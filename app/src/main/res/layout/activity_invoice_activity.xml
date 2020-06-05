@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/pmo_welcome_background"
+    tools:context="com.example.lifeassistant_project.menu_activity.Invoice_activity">
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="320dp"
+        android:onClick="onbuttonclick"
+        android:text="使用掃描器" />
+
+
+    <Button
+        android:id="@+id/okbutton"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="610dp"
+        android:text="好"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/welcometext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="90dp"
+        android:text="歡迎來到"
+        android:textColor="@android:color/background_light"
+        android:textSize="40dp"
+        android:textStyle="bold"
+        tools:text="歡迎來到" />
+
+    <TextView
+        android:id="@+id/more"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="500dp"
+        android:text="或是，你可以..."
+        android:textColor="@android:color/holo_blue_bright"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        tools:text="或是，你可以..." />
+
+    <TextView
+        android:id="@+id/welcometext2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        android:text="發票兌獎"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_blue_bright"
+        android:textSize="60dp"
+        android:textStyle="bold"
+        tools:text="發票兌獎" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/reciptinfo"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="540dp"
+        android:background="@android:drawable/editbox_background_normal">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/receiptsewrial"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="550dp"
+            android:foregroundTint="@color/design_default_color_background"
+            android:hint="請輸入末三碼"
+            android:textColor="@color/design_default_color_background"
+            android:textColorHighlight="@color/design_default_color_background"
+            android:textColorHint="@color/design_default_color_background"
+            android:textColorLink="@color/design_default_color_background" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+</RelativeLayout>

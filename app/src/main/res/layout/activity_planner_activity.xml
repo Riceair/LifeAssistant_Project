@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/planner_background"
+    tools:context="com.example.lifeassistant_project.menu_activity.Planner_activity">
+
+
+    <TextView
+        android:id="@+id/titletext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="30dp"
+        android:text="今"
+        android:textColor="@color/cardview_light_background"
+        android:textColorHint="@android:color/darker_gray"
+        android:textSize="75dp" />
+
+    <TextView
+        android:id="@+id/titletext2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="125dp"
+        android:layout_marginTop="80dp"
+        android:text="日排程"
+        android:textColor="@color/cardview_light_background"
+        android:textColorHint="@android:color/darker_gray"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/titletext5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="130dp"
+        android:text="未"
+        android:textColor="@android:color/holo_orange_light"
+        android:textColorHint="@android:color/darker_gray"
+        android:textSize="75dp" />
+
+    <TextView
+        android:id="@+id/titletext4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="125dp"
+        android:layout_marginTop="180dp"
+        android:text="完事項"
+        android:textColor="@color/cardview_light_background"
+        android:textColorHint="@android:color/darker_gray"
+        android:textSize="30dp" />
+
+    <Button
+        android:id="@+id/checkbutton"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="320dp"
+        android:layout_marginTop="175dp"
+        android:onClick="clickViewPlan"
+        android:text="檢視" />
+
+    <Button
+        android:id="@+id/checkbutton2"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="320dp"
+        android:layout_marginTop="75dp"
+        android:onClick="clickTodayPlan"
+        android:text="檢視" />
+
+    <ImageView
+        android:id="@+id/todaycountdecimal"
+        android:layout_width="30dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="250dp"
+        android:layout_marginTop="70dp"
+        app:srcCompat="@drawable/easy_temp_0" />
+
+    <ImageView
+        android:id="@+id/todaycountdigit"
+        android:layout_width="30dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="280dp"
+        android:layout_marginTop="70dp"
+        app:srcCompat="@drawable/easy_temp_2" />
+
+    <ImageView
+        android:id="@+id/stuffcountdecimal"
+        android:layout_width="30dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="250dp"
+        android:layout_marginTop="170dp"
+        app:srcCompat="@drawable/easy_temp_1red" />
+
+    <ImageView
+        android:id="@+id/stuffcountdigit"
+        android:layout_width="30dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="280dp"
+        android:layout_marginTop="170dp"
+        app:srcCompat="@drawable/easy_temp_2red" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context=".MainActivity">
+
+            <CalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="320dp"
+                android:background="@android:drawable/editbox_dropdown_light_frame"
+                android:selectedWeekBackgroundColor="@android:color/holo_orange_light"
+                android:unfocusedMonthDateColor="@color/colorAccent"
+                android:weekNumberColor="@color/cardview_light_background"
+                android:weekSeparatorLineColor="@android:color/background_light" />
+
+            <Button
+                android:id="@+id/addbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="670dp"
+                android:onClick="clickNewPlan"
+                android:text=" 新增排程" />
+
+            <ImageView
+                android:id="@+id/weathercondition"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="80dp"
+                android:layout_marginTop="225dp"
+                app:srcCompat="@drawable/easy_weather_ic_partlysunny" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="200dp"
+                android:layout_marginTop="240dp"
+                android:text="22:19"
+                android:textColor="@android:color/background_light"
+                android:textSize="50dp" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>
