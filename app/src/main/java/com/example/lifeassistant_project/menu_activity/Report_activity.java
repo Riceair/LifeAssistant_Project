@@ -26,7 +26,6 @@ import java.util.ArrayList;
 public class Report_activity extends AppCompatActivity {
     private static final String PATH = "/data/data/com.example.lifeassistant_project";
     private static final String DBNAME = "myDB.db";
-
     private SQLiteDatabase myDB;
     private Cursor cursor;
 
@@ -35,7 +34,7 @@ public class Report_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide(); //隱藏狀態列(綠色的那塊)
         setContentView(R.layout.activity_report_activity);
-
+        Log.e("123","123");
         // 資料庫
         File FdbFile = new File(PATH, "databases");
         FdbFile.mkdir();
