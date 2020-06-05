@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.lifeassistant_project.R;
@@ -34,7 +35,7 @@ public class Report_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide(); //隱藏狀態列(綠色的那塊)
         setContentView(R.layout.activity_report_activity);
-
+        Log.e("123","123");
         // 資料庫
         File FdbFile = new File(PATH, "databases");
         FdbFile.mkdir();
@@ -105,7 +106,7 @@ public class Report_activity extends AppCompatActivity {
         //mv.setChartView(mChart);
         //mChart.setMarker(mv);
     }
-    //
+
     /**
      * 設置圓形圖的數據
      */
