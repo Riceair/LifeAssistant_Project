@@ -105,7 +105,7 @@ public class Report_activity extends AppCompatActivity {
         //mv.setChartView(mChart);
         //mChart.setMarker(mv);
     }
-    
+
     /**
      * 設置圓形圖的數據
      */
