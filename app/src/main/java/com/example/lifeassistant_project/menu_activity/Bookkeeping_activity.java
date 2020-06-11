@@ -236,15 +236,13 @@ public class Bookkeeping_activity extends AppCompatActivity {
 
     //資料庫新增介面
     private void addDBbox(){
-        LayoutInflater inflater = LayoutInflater.from(Bookkeeping_activity.this);
-        final View v = inflater.inflate(R.layout.bookkeeping_add_category,null);
+        final EditText editText = new EditText(this);
         new AlertDialog.Builder(Bookkeeping_activity.this)
                 .setTitle("請輸入要新增的類別")
-                .setView(v)
+                .setView(editText)
                 .setPositiveButton("確定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        EditText editText = (EditText) v.findViewById(R.id.addCategory);
                         addToDB(editText.getText().toString());
                     }
                 }).show();
@@ -254,7 +252,7 @@ public class Bookkeeping_activity extends AppCompatActivity {
         if(newCategory.equals("")) return;
         ContentValues values = new ContentValues();
         values.put("name",newCategory);
-        myDB = openOrCreateDatabase(FILTER_TABLE,MODE_PRIVATE,null);
+        myDB = openOrCreateDatabase(DBNAME,MODE_PRIVATE,null);
         long result = myDB.insert(FILTER_TABLE,null,values);
         if(result!=-1L){
             myDB.close();
