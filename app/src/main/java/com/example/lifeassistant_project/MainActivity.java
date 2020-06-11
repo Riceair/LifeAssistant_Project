@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         View view = getLayoutInflater().inflate(R.layout.activity_main,null);
         LinearLayout parent_layout=(LinearLayout) view.findViewById(R.id.menu_linear);
 
+        // goodmorning
         Weather_option wo=new Weather_option(view,parent_layout);
         Predict_option po=new Predict_option(view,parent_layout);
         FinMan_option fo=new FinMan_option(view,parent_layout);
