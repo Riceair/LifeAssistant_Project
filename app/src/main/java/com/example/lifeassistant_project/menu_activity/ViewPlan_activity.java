@@ -81,7 +81,7 @@ public class ViewPlan_activity extends AppCompatActivity {
                 int iRow = cursor.getCount(); // 取得資料記錄的筆數
                 cursor.moveToFirst();
                 for (int i=0;i<iRow;i++){
-                    String stuffName = cursor.getString(0)+"("+cursor.getString(1)+"/"+cursor.getString(2)+"/"+cursor.getString(3)+"Starts at"+cursor.getString(4)+"o'clock"+"Ends at"+cursor.getString(5)+"o'clock)";
+                    String stuffName = cursor.getString(0)+"("+cursor.getString(1)+"年"+cursor.getString(2)+"月"+cursor.getString(3)+"日) Starts at:"+cursor.getString(4)+"/ Ends at: "+cursor.getString(5);
                     stuffList.add(stuffName);
                     cursor.moveToNext();
                 }
