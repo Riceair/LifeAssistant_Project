@@ -55,11 +55,11 @@ public class Bookkeeping_activity extends AppCompatActivity {
         setContentView(R.layout.activity_bookkeeping_activity);
 
         // 資料庫
-        File FdbFile = new File(PATH, "databases");
-        FdbFile.mkdir();
-        File CdbFile = new File(PATH+"/databases",DBNAME);
-        if(!CdbFile.exists() || !CdbFile.isFile())
-            copyAssets(PATH,DBNAME); //初始資料庫複製到路徑
+        File dbDir = new File(PATH, "databases");
+        dbDir.mkdir();
+        File FdbFile = new File(PATH+"/databases",DBNAME);
+        if(!FdbFile.exists() || !FdbFile.isFile())
+            copyAssets(PATH); //初始資料庫複製到路徑
         filterinput = (EditText) findViewById(R.id.filterinput);
 
         ////////////////////////////////日期/////////////////////////////////
@@ -267,11 +267,11 @@ public class Bookkeeping_activity extends AppCompatActivity {
     }
 
     //第一次開啟App才會啟用
-    private void copyAssets(String path,String dbname) {
+    private void copyAssets(String path) {
         InputStream in = null;
         OutputStream out = null;
         try {
-            in = getAssets().open(dbname);
+            in = getAssets().open(DBNAME);
             out = new FileOutputStream(PATH + "/databases/" + DBNAME);
             copyFile(in, out);
             in.close();

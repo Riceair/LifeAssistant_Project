@@ -29,7 +29,8 @@ public class Report_activity extends AppCompatActivity {
     private static final String DBNAME = "myDB.db";
     private SQLiteDatabase myDB;
     private Cursor cursor;
-    private List<String> list = new ArrayList<>();
+    private List<String> type_list = new ArrayList<>();
+    private List<Integer> sum_list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,10 +150,10 @@ public class Report_activity extends AppCompatActivity {
                 cursor.moveToFirst();
                 for (int i=0;i<iRow;i++){
                     String type = cursor.getString(0);
-                    list.add(type);
+                    type_list.add(type);
                     cursor.moveToNext();
                 }
-                Toast.makeText(this,list.get(0),Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,type_list.get(0),Toast.LENGTH_SHORT).show();
                 // 5. 關閉 DB
                 myDB.close();
             }
