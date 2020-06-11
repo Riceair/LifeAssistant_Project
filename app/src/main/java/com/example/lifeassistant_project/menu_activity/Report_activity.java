@@ -22,19 +22,21 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Report_activity extends AppCompatActivity {
     private static final String PATH = "/data/data/com.example.lifeassistant_project";
     private static final String DBNAME = "myDB.db";
     private SQLiteDatabase myDB;
     private Cursor cursor;
+    private List<String> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide(); //隱藏狀態列(綠色的那塊)
         setContentView(R.layout.activity_report_activity);
-        Log.e("123","123");
+
         // 資料庫
         File FdbFile = new File(PATH, "databases");
         FdbFile.mkdir();
@@ -145,7 +147,12 @@ public class Report_activity extends AppCompatActivity {
             if(cursor!=null) {
                 int iRow = cursor.getCount(); // 取得資料記錄的筆數
                 cursor.moveToFirst();
-
+                for (int i=0;i<iRow;i++){
+                    String type = cursor.getString(0);
+                    list.add(type);
+                    cursor.moveToNext();
+                }
+                Toast.makeText(this,list.get(0),Toast.LENGTH_SHORT).show();
                 // 5. 關閉 DB
                 myDB.close();
             }
