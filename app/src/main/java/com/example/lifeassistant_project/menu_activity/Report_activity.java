@@ -39,11 +39,11 @@ public class Report_activity extends AppCompatActivity {
         setContentView(R.layout.activity_report_activity);
 
         // 資料庫
-        File FdbFile = new File(PATH, "databases");
-        FdbFile.mkdir();
-        File CdbFile = new File(PATH+"/databases",DBNAME);
-        if(!CdbFile.exists() || !CdbFile.isFile())
-            copyAssets(PATH,DBNAME); //初始資料庫複製到路徑
+        File dbDir = new File(PATH, "databases");
+        dbDir.mkdir();
+        File FdbFile = new File(PATH+"/databases",DBNAME);
+        if(!FdbFile.exists() || !FdbFile.isFile())
+            copyAssets(PATH); //初始資料庫複製到路徑
 
         ReadDBRecord();
 
@@ -143,17 +143,19 @@ public class Report_activity extends AppCompatActivity {
     private void ReadDBRecord(){
         myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
         try {
-            cursor = myDB.rawQuery("select record.分類, sum(record.金額)  from record,filter where filter.name = record.分類",null);
+            cursor = myDB.rawQuery("select record.分類, sum(record.金額)  from record,filter where filter.name = record.分類 group by record.分類",null);
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             if(cursor!=null) {
                 int iRow = cursor.getCount(); // 取得資料記錄的筆數
                 cursor.moveToFirst();
                 for (int i=0;i<iRow;i++){
                     String type = cursor.getString(0);
+                    int sum = cursor.getInt(1);
                     type_list.add(type);
+                    sum_list.add(sum);
                     cursor.moveToNext();
                 }
-                Toast.makeText(this,type_list.get(0),Toast.LENGTH_SHORT).show();
+                Log.e("123",type_list.get(2)+String.valueOf(sum_list.get(2)));
                 // 5. 關閉 DB
                 myDB.close();
             }
@@ -168,11 +170,11 @@ public class Report_activity extends AppCompatActivity {
 
 
     //第一次開啟App才會啟用
-    private void copyAssets(String path,String dbname) {
+    private void copyAssets(String path) {
         InputStream in = null;
         OutputStream out = null;
         try {
-            in = getAssets().open(dbname);
+            in = getAssets().open(DBNAME);
             out = new FileOutputStream(PATH + "/databases/" + DBNAME);
             copyFile(in, out);
             in.close();
