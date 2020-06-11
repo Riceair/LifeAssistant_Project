@@ -38,9 +38,16 @@ public class ViewPlan_activity extends AppCompatActivity {
         setContentView(R.layout.activity_view_plan_activity);
         final ListView list = findViewById(R.id.list);
 
-        stuffList.add("OS期中");
-        stuffList.add("餵狗");
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, arrayList);
+
+
+        File dbDir = new File(PATH, "databases");
+        dbDir.mkdir();
+        File FdbFile = new File(PATH+"/databases",DBNAME);
+        if(!FdbFile.exists() || !FdbFile.isFile())
+            copyAssets(PATH); //初始資料庫複製到路徑
+
+        ReadDBRecord();
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, stuffList);
         list.setAdapter(arrayAdapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -49,14 +56,6 @@ public class ViewPlan_activity extends AppCompatActivity {
                 Toast.makeText(ViewPlan_activity.this,clickedItem,Toast.LENGTH_LONG).show();
             }
         });
-        File dbDir = new File(PATH, "databases");
-        dbDir.mkdir();
-        File FdbFile = new File(PATH+"/databases",DBNAME);
-        if(!FdbFile.exists() || !FdbFile.isFile())
-            copyAssets(PATH); //初始資料庫複製到路徑
-
-
-
 
 
 
@@ -82,17 +81,11 @@ public class ViewPlan_activity extends AppCompatActivity {
                 int iRow = cursor.getCount(); // 取得資料記錄的筆數
                 cursor.moveToFirst();
                 for (int i=0;i<iRow;i++){
-                    String stuffName = cursor.getString(0);
+                    String stuffName = cursor.getString(0)+"("+cursor.getString(1)+"/"+cursor.getString(2)+"/"+cursor.getString(3)+"Starts at"+cursor.getString(4)+"o'clock"+"Ends at"+cursor.getString(5)+"o'clock)";
                     stuffList.add(stuffName);
-                    String date = cursor.getString(1)+"/"+cursor.getString(2)+"/"+cursor.getString(3);
-                    dateList.add(date);
-                    String whentodo = "Starts at"+cursor.getString(4)+"o'clock"+"Ends at"+cursor.getString(5)+"o'clock";
-                    timeList.add(whentodo);
                     cursor.moveToNext();
                 }
                 Toast.makeText(this,stuffList.get(0),Toast.LENGTH_SHORT).show();
-                Toast.makeText(this,dateList.get(0),Toast.LENGTH_SHORT).show();
-                Toast.makeText(this,timeList.get(0),Toast.LENGTH_SHORT).show();
                 // 5. 關閉 DB
                 myDB.close();
             }
