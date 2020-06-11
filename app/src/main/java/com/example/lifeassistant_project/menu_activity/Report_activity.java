@@ -5,7 +5,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lifeassistant_project.R;
@@ -23,6 +24,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Report_activity extends AppCompatActivity {
     private static final String PATH = "/data/data/com.example.lifeassistant_project";
@@ -52,11 +54,11 @@ public class Report_activity extends AppCompatActivity {
         mChart.setUsePercentValues(true);  //使用百分比顯示
         mChart.getDescription().setEnabled(false);    //設置pipeChart圖表的描述
         mChart.setBackgroundColor(Color.rgb(108,110,169));
-        mChart.setExtraOffsets(10, 10, 10, 10);
+        mChart.setExtraOffsets(10, 30, 10, 120);
         mChart.setDragDecelerationFrictionCoef(0.95f); //設置pieChart圖表轉動阻力摩擦係數[0,1]
         mChart.setRotationAngle(0);                   //設置pieChart圖表起始角度
-        mChart.setRotationEnabled(true);              //設置pieChart圖表是否可以手動旋轉
-        mChart.setHighlightPerTapEnabled(true);       //設置piecahrt圖表點擊Item高亮是否可用
+        mChart.setRotationEnabled(false);              //設置pieChart圖表是否可以手動旋轉
+        mChart.setHighlightPerTapEnabled(false);       //設置piecahrt圖表點擊Item高亮是否可用
         //mChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);// 設置pieChart圖表展示動畫效果
 
 // 設置 pieChart 圖表Item文字屬性
@@ -85,10 +87,10 @@ public class Report_activity extends AppCompatActivity {
 
 // 獲取pieCahrt圖例
         Legend l = mChart.getLegend();
-        l.setEnabled(true);                    //是否啟用圖列（true：下麵屬性才有意義）
+        l.setEnabled(true);                    //是否啟用圖列（true：下面屬性才有意義）
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         l.setForm(Legend.LegendForm.SQUARE); //設置圖例的形狀
         l.setFormSize(20);               //設置圖例的大小
         l.setFormToTextSpace(10f);         //設置每個圖例實體中標籤和形狀之間的間距
@@ -97,8 +99,8 @@ public class Report_activity extends AppCompatActivity {
         l.setXEntrySpace(10f);            //設置圖例實體之間延X軸的間距（setOrientation = HORIZONTAL有效）
         l.setYEntrySpace(8f);             //設置圖例實體之間延Y軸的間距（setOrientation = VERTICAL 有效）
         l.setYOffset(0f);                //設置比例塊Y軸偏移量
-        l.setTextSize(14f);                  //設置圖例標籤文本的大小
-        l.setTextColor(Color.parseColor("#ff9933"));//設置圖例標籤文本的顏色
+        l.setTextSize(15f);                  //設置圖例標籤文本的大小
+        l.setTextColor(Color.WHITE);//設置圖例標籤文本的顏色
 
 //pieChart 選擇監聽
         // mChart.setOnChartValueSelectedListener(this);
@@ -113,24 +115,28 @@ public class Report_activity extends AppCompatActivity {
      * 設置圓形圖的數據
      */
     private void setData(PieChart mChart) {
+        int length = type_list.size();
         ArrayList<PieEntry> pieEntryList = new ArrayList<PieEntry>();
         ArrayList<Integer> colors = new ArrayList<Integer>();
-        colors.add(Color.parseColor("#f17548"));
-        colors.add(Color.parseColor("#FF9933"));
+        for (int i=0;i<length;i++){
+            colors.add(randomColor());
+        }
+        // #FF8000 	#FF9224 #EA7500 #FFAF60 	#FF8040 #FF8F59 	#FF9D6F
         //圓形圖實體 PieEntry
-        PieEntry CashBalance = new PieEntry(70, "現金餘額 1500");
-        PieEntry ConsumptionBalance = new PieEntry(30, "消費餘額 768");
-        pieEntryList.add(CashBalance);
-        pieEntryList.add(ConsumptionBalance);
+        for (int i=0;i<length;i++){
+            int value = sum_list.get(i);
+            PieEntry pieEntry = new PieEntry(value,type_list.get(i));
+            pieEntryList.add(pieEntry);
+        }
         //餅狀圖資料集 PieDataSet
-        PieDataSet pieDataSet = new PieDataSet(pieEntryList, "資產總");
+        PieDataSet pieDataSet = new PieDataSet(pieEntryList, "");
         pieDataSet.setSliceSpace(3f);           //設置餅狀Item之間的間隙
         pieDataSet.setSelectionShift(10f);      //設置餅狀Item被選中時變化的距離
         pieDataSet.setColors(colors);           //為DataSet中的資料匹配上顏色集(圓形圖Item顏色)
         //最終資料 PieData
         PieData pieData = new PieData(pieDataSet);
         pieData.setDrawValues(true);            //設置是否顯示資料實體(百分比，true:以下屬性才有意義)
-        pieData.setValueTextColor(Color.BLUE);  //設置所有DataSet內資料實體（百分比）的文本顏色
+        pieData.setValueTextColor(Color.WHITE);  //設置所有DataSet內資料實體（百分比）的文本顏色
         pieData.setValueTextSize(12f);          //設置所有DataSet內資料實體（百分比）的文本字體大小
         //pieData.setValueTypeface(mTfLight);     //設置所有DataSet內資料實體（百分比）的文本字體樣式
         pieData.setValueFormatter(new PercentFormatter());//設置所有DataSet內資料實體（百分比）的文本字體格式
@@ -145,7 +151,7 @@ public class Report_activity extends AppCompatActivity {
         try {
             cursor = myDB.rawQuery("select record.分類, sum(record.金額)  from record,filter where filter.name = record.分類 group by record.分類",null);
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            if(cursor!=null) {
+            if(cursor!=null) { //取得資料
                 int iRow = cursor.getCount(); // 取得資料記錄的筆數
                 cursor.moveToFirst();
                 for (int i=0;i<iRow;i++){
@@ -155,7 +161,17 @@ public class Report_activity extends AppCompatActivity {
                     sum_list.add(sum);
                     cursor.moveToNext();
                 }
-                Log.e("123",type_list.get(2)+String.valueOf(sum_list.get(2)));
+
+                LinearLayout recordLinear = (LinearLayout) findViewById(R.id.record_list); //要顯示的layout
+                for(int i=0;i<type_list.size();i++){
+                    LinearLayout recordlist_element = (LinearLayout) getLayoutInflater().inflate(R.layout.report_recordlist_element,null);
+                    TextView typeName = (TextView) recordlist_element.findViewById(R.id.record_type);
+                    TextView sum = (TextView) recordlist_element.findViewById(R.id.record_sum);
+                    typeName.setText(type_list.get(i));
+                    sum.setText(String.valueOf(sum_list.get(i)));
+                    recordLinear.addView(recordlist_element);
+                }
+
                 // 5. 關閉 DB
                 myDB.close();
             }
@@ -168,6 +184,20 @@ public class Report_activity extends AppCompatActivity {
         }
     }
 
+
+    //產生隨機顏色
+    private static int randomColor(){
+        Random random = new Random();
+        int returnColor;
+        while(true) {
+            int r = random.nextInt(256);
+            int g = random.nextInt(256);
+            int b = random.nextInt(256);
+            returnColor = Color.rgb(r,g,b);
+            if(returnColor!=Color.WHITE) break;
+        }
+        return returnColor;
+    }
 
     //第一次開啟App才會啟用
     private void copyAssets(String path) {
