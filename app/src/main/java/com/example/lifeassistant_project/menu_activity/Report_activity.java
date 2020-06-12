@@ -54,7 +54,7 @@ public class Report_activity extends AppCompatActivity {
         mChart.setUsePercentValues(true);  //使用百分比顯示
         mChart.getDescription().setEnabled(false);    //設置pipeChart圖表的描述
         mChart.setBackgroundColor(Color.rgb(108,110,169));
-        mChart.setExtraOffsets(10, 30, 10, 120);
+        mChart.setExtraOffsets(10, 40, 10, 130);
         mChart.setDragDecelerationFrictionCoef(0.95f); //設置pieChart圖表轉動阻力摩擦係數[0,1]
         mChart.setRotationAngle(0);                   //設置pieChart圖表起始角度
         mChart.setRotationEnabled(false);              //設置pieChart圖表是否可以手動旋轉
@@ -62,7 +62,7 @@ public class Report_activity extends AppCompatActivity {
         //mChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);// 設置pieChart圖表展示動畫效果
 
 // 設置 pieChart 圖表Item文字屬性
-        mChart.setDrawEntryLabels(true);              //設置pieChart是否只顯示圓形圖上百分比不顯示文字（true：下面屬性才有效果）
+        mChart.setDrawEntryLabels(false);              //設置pieChart是否只顯示圓形圖上百分比不顯示文字（true：下面屬性才有效果）
         mChart.setEntryLabelColor(Color.WHITE);       //設置pieChart圖表文本字體顏色
         //mChart.setEntryLabelTypeface(mTfRegular);     //設置pieChart圖表文本字體樣式
         mChart.setEntryLabelTextSize(15f);            //設置pieChart圖表文本字體大小
@@ -149,7 +149,7 @@ public class Report_activity extends AppCompatActivity {
     private void ReadDBRecord(){
         myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
         try {
-            cursor = myDB.rawQuery("select record.分類, sum(record.金額)  from record,filter where filter.name = record.分類 group by record.分類",null);
+            cursor = myDB.rawQuery("select record.分類, sum(record.金額)  from record group by record.分類",null);
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             if(cursor!=null) { //取得資料
                 int iRow = cursor.getCount(); // 取得資料記錄的筆數
@@ -188,15 +188,10 @@ public class Report_activity extends AppCompatActivity {
     //產生隨機顏色
     private static int randomColor(){
         Random random = new Random();
-        int returnColor;
-        while(true) {
-            int r = random.nextInt(256);
-            int g = random.nextInt(256);
-            int b = random.nextInt(256);
-            returnColor = Color.rgb(r,g,b);
-            if(returnColor!=Color.WHITE) break;
-        }
-        return returnColor;
+        int r = random.nextInt(256);
+        int g = random.nextInt(256);
+        int b = random.nextInt(256);
+        return Color.rgb(r,g,b);
     }
 
     //第一次開啟App才會啟用
