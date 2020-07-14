@@ -1,14 +1,20 @@
 package com.example.lifeassistant_project.menu_activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.DatePickerDialog;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.lifeassistant_project.R;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -16,13 +22,14 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
@@ -31,13 +38,14 @@ public class Report_activity extends AppCompatActivity {
     private static final String DBNAME = "myDB.db";
     private SQLiteDatabase myDB;
     private Cursor cursor;
+    private PieChart mChart;
+    private int currentYear,currentMonth;
     private List<String> type_list = new ArrayList<>();
     private List<Integer> sum_list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide(); //隱藏狀態列(綠色的那塊)
         setContentView(R.layout.activity_report_activity);
 
         // 資料庫
@@ -47,14 +55,12 @@ public class Report_activity extends AppCompatActivity {
         if(!FdbFile.exists() || !FdbFile.isFile())
             copyAssets(PATH); //初始資料庫複製到路徑
 
-        ReadDBRecord();
-
-        PieChart mChart=findViewById(R.id.pieChart);
+        mChart=findViewById(R.id.pieChart);
 
         mChart.setUsePercentValues(true);  //使用百分比顯示
         mChart.getDescription().setEnabled(false);    //設置pipeChart圖表的描述
         mChart.setBackgroundColor(Color.rgb(108,110,169));
-        mChart.setExtraOffsets(10, 40, 10, 130);
+        mChart.setExtraOffsets(10, 20, 10, 100);
         mChart.setDragDecelerationFrictionCoef(0.95f); //設置pieChart圖表轉動阻力摩擦係數[0,1]
         mChart.setRotationAngle(0);                   //設置pieChart圖表起始角度
         mChart.setRotationEnabled(false);              //設置pieChart圖表是否可以手動旋轉
@@ -68,22 +74,15 @@ public class Report_activity extends AppCompatActivity {
         mChart.setEntryLabelTextSize(15f);            //設置pieChart圖表文本字體大小
 
         mChart.setDrawHoleEnabled(false);
-/* 設置 pieChart 內部圓環屬性
-        mChart.setDrawHoleEnabled(false);              //是否顯示PieChart內部圓環(true:下麵屬性才有意義)
-        mChart.setHoleRadius(28f);                    //設置PieChart內部圓的半徑(這裡設置28.0f)
-        mChart.setTransparentCircleRadius(31f);       //設置PieChart內部透明圓的半徑(這裡設置31.0f)
-        mChart.setTransparentCircleColor(Color.BLACK);//設置PieChart內部透明圓與內部圓間距(31f-28f)填充顏色
-        mChart.setTransparentCircleAlpha(50);         //設置PieChart內部透明圓與內部圓間距(31f-28f)透明度[0~255]數值越小越透明
-        mChart.setHoleColor(Color.WHITE);             //設置PieChart內部圓的顏色
-        mChart.setDrawCenterText(true);               //是否繪製PieChart內部中心文本（true：下麵屬性才有意義）
-        //mChart.setCenterTextTypeface(mTfLight);       //設置PieChart內部圓文字的字體樣式
-        //mChart.setCenterText("Test");                 //設置PieChart內部圓文字的內容
-        mChart.setCenterTextSize(10f);                //設置PieChart內部圓文字的大小
-        mChart.setCenterTextColor(Color.RED);         //設置PieChart內部圓文字的顏色
-        */
 
-// pieChart添加數據
+// pieChart添加數據 title設置 底部資訊設置
+        Calendar c = Calendar.getInstance();
+        currentYear=c.get(Calendar.YEAR);
+        currentMonth=c.get(Calendar.MONTH)+1;
+        getSupportActionBar().setTitle(String.valueOf(currentYear)+"年"+String.valueOf(currentMonth)+"月");
+        ReadDBRecord(currentYear,currentMonth);
         setData(mChart);
+        setBotInf();
 
 // 獲取pieCahrt圖例
         Legend l = mChart.getLegend();
@@ -101,19 +100,109 @@ public class Report_activity extends AppCompatActivity {
         l.setYOffset(0f);                //設置比例塊Y軸偏移量
         l.setTextSize(15f);                  //設置圖例標籤文本的大小
         l.setTextColor(Color.WHITE);//設置圖例標籤文本的顏色
-
-//pieChart 選擇監聽
-        // mChart.setOnChartValueSelectedListener(this);
-
-//設置MARKERVIEW
-        //CustomMarkerView mv = new CustomMarkerView(this, new PercentFormatter());
-        //mv.setChartView(mChart);
-        //mChart.setMarker(mv);
     }
 
-    /**
-     * 設置圓形圖的數據
-     */
+    ////////////////////////////////////////////////////menu處理///////////////////////////////////////////////////
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.report_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.lastYear:
+                getSupportActionBar().setTitle(String.valueOf(currentYear-1)+"年");
+                ReadDBRecord(currentYear-1,0);
+                setData(mChart);
+                setBotInf();
+                break;
+            case R.id.thisYear:
+                getSupportActionBar().setTitle(String.valueOf(currentYear)+"年");
+                ReadDBRecord(currentYear,0);
+                setData(mChart);
+                setBotInf();
+                break;
+            case R.id.lastMonth:
+                getSupportActionBar().setTitle(String.valueOf(currentYear)+"年"+String.valueOf(currentMonth-1)+"月");
+                ReadDBRecord(currentYear,currentMonth-1);
+                setData(mChart);
+                setBotInf();
+                break;
+            case R.id.thisMonth:
+                getSupportActionBar().setTitle(String.valueOf(currentYear)+"年"+String.valueOf(currentMonth)+"月");
+                ReadDBRecord(currentYear,currentMonth);
+                setData(mChart);
+                setBotInf();
+                break;
+            case R.id.all:
+                getSupportActionBar().setTitle("所有紀錄");
+                ReadDBRecord(0,0);
+                setData(mChart);
+                setBotInf();
+                break;
+            case R.id.selfChoice:
+                int mYear,mMonth,mDay;
+                final Calendar c=Calendar.getInstance();
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+                new DatePickerDialog(Report_activity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                        String format = setDataFormat(year,month,day);
+                    }
+                },mYear,mMonth,mDay).show();
+                break;
+        }
+        return true;
+    }
+
+    private String setDataFormat(int year, int monthOfYear,int dayOfMonth){
+        return String.valueOf(year)+"-"+String.valueOf(monthOfYear+1)+"-"+String.valueOf(dayOfMonth);
+    }
+
+    ////////////////////////////////////////////////////數據處理///////////////////////////////////////////////////
+    //讀資料庫
+    private void ReadDBRecord(int year,int month){
+        myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
+        type_list.clear();
+        sum_list.clear();
+        try {
+            if(month==0){
+                if(year==0) //顯示所有紀錄
+                    cursor = myDB.rawQuery("select record.分類, sum(record.金額)  from record group by record.分類",null);
+                else
+                    cursor = myDB.rawQuery("select record.分類, sum(record.金額)  from record where record.年=? group by record.分類",new String[]{String.valueOf(year)});
+            }
+            else {
+                cursor = myDB.rawQuery("select record.分類, sum(record.金額)  from record where record.年=? and record.月=? group by record.分類"
+                        , new String[]{String.valueOf(year), String.valueOf(month)});
+            }
+            if(cursor!=null) { //取得資料
+                int iRow = cursor.getCount(); // 取得資料記錄的筆數
+                cursor.moveToFirst();
+                for (int i=0;i<iRow;i++){
+                    String type = cursor.getString(0);
+                    int sum = cursor.getInt(1);
+                    type_list.add(type);
+                    sum_list.add(sum);
+                    cursor.moveToNext();
+                }
+                // 5. 關閉 DB
+                myDB.close();
+            }
+            else {
+                Toast.makeText(this,"Hint 1: 請將db準備好!",Toast.LENGTH_SHORT).show();
+            }
+        }
+        catch (Exception e) {
+            Toast.makeText(this,e.toString(),Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    //設置圓形圖的數據
     private void setData(PieChart mChart) {
         int length = type_list.size();
         ArrayList<PieEntry> pieEntryList = new ArrayList<PieEntry>();
@@ -145,42 +234,17 @@ public class Report_activity extends AppCompatActivity {
         mChart.invalidate();                    //將圖表重繪以顯示設定的屬性和資料
     }
 
-    ////////////////////////////////////////////讀資料庫///////////////////////////////////////////
-    private void ReadDBRecord(){
-        myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
-        try {
-            cursor = myDB.rawQuery("select record.分類, sum(record.金額)  from record group by record.分類",null);
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            if(cursor!=null) { //取得資料
-                int iRow = cursor.getCount(); // 取得資料記錄的筆數
-                cursor.moveToFirst();
-                for (int i=0;i<iRow;i++){
-                    String type = cursor.getString(0);
-                    int sum = cursor.getInt(1);
-                    type_list.add(type);
-                    sum_list.add(sum);
-                    cursor.moveToNext();
-                }
-
-                LinearLayout recordLinear = (LinearLayout) findViewById(R.id.record_list); //要顯示的layout
-                for(int i=0;i<type_list.size();i++){
-                    LinearLayout recordlist_element = (LinearLayout) getLayoutInflater().inflate(R.layout.report_recordlist_element,null);
-                    TextView typeName = (TextView) recordlist_element.findViewById(R.id.record_type);
-                    TextView sum = (TextView) recordlist_element.findViewById(R.id.record_sum);
-                    typeName.setText(type_list.get(i));
-                    sum.setText(String.valueOf(sum_list.get(i)));
-                    recordLinear.addView(recordlist_element);
-                }
-
-                // 5. 關閉 DB
-                myDB.close();
-            }
-            else {
-                Toast.makeText(this,"Hint 1: 請將db準備好!",Toast.LENGTH_SHORT).show();
-            }
-        }
-        catch (Exception e) {
-            Toast.makeText(this,e.toString(),Toast.LENGTH_SHORT).show();
+    //設定底下顯示的資料
+    private void setBotInf(){
+        LinearLayout recordLinear = (LinearLayout) findViewById(R.id.record_list); //要顯示的layout
+        recordLinear.removeAllViews();
+        for(int i=0;i<type_list.size();i++){
+            LinearLayout recordlist_element = (LinearLayout) getLayoutInflater().inflate(R.layout.report_recordlist_element,null);
+            TextView typeName = (TextView) recordlist_element.findViewById(R.id.record_type);
+            TextView sum = (TextView) recordlist_element.findViewById(R.id.record_sum);
+            typeName.setText(type_list.get(i));
+            sum.setText(String.valueOf(sum_list.get(i)));
+            recordLinear.addView(recordlist_element);
         }
     }
 

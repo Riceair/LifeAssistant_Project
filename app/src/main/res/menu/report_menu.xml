@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/lastYear"
+        android:title="去年紀錄" />
+    <item
+        android:id="@+id/thisYear"
+        android:title="今年紀錄" />
+    <item
+        android:id="@+id/lastMonth"
+        android:title="上個月紀錄" />
+    <item
+        android:id="@+id/thisMonth"
+        android:title="本月紀錄" />
+    <item
+        android:id="@+id/all"
+        android:title="所有紀錄" />
+    <item
+        android:id="@+id/selfChoice"
+        android:title="自由選擇...." />
+</menu>
