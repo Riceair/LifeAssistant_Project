@@ -5,6 +5,16 @@ public class AccountPackage
     private int ID, money, year, month, day;
     private String item, detail;
     private boolean type; // True for 收入
+    private int requestAction; // request 需要執行的行為
+    // 0 = 新增, 1 = 刪除, 2 = 修改, 3 = 查詢, 4 = Debug.
+
+    public int getRequestAction() {
+        return requestAction;
+    }
+
+    public void setRequestAction(int requestAction) {
+        this.requestAction = requestAction;
+    }
 
     public AccountPackage(int ID, int money, int year, int month, int day, String item, String detail, boolean type)
     {
@@ -16,8 +26,9 @@ public class AccountPackage
         this.item = item;
         this.detail = detail;
         this.type = type;
+        this.requestAction = 4;
     }
-    AccountPackage()
+    public AccountPackage()
     {
         this.ID = 0;
         this.money = 0;
@@ -27,6 +38,7 @@ public class AccountPackage
         this.item = "";
         this.detail = "";
         this.type = false;
+        this.requestAction = 4;
     }
 
     public int getID() {

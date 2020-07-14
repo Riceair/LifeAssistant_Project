@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lifeassistant_project.R;
+import com.example.lifeassistant_project.bookkeeping_activity_update.AccountPackage;
 import com.example.lifeassistant_project.bookkeeping_activity_update.BookkeepingClient;
 
 
@@ -44,6 +45,9 @@ public class Bookkeeping_activity extends AppCompatActivity {
     private Cursor cursor;
     private List<String> list = new ArrayList<>();
     private EditText filterinput;
+
+    // the package need to be send.
+    private AccountPackage sendPackage;
 
     private int mYear, mMonth, mDay;
 
@@ -101,8 +105,12 @@ public class Bookkeeping_activity extends AppCompatActivity {
     /////////////////////////////////////////////////////////連網/////////////////////////////////////////////////////////
     public void clickToUpdate(View view){
         writeToBKDB();
+        //
         BookkeepingClient client = new BookkeepingClient();
-        new Thread(client).start();
+        client.setBookkeeping(this.sendPackage);
+        Thread conn = new Thread(client);
+        conn.start();
+        //
     }
 
     /////////////////////////////////////////////////////////記帳資料庫/////////////////////////////////////////////////////////
@@ -167,6 +175,10 @@ public class Bookkeeping_activity extends AppCompatActivity {
             try {
                 int id = (int) (Math.random() * 99999);
                 values.put("id", id);
+                // get Account Class
+                this.sendPackage = new AccountPackage(id, cost, year, month, day, type, item, (attribute == 0 ? false : true));
+                this.sendPackage.setRequestAction(0);
+                //
                 result = myDB.insert(BK_TABLE, null, values);
                 break;
             }catch (Exception e){
@@ -203,23 +215,20 @@ public class Bookkeeping_activity extends AppCompatActivity {
                 // 3. 準備ArrayList去接資料庫的list
                 final ArrayList<String> arrayList = new ArrayList<>(list);
                 arrayList.add("新增選項...");
-                arrayList.add("刪除選項...");
                 // 4. 將ArrayList 轉成String array
-                final String[] categoryArr = new String[arrayList.size()];
+                final String[] categoryList = new String[arrayList.size()];
                 for(int i=0;i<arrayList.size();i++){
-                    categoryArr[i]=arrayList.get(i);
+                    categoryList[i]=arrayList.get(i);
                 }
 
                 // 建立清單彈跳視窗
                 AlertDialog.Builder dialog_list = new AlertDialog.Builder(Bookkeeping_activity.this);
-                dialog_list.setItems(categoryArr,new DialogInterface.OnClickListener(){
+                dialog_list.setItems(categoryList,new DialogInterface.OnClickListener(){
                    @Override
                    public void onClick(DialogInterface dialog, int which){
-                       if (categoryArr[which].equals("新增選項..."))
+                       if (categoryList[which].equals("新增選項..."))
                            addDBbox();
-                       else if (categoryArr[which].equals("刪除選項..."))
-                           delDBbox(categoryArr);
-                       else filterinput.setText(categoryArr[which]);
+                       else filterinput.setText(categoryList[which]);
                    }
                 });
                 dialog_list.show();
@@ -237,7 +246,7 @@ public class Bookkeeping_activity extends AppCompatActivity {
         }
     }
 
-    //選項資料庫新增介面
+    //資料庫新增介面
     private void addDBbox(){
         final EditText editText = new EditText(this);
         new AlertDialog.Builder(Bookkeeping_activity.this)
@@ -250,7 +259,7 @@ public class Bookkeeping_activity extends AppCompatActivity {
                     }
                 }).show();
     }
-    //選項資料庫新增
+    //資料庫新增
     private void addToDB(String newCategory){
         if(newCategory.equals("")) return;
         ContentValues values = new ContentValues();
@@ -265,27 +274,6 @@ public class Bookkeeping_activity extends AppCompatActivity {
         else{
             Toast.makeText(Bookkeeping_activity.this,"類別新增失敗",Toast.LENGTH_SHORT).show();
         }
-    }
-
-    //選項資料庫刪除介面
-    private void delDBbox(final String[] inArr){
-        final String[] categoryArr= new String[inArr.length-2];
-        for(int i=0;i<inArr.length-2;i++){
-            categoryArr[i]=inArr[i];
-        }
-        AlertDialog.Builder dialog_list = new AlertDialog.Builder(Bookkeeping_activity.this);
-        dialog_list.setItems(categoryArr, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int which) {
-                delToDB(categoryArr[which]);
-            }
-        });
-        dialog_list.show();
-    }
-
-    //選項資料庫刪除
-    private void delToDB(String delCategory){
-        Toast.makeText(this,delCategory,Toast.LENGTH_SHORT).show();
     }
 
     //第一次開啟App才會啟用
