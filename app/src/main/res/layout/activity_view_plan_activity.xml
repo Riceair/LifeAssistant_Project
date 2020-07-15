@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/weather_2nd_bg_parly_sunny"
+    android:background="@drawable/view_stuff_frame"
     tools:context=".menu_activity.ViewPlan_activity">
 
     <TextView
@@ -44,7 +44,7 @@
         android:layout_marginTop="130dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/background_list"
+        android:background="@drawable/view_stuff_background"
         android:orientation="vertical">
 
         <ListView

@@ -76,7 +76,7 @@
         android:layout_height="60dp"
         android:layout_marginLeft="250dp"
         android:layout_marginTop="70dp"
-        app:srcCompat="@drawable/easy_temp_0" />
+        app:srcCompat="@drawable/digits_0" />
 
     <ImageView
         android:id="@+id/todaycountdigit"
@@ -84,7 +84,7 @@
         android:layout_height="60dp"
         android:layout_marginLeft="280dp"
         android:layout_marginTop="70dp"
-        app:srcCompat="@drawable/easy_temp_2" />
+        app:srcCompat="@drawable/digits_2" />
 
     <ImageView
         android:id="@+id/stuffcountdecimal"
@@ -92,7 +92,7 @@
         android:layout_height="60dp"
         android:layout_marginLeft="250dp"
         android:layout_marginTop="170dp"
-        app:srcCompat="@drawable/easy_temp_1red" />
+        app:srcCompat="@drawable/digits_1red" />
 
     <ImageView
         android:id="@+id/stuffcountdigit"
@@ -100,7 +100,7 @@
         android:layout_height="60dp"
         android:layout_marginLeft="280dp"
         android:layout_marginTop="170dp"
-        app:srcCompat="@drawable/easy_temp_2red" />
+        app:srcCompat="@drawable/digits_2red" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -138,7 +138,7 @@
                 android:layout_height="80dp"
                 android:layout_marginLeft="80dp"
                 android:layout_marginTop="225dp"
-                app:srcCompat="@drawable/easy_weather_ic_partlysunny" />
+                app:srcCompat="@drawable/weather_condition_sunny" />
 
             <TextView
                 android:id="@+id/textView3"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/pmo_welcome_background"
+    android:background="@drawable/receipt_checksum_background"
     tools:context="com.example.lifeassistant_project.menu_activity.Invoice_activity">
 
     <Button

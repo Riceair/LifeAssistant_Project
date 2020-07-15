@@ -212,7 +212,7 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="145dp"
                 android:layout_marginTop="415dp"
-                app:srcCompat="@drawable/easy_weather_ic_fog"
+                app:srcCompat="@drawable/weather_bg_fog"
                 tools:srcCompat="@drawable/weather_condition_partlysunnywithshowers" />
 
             <TextView
@@ -250,7 +250,7 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="145dp"
                 android:layout_marginTop="465dp"
-                app:srcCompat="@drawable/easy_weather_ic_cold"
+                app:srcCompat="@drawable/weather_bg_cold"
                 tools:srcCompat="@drawable/weather_condition_partlysunnywithshowers" />
 
             <TextView
@@ -288,7 +288,7 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="145dp"
                 android:layout_marginTop="515dp"
-                app:srcCompat="@drawable/easy_weather_ic_hot"
+                app:srcCompat="@drawable/weather_bg_hot"
                 tools:srcCompat="@drawable/weather_condition_partlysunnywithshowers" />
 
             <TextView
@@ -326,7 +326,7 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="145dp"
                 android:layout_marginTop="565dp"
-                app:srcCompat="@drawable/easy_weather_ic_windy"
+                app:srcCompat="@drawable/weather_condition_windy"
                 tools:srcCompat="@drawable/weather_condition_partlysunnywithshowers" />
 
             <TextView
@@ -364,7 +364,7 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="145dp"
                 android:layout_marginTop="615dp"
-                app:srcCompat="@drawable/easy_weather_ic_clear"
+                app:srcCompat="@drawable/weather_bg_clear"
                 tools:srcCompat="@drawable/weather_condition_partlysunnywithshowers" />
 
             <TextView
@@ -401,7 +401,7 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="145dp"
                 android:layout_marginTop="665dp"
-                app:srcCompat="@drawable/easy_weather_ic_flurries"
+                app:srcCompat="@drawable/weather_condition_flurries"
                 tools:srcCompat="@drawable/weather_condition_partlysunnywithshowers" />
 
             <TextView
