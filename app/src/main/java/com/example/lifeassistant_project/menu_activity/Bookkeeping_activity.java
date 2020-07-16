@@ -8,20 +8,17 @@ import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lifeassistant_project.R;
-import com.example.lifeassistant_project.bookkeeping_activity_update.AccountPackage;
-import com.example.lifeassistant_project.bookkeeping_activity_update.BookkeepingClient;
+import com.example.lifeassistant_project.activity_update.AccountPackage;
+import com.example.lifeassistant_project.activity_update.ClientProgress;
 
 
 import java.io.File;
@@ -29,7 +26,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -106,7 +102,7 @@ public class Bookkeeping_activity extends AppCompatActivity {
     public void clickToUpdate(View view){
         writeToBKDB();
         //
-        BookkeepingClient client = new BookkeepingClient();
+        ClientProgress client = new ClientProgress();
         this.sendPackage.setUser("1");
         client.setBookkeeping(this.sendPackage);
 //        client.setWeather();

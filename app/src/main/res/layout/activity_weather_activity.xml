@@ -174,7 +174,7 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="145dp"
                 android:layout_marginTop="365dp"
-                app:srcCompat="@drawable/weather_condition_rainandsnowmixed"
+                app:srcCompat="@drawable/weather_condition_hot"
                 tools:srcCompat="@drawable/weather_condition_partlysunnywithshowers" />
 
             <TextView
@@ -212,7 +212,7 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="145dp"
                 android:layout_marginTop="415dp"
-                app:srcCompat="@drawable/weather_bg_fog"
+                app:srcCompat="@drawable/digits_0"
                 tools:srcCompat="@drawable/weather_condition_partlysunnywithshowers" />
 
             <TextView
@@ -250,7 +250,7 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="145dp"
                 android:layout_marginTop="465dp"
-                app:srcCompat="@drawable/weather_bg_cold"
+                app:srcCompat="@drawable/digits_0"
                 tools:srcCompat="@drawable/weather_condition_partlysunnywithshowers" />
 
             <TextView
@@ -288,7 +288,7 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="145dp"
                 android:layout_marginTop="515dp"
-                app:srcCompat="@drawable/weather_bg_hot"
+                app:srcCompat="@drawable/digits_0"
                 tools:srcCompat="@drawable/weather_condition_partlysunnywithshowers" />
 
             <TextView
@@ -364,7 +364,7 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="145dp"
                 android:layout_marginTop="615dp"
-                app:srcCompat="@drawable/weather_bg_clear"
+                app:srcCompat="@drawable/digits_0"
                 tools:srcCompat="@drawable/weather_condition_partlysunnywithshowers" />
 
             <TextView

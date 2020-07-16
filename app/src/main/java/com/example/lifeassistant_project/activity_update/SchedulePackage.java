@@ -1,4 +1,4 @@
-package com.example.lifeassistant_project.bookkeeping_activity_update;
+package com.example.lifeassistant_project.activity_update;
 
 public class SchedulePackage {
     private int id, year, month, day, start_time, end_time;

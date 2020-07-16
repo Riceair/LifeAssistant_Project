@@ -1,9 +1,7 @@
-package com.example.lifeassistant_project.bookkeeping_activity_update;
+package com.example.lifeassistant_project.activity_update;
 
 import java.io.UnsupportedEncodingException;
-import java.net.Inet4Address;
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
 import java.nio.charset.StandardCharsets;
 
 public class PackageHandler
@@ -453,10 +451,14 @@ public class PackageHandler
         temp = 0;
 
         for(int i = currentSize - CITY_SIZE; i < currentSize; i++)
+        {
+            if(message[i] == 0) break;
             buffer.put(message[i]);
+        }
         tempString = new String(buffer.array(), StandardCharsets.UTF_8);
+//        System.out.println(tempString.split(tempString.substring(10,11))[0]);
         buffer.clear();
-        result.setCity(tempString);
+        result.setCity(tempString.split(tempString.substring(10,11))[0]);//split null character in the String.
         currentSize += PERIOD_SIZE;
 
         for(int i = currentSize - PERIOD_SIZE; i < currentSize; i++)
@@ -483,6 +485,7 @@ public class PackageHandler
             }
             temp += temp_m;
         }
+        System.out.println(temp);
         result.setMax_temperature(temp);
         currentSize += TEMPERATURE_SIZE;
         temp = 0;
@@ -497,6 +500,7 @@ public class PackageHandler
             }
             temp += temp_m;
         }
+        System.out.println(temp);
         result.setMin_temperature(temp);
 
         return result;

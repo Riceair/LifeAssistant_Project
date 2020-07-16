@@ -1,4 +1,4 @@
-package com.example.lifeassistant_project.bookkeeping_activity_update;
+package com.example.lifeassistant_project.activity_update;
 
 import android.os.Build;
 
@@ -12,7 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class BookkeepingClient implements Runnable {
+public class ClientProgress implements Runnable {
 
         public static int port = 6666;
         public static String address = "192.168.203.108";
@@ -20,6 +20,9 @@ public class BookkeepingClient implements Runnable {
         private AccountPackage accountPackage;
         private ArrayList<AccountPackage> rcvAccountData;
         private ArrayList<WeatherPackage> rcvWeatherData;
+
+        public ArrayList<WeatherPackage> getRcvWeatherData(){ return this.rcvWeatherData; }
+        public ArrayList<AccountPackage> getRcvAccountData(){ return this.rcvAccountData; }
 
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         @Override
@@ -87,57 +90,58 @@ public class BookkeepingClient implements Runnable {
             }
             else if (this.packageType.equals("weather"))
             {
-                try {
-                    final int PACKAGE_SIZE = 76, CITY_COUNT = 22, WEATHER_PER_CITY = 14;
-                    Socket client = new Socket(this.address, this.port);
-
-                    OutputStream out = client.getOutputStream();
-
-                    // send account package
-                    out.write(PackageHandler.weatherPackageEncode());
-                    out.flush();
-                    InputStream in = client.getInputStream();      // 取得輸入訊息的串流
-
-                    StringBuffer buf = new StringBuffer();        // 建立讀取字串。
-                    ByteBuffer b_buf = ByteBuffer.allocate(PACKAGE_SIZE * CITY_COUNT * WEATHER_PER_CITY);
+                synchronized (this)
+                {
                     try {
-                        while (true) {            // 不斷讀取。
-                            int x = in.read();    // 讀取一個 byte。(read 傳回 -1 代表串流結束)
-                            if (x==-1) break;     // x = -1 代表串流結束，讀取完畢，用 break 跳開。
-                            byte b = (byte) x;    // 將 x 轉為 byte，放入變數 b.
-                            b_buf.put(b);
-                            buf.append((char) b); // 假設傳送ASCII字元都是 ASCII。
+                        System.out.println("wea");
+                        final int PACKAGE_SIZE = 76, CITY_COUNT = 22, WEATHER_PER_CITY = 14;
+                        Socket client = new Socket(this.address, this.port);
+
+                        OutputStream out = client.getOutputStream();
+
+                        // send account package
+                        out.write(PackageHandler.weatherPackageEncode());
+                        out.flush();
+                        InputStream in = client.getInputStream();      // 取得輸入訊息的串流
+
+                        StringBuffer buf = new StringBuffer();        // 建立讀取字串。
+                        ByteBuffer b_buf = ByteBuffer.allocate(PACKAGE_SIZE * CITY_COUNT * WEATHER_PER_CITY);
+                        try {
+                            while (true) {            // 不斷讀取。
+                                int x = in.read();    // 讀取一個 byte。(read 傳回 -1 代表串流結束)
+                                if (x==-1) break;     // x = -1 代表串流結束，讀取完畢，用 break 跳開。
+                                byte b = (byte) x;    // 將 x 轉為 byte，放入變數 b.
+                                b_buf.put(b);
+                                buf.append((char) b); // 假設傳送ASCII字元都是 ASCII。
+                            }
+                        } catch (Exception e) {
+                            in.close();               // 關閉輸入串流。
                         }
-                    } catch (Exception e) {
-                        in.close();               // 關閉輸入串流。
-                    }
-                    out.close();
+                        out.close();
 
-                    byte[] rcvArray = Arrays.copyOfRange(b_buf.array(), 0, b_buf.array().length);
-                    ArrayList<WeatherPackage> weatherData = new ArrayList<WeatherPackage>();
-                    System.out.println("wea");
-                    for (int i = 0, currentLength = 0; i < b_buf.array().length / PACKAGE_SIZE; i++)
-                    {
-                        byte[] resultArray = Arrays.copyOfRange(b_buf.array(), currentLength+3, currentLength+PACKAGE_SIZE);
-                        weatherData.add(PackageHandler.weatherPackageDecode(resultArray));
-                        currentLength += PACKAGE_SIZE;
-                    }
+                        byte[] rcvArray = Arrays.copyOfRange(b_buf.array(), 0, b_buf.array().length);
+                        ArrayList<WeatherPackage> weatherData = new ArrayList<WeatherPackage>();
+                        for (int i = 0, currentLength = 0; i < b_buf.array().length / PACKAGE_SIZE; i++)
+                        {
+                            byte[] resultArray = Arrays.copyOfRange(b_buf.array(), currentLength+3, currentLength+PACKAGE_SIZE);
+                            weatherData.add(PackageHandler.weatherPackageDecode(resultArray));
+                            currentLength += PACKAGE_SIZE;
+                        }
 
-                    this.rcvWeatherData = weatherData;
-                    for (WeatherPackage temp : this.rcvWeatherData)
-                    {
-                        System.out.println(temp.getCity());
-                        System.out.println(temp.getDay());
-                        System.out.println(temp.getSituation());
-                    }
-                    String rcvString = new String(rcvArray, StandardCharsets.UTF_8);
-                    System.out.println(rcvString);
+                        this.rcvWeatherData = weatherData;
 
-                    System.out.println("message send.");                    // 印出接收到的訊息。
-                    client.close();                                // 關閉 TcpSocket.
-                }catch (Exception e){
-                    System.out.println(e);
+                        String rcvString = new String(rcvArray, StandardCharsets.UTF_8);
+                        System.out.println(rcvString);
+
+                        System.out.println("message send.");                    // 印出接收到的訊息。
+                        client.close();                                // 關閉 TcpSocket.
+                    }catch (Exception e){
+                        System.out.println(e);
+                    }finally {
+                        notify();
+                    }
                 }
+
             }
             else
             {
@@ -210,5 +214,6 @@ public class BookkeepingClient implements Runnable {
         {
             this.packageType = "weather";
         }
+
 }
 
