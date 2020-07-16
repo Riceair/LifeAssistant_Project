@@ -1,36 +1,88 @@
 package com.example.lifeassistant_project;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
+import android.util.Log;
+import android.view.MenuItem;
+import android.widget.Toast;
 
-import com.example.lifeassistant_project.menu_options.FinMan_option;
-import com.example.lifeassistant_project.menu_options.Life_option;
-import com.example.lifeassistant_project.menu_options.Predict_option;
-import com.example.lifeassistant_project.menu_options.Weather_option;
+import com.example.lifeassistant_project.menu_activity.Bookkeeping_activity;
+import com.example.lifeassistant_project.menu_activity.Invoice_activity;
+import com.example.lifeassistant_project.menu_activity.Planner_activity;
+import com.example.lifeassistant_project.menu_activity.Report_activity;
+import com.example.lifeassistant_project.menu_activity.Weather_activity;
+import com.google.android.material.navigation.NavigationView;
 
 
-public class MainActivity extends AppCompatActivity {
-    // 行事曆
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+    private Toolbar toolbar;
+    private NavigationView navigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide(); //隱藏狀態列(綠色的那塊)
-        //getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);  //全螢幕
         //天氣 預測 理財 生活
-        View view = getLayoutInflater().inflate(R.layout.activity_main,null);
-        LinearLayout parent_layout=(LinearLayout) view.findViewById(R.id.menu_linear);
+        setContentView(R.layout.activity_main);
+        toolbar=findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        // goodmorning
-        Weather_option wo=new Weather_option(view,parent_layout);
-        Predict_option po=new Predict_option(view,parent_layout);
-        FinMan_option fo=new FinMan_option(view,parent_layout);
-        Life_option lo=new Life_option(view,parent_layout);
-        setContentView(view);
+        drawerLayout=findViewById(R.id.drawer);
+        navigationView=findViewById(R.id.navigationView);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open,R.string.close);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
+        actionBarDrawerToggle.syncState();
+    }
+
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Intent intent;
+        switch (item.getItemId()){
+            case R.id.menu_weather:
+                intent=new Intent(this, Weather_activity.class);
+                this.startActivity(intent);
+                break;
+            case R.id.menu_predict_oil:
+                Toast.makeText(this,"油價",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.menu_fin_bookkeeping:
+                intent=new Intent(this, Bookkeeping_activity.class);
+                this.startActivity(intent);
+                break;
+            case R.id.menu_fin_report:
+                intent=new Intent(this, Report_activity.class);
+                this.startActivity(intent);
+                break;
+            case R.id.menu_fin_invoice:
+                intent=new Intent(this, Invoice_activity.class);
+                this.startActivity(intent);
+                break;
+            case R.id.menu_schedule:
+                intent=new Intent(this, Planner_activity.class);
+                this.startActivity(intent);
+                break;
+        }
+        return true;
+    }
+
+    @Override
+    public void onBackPressed(){
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }else{
+            super.onBackPressed();
+        }
     }
 }

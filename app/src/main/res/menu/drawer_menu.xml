@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="生活">
+        <menu>
+            <item
+                android:id="@+id/menu_weather"
+                android:icon="@drawable/ic_baseline_cloud_24"
+                android:title="天氣" />
+        </menu>
+    </item>
+
+
+    <item android:title="預測">
+        <menu>
+            <item
+                android:id="@+id/menu_predict_oil"
+                android:icon="@drawable/ic_baseline_battery_std_24"
+                android:title="油價" />
+        </menu>
+    </item>
+
+    <item android:title="理財">
+        <menu>
+            <item
+                android:id="@+id/menu_fin_bookkeeping"
+                android:icon="@drawable/icon_bookkeeping"
+                android:title="記帳" />
+            <item
+                android:id="@+id/menu_fin_report"
+                android:title="報表" />
+            <item
+                android:id="@+id/menu_fin_invoice"
+                android:title="兌發票" />
+        </menu>
+    </item>
+
+
+    <item android:title="生活">
+        <menu>
+            <item
+                android:id="@+id/menu_schedule"
+                android:title="排程" />
+        </menu>
+    </item>
+
+</menu>

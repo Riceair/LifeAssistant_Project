@@ -18,7 +18,7 @@
         <activity android:name=".menu_activity.Invoice_activity" />
         <activity android:name=".menu_activity.Weather_activity" />
         <activity android:name=".menu_activity.Bookkeeping_activity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

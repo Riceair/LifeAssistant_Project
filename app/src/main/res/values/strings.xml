@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">LifeAssistant_Project</string>
     <string name="title_activity_weather_activity">Weather_activity</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
 </resources>
