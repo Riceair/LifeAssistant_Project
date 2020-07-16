@@ -14,7 +14,7 @@ public class PackageHandler
     }
 
     static public byte[] accountPackageEncode(AccountPackage acPkg) throws UnsupportedEncodingException {
-        final int ID_size = 4, money_size = 4, year_size = 1, month_size = 1, day_size = 1, item_size = 18, detail_size = 18, status_size = 1, action_size = 1;
+        final int ID_size = 4, money_size = 4, year_size = 1, month_size = 1, day_size = 1, item_size = 18, detail_size = 18, status_size = 1, action_size = 1, user_size = 20;
 
         ByteBuffer buf = ByteBuffer.allocate(1024);
         int currentLength = 0;
@@ -110,6 +110,18 @@ public class PackageHandler
             temp /= 256;
         }
         buf.put(b_temp.array());
+
+        if(acPkg.getUser().getBytes().length == user_size) buf.put(acPkg.getUser().getBytes("UTF-8"));
+        else // < 18
+        {
+            b_temp = ByteBuffer.allocate(user_size);
+            b_temp.put(acPkg.getUser().getBytes("UTF-8"));
+            for(int i = acPkg.getUser().getBytes().length; i < user_size; i++)
+            {
+                b_temp.put((byte)0);
+            }
+            buf.put(b_temp.array());
+        }
 //        System.out.println(buf.array().length);
 
         return buf.array();
@@ -117,7 +129,7 @@ public class PackageHandler
 
     static public AccountPackage accountPackageDecode(byte[] message)
     {
-        final int ID_size = 4, money_size = 4, year_size = 1, month_size = 1, day_size = 1, item_size = 18, detail_size = 18, status_size = 1;
+        final int ID_size = 4, money_size = 4, year_size = 1, month_size = 1, day_size = 1, item_size = 18, detail_size = 18, status_size = 1, user_size = 20;
         AccountPackage result = new AccountPackage();
         int temp = 0, currentSize = ID_size;
         ByteBuffer buffer = ByteBuffer.allocate(1024);
@@ -125,35 +137,60 @@ public class PackageHandler
         for(int i = 0;i < currentSize; i++)
         {
             temp = temp << 8;
-            temp += (int)message[i];
+            int temp_m = (int)message[i];
+            if(temp_m < 0)
+            {
+                temp_m = ((temp_m ^ 255) + 1) * -1;
+            }
+            temp += temp_m;
         }
         result.setID(temp);
         currentSize += money_size;
         for(int i = currentSize - money_size ;i < currentSize; i++)
         {
             temp = temp << 8;
-            temp += (int)message[i];
+            int temp_m = (int)message[i];
+            if(temp_m < 0)
+            {
+                temp_m = ((temp_m ^ 255) + 1) * -1;
+            }
+            temp += temp_m;
         }
         result.setMoney(temp);
         currentSize += year_size;
         for(int i = currentSize - year_size ;i < currentSize; i++)
         {
             temp = temp << 8;
-            temp += (int)message[i];
+            int temp_m = (int)message[i];
+            if(temp_m < 0)
+            {
+                temp_m = ((temp_m ^ 255) + 1) * -1;
+            }
+            temp += temp_m;
         }
         result.setYear(temp);
         currentSize += month_size;
         for(int i = currentSize - month_size ;i < currentSize; i++)
         {
             temp = temp << 8;
-            temp += (int)message[i];
+            int temp_m = (int)message[i];
+            if(temp_m < 0)
+            {
+                temp_m = ((temp_m ^ 255) + 1) * -1;
+            }
+            temp += temp_m;
         }
         result.setMonth(temp);
         currentSize += day_size;
         for(int i = currentSize - day_size ;i < currentSize; i++)
         {
             temp = temp << 8;
-            temp += (int)message[i];
+            int temp_m = (int)message[i];
+            if(temp_m < 0)
+            {
+                temp_m = ((temp_m ^ 255) + 1) * -1;
+            }
+            temp += temp_m;
         }
         result.setDay(temp);
         currentSize += item_size;
@@ -172,10 +209,23 @@ public class PackageHandler
         for(int i = currentSize - day_size ;i < currentSize; i++)
         {
             temp = temp << 8;
-            temp += (int)message[i];
+            int temp_m = (int)message[i];
+            if(temp_m < 0)
+            {
+                temp_m = ((temp_m ^ 255) + 1) * -1;
+            }
+            temp += temp_m;
         }
         if(temp > 0) result.setType(true);
         else result.setType(false);
+
+        currentSize += user_size;
+        for(int i = currentSize - user_size; i < currentSize; i++)
+            buffer.put(message[i]);
+        tempString = new String(buffer.array(), StandardCharsets.UTF_8);
+        buffer.clear();
+        result.setUser(tempString);
+
         return result;
     }
 
@@ -268,7 +318,12 @@ public class PackageHandler
         for(int i = 0;i < currentSize; i++)
         {
             temp = temp << 8;
-            temp += (int)message[i];
+            int temp_m = (int)message[i];
+            if(temp_m < 0)
+            {
+                temp_m = ((temp_m ^ 255) + 1) * -1;
+            }
+            temp += temp_m;
         }
         result.setID(temp);
 
@@ -284,7 +339,12 @@ public class PackageHandler
         for(int i = currentSize - YEAR_SIZE;i < currentSize; i++)
         {
             temp = temp << 8;
-            temp += (int)message[i];
+            int temp_m = (int)message[i];
+            if(temp_m < 0)
+            {
+                temp_m = ((temp_m ^ 255) + 1) * -1;
+            }
+            temp += temp_m;
         }
         result.setYear(temp);
 
@@ -293,7 +353,12 @@ public class PackageHandler
         for(int i = currentSize - MONTH_SIZE;i < currentSize; i++)
         {
             temp = temp << 8;
-            temp += (int)message[i];
+            int temp_m = (int)message[i];
+            if(temp_m < 0)
+            {
+                temp_m = ((temp_m ^ 255) + 1) * -1;
+            }
+            temp += temp_m;
         }
         result.setMonth(temp);
 
@@ -302,7 +367,12 @@ public class PackageHandler
         for(int i = currentSize - DAY_SIZE;i < currentSize; i++)
         {
             temp = temp << 8;
-            temp += (int)message[i];
+            int temp_m = (int)message[i];
+            if(temp_m < 0)
+            {
+                temp_m = ((temp_m ^ 255) + 1) * -1;
+            }
+            temp += temp_m;
         }
         result.setDay(temp);
 
@@ -311,7 +381,12 @@ public class PackageHandler
         for(int i = currentSize - START_TIME_SIZE;i < currentSize; i++)
         {
             temp = temp << 8;
-            temp += (int)message[i];
+            int temp_m = (int)message[i];
+            if(temp_m < 0)
+            {
+                temp_m = ((temp_m ^ 255) + 1) * -1;
+            }
+            temp += temp_m;
         }
         result.setStart_time(temp);
 
@@ -320,16 +395,30 @@ public class PackageHandler
         for(int i = currentSize - END_TIME_SIZE;i < currentSize; i++)
         {
             temp = temp << 8;
-            temp += (int)message[i];
+            int temp_m = (int)message[i];
+            if(temp_m < 0)
+            {
+                temp_m = ((temp_m ^ 255) + 1) * -1;
+            }
+            temp += temp_m;
         }
         result.setEnd_time(temp);
 
         return result;
     }
 
-    static public WeatherPackage weatherPackageDecoder(byte[] message)
+    static public byte[] weatherPackageEncode() throws UnsupportedEncodingException {
+        ByteBuffer buf = ByteBuffer.allocate(1024);
+
+        ByteBuffer b_temp;
+        buf.put("wea".getBytes("UTF-8"));
+
+        return buf.array();
+    }
+
+    static public WeatherPackage weatherPackageDecode(byte[] message)
     {
-        final int DAY_SIZE = 1, MONTH_SIZE = 1, CITY_SIZE = 12, PERIOD_SIZE = 12, SITUATION_SIZE = 30, TEMPERATURE_SIZE = 1;
+        final int DAY_SIZE = 1, MONTH_SIZE = 1, CITY_SIZE = 12, PERIOD_SIZE = 12, SITUATION_SIZE = 45, TEMPERATURE_SIZE = 1;
         WeatherPackage result = new WeatherPackage();
         int temp = 0, currentSize = MONTH_SIZE;
         String tempString;
@@ -338,7 +427,12 @@ public class PackageHandler
         for(int i = 0; i < currentSize; i++)
         {
             temp = temp << 8;
-            temp += (int)message[i];
+            int temp_m = (int)message[i];
+            if(temp_m < 0)
+            {
+                temp_m = ((temp_m ^ 255) + 1) * -1;
+            }
+            temp += temp_m;
         }
         result.setMonth(temp);
         currentSize += DAY_SIZE;
@@ -347,7 +441,12 @@ public class PackageHandler
         for(int i = currentSize - DAY_SIZE; i < currentSize; i++)
         {
             temp = temp << 8;
-            temp += (int)message[i];
+            int temp_m = (int)message[i];
+            if(temp_m < 0)
+            {
+                temp_m = ((temp_m ^ 255) + 1) * -1;
+            }
+            temp += temp_m;
         }
         result.setDay(temp);
         currentSize += CITY_SIZE;
@@ -371,13 +470,18 @@ public class PackageHandler
             buffer.put(message[i]);
         tempString = new String(buffer.array(), StandardCharsets.UTF_8);
         buffer.clear();
-        result.setPeriod(tempString);
+        result.setSituation(tempString);
         currentSize += TEMPERATURE_SIZE;
 
         for(int i = currentSize - TEMPERATURE_SIZE; i < currentSize; i++)
         {
             temp = temp << 8;
-            temp += (int)message[i];
+            int temp_m = (int)message[i];
+            if(temp_m < 0)
+            {
+                temp_m = ((temp_m ^ 255) + 1) * -1;
+            }
+            temp += temp_m;
         }
         result.setMax_temperature(temp);
         currentSize += TEMPERATURE_SIZE;
@@ -386,7 +490,12 @@ public class PackageHandler
         for(int i = currentSize - TEMPERATURE_SIZE; i < currentSize; i++)
         {
             temp = temp << 8;
-            temp += (int)message[i];
+            int temp_m = (int)message[i];
+            if(temp_m < 0)
+            {
+                temp_m = ((temp_m ^ 255) + 1) * -1;
+            }
+            temp += temp_m;
         }
         result.setMin_temperature(temp);
 

@@ -3,7 +3,7 @@ package com.example.lifeassistant_project.bookkeeping_activity_update;
 public class AccountPackage
 {
     private int ID, money, year, month, day;
-    private String item, detail;
+    private String item, detail, user;
     private boolean type; // True for 收入
     private int requestAction; // request 需要執行的行為
     // 0 = 新增, 1 = 刪除, 2 = 修改, 3 = 查詢, 4 = Debug.
@@ -104,4 +104,9 @@ public class AccountPackage
     public void setType(boolean type) {
         this.type = type;
     }
+
+    public String getUser() { return user; }
+
+    public void setUser(String user) { this.user = user; }
+
 }

@@ -107,7 +107,9 @@ public class Bookkeeping_activity extends AppCompatActivity {
         writeToBKDB();
         //
         BookkeepingClient client = new BookkeepingClient();
+        this.sendPackage.setUser("1");
         client.setBookkeeping(this.sendPackage);
+//        client.setWeather();
         Thread conn = new Thread(client);
         conn.start();
         //

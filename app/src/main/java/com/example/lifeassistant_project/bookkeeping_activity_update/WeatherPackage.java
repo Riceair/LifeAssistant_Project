@@ -6,7 +6,18 @@ public class WeatherPackage
     private int day;
     private int max_temperature;
     private int min_temperature;
-    private String city, period;
+    private String city;
+    private String period;
+
+    public String getSituation() {
+        return situation;
+    }
+
+    public void setSituation(String situation) {
+        this.situation = situation;
+    }
+
+    private String situation;
 
     WeatherPackage()
     {
