@@ -24,7 +24,6 @@
         <menu>
             <item
                 android:id="@+id/menu_fin_bookkeeping"
-                android:icon="@drawable/icon_bookkeeping"
                 android:title="記帳" />
             <item
                 android:id="@+id/menu_fin_report"
