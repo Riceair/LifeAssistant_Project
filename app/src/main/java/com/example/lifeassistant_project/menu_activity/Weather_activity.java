@@ -21,7 +21,7 @@ public class Weather_activity extends AppCompatActivity {
         ArrayList<String> weather_condition = new ArrayList();
         ArrayList<Integer> weather_degree_higher = new ArrayList();
         ArrayList<Integer> weather_degree_lower = new ArrayList();
-        //123
+
         ArrayList weather_thismorning = new ArrayList<String>();
         weather_condition.add("晴時多雲");
         weather_degree_higher.add(27);
