@@ -6,22 +6,22 @@
     android:layout_height="200sp"
     android:background="@drawable/toggle_login">
 
-    <TextView
-        android:id="@+id/account_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/imageButton"
-        android:layout_centerHorizontal="true"
-        android:text="按此登入"
-        android:textColor="@color/cardview_light_background" />
-
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/LoginImg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="55dp"
         android:background="@android:drawable/divider_horizontal_bright"
         app:srcCompat="@drawable/login_button" />
+
+    <TextView
+        android:id="@+id/account_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/LoginImg"
+        android:layout_centerHorizontal="true"
+        android:text="按此登入"
+        android:textColor="@color/cardview_light_background" />
 
 </RelativeLayout>

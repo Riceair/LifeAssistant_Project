@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         actionBarDrawerToggle.syncState();
 
+        //語音TTS
         userSay=findViewById(R.id.userSay);
         chatBotSay=(TextView) findViewById(R.id.chatBotSay);
         userSayButton=findViewById(R.id.userSayButton);
@@ -78,6 +80,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
         DEBUG_FUNCTION();
+
+        //登入
+        View headerView=navigationView.getHeaderView(0);
+        ImageView LoginImg=headerView.findViewById(R.id.LoginImg);
+        LoginImg.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent=new Intent(MainActivity.this,Login_activity.class);
+                MainActivity.this.startActivity(intent);
+
+            }
+        });
     }
     private void DEBUG_FUNCTION()
     {
@@ -123,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
     }
+
     ///////////////////////////Navigation Drawer/////////////////////////////
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
