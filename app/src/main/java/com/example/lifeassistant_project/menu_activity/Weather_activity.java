@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.lifeassistant_project.R;
 import com.example.lifeassistant_project.activity_update.ClientProgress;
 import com.example.lifeassistant_project.activity_update.WeatherPackage;
+import org.w3c.dom.Text;
 
 import java.util.*;
 
@@ -60,6 +61,8 @@ public class Weather_activity extends AppCompatActivity {
         for(int i = 0;i < WEEK_SIZE; i++)
         {
             WeatherPackage currentWeather = weatherData.get(pointer + i);
+            System.out.println(currentWeather.getSituation());
+
             switch (i)
             {
                 case 0:
@@ -67,12 +70,20 @@ public class Weather_activity extends AppCompatActivity {
                     assignNumber2Image(currentWeather.getMax_temperature() % 10, R.id.higher_digitsdegree);
                     assignNumber2Image(currentWeather.getMin_temperature() / 10, R.id.lower_decimaldegree);
                     assignNumber2Image(currentWeather.getMin_temperature() % 10, R.id.lower_digitsdegree);
+                    TextView displayText = (TextView) findViewById(R.id.conditions);
+                    displayText.setText(currentWeather.getSituation());
+                    displayText = (TextView) findViewById(R.id.Location);
+                    displayText.setText(currentWeather.getCity());
                     break;
                 case 1:
                     assignNumber2Image(currentWeather.getMax_temperature() / 10, R.id.sec_higher_decimaldegree);
                     assignNumber2Image(currentWeather.getMax_temperature() % 10, R.id.sec_higher_digitsdegree);
                     assignNumber2Image(currentWeather.getMin_temperature() / 10, R.id.sec_lower_decimaldegree);
                     assignNumber2Image(currentWeather.getMin_temperature() % 10, R.id.sec_lower_digitsdegree);
+                    displayText = (TextView) findViewById(R.id.secondview);
+                    displayText.setText(currentWeather.getPeriod());
+                    displayText = (TextView) findViewById(R.id.seccoditions);
+                    displayText.setText(currentWeather.getSituation());
                     break;
                 case 2:
                     assignTemperature2Text(currentWeather, R.id.onedaytemperature);
@@ -91,6 +102,7 @@ public class Weather_activity extends AppCompatActivity {
                     break;
                 case 12:
                     assignTemperature2Text(currentWeather, R.id.sixdaytemperature);
+                    break;
                 default:
                     break;
             }

@@ -1,5 +1,6 @@
 package com.example.lifeassistant_project;
 
+import android.os.strictmode.CleartextNetworkViolation;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.lifeassistant_project.activity_update.ClientProgress;
 import com.example.lifeassistant_project.menu_activity.Bookkeeping_activity;
 import com.example.lifeassistant_project.menu_activity.Invoice_activity;
 import com.example.lifeassistant_project.menu_activity.Planner_activity;
@@ -43,8 +45,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         actionBarDrawerToggle.syncState();
-    }
 
+//        this.DEBUG_FUNCTION();
+    }
+    private void DEBUG_FUNCTION()
+    {
+        ClientProgress client = new ClientProgress();
+        client.setChatBot("我要記帳");
+        Thread cThread = new Thread(client);
+        cThread.start();
+    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -85,4 +95,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
+
+
 }

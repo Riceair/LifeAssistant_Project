@@ -465,14 +465,14 @@ public class PackageHandler
             buffer.put(message[i]);
         tempString = new String(buffer.array(), StandardCharsets.UTF_8);
         buffer.clear();
-        result.setPeriod(tempString);
+        result.setPeriod(tempString.split(tempString.substring(10,11))[0]);//split null character in the String.
         currentSize += SITUATION_SIZE;
 
         for(int i = currentSize - SITUATION_SIZE; i < currentSize; i++)
             buffer.put(message[i]);
         tempString = new String(buffer.array(), StandardCharsets.UTF_8);
         buffer.clear();
-        result.setSituation(tempString);
+        result.setSituation(tempString.split(tempString.substring(10,11))[0]);//split null character in the String.
         currentSize += TEMPERATURE_SIZE;
 
         for(int i = currentSize - TEMPERATURE_SIZE; i < currentSize; i++)
@@ -504,6 +504,30 @@ public class PackageHandler
         result.setMin_temperature(temp);
 
         return result;
+    }
+
+    static public byte[] sentencePackageEncode(String message) throws UnsupportedEncodingException {
+        final int MES_SIZE = 75;
+
+        ByteBuffer buf = ByteBuffer.allocate(1024);
+        int currentLength = 0;
+
+        ByteBuffer b_temp;
+        buf.put("sen".getBytes("UTF-8"));
+
+        if(message.getBytes().length == MES_SIZE) buf.put(message.getBytes("UTF-8"));
+        else // < SIZE
+        {
+            b_temp = ByteBuffer.allocate(MES_SIZE);
+            b_temp.put(message.getBytes("UTF-8"));
+            for(int i = message.getBytes().length; i < MES_SIZE; i++)
+            {
+                b_temp.put((byte)0);
+            }
+            buf.put(b_temp.array());
+        }
+
+        return buf.array();
     }
 }
 
