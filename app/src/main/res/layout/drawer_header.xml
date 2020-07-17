@@ -3,19 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
-    android:background="#3F51B5">
+    android:layout_height="200sp"
+    android:background="@drawable/toggle_login" >
 
-    <TextView
-        android:id="@+id/header"
-        android:layout_width="133dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="48dp"
-        android:text="生活助理"
-        android:textColor="#FF5722"
-        android:textSize="30dp"
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/actionBarItemBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.179"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.584"
+        app:srcCompat="@drawable/login_button" />
 </androidx.constraintlayout.widget.ConstraintLayout>
