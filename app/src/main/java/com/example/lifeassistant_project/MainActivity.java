@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lifeassistant_project.activity_update.ClientProgress;
+import com.example.lifeassistant_project.activity_update.SentenceHandler;
 import com.example.lifeassistant_project.menu_activity.Bookkeeping_activity;
 import com.example.lifeassistant_project.menu_activity.Invoice_activity;
 import com.example.lifeassistant_project.menu_activity.Planner_activity;
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         actionBarDrawerToggle.syncState();
 
         userSay=findViewById(R.id.userSay);
+        chatBotSay=(TextView) findViewById(R.id.chatBotSay);
         userSayButton=findViewById(R.id.userSayButton);
         userSayButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -73,6 +75,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         });
+
+        DEBUG_FUNCTION();
     }
     private void DEBUG_FUNCTION()
     {
@@ -81,6 +85,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Thread cThread = new Thread(client);
         cThread.start();
     }
+    private String dealSentenceAndRcvMessage(String message)
+    {
+        ClientProgress client = new ClientProgress();
+        client.setChatBot(message);
+        Thread cThread = new Thread(client);
+        cThread.start();
+
+        synchronized (client)
+        {
+            try {
+                System.out.println("WAITTING");
+                client.wait();
+                System.out.println("GOGOGO");
+            }
+            catch (InterruptedException e) {
+                System.out.println(e);
+            }
+        }
+
+        SentenceHandler handler = client.getRcvSentence();
+
+        return handler.getFulfillment();
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -88,7 +115,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(requestCode == 200){
             if(resultCode == RESULT_OK && data != null){
                 ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                System.out.println(result.get(0));
                 userSay.setText(result.get(0));
+                chatBotSay.setText(dealSentenceAndRcvMessage(result.get(0)));
             }
         }
     }

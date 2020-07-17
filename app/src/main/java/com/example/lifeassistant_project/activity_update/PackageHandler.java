@@ -529,5 +529,33 @@ public class PackageHandler
 
         return buf.array();
     }
+
+    static public SentenceHandler sentencePackageDecode(byte[] message)
+    {
+        final int INTENT_SIZE = 30, FULFILLMENT_SIZE = 90;
+        SentenceHandler result = new SentenceHandler();
+        int temp = 0, currentSize = INTENT_SIZE;
+        String tempString;
+        ByteBuffer buffer = ByteBuffer.allocate(1024);
+
+        for(int i = currentSize - INTENT_SIZE; i < currentSize; i++)
+        {
+            if(message[i] == 0) break;
+            buffer.put(message[i]);
+        }
+        tempString = new String(buffer.array(), StandardCharsets.UTF_8);
+//        System.out.println(tempString.split(tempString.substring(10,11))[0]);
+        buffer.clear();
+        result.setIntent(tempString.split(tempString.substring(23,24))[0]);//split null character in the String.
+        currentSize += FULFILLMENT_SIZE;
+
+        for(int i = currentSize - FULFILLMENT_SIZE; i < currentSize; i++)
+            buffer.put(message[i]);
+        tempString = new String(buffer.array(), StandardCharsets.UTF_8);
+        buffer.clear();
+        result.setFulfillment(tempString.split(tempString.substring(70,71))[0]);//split null character in the String.
+
+        return result;
+    }
 }
 

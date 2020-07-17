@@ -18,12 +18,14 @@ public class ClientProgress implements Runnable {
         public static String address = "192.168.203.108";
         private String packageType = "";
         private String sendText = "";
+        private SentenceHandler rcvSentence;
         private AccountPackage accountPackage;
         private ArrayList<AccountPackage> rcvAccountData;
         private ArrayList<WeatherPackage> rcvWeatherData;
 
         public ArrayList<WeatherPackage> getRcvWeatherData(){ return this.rcvWeatherData; }
         public ArrayList<AccountPackage> getRcvAccountData(){ return this.rcvAccountData; }
+        public SentenceHandler getRcvSentence() { return this.rcvSentence; }
 
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         @Override
@@ -146,43 +148,50 @@ public class ClientProgress implements Runnable {
             }
             else if(this.packageType.equals("chatBot"))
             {
-                try {
-                    final int PACKAGE_SIZE = 71;
-
-                    Socket client = new Socket(this.address, this.port);
-
-                    OutputStream out = client.getOutputStream();
-
-                    // send account package
-                    out.write(PackageHandler.sentencePackageEncode(this.sendText));
-                    out.flush();
-                    InputStream in = client.getInputStream();      // 取得輸入訊息的串流
-
-                    StringBuffer buf = new StringBuffer();        // 建立讀取字串。
-                    ByteBuffer b_buf = ByteBuffer.allocate(1024);
+                synchronized (this)
+                {
                     try {
-                        while (true) {            // 不斷讀取。
-                            int x = in.read();    // 讀取一個 byte。(read 傳回 -1 代表串流結束)
-                            if (x==-1) break;     // x = -1 代表串流結束，讀取完畢，用 break 跳開。
-                            byte b = (byte) x;    // 將 x 轉為 byte，放入變數 b.
-                            b_buf.put(b);
-                            buf.append((char) b); // 假設傳送ASCII字元都是 ASCII。
+                        final int PACKAGE_SIZE = 71;
+
+                        Socket client = new Socket(this.address, this.port);
+
+                        OutputStream out = client.getOutputStream();
+
+                        // send account package
+                        out.write(PackageHandler.sentencePackageEncode(this.sendText));
+                        out.flush();
+                        InputStream in = client.getInputStream();      // 取得輸入訊息的串流
+
+                        StringBuffer buf = new StringBuffer();        // 建立讀取字串。
+                        ByteBuffer b_buf = ByteBuffer.allocate(1024);
+                        try {
+                            while (true) {            // 不斷讀取。
+                                int x = in.read();    // 讀取一個 byte。(read 傳回 -1 代表串流結束)
+                                if (x==-1) break;     // x = -1 代表串流結束，讀取完畢，用 break 跳開。
+                                byte b = (byte) x;    // 將 x 轉為 byte，放入變數 b.
+                                b_buf.put(b);
+                                buf.append((char) b); // 假設傳送ASCII字元都是 ASCII。
+                            }
+                        } catch (Exception e) {
+                            in.close();               // 關閉輸入串流。
                         }
-                    } catch (Exception e) {
-                        in.close();               // 關閉輸入串流。
+                        out.close();
+                        // deal with first 3 char
+                        byte[] rcvArray = Arrays.copyOfRange(b_buf.array(), 3, b_buf.array().length);
+
+                        String rcvString = new String(rcvArray, StandardCharsets.UTF_8);
+                        SentenceHandler rcvSentence = PackageHandler.sentencePackageDecode(rcvArray);
+
+                        this.rcvSentence = rcvSentence;
+
+                        System.out.println("message send.");                    // 印出接收到的訊息。
+                        client.close();                                // 關閉 TcpSocket.
+                    }catch (Exception e){
+                        System.out.println("exception");
+                        System.out.println(e);
+                    }finally {
+                        notify();
                     }
-                    out.close();
-                    // deal with first 3 char
-                    byte[] rcvArray = Arrays.copyOfRange(b_buf.array(), 0, b_buf.array().length);
-
-                    String rcvString = new String(rcvArray, StandardCharsets.UTF_8);
-                    System.out.println(rcvString);
-
-                    System.out.println("message send.");                    // 印出接收到的訊息。
-                    client.close();                                // 關閉 TcpSocket.
-                }catch (Exception e){
-                    System.out.println("exception");
-                    System.out.println(e);
                 }
             }
             else
