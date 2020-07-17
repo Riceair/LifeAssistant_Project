@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.example.lifeassistant_project.R;
 import com.example.lifeassistant_project.activity_update.ClientProgress;
 import com.example.lifeassistant_project.activity_update.WeatherPackage;
-import org.w3c.dom.Text;
 
 import java.util.*;
 
@@ -61,8 +60,6 @@ public class Weather_activity extends AppCompatActivity {
         for(int i = 0;i < WEEK_SIZE; i++)
         {
             WeatherPackage currentWeather = weatherData.get(pointer + i);
-            System.out.println(currentWeather.getSituation());
-
             switch (i)
             {
                 case 0:
@@ -74,6 +71,9 @@ public class Weather_activity extends AppCompatActivity {
                     displayText.setText(currentWeather.getSituation());
                     displayText = (TextView) findViewById(R.id.Location);
                     displayText.setText(currentWeather.getCity());
+                    assignCondition2Image(currentWeather.getSituation(),R.id.Conditions);
+                    assignbackground2Image(currentWeather.getSituation(),R.id.mainly);
+
                     break;
                 case 1:
                     assignNumber2Image(currentWeather.getMax_temperature() / 10, R.id.sec_higher_decimaldegree);
@@ -84,30 +84,112 @@ public class Weather_activity extends AppCompatActivity {
                     displayText.setText(currentWeather.getPeriod());
                     displayText = (TextView) findViewById(R.id.seccoditions);
                     displayText.setText(currentWeather.getSituation());
+                    assignCondition2Image(currentWeather.getSituation(),R.id.secconditions);
+
                     break;
                 case 2:
                     assignTemperature2Text(currentWeather, R.id.onedaytemperature);
+                    assignCondition2Image(currentWeather.getSituation(),R.id.onedaycondition);
                     break;
                 case 4:
                     assignTemperature2Text(currentWeather, R.id.twodaytemperature);
+                    assignCondition2Image(currentWeather.getSituation(),R.id.twodayscondition);
                     break;
                 case 6:
                     assignTemperature2Text(currentWeather, R.id.threedaytemperature);
+                    assignCondition2Image(currentWeather.getSituation(),R.id.threedayscondition);
                     break;
                 case 8:
                     assignTemperature2Text(currentWeather, R.id.fourdaytemperature);
+                    assignCondition2Image(currentWeather.getSituation(),R.id.fourdayscondition);
                     break;
                 case 10:
                     assignTemperature2Text(currentWeather, R.id.fivedaytemperature);
+                    assignCondition2Image(currentWeather.getSituation(),R.id.fivedayscondition);
                     break;
                 case 12:
                     assignTemperature2Text(currentWeather, R.id.sixdaytemperature);
+                    assignCondition2Image(currentWeather.getSituation(),R.id.sixodayscondition);
                     break;
                 default:
                     break;
             }
         }
     }
+
+
+    private void assignCondition2Image(String current_weather,int RID)
+    {
+        ImageView image = (ImageView)findViewById(RID);
+        switch(current_weather)
+        {
+            case "多雲短暫陣雨":
+                image.setImageResource(R.drawable.weather_condition_rain);
+                break;
+            case "多雲時陰短暫陣雨":
+                image.setImageResource(R.drawable.weather_condition_shower);
+                break;
+            case "多雲時陰短暫陣雨或雷雨":
+                image.setImageResource(R.drawable.weather_condition_rainandsnowmixed);
+                break;
+            case "多雲午後短暫雷陣雨":
+                image.setImageResource(R.drawable.weather_condition_thunderstorms);
+                break;
+            case "多雲":
+                image.setImageResource(R.drawable.weather_condition_mostlycloudy);
+                break;
+            case "多雲時晴":
+                image.setImageResource(R.drawable.weather_condition_partlysunny);
+                break;
+            case "晴時多雲":
+                image.setImageResource(R.drawable.weather_condition_sunny);
+                break;
+            case "晴午後短暫雷陣雨":
+                image.setImageResource(R.drawable.weather_condition_mostlyclear);
+                break;
+            default:
+                image.setImageResource(R.drawable.weather_condition_windy);
+                break;
+        }
+    }
+
+    private void assignbackground2Image(String current_weather,int RID)
+    {
+        RelativeLayout relativeLayout = findViewById(RID);
+        switch(current_weather)
+        {
+            case "多雲短暫陣雨":
+                relativeLayout.setBackgroundResource(R.drawable.weather_bg_rain);
+                break;
+            case "多雲時陰短暫陣雨":
+                relativeLayout.setBackgroundResource(R.drawable.weather_bg_fog);
+                break;
+            case "多雲時陰短暫陣雨或雷雨":
+                relativeLayout.setBackgroundResource(R.drawable.weather_bg_snow);
+                break;
+            case "多雲午後短暫雷陣雨":
+                relativeLayout.setBackgroundResource(R.drawable.weather_bg_thunderstorms);
+                break;
+            case "多雲":
+                relativeLayout.setBackgroundResource(R.drawable.weather_bg_cloudy);
+                break;
+            case "多雲時晴":
+                relativeLayout.setBackgroundResource(R.drawable.weather_bg_parly_sunny);
+                break;
+            case "晴時多雲":
+                relativeLayout.setBackgroundResource(R.drawable.weather_bg_clear);
+                break;
+            case "晴午後短暫雷陣雨":
+                relativeLayout.setBackgroundResource(R.drawable.weather_bg_mostly_clear);
+                break;
+            default:
+                relativeLayout.setBackgroundResource(R.drawable.weather_bg_sunny);
+                break;
+        }
+    }
+
+
+
     private void assignNumber2Image(int number, int RID)
     {
         ImageView image = (ImageView) findViewById(RID);
