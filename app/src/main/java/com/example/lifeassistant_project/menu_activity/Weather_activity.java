@@ -3,6 +3,7 @@ package com.example.lifeassistant_project.menu_activity;
 import android.icu.lang.UCharacter;
 import android.media.Image;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
