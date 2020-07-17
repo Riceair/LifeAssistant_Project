@@ -11,14 +11,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".menu_activity.Report_activity"></activity>
+        <activity android:name=".menu_activity.Login_activity"></activity>
+        <activity android:name=".menu_activity.Report_activity" />
         <activity android:name=".menu_activity.ViewPlan_activity" />
         <activity android:name=".menu_activity.NewPlan_activity" />
         <activity android:name=".menu_activity.Planner_activity" />
         <activity android:name=".menu_activity.Invoice_activity" />
         <activity android:name=".menu_activity.Weather_activity" />
         <activity android:name=".menu_activity.Bookkeeping_activity" />
-        <activity android:name=".MainActivity" android:theme="@style/AppTheme.NoActionBar">
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

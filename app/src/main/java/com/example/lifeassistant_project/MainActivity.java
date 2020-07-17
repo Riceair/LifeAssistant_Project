@@ -23,6 +23,7 @@ import com.example.lifeassistant_project.activity_update.ClientProgress;
 import com.example.lifeassistant_project.activity_update.SentenceHandler;
 import com.example.lifeassistant_project.menu_activity.Bookkeeping_activity;
 import com.example.lifeassistant_project.menu_activity.Invoice_activity;
+import com.example.lifeassistant_project.menu_activity.Login_activity;
 import com.example.lifeassistant_project.menu_activity.Planner_activity;
 import com.example.lifeassistant_project.menu_activity.Report_activity;
 import com.example.lifeassistant_project.menu_activity.Weather_activity;
@@ -109,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return handler.getFulfillment();
     }
 
+    ////////////////////////////語音///////////////////////////////////
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -121,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
     }
-
+    ///////////////////////////Navigation Drawer/////////////////////////////
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Intent intent;
