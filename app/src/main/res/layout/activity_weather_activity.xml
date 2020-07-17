@@ -106,14 +106,14 @@
 
             <TextView
                     android:id="@+id/seccoditions"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150sp"
                     android:layout_height="wrap_content"
 
                     android:layout_marginTop="300dp"
                     android:text="暴雪"
                     android:textColor="@android:color/background_light"
                     android:textColorHint="@color/colorPrimaryDark"
-                    android:textSize="30sp"/>
+                    android:textSize="18sp"/>
 
             <ImageView
                     android:id="@+id/sec_higher_decimaldegree"

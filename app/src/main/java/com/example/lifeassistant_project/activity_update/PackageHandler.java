@@ -532,7 +532,7 @@ public class PackageHandler
 
     static public SentenceHandler sentencePackageDecode(byte[] message)
     {
-        final int INTENT_SIZE = 30, FULFILLMENT_SIZE = 75;
+        final int INTENT_SIZE = 30, FULFILLMENT_SIZE = 90;
         SentenceHandler result = new SentenceHandler();
         int temp = 0, currentSize = INTENT_SIZE;
         String tempString;
