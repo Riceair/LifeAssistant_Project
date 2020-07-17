@@ -173,10 +173,13 @@ public class ClientProgress implements Runnable {
                     }
                     out.close();
                     // deal with first 3 char
-                    byte[] rcvArray = Arrays.copyOfRange(b_buf.array(), 0, b_buf.array().length);
+                    byte[] rcvArray = Arrays.copyOfRange(b_buf.array(), 3, b_buf.array().length);
 
                     String rcvString = new String(rcvArray, StandardCharsets.UTF_8);
-                    System.out.println(rcvString);
+                    SentenceHandler rcvSentence = PackageHandler.sentencePackageDecode(rcvArray);
+
+                    System.out.println(rcvSentence.getIntent());
+                    System.out.println(rcvSentence.getFulfillment());
 
                     System.out.println("message send.");                    // 印出接收到的訊息。
                     client.close();                                // 關閉 TcpSocket.
