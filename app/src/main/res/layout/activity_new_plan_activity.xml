@@ -21,7 +21,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="550dp"
-                app:srcCompat="@drawable/digits_0" />
+                app:srcCompat="@drawable/layer6" />
 
             <ImageView
                 android:id="@+id/frame4"
@@ -29,28 +29,28 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="450dp"
-                app:srcCompat="@drawable/digits_0" />
+                app:srcCompat="@drawable/layer5" />
 
             <ImageView
                 android:id="@+id/frame3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="350dp"
-                app:srcCompat="@drawable/digits_0" />
+                app:srcCompat="@drawable/layer3" />
 
             <ImageView
                 android:id="@+id/frame2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="230dp"
-                app:srcCompat="@drawable/digits_0" />
+                app:srcCompat="@drawable/layer2" />
 
             <ImageView
                 android:id="@+id/frame"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="160dp"
-                app:srcCompat="@drawable/digits_0" />
+                app:srcCompat="@drawable/layer1" />
 
             <Spinner
                 android:id="@+id/type"
@@ -96,14 +96,6 @@
                 android:textColor="@android:color/black"
                 android:textColorHint="@android:color/darker_gray"
                 android:textSize="36sp" />
-
-            <ImageView
-                android:id="@+id/weathercondition"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginLeft="200dp"
-                android:layout_marginTop="30dp"
-                app:srcCompat="@drawable/weather_bg_clear" />
 
             <ImageView
                 android:id="@+id/mindecimal2"
