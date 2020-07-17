@@ -7,6 +7,77 @@
     tools:context=".MainActivity"
     android:id="@+id/drawer">
 
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/main_background">
+
+        <ImageView
+            android:id="@+id/chatBotHelpImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="64dp"
+            app:layout_constraintEnd_toStartOf="@+id/chatBotHelp"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_help" />
+
+        <TextView
+            android:id="@+id/chatBotHelp"
+            android:layout_width="91dp"
+            android:layout_height="40dp"
+            android:text="使用說明"
+            android:textColor="#2E3351"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.092" />
+
+        <TextView
+            android:id="@+id/chatBotSay"
+            android:layout_width="370dp"
+            android:layout_height="110dp"
+            android:text="您好，需要幫助嗎?"
+            android:textColor="#B5042D51"
+            android:textSize="38dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.243" />
+
+        <TextView
+            android:id="@+id/userSay"
+            android:layout_width="275dp"
+            android:layout_height="122dp"
+            android:layout_marginTop="128dp"
+            android:text="按下以下按鈕開始對話"
+            android:textColor="#B5041B30"
+            android:textSize="25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.882"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chatBotSay"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/userSayButton"
+            android:layout_width="110dp"
+            android:layout_height="357dp"
+            android:layout_marginTop="420dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/user_say_button" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,50 +87,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         layout="@layout/content_main"/>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    <ImageButton
-        android:id="@+id/toggle"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:scaleType="fitXY"
-        app:srcCompat="@drawable/toggle_dialogue_button" />
-
-    <TextView
-        android:id="@+id/response_contents"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="55dp"
-        android:text="您好，\n說點什麼吧..."
-        android:textColor="@android:color/background_light"
-        android:textSize="35dp" />
-
-    <ImageView
-        android:id="@+id/gif"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_alignParentBottom="true" />
-
-    <TextView
-        android:id="@+id/collection_contents"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="250dp"
-        android:layout_marginRight="30dp"
-        android:text="按下按鈕以繼續..."
-        android:textColor="@android:color/background_light"
-        android:textSize="23sp" />
-    </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:layout_width="match_parent"
