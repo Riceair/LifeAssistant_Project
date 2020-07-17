@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_background">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        app:srcCompat="@drawable/welcome_logo" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="您好!我是您的生活助理"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView"
+        android:layout_centerHorizontal="true"
+        android:text="輸入資訊以繼續"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/login_button"
+        android:layout_width="150dp"
+        android:layout_height="42dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="100dp"
+        app:srcCompat="@drawable/signinbutton" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:text="帳號"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="300dp"
+        android:layout_height="65dp"
+        android:layout_below="@id/textView4"
+        android:layout_alignParentBottom="false"
+        android:layout_centerHorizontal="true"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/fillin_frame" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageView4"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="密碼"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="300dp"
+        android:layout_height="65dp"
+        android:layout_below="@id/textView6"
+        android:layout_alignParentBottom="false"
+        android:layout_centerHorizontal="true"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/fillin_frame" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="250dp"
+        android:layout_height="65dp"
+        android:layout_below="@id/textView4"
+        android:layout_centerHorizontal="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/account_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/account_password"
+        android:layout_width="250dp"
+        android:layout_height="65dp"
+        android:layout_below="@id/textView6"
+        android:layout_centerHorizontal="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+</RelativeLayout>
