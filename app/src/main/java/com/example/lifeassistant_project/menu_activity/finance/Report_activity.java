@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
@@ -108,15 +109,19 @@ public class Report_activity extends AppCompatActivity {
         l.setTextColor(Color.WHITE);//設置圖例標籤文本的顏色
 
         //////////////////////////////////////收入,支出切換//////////////////////////////////////
-        inoutSwitch=(Switch) findViewById(R.id.inoutSwitch);
+        final TextView outSwitchText=findViewById(R.id.outSwitchText);
+        final TextView inSwitchText=findViewById(R.id.inSwitchText);
+        inoutSwitch=findViewById(R.id.inoutSwitch);
         inoutSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean IsCheck) {
-                if(IsCheck) {
-                    inoutSwitch.setText("收入");
+                if(IsCheck) { //選擇收入
+                    inSwitchText.setVisibility(View.VISIBLE);
+                    outSwitchText.setVisibility(View.INVISIBLE);
                     inOutAttribute=0;
-                }else {
-                    inoutSwitch.setText("支出");
+                }else { //選擇支出
+                    inSwitchText.setVisibility(View.INVISIBLE);
+                    outSwitchText.setVisibility(View.VISIBLE);
                     inOutAttribute=1;
                 }
                 InOutModeChange();
