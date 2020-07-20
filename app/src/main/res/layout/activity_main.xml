@@ -8,75 +8,65 @@
     android:id="@+id/drawer">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/main_background">
 
         <ImageView
             android:id="@+id/chatBotHelpImg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="64dp"
-            app:layout_constraintEnd_toStartOf="@+id/chatBotHelp"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_help" />
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="70dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/help_button" />
 
         <TextView
             android:id="@+id/chatBotHelp"
-            android:layout_width="91dp"
-            android:layout_height="40dp"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="70dp"
+            android:layout_marginRight="30dp"
+            android:paddingTop="3dp"
             android:text="使用說明"
-            android:textColor="#2E3351"
-            android:textSize="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.092" />
+            android:textColor="@color/design_default_color_background"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/chatBotSay"
-            android:layout_width="370dp"
-            android:layout_height="110dp"
-            android:text="您好，需要幫助嗎?"
+            android:layout_width="300dp"
+            android:layout_height="400dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="35dp"
+            android:text="您好，我可以為您做什麼?"
             android:textColor="#B5042D51"
-            android:textSize="38dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.243" />
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/userSay"
-            android:layout_width="275dp"
-            android:layout_height="122dp"
-            android:layout_marginTop="128dp"
-            android:text="按下以下按鈕開始對話"
+            android:layout_width="220dp"
+            android:layout_height="120dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="100dp"
+            android:text="按下按鈕開始對話"
             android:textColor="#B5041B30"
-            android:textSize="25dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.882"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/chatBotSay"
-            app:layout_constraintVertical_bias="0.0" />
+            android:textSize="25sp" />
 
         <ImageView
             android:id="@+id/userSayButton"
-            android:layout_width="110dp"
-            android:layout_height="357dp"
-            android:layout_marginTop="420dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/user_say_button" />
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="30dp"
+            app:srcCompat="@drawable/toggle_speak" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 
     <include
         android:layout_width="match_parent"
