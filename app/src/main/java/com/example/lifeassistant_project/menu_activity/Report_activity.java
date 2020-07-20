@@ -12,8 +12,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +44,10 @@ public class Report_activity extends AppCompatActivity {
     private Cursor cursor;
     private PieChart mChart;
     private int currentYear,currentMonth;
+    private Switch inoutSwitch;
+    private int inOutAttribute=1; //收入或支出(資料庫Query)
+    private int chYear,chMonth,chDay; //儲存選到的日期
+    private String chMode="thisMonth"; //儲存menu選擇的mode lastYear thisYear lastMonth thisMonth all selfChoice
     private List<String> type_list = new ArrayList<>();
     private List<Integer> sum_list = new ArrayList<>();
 
@@ -57,6 +63,7 @@ public class Report_activity extends AppCompatActivity {
         if(!FdbFile.exists() || !FdbFile.isFile())
             copyAssets(PATH); //初始資料庫複製到路徑
 
+        //////////////////////////////報表API使用//////////////////////////////
         mChart=findViewById(R.id.pieChart);
 
         mChart.setUsePercentValues(true);  //使用百分比顯示
@@ -82,7 +89,7 @@ public class Report_activity extends AppCompatActivity {
         currentYear=c.get(Calendar.YEAR);
         currentMonth=c.get(Calendar.MONTH)+1;
         getSupportActionBar().setTitle(String.valueOf(currentYear)+"年"+String.valueOf(currentMonth)+"月");
-        ReadDBRecord(currentYear,currentMonth);
+        ReadDBRecord(currentYear,currentMonth,0);
         setData(mChart);
         setBotInf();
 
@@ -102,6 +109,22 @@ public class Report_activity extends AppCompatActivity {
         l.setYOffset(0f);                //設置比例塊Y軸偏移量
         l.setTextSize(15f);                  //設置圖例標籤文本的大小
         l.setTextColor(Color.WHITE);//設置圖例標籤文本的顏色
+
+        //////////////////////////////////////收入,支出切換//////////////////////////////////////
+        inoutSwitch=(Switch) findViewById(R.id.inoutSwitch);
+        inoutSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean IsCheck) {
+                if(IsCheck) {
+                    inoutSwitch.setText("收入");
+                    inOutAttribute=0;
+                }else {
+                    inoutSwitch.setText("支出");
+                    inOutAttribute=1;
+                }
+                InOutModeChange();
+            }
+        });
     }
 
     ////////////////////////////////////////////////////menu處理///////////////////////////////////////////////////
@@ -115,36 +138,42 @@ public class Report_activity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.lastYear:
+                chMode="lastYear";
                 getSupportActionBar().setTitle(String.valueOf(currentYear-1)+"年");
-                ReadDBRecord(currentYear-1,0);
+                ReadDBRecord(currentYear-1,0,0);
                 setData(mChart);
                 setBotInf();
                 break;
             case R.id.thisYear:
+                chMode="thisYear";
                 getSupportActionBar().setTitle(String.valueOf(currentYear)+"年");
-                ReadDBRecord(currentYear,0);
+                ReadDBRecord(currentYear,0,0);
                 setData(mChart);
                 setBotInf();
                 break;
             case R.id.lastMonth:
+                chMode="lastMonth";
                 getSupportActionBar().setTitle(String.valueOf(currentYear)+"年"+String.valueOf(currentMonth-1)+"月");
-                ReadDBRecord(currentYear,currentMonth-1);
+                ReadDBRecord(currentYear,currentMonth-1,0);
                 setData(mChart);
                 setBotInf();
                 break;
             case R.id.thisMonth:
+                chMode="thisMonth";
                 getSupportActionBar().setTitle(String.valueOf(currentYear)+"年"+String.valueOf(currentMonth)+"月");
-                ReadDBRecord(currentYear,currentMonth);
+                ReadDBRecord(currentYear,currentMonth,0);
                 setData(mChart);
                 setBotInf();
                 break;
             case R.id.all:
+                chMode="all";
                 getSupportActionBar().setTitle("所有紀錄");
-                ReadDBRecord(0,0);
+                ReadDBRecord(0,0,0);
                 setData(mChart);
                 setBotInf();
                 break;
             case R.id.selfChoice:
+                chMode="selfChoice";
                 int mYear,mMonth,mDay;
                 final Calendar c=Calendar.getInstance();
                 mYear = c.get(Calendar.YEAR);
@@ -153,34 +182,77 @@ public class Report_activity extends AppCompatActivity {
                 new DatePickerDialog(Report_activity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                        String format = setDataFormat(year,month,day);
+                        chYear=year;
+                        chMonth=month+1;
+                        chDay=day;
+                        ReadDBRecord(year,month+1,day);
+                        setData(mChart);
+                        setBotInf();
                     }
                 },mYear,mMonth,mDay).show();
                 break;
         }
         return true;
     }
+    ////////////////////////////////////////////////////menu處理///////////////////////////////////////////////////
 
-    private String setDataFormat(int year, int monthOfYear,int dayOfMonth){
-        return String.valueOf(year)+"-"+String.valueOf(monthOfYear+1)+"-"+String.valueOf(dayOfMonth);
+    ////////////////////////////////////////////////////收入 支出切換///////////////////////////////////////////////////
+    private void InOutModeChange(){
+        switch (chMode){
+            case "lastYear":
+                ReadDBRecord(currentYear-1,0,0);
+                setData(mChart);
+                setBotInf();
+                break;
+            case "thisYear":
+                ReadDBRecord(currentYear,0,0);
+                setData(mChart);
+                setBotInf();
+                break;
+            case "lastMonth":
+                ReadDBRecord(currentYear,currentMonth-1,0);
+                setData(mChart);
+                setBotInf();
+                break;
+            case "thisMonth":
+                ReadDBRecord(currentYear,currentMonth,0);
+                setData(mChart);
+                setBotInf();
+                break;
+            case "all":
+                ReadDBRecord(0,0,0);
+                setData(mChart);
+                setBotInf();
+                break;
+            case "selfChoice":
+                ReadDBRecord(chYear,chMonth,chDay);
+                setData(mChart);
+                setBotInf();
+                break;
+        }
     }
+    ////////////////////////////////////////////////////收入 支出切換///////////////////////////////////////////////////
 
     ////////////////////////////////////////////////////數據處理///////////////////////////////////////////////////
     //讀資料庫
-    private void ReadDBRecord(int year,int month){
+    private void ReadDBRecord(int year,int month,int day){
         myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
         type_list.clear();
         sum_list.clear();
         try {
             if(month==0){
                 if(year==0) //顯示所有紀錄
-                    cursor = myDB.rawQuery("select record.分類, sum(record.金額)  from record group by record.分類",null);
+                    cursor = myDB.rawQuery("select record.分類, sum(record.金額)  from record where record.收支屬性=? group by record.分類"
+                            ,new String[]{String.valueOf(inOutAttribute)});
                 else
-                    cursor = myDB.rawQuery("select record.分類, sum(record.金額)  from record where record.年=? group by record.分類",new String[]{String.valueOf(year)});
-            }
-            else {
-                cursor = myDB.rawQuery("select record.分類, sum(record.金額)  from record where record.年=? and record.月=? group by record.分類"
-                        , new String[]{String.valueOf(year), String.valueOf(month)});
+                    cursor = myDB.rawQuery("select record.分類, sum(record.金額)  from record where record.年=? and record.收支屬性=? group by record.分類"
+                            ,new String[]{String.valueOf(year),String.valueOf(inOutAttribute)});
+            }else if(day!=0){ //自訂日期
+                cursor = myDB.rawQuery("select record.分類, sum(record.金額)  from record where record.年=? and record.月=? and record.日=? and record.收支屬性=? group by record.分類"
+                        ,new String[]{String.valueOf(year),String.valueOf(month),String.valueOf(day),String.valueOf(inOutAttribute)});
+            }else {
+                cursor = myDB.rawQuery("select record.分類, sum(record.金額)  from record where record.年=? and record.月=? and record.收支屬性=? group by record.分類"
+                        , new String[]{String.valueOf(year), String.valueOf(month),String.valueOf(inOutAttribute)});
             }
             if(cursor!=null) { //取得資料
                 int iRow = cursor.getCount(); // 取得資料記錄的筆數
@@ -200,7 +272,7 @@ public class Report_activity extends AppCompatActivity {
             }
         }
         catch (Exception e) {
-            Toast.makeText(this,e.toString(),Toast.LENGTH_SHORT).show();
+            Log.e("SQL wrong",e.toString());
         }
     }
 

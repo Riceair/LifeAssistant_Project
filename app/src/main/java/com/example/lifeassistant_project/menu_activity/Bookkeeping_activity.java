@@ -149,10 +149,10 @@ public class Bookkeeping_activity extends AppCompatActivity {
             month = Integer.parseInt(date.substring(5,date.indexOf('-',5)));
             day = Integer.parseInt(date.substring(date.indexOf('-',5)+1,date.length()));
         }
-        int attribute=0; //收入或支出
-        RadioButton radioOutlay = (RadioButton) findViewById(R.id.outlay);
-        if(radioOutlay.isChecked()){
-            attribute=1;
+        int attribute=1; //收入或支出 0,1
+        RadioButton radioIncome = (RadioButton) findViewById(R.id.income);
+        if(radioIncome.isChecked()){
+            attribute=0;
         }
 
         list.clear();
