@@ -144,21 +144,21 @@
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/income"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="收入"
-                android:textColor="@color/design_default_color_background"
-                android:textSize="15dp" />
-
-            <RadioButton
                 android:id="@+id/outlay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="支出"
+                android:checked="true"
                 android:textColor="@color/design_default_color_background"
-                android:textSize="15dp" />
+                android:textSize="15dp"
+                android:text="支出"/>
+
+            <RadioButton
+                android:id="@+id/income"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/design_default_color_background"
+                android:textSize="15dp"
+                android:text="收入" />
         </RadioGroup>
 
         <TextView
