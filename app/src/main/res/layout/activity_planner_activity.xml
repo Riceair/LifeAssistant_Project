@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/planner_background"
-    tools:context="com.example.lifeassistant_project.menu_activity.Planner_activity">
+    tools:context="com.example.lifeassistant_project.menu_activity.schedule.Planner_activity">
 
 
     <Button

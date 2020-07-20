@@ -5,7 +5,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/weather_bg_sunny"
-                tools:context=".menu_activity.Weather_activity" android:id="@+id/mainly">
+                tools:context=".menu_activity.weather.Weather_activity" android:id="@+id/mainly">
 
     <ScrollView
             android:layout_width="wrap_content"

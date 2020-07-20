@@ -1,4 +1,4 @@
-package com.example.lifeassistant_project.menu_activity;
+package com.example.lifeassistant_project.menu_activity.weather;
 
 import android.icu.lang.UCharacter;
 import android.media.Image;

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_alignParentBottom="false"
     android:background="@drawable/receipt_checksum_background"
-    tools:context="com.example.lifeassistant_project.menu_activity.Invoice_activity">
+    tools:context="com.example.lifeassistant_project.menu_activity.finance.Invoice_activity">
 
     <Button
         android:id="@+id/button"

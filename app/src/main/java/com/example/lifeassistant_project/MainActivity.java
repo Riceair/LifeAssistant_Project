@@ -1,6 +1,5 @@
 package com.example.lifeassistant_project;
 
-import android.os.strictmode.CleartextNetworkViolation;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,8 +11,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,12 +19,12 @@ import android.widget.Toast;
 
 import com.example.lifeassistant_project.activity_update.ClientProgress;
 import com.example.lifeassistant_project.activity_update.SentenceHandler;
-import com.example.lifeassistant_project.menu_activity.Bookkeeping_activity;
-import com.example.lifeassistant_project.menu_activity.Invoice_activity;
-import com.example.lifeassistant_project.menu_activity.Login_activity;
-import com.example.lifeassistant_project.menu_activity.Planner_activity;
-import com.example.lifeassistant_project.menu_activity.Report_activity;
-import com.example.lifeassistant_project.menu_activity.Weather_activity;
+import com.example.lifeassistant_project.menu_activity.finance.Bookkeeping_activity;
+import com.example.lifeassistant_project.menu_activity.finance.Invoice_activity;
+import com.example.lifeassistant_project.menu_activity.login.Login_activity;
+import com.example.lifeassistant_project.menu_activity.schedule.Planner_activity;
+import com.example.lifeassistant_project.menu_activity.finance.Report_activity;
+import com.example.lifeassistant_project.menu_activity.weather.Weather_activity;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
