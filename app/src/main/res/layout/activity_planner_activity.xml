@@ -92,7 +92,7 @@
         android:layout_height="60dp"
         android:layout_marginLeft="250dp"
         android:layout_marginTop="170dp"
-        app:srcCompat="@drawable/digits_1red" />
+        app:srcCompat="@drawable/digits_0" />
 
     <ImageView
         android:id="@+id/stuffcountdigit"
@@ -100,7 +100,7 @@
         android:layout_height="60dp"
         android:layout_marginLeft="280dp"
         android:layout_marginTop="170dp"
-        app:srcCompat="@drawable/digits_2red" />
+        app:srcCompat="@drawable/digits_0" />
 
     <ScrollView
         android:layout_width="match_parent"
