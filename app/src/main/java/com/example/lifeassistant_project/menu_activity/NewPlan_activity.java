@@ -39,6 +39,13 @@ public class NewPlan_activity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0,R.anim.translate_out);
+    }
+
     private void copyAssets(String path) {
         InputStream in = null;
         OutputStream out = null;

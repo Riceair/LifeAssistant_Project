@@ -152,19 +152,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.menu_fin_bookkeeping:
                 intent=new Intent(this, Bookkeeping_activity.class);
                 this.startActivity(intent);
-                overridePendingTransition(R.anim.translate_in,0);
+                overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
                 break;
             case R.id.menu_fin_report:
                 intent=new Intent(this, Report_activity.class);
                 this.startActivity(intent);
+                overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
                 break;
             case R.id.menu_fin_invoice:
                 intent=new Intent(this, Invoice_activity.class);
                 this.startActivity(intent);
+                overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
                 break;
             case R.id.menu_schedule:
                 intent=new Intent(this, Planner_activity.class);
                 this.startActivity(intent);
+                overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
                 break;
         }
         return true;

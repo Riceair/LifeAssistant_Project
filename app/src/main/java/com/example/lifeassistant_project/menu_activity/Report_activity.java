@@ -332,6 +332,12 @@ public class Report_activity extends AppCompatActivity {
         return Color.rgb(r,g,b);
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0,R.anim.translate_out);
+    }
+
     //第一次開啟App才會啟用
     private void copyAssets(String path) {
         InputStream in = null;

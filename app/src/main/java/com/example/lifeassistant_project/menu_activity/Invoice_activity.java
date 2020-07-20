@@ -52,4 +52,10 @@ public class Invoice_activity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"發生錯誤",Toast.LENGTH_LONG).show();
         }
     }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0,R.anim.translate_out);
+    }
 }

@@ -237,4 +237,10 @@ public class Weather_activity extends AppCompatActivity {
         String temp = new String(Integer.toString(weatherPackage.getMax_temperature()) + "-" + Integer.toString(weatherPackage.getMin_temperature()));
         textView.setText(temp);
     }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0,R.anim.translate_out);
+    }
 }
