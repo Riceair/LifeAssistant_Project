@@ -16,7 +16,6 @@
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="false"
         android:layout_marginBottom="30dp">
@@ -146,23 +145,23 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <RadioButton
-                    android:id="@+id/income"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="收入"
-                    android:textColor="@color/design_default_color_background"
-                    android:textSize="15dp" />
+            <RadioButton
+                android:id="@+id/outlay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:textColor="@color/design_default_color_background"
+                android:textSize="15dp"
+                android:text="支出"/>
 
-                <RadioButton
-                    android:id="@+id/outlay"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="支出"
-                    android:textColor="@color/design_default_color_background"
-                    android:textSize="15dp" />
-            </RadioGroup>
+            <RadioButton
+                android:id="@+id/income"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/design_default_color_background"
+                android:textSize="15dp"
+                android:text="收入" />
+        </RadioGroup>
 
             <TextView
                 android:id="@+id/receipt"
