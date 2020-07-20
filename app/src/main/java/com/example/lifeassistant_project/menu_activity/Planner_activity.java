@@ -31,4 +31,10 @@ public class Planner_activity extends AppCompatActivity {
         Intent intent = new Intent(view.getContext(),ViewPlan_activity.class);
         view.getContext().startActivity(intent);
     }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0,R.anim.translate_out);
+    }
 }

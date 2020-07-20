@@ -132,4 +132,10 @@ public class ViewPlan_activity extends AppCompatActivity {
             out.write(buffer, 0, read);
         }
     }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0,R.anim.translate_out);
+    }
 }
