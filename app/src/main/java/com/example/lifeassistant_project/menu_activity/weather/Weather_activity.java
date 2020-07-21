@@ -53,6 +53,11 @@ public class Weather_activity extends AppCompatActivity {
         }
 
         ArrayList<WeatherPackage> weatherData = client.getRcvWeatherData();
+        if(weatherData.size() == 0)
+        {
+            System.out.println("can't get data");
+            return;
+        }
 
         int pointer;
         for (pointer = 0;pointer < weatherData.size(); pointer++)
@@ -147,7 +152,7 @@ public class Weather_activity extends AppCompatActivity {
             if (ptr >= 7) ptr = 0;
             TextView target;
             int RID = 0;
-            if(i == 0) System.out.println("123");
+            if(i == 0) System.out.println("today");
             else if(i == 1)RID = R.id.onedayafter;
             else if(i == 2)RID = R.id.twodaysafter;
             else if(i == 3)RID = R.id.threedaysafter;
@@ -156,7 +161,6 @@ public class Weather_activity extends AppCompatActivity {
             else if(i == 6)RID = R.id.sixdaysafter;
             else RID = R.id.onedayafter;
 
-            System.out.println(i);
             target = (TextView) findViewById(RID);
             if(target != null) target.setText(weekList[ptr++]);
             else ptr++;

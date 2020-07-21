@@ -533,28 +533,22 @@ public class PackageHandler
 
     static public SentenceHandler sentencePackageDecode(byte[] message)
     {
-        final int INTENT_SIZE = 30, FULFILLMENT_SIZE = 90;
+        final int INTENT_SIZE = 4, OPERATION_SIZE = 4, FULFILLMENT_SIZE = 90;
+
         SentenceHandler result = new SentenceHandler();
-        int temp = 0, currentSize = INTENT_SIZE;
+        int temp = 0, currentSize = 0;
         String tempString;
         ByteBuffer buffer = ByteBuffer.allocate(1024);
 
-        for(int i = currentSize - INTENT_SIZE; i < currentSize; i++)
-        {
-            if(message[i] == 0) break;
-            buffer.put(message[i]);
-        }
-        tempString = new String(buffer.array(), StandardCharsets.UTF_8);
-//        System.out.println(tempString.split(tempString.substring(10,11))[0]);
-        buffer.clear();
-        result.setIntent(tempString.split(tempString.substring(23,24))[0]);//split null character in the String.
+        result.setIntent(TransByteArray2Int(Arrays.copyOfRange(message, currentSize, currentSize + INTENT_SIZE), INTENT_SIZE));
+        currentSize += INTENT_SIZE;
+
+        result.setOperation(TransByteArray2Int(Arrays.copyOfRange(message, currentSize, currentSize + OPERATION_SIZE), OPERATION_SIZE));
+        currentSize += OPERATION_SIZE;
+
+        result.setFulfillment(TransByteArray2String(Arrays.copyOfRange(message, currentSize, currentSize + FULFILLMENT_SIZE), FULFILLMENT_SIZE));
         currentSize += FULFILLMENT_SIZE;
 
-        for(int i = currentSize - FULFILLMENT_SIZE; i < currentSize; i++)
-            buffer.put(message[i]);
-        tempString = new String(buffer.array(), StandardCharsets.UTF_8);
-        buffer.clear();
-        result.setFulfillment(tempString.split(tempString.substring(70,71))[0]);//split null character in the String.
 
         return result;
 }
@@ -595,6 +589,24 @@ public class PackageHandler
 //    {
 //
 //    }
+    static private int TransByteArray2Int(byte[] message, int MES_SIZE)
+    {
+        int temp = 0;
+        ByteBuffer buffer = ByteBuffer.allocate(1024);
+
+        for(int i = 0;i < MES_SIZE; i++)
+        {
+            temp = temp << 8;
+            int temp_m = (int)message[i];
+            if(temp_m < 0)
+            {
+                temp_m = ((temp_m ^ 255) + 1) * -1;
+            }
+            temp += temp_m;
+        }
+
+        return temp;
+    }
     static private String TransByteArray2String(byte[] message, int MES_SIZE)
     {
         ByteBuffer buffer = ByteBuffer.allocate(MES_SIZE);

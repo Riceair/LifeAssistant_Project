@@ -35,15 +35,20 @@ public class Login_activity extends AppCompatActivity {
                 else
                 {
                     String userKey = LoginCertification(loginPackage);
+                    LoginPackage.setUserKey(userKey);
                     if(userKey.equals("NO"))
                     {
-                        LoginPackage.setUserKey(userKey);
                         System.out.println("Certification Fail."); //need to be conduct functionality.
+                    }
+                    else if(userKey.equals("FA"))
+                    {
+                        System.out.println("Connection Fail.");
                     }
                     else
                     {
-                        LoginPackage.setUserKey(userKey);
-                        System.out.println(LoginPackage.getUserKey());
+//                        System.out.println(LoginPackage.getUserKey());
+                        LoginPackage.setIsLogin(true);
+                        Login_activity.this.finish();
                     }
                 }
             }
@@ -61,7 +66,7 @@ public class Login_activity extends AppCompatActivity {
         {
             try {
                 System.out.println("WAITTING");
-                client.wait();
+                client.wait(3000);
                 System.out.println("GOGOGO");
             }
             catch (InterruptedException e) {

@@ -1,16 +1,18 @@
 package com.example.lifeassistant_project.activity_update;
 
 public class SentenceHandler {
-    private String intent;
+    private int intent, operation;
     private String fulfillment;
 
+    public int getOperation() { return operation; }
 
+    public void setOperation(int operation) { this.operation = operation; }
 
-    public String getIntent() {
+    public int getIntent() {
         return intent;
     }
 
-    public void setIntent(String intent) {
+    public void setIntent(int intent) {
         this.intent = intent;
     }
 
