@@ -10,6 +10,8 @@
 
     <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
         <item name="colorPrimary">#00146CD8</item>
         <item name="colorPrimaryDark">#83ACF3</item>
         <item name="colorAccent">@color/colorAccent</item>
