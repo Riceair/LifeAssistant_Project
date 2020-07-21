@@ -1,10 +1,12 @@
 package com.example.lifeassistant_project.menu_activity.schedule;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,6 +14,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.lifeassistant_project.R;
+import com.example.lifeassistant_project.menu_activity.finance.Report_type_activity;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -34,11 +37,14 @@ public class ViewPlan_activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
         setContentView(R.layout.activity_view_plan_activity);
+        Toolbar toolbar=findViewById(R.id.toolbar);
+        toolbar.setTitle("檢視記事");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
         final ListView list = findViewById(R.id.list);
-
-
 
         File dbDir = new File(PATH, "databases");
         dbDir.mkdir();
@@ -131,6 +137,14 @@ public class ViewPlan_activity extends AppCompatActivity {
         while((read = in.read(buffer)) != -1){
             out.write(buffer, 0, read);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        if(item.getItemId()==android.R.id.home){
+            ViewPlan_activity.this.finish();
+        }
+        return true;
     }
 
     @Override

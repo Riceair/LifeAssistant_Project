@@ -2,9 +2,11 @@ package com.example.lifeassistant_project.menu_activity.login;
 
 import android.media.Image;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.view.View;
 import com.example.lifeassistant_project.R;
 import com.example.lifeassistant_project.activity_update.ClientProgress;
 import com.example.lifeassistant_project.activity_update.LoginPackage;
+import com.example.lifeassistant_project.menu_activity.finance.Report_type_activity;
 import com.google.android.material.textfield.TextInputEditText;
 import org.w3c.dom.Text;
 
@@ -20,9 +23,13 @@ public class Login_activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide(); //隱藏狀態列(綠色的那塊)
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);  //全螢幕
         setContentView(R.layout.activity_login_activity);
+        Toolbar toolbar=findViewById(R.id.toolbar);
+        toolbar.setTitle("登入");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         final ImageView loginButton = (ImageView) findViewById(R.id.login_button);
         loginButton.setOnClickListener(new View.OnClickListener()
@@ -84,6 +91,14 @@ public class Login_activity extends AppCompatActivity {
         targetText = (TextInputEditText) findViewById(R.id.account_password);
         loginPackage.setPassword(targetText.getText().toString());
         return loginPackage;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        if(item.getItemId()==android.R.id.home){
+            Login_activity.this.finish();
+        }
+        return true;
     }
 
     @Override

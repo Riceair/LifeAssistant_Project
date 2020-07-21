@@ -1,6 +1,8 @@
 package com.example.lifeassistant_project.menu_activity.finance;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
@@ -8,6 +10,7 @@ import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -50,9 +53,14 @@ public class Bookkeeping_activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide(); //隱藏狀態列(綠色的那塊)
-        //getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);  //全螢幕
         setContentView(R.layout.activity_bookkeeping_activity);
+        Toolbar toolbar=findViewById(R.id.toolbar);
+        toolbar.setTitle("記帳");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.ic_bookkeeping);
 
         // 資料庫
         File dbDir = new File(PATH, "databases");
@@ -272,6 +280,14 @@ public class Bookkeeping_activity extends AppCompatActivity {
         else{
             Toast.makeText(Bookkeeping_activity.this,"類別新增失敗",Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        if(item.getItemId()==android.R.id.home){
+            Bookkeeping_activity.this.finish();
+        }
+        return true;
     }
 
     @Override

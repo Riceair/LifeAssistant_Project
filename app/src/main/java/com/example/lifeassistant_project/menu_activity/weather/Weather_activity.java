@@ -2,9 +2,11 @@ package com.example.lifeassistant_project.menu_activity.weather;
 
 import android.icu.lang.UCharacter;
 import android.media.Image;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +15,8 @@ import android.widget.TextView;
 import com.example.lifeassistant_project.R;
 import com.example.lifeassistant_project.activity_update.ClientProgress;
 import com.example.lifeassistant_project.activity_update.WeatherPackage;
+import com.example.lifeassistant_project.menu_activity.finance.Report_type_activity;
+
 import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
@@ -23,9 +27,13 @@ public class Weather_activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide(); //隱藏狀態列(綠色的那塊)
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);  //全螢幕
         setContentView(R.layout.activity_weather_activity);
+        Toolbar toolbar=findViewById(R.id.toolbar);
+        toolbar.setTitle("天氣");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         this.showWeatherData();
     }
@@ -285,6 +293,14 @@ public class Weather_activity extends AppCompatActivity {
         TextView textView = (TextView) findViewById(RID);
         String temp = new String(Integer.toString(weatherPackage.getMax_temperature()) + "-" + Integer.toString(weatherPackage.getMin_temperature()));
         textView.setText(temp);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        if(item.getItemId()==android.R.id.home){
+            Weather_activity.this.finish();
+        }
+        return true;
     }
 
     @Override

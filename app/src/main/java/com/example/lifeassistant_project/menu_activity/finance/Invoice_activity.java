@@ -1,9 +1,11 @@
 package com.example.lifeassistant_project.menu_activity.finance;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -19,9 +21,13 @@ public class Invoice_activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_invoice_activity);
+        Toolbar toolbar=findViewById(R.id.toolbar);
+        toolbar.setTitle("兌發票");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     public void onbuttonclick(View view)
@@ -51,6 +57,14 @@ public class Invoice_activity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, intent);
             Toast.makeText(getApplicationContext(),"發生錯誤",Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        if(item.getItemId()==android.R.id.home){
+            Invoice_activity.this.finish();
+        }
+        return true;
     }
 
     @Override

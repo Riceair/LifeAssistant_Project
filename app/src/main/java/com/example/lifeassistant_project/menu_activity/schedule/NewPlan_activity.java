@@ -1,12 +1,15 @@
 package com.example.lifeassistant_project.menu_activity.schedule;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.example.lifeassistant_project.R;
+import com.example.lifeassistant_project.menu_activity.finance.Report_type_activity;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -27,17 +30,27 @@ public class NewPlan_activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
         setContentView(R.layout.activity_new_plan_activity);
+        Toolbar toolbar=findViewById(R.id.toolbar);
+        toolbar.setTitle("新增記事");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
         File dbDir = new File(PATH, "databases");
         dbDir.mkdir();
         File FdbFile = new File(PATH+"/databases",DBNAME);
         if(!FdbFile.exists() || !FdbFile.isFile())
             copyAssets(PATH); //初始資料庫複製到路徑
+    }
 
-
-
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        if(item.getItemId()==android.R.id.home){
+            NewPlan_activity.this.finish();
+        }
+        return true;
     }
 
     @Override

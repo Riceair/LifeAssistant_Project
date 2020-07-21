@@ -1,6 +1,7 @@
 package com.example.lifeassistant_project.menu_activity.finance;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -16,10 +17,13 @@ public class Report_type_activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_type_activity);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Toolbar toolbar=findViewById(R.id.toolbar);
+        toolbar.setTitle("報表");
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_baseline_battery_std_24);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.baseline_analytics_24);
 
         Bundle bundle = getIntent().getExtras();
         type=bundle.getString("TYPE");

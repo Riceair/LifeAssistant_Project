@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.lifeassistant_project.R;
 import com.github.mikephil.charting.charts.PieChart;
@@ -54,7 +55,13 @@ public class Report_activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_activity);
+        Toolbar toolbar=findViewById(R.id.toolbar);
+        toolbar.setTitle("報表");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.baseline_analytics_24);
 
         // 資料庫
         File dbDir = new File(PATH, "databases");
@@ -69,7 +76,7 @@ public class Report_activity extends AppCompatActivity {
         mChart.setUsePercentValues(true);  //使用百分比顯示
         mChart.getDescription().setEnabled(false);    //設置pipeChart圖表的描述
         //mChart.setBackgroundColor(Color.rgb(108,110,169)); //設置背景顏色
-        mChart.setExtraOffsets(10, 20, 10, 100);
+        mChart.setExtraOffsets(5, 5, 5, 5);
         mChart.setDragDecelerationFrictionCoef(0.95f); //設置pieChart圖表轉動阻力摩擦係數[0,1]
         mChart.setRotationAngle(0);                   //設置pieChart圖表起始角度
         mChart.setRotationEnabled(false);              //設置pieChart圖表是否可以手動旋轉
@@ -78,7 +85,7 @@ public class Report_activity extends AppCompatActivity {
 
 // 設置 pieChart 圖表Item文字屬性
         mChart.setDrawEntryLabels(false);              //設置pieChart是否只顯示圓形圖上百分比不顯示文字（true：下面屬性才有效果）
-        mChart.setEntryLabelColor(Color.WHITE);       //設置pieChart圖表文本字體顏色
+        mChart.setEntryLabelColor(Color.BLACK);       //設置pieChart圖表文本字體顏色
         //mChart.setEntryLabelTypeface(mTfRegular);     //設置pieChart圖表文本字體樣式
         mChart.setEntryLabelTextSize(15f);            //設置pieChart圖表文本字體大小
         mChart.setDrawHoleEnabled(false);
@@ -87,7 +94,7 @@ public class Report_activity extends AppCompatActivity {
         Calendar c = Calendar.getInstance();
         currentYear=c.get(Calendar.YEAR);
         currentMonth=c.get(Calendar.MONTH)+1;
-        getSupportActionBar().setTitle(String.valueOf(currentYear)+"年"+String.valueOf(currentMonth)+"月");
+        getSupportActionBar().setSubtitle(String.valueOf(currentYear)+"年"+String.valueOf(currentMonth)+"月");
         ReadDBRecord(currentYear,currentMonth,0);
         setData(mChart);
         setBotInf();
@@ -107,7 +114,7 @@ public class Report_activity extends AppCompatActivity {
         l.setYEntrySpace(8f);             //設置圖例實體之間延Y軸的間距（setOrientation = VERTICAL 有效）
         l.setYOffset(0f);                //設置比例塊Y軸偏移量
         l.setTextSize(15f);                  //設置圖例標籤文本的大小
-        l.setTextColor(Color.WHITE);//設置圖例標籤文本的顏色
+        l.setTextColor(Color.BLACK);//設置圖例標籤文本的顏色
 
         //////////////////////////////////////收入,支出切換//////////////////////////////////////
         final TextView outSwitchText=findViewById(R.id.outSwitchText);
@@ -142,35 +149,35 @@ public class Report_activity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.lastYear:
                 chMode="lastYear";
-                getSupportActionBar().setTitle(String.valueOf(currentYear-1)+"年");
+                getSupportActionBar().setSubtitle(String.valueOf(currentYear-1)+"年");
                 ReadDBRecord(currentYear-1,0,0);
                 setData(mChart);
                 setBotInf();
                 break;
             case R.id.thisYear:
                 chMode="thisYear";
-                getSupportActionBar().setTitle(String.valueOf(currentYear)+"年");
+                getSupportActionBar().setSubtitle(String.valueOf(currentYear)+"年");
                 ReadDBRecord(currentYear,0,0);
                 setData(mChart);
                 setBotInf();
                 break;
             case R.id.lastMonth:
                 chMode="lastMonth";
-                getSupportActionBar().setTitle(String.valueOf(currentYear)+"年"+String.valueOf(currentMonth-1)+"月");
+                getSupportActionBar().setSubtitle(String.valueOf(currentYear)+"年"+String.valueOf(currentMonth-1)+"月");
                 ReadDBRecord(currentYear,currentMonth-1,0);
                 setData(mChart);
                 setBotInf();
                 break;
             case R.id.thisMonth:
                 chMode="thisMonth";
-                getSupportActionBar().setTitle(String.valueOf(currentYear)+"年"+String.valueOf(currentMonth)+"月");
+                getSupportActionBar().setSubtitle(String.valueOf(currentYear)+"年"+String.valueOf(currentMonth)+"月");
                 ReadDBRecord(currentYear,currentMonth,0);
                 setData(mChart);
                 setBotInf();
                 break;
             case R.id.all:
                 chMode="all";
-                getSupportActionBar().setTitle("所有紀錄");
+                getSupportActionBar().setSubtitle("所有紀錄");
                 ReadDBRecord(0,0,0);
                 setData(mChart);
                 setBotInf();
@@ -188,7 +195,7 @@ public class Report_activity extends AppCompatActivity {
                         chYear=year;
                         chMonth=month+1;
                         chDay=day;
-                        getSupportActionBar().setTitle(String.valueOf(chYear)+"年"+String.valueOf(chMonth)+"月"+String.valueOf(chDay)+"日");
+                        getSupportActionBar().setSubtitle(String.valueOf(chYear)+"年"+String.valueOf(chMonth)+"月"+String.valueOf(chDay)+"日");
                         ReadDBRecord(year,month+1,day);
                         setData(mChart);
                         setBotInf();

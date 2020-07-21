@@ -45,9 +45,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //天氣 預測 理財 生活
-        setTitle("生活助理");
         setContentView(R.layout.activity_main);
         toolbar=findViewById(R.id.toolbar);
+        toolbar.setTitle("生活助理");
         setSupportActionBar(toolbar);
 
         drawerLayout=findViewById(R.id.drawer);

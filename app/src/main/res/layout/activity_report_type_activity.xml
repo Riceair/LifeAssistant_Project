@@ -7,10 +7,24 @@
     android:background="#4E5477"
     tools:context=".menu_activity.finance.Report_type_activity">
 
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/pieChart"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <RelativeLayout
+        android:layout_width="330dp"
+        android:layout_height="450dp"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="68dp"
+        android:background="@drawable/main_inner_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pieChart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
 
     <Switch
         android:id="@+id/inoutSwitch"
@@ -74,4 +88,8 @@
             android:orientation="vertical" />
     </ScrollView>
 
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/drawer_toolbar"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

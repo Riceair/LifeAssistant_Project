@@ -11,15 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".menu_activity.finance.Report_type_activity"></activity>
-        <activity android:name=".menu_activity.login.Login_activity" />
-        <activity android:name=".menu_activity.finance.Report_activity" />
-        <activity android:name=".menu_activity.schedule.ViewPlan_activity" />
-        <activity android:name=".menu_activity.schedule.NewPlan_activity" />
-        <activity android:name=".menu_activity.schedule.Planner_activity" />
-        <activity android:name=".menu_activity.finance.Invoice_activity" />
-        <activity android:name=".menu_activity.weather.Weather_activity" />
-        <activity android:name=".menu_activity.finance.Bookkeeping_activity" />
+        <activity android:name=".menu_activity.finance.Report_type_activity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".menu_activity.login.Login_activity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".menu_activity.finance.Report_activity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".menu_activity.schedule.ViewPlan_activity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".menu_activity.schedule.NewPlan_activity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".menu_activity.schedule.Planner_activity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".menu_activity.finance.Invoice_activity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".menu_activity.weather.Weather_activity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".menu_activity.finance.Bookkeeping_activity" android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">

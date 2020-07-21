@@ -24,9 +24,11 @@
         <menu>
             <item
                 android:id="@+id/menu_fin_bookkeeping"
+                android:icon="@drawable/ic_bookkeeping"
                 android:title="記帳" />
             <item
                 android:id="@+id/menu_fin_report"
+                android:icon="@drawable/baseline_analytics_24"
                 android:title="報表" />
             <item
                 android:id="@+id/menu_fin_invoice"
