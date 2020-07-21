@@ -23,7 +23,7 @@ public class Report_type_activity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.baseline_analytics_24);
+        getSupportActionBar().setIcon(R.drawable.ic_report);
 
         Bundle bundle = getIntent().getExtras();
         type=bundle.getString("TYPE");
