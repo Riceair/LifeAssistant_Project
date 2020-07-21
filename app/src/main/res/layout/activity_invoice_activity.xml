@@ -50,13 +50,13 @@
 
         <TextView
             android:id="@+id/more"
-            android:layout_width="200dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="20dp"
+            android:layout_centerHorizontal="true"
             android:layout_marginBottom="200dp"
             android:text="或是，你可以..."
-            android:textColor="@android:color/holo_blue_bright"
+            android:textColor="@android:color/background_light"
             android:textSize="20sp"
             android:textStyle="bold"
             tools:text="或是，你可以..." />
