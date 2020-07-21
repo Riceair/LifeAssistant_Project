@@ -1,4 +1,4 @@
-package com.example.lifeassistant_project.menu_activity;
+package com.example.lifeassistant_project.menu_activity.login;
 
 import android.media.Image;
 import android.util.Log;
@@ -79,5 +79,11 @@ public class Login_activity extends AppCompatActivity {
         targetText = (TextInputEditText) findViewById(R.id.account_password);
         loginPackage.setPassword(targetText.getText().toString());
         return loginPackage;
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0,R.anim.translate_out);
     }
 }

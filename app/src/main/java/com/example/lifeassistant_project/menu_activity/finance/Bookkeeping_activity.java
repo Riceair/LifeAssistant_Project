@@ -1,4 +1,4 @@
-package com.example.lifeassistant_project.menu_activity;
+package com.example.lifeassistant_project.menu_activity.finance;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
@@ -272,6 +272,12 @@ public class Bookkeeping_activity extends AppCompatActivity {
         else{
             Toast.makeText(Bookkeeping_activity.this,"類別新增失敗",Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0,R.anim.translate_out);
     }
 
     //第一次開啟App才會啟用

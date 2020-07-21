@@ -1,4 +1,4 @@
-package com.example.lifeassistant_project.menu_activity;
+package com.example.lifeassistant_project.menu_activity.schedule;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -131,5 +131,11 @@ public class ViewPlan_activity extends AppCompatActivity {
         while((read = in.read(buffer)) != -1){
             out.write(buffer, 0, read);
         }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0,R.anim.translate_out);
     }
 }

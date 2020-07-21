@@ -1,4 +1,4 @@
-package com.example.lifeassistant_project.menu_activity;
+package com.example.lifeassistant_project.menu_activity.finance;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -51,5 +51,11 @@ public class Invoice_activity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, intent);
             Toast.makeText(getApplicationContext(),"發生錯誤",Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0,R.anim.translate_out);
     }
 }

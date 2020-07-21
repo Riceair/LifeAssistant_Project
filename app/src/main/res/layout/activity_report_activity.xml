@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".menu_activity.Report_activity">
+    tools:context=".menu_activity.finance.Report_activity">
 
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/pieChart"
@@ -15,16 +15,45 @@
 
     <Switch
         android:id="@+id/inoutSwitch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="324dp"
-        android:layout_marginLeft="324dp"
-        android:layout_marginBottom="8dp"
-        android:text="支出"
+        android:layout_width="120dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="288dp"
+        android:layout_marginLeft="288dp"
+        android:layout_marginBottom="4dp"
         android:checked="false"
-        android:textSize="20dp"
+        android:thumb="@drawable/report_inout_switch"
+        android:track="@drawable/report_switch_background"
         app:layout_constraintBottom_toTopOf="@+id/reportScroll"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/outSwitchText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="支出"
+        android:textSize="18dp"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/inoutSwitch"
+        app:layout_constraintStart_toStartOf="@+id/inoutSwitch"
+        app:layout_constraintTop_toTopOf="@+id/inoutSwitch"
+        app:layout_constraintVertical_bias="0.375" />
+
+    <TextView
+        android:id="@+id/inSwitchText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:layout_marginRight="12dp"
+        android:visibility="invisible"
+        android:text="收入"
+        android:textColor="#FFFFFF"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/inoutSwitch"
+        app:layout_constraintEnd_toEndOf="@+id/inoutSwitch"
+        app:layout_constraintTop_toTopOf="@+id/inoutSwitch"
+        app:layout_constraintVertical_bias="0.37" />
 
     <ScrollView
         android:id="@+id/reportScroll"

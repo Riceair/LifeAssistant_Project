@@ -1,4 +1,4 @@
-package com.example.lifeassistant_project.menu_activity;
+package com.example.lifeassistant_project.menu_activity.schedule;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -30,5 +30,11 @@ public class Planner_activity extends AppCompatActivity {
     public void clickViewPlan(View view){
         Intent intent = new Intent(view.getContext(),ViewPlan_activity.class);
         view.getContext().startActivity(intent);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0,R.anim.translate_out);
     }
 }

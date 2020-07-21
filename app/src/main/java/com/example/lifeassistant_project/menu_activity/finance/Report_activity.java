@@ -1,7 +1,6 @@
-package com.example.lifeassistant_project.menu_activity;
+package com.example.lifeassistant_project.menu_activity.finance;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
 import android.database.Cursor;
@@ -31,7 +30,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -111,15 +109,19 @@ public class Report_activity extends AppCompatActivity {
         l.setTextColor(Color.WHITE);//設置圖例標籤文本的顏色
 
         //////////////////////////////////////收入,支出切換//////////////////////////////////////
-        inoutSwitch=(Switch) findViewById(R.id.inoutSwitch);
+        final TextView outSwitchText=findViewById(R.id.outSwitchText);
+        final TextView inSwitchText=findViewById(R.id.inSwitchText);
+        inoutSwitch=findViewById(R.id.inoutSwitch);
         inoutSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean IsCheck) {
-                if(IsCheck) {
-                    inoutSwitch.setText("收入");
+                if(IsCheck) { //選擇收入
+                    inSwitchText.setVisibility(View.VISIBLE);
+                    outSwitchText.setVisibility(View.INVISIBLE);
                     inOutAttribute=0;
-                }else {
-                    inoutSwitch.setText("支出");
+                }else { //選擇支出
+                    inSwitchText.setVisibility(View.INVISIBLE);
+                    outSwitchText.setVisibility(View.VISIBLE);
                     inOutAttribute=1;
                 }
                 InOutModeChange();
@@ -330,6 +332,12 @@ public class Report_activity extends AppCompatActivity {
         int g = random.nextInt(256);
         int b = random.nextInt(256);
         return Color.rgb(r,g,b);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0,R.anim.translate_out);
     }
 
     //第一次開啟App才會啟用
