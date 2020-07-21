@@ -3,6 +3,7 @@ package com.example.lifeassistant_project.menu_activity.finance;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -53,6 +54,7 @@ public class Report_activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_activity);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // 資料庫
         File dbDir = new File(PATH, "databases");
@@ -66,7 +68,7 @@ public class Report_activity extends AppCompatActivity {
 
         mChart.setUsePercentValues(true);  //使用百分比顯示
         mChart.getDescription().setEnabled(false);    //設置pipeChart圖表的描述
-        mChart.setBackgroundColor(Color.rgb(108,110,169));
+        //mChart.setBackgroundColor(Color.rgb(108,110,169)); //設置背景顏色
         mChart.setExtraOffsets(10, 20, 10, 100);
         mChart.setDragDecelerationFrictionCoef(0.95f); //設置pieChart圖表轉動阻力摩擦係數[0,1]
         mChart.setRotationAngle(0);                   //設置pieChart圖表起始角度
@@ -79,7 +81,6 @@ public class Report_activity extends AppCompatActivity {
         mChart.setEntryLabelColor(Color.WHITE);       //設置pieChart圖表文本字體顏色
         //mChart.setEntryLabelTypeface(mTfRegular);     //設置pieChart圖表文本字體樣式
         mChart.setEntryLabelTextSize(15f);            //設置pieChart圖表文本字體大小
-
         mChart.setDrawHoleEnabled(false);
 
 // pieChart添加數據 title設置 底部資訊設置
@@ -187,11 +188,15 @@ public class Report_activity extends AppCompatActivity {
                         chYear=year;
                         chMonth=month+1;
                         chDay=day;
+                        getSupportActionBar().setTitle(String.valueOf(chYear)+"年"+String.valueOf(chMonth)+"月"+String.valueOf(chDay)+"日");
                         ReadDBRecord(year,month+1,day);
                         setData(mChart);
                         setBotInf();
                     }
                 },mYear,mMonth,mDay).show();
+                break;
+            case android.R.id.home:
+                Report_activity.this.finish();
                 break;
         }
         return true;
@@ -316,10 +321,57 @@ public class Report_activity extends AppCompatActivity {
         recordLinear.removeAllViews();
         for(int i=0;i<type_list.size();i++){
             LinearLayout recordlist_element = (LinearLayout) getLayoutInflater().inflate(R.layout.report_recordlist_element,null);
-            TextView typeName = (TextView) recordlist_element.findViewById(R.id.record_type);
+            final TextView typeName = (TextView) recordlist_element.findViewById(R.id.record_type);
             TextView sum = (TextView) recordlist_element.findViewById(R.id.record_sum);
             typeName.setText(type_list.get(i));
             sum.setText(String.valueOf(sum_list.get(i)));
+            recordlist_element.setOnClickListener(new View.OnClickListener() { //綁定依照類別查詢的Activity
+                @Override
+                public void onClick(View view) {
+                    int transYear=0;
+                    int transMonth=0;
+                    int transDay=0;
+                    switch (chMode){
+                        case "lastYear":
+                            transYear=currentYear-1;
+                            transMonth=0;
+                            transDay=0;
+                            break;
+                        case "thisYear":
+                            transYear=currentYear;
+                            transMonth=0;
+                            transDay=0;
+                            break;
+                        case "lastMonth":
+                            transYear=currentYear;
+                            transMonth=currentMonth-1;
+                            transDay=0;
+                            break;
+                        case "thisMonth":
+                            transYear=currentYear;
+                            transMonth=currentMonth;
+                            transDay=0;
+                            break;
+                        case "all":
+                            transYear=0;
+                            transMonth=0;
+                            transDay=0;
+                            break;
+                        case "selfChoice":
+                            transYear=chYear;
+                            transMonth=chMonth;
+                            transDay=chDay;
+                            break;
+                    }
+                    Intent intent=new Intent(Report_activity.this,Report_type_activity.class);
+                    intent.putExtra("TYPE",typeName.getText().toString());
+                    intent.putExtra("YEAR",transYear);
+                    intent.putExtra("MONTH",transMonth);
+                    intent.putExtra("DAY",transDay);
+                    Report_activity.this.startActivity(intent);
+                    overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
+                }
+            });
             recordLinear.addView(recordlist_element);
         }
     }
