@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".menu_activity.login.Login_activity"></activity>
+        <activity android:name=".menu_activity.finance.Report_type_activity"></activity>
+        <activity android:name=".menu_activity.login.Login_activity" />
         <activity android:name=".menu_activity.finance.Report_activity" />
         <activity android:name=".menu_activity.schedule.ViewPlan_activity" />
         <activity android:name=".menu_activity.schedule.NewPlan_activity" />
