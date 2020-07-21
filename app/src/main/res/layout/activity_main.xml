@@ -8,10 +8,69 @@
     android:id="@+id/drawer">
 
 
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/drawer_toolbar"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/main_background">
+
+        <RelativeLayout
+            android:layout_width="350dp"
+            android:layout_height="300dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/main_inner_background"
+            android:visibility="visible"
+            tools:visibility="invisible">
+
+            <TextView
+                android:id="@+id/chatBotSay_more"
+                android:layout_width="300dp"
+                android:layout_height="400dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp"
+                android:text="確定要新增記帳500元嗎？"
+                android:textColor="@color/cardview_dark_background"
+                android:textSize="28sp" />
+
+            <ImageButton
+                android:id="@+id/assure_button"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="25dp"
+                android:layout_marginBottom="30dp"
+                android:background="@android:drawable/menuitem_background"
+                android:scaleType="fitXY"
+                android:src="@drawable/assure_button" />
+
+            <ImageButton
+                android:id="@+id/cancelButton"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_alignRight="@id/chatBotSay_more"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="25dp"
+                android:layout_marginBottom="30dp"
+                android:background="@android:drawable/menuitem_background"
+                android:scaleType="fitXY"
+                android:src="@drawable/cancel_button" />
+
+            <ImageButton
+                android:id="@+id/weather_condition"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="100dp"
+                android:background="@drawable/weather_frame"
+                android:scaleType="fitXY"
+                android:src="@drawable/weather_condition_thunderstorms" />
+
+        </RelativeLayout>
 
         <ImageView
             android:id="@+id/chatBotHelpImg"
@@ -23,8 +82,28 @@
             app:srcCompat="@drawable/help_button" />
 
         <TextView
+            android:id="@+id/chatBotSay"
+            android:layout_width="350dp"
+            android:layout_height="400dp"
+            android:layout_alignParentBottom="false"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="120dp"
+            android:text="您好，我可以為您做什麼?"
+            android:textColor="@color/cardview_light_background"
+            android:textSize="30sp" />
+
+        <ImageView
+            android:id="@+id/userSayButton"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="30dp"
+            app:srcCompat="@drawable/toggle_speak" />
+
+        <TextView
             android:id="@+id/chatBotHelp"
-            android:layout_width="100dp"
+            android:layout_width="85dp"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
             android:layout_marginTop="70dp"
@@ -35,43 +114,18 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/chatBotSay"
-            android:layout_width="300dp"
-            android:layout_height="400dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="35dp"
-            android:text="您好，我可以為您做什麼?"
-            android:textColor="#B5042D51"
-            android:textSize="30sp" />
-
-        <TextView
             android:id="@+id/userSay"
             android:layout_width="220dp"
             android:layout_height="120dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:layout_marginRight="40dp"
-            android:layout_marginBottom="100dp"
+            android:layout_marginBottom="80dp"
             android:text="按下按鈕開始對話"
-            android:textColor="#B5041B30"
+            android:textColor="@color/cardview_light_background"
             android:textSize="25sp" />
 
-        <ImageView
-            android:id="@+id/userSayButton"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="30dp"
-            app:srcCompat="@drawable/toggle_speak" />
-
     </RelativeLayout>
-
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/drawer_toolbar"/>
 
     <include
         android:layout_width="match_parent"

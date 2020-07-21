@@ -9,8 +9,8 @@
     <RelativeLayout
         android:layout_width="330dp"
         android:layout_height="580dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="150dp"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
         android:background="@drawable/bookkeeping_inner_background">
 
         <TextView
@@ -148,17 +148,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
+                android:text="支出"
                 android:textColor="@color/design_default_color_background"
-                android:textSize="15dp"
-                android:text="支出"/>
+                android:textSize="15dp" />
 
             <RadioButton
                 android:id="@+id/income"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="收入"
                 android:textColor="@color/design_default_color_background"
-                android:textSize="15dp"
-                android:text="收入" />
+                android:textSize="15dp" />
         </RadioGroup>
 
         <TextView
