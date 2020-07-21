@@ -78,8 +78,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-//        DEBUG_FUNCTION();
-
         //登入
         View headerView=navigationView.getHeaderView(0);
         ImageView LoginImg=headerView.findViewById(R.id.LoginImg);

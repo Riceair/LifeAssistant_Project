@@ -4,10 +4,13 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import javax.net.SocketFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -91,7 +94,10 @@ public class ClientProgress implements Runnable {
                     try {
                         System.out.println("wea");
                         final int PACKAGE_SIZE = 76, CITY_COUNT = 22, WEATHER_PER_CITY = 14;
-                        Socket client = new Socket(this.address, this.port);
+
+                        SocketAddress temp = new InetSocketAddress(this.address, this.port);
+                        Socket client = SocketFactory.getDefault().createSocket();
+                        client.connect(temp, 5000);
 
                         OutputStream out = client.getOutputStream();
 
@@ -108,6 +114,7 @@ public class ClientProgress implements Runnable {
                         ArrayList<WeatherPackage> weatherData = new ArrayList<WeatherPackage>();
                         for (int i = 0, currentLength = 0; i < b_buf.array().length / PACKAGE_SIZE; i++)
                         {
+                            System.out.println(i);
                             byte[] resultArray = Arrays.copyOfRange(b_buf.array(), currentLength+3, currentLength+PACKAGE_SIZE);
                             weatherData.add(PackageHandler.weatherPackageDecode(resultArray));
                             currentLength += PACKAGE_SIZE;
@@ -122,6 +129,7 @@ public class ClientProgress implements Runnable {
                         client.close();                                // 關閉 TcpSocket.
                     }catch (Exception e){
                         System.out.println(e);
+                        this.rcvWeatherData = new ArrayList<WeatherPackage>();
                     }finally {
                         notify();
                     }
@@ -195,6 +203,7 @@ public class ClientProgress implements Runnable {
                         client.close();                                // 關閉 TcpSocket.
                     }catch (Exception e){
                         System.out.println(e);
+                        rcvUserKey = "FA"; //connection fail
                     }finally {
                         notify();
                     }
