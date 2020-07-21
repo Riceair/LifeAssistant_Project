@@ -3,6 +3,7 @@ package com.example.lifeassistant_project.activity_update;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 public class PackageHandler
 {
@@ -485,7 +486,7 @@ public class PackageHandler
             }
             temp += temp_m;
         }
-        System.out.println(temp);
+//        System.out.println(temp);
         result.setMax_temperature(temp);
         currentSize += TEMPERATURE_SIZE;
         temp = 0;
@@ -500,7 +501,7 @@ public class PackageHandler
             }
             temp += temp_m;
         }
-        System.out.println(temp);
+//        System.out.println(temp);
         result.setMin_temperature(temp);
 
         return result;
@@ -556,6 +557,67 @@ public class PackageHandler
         result.setFulfillment(tempString.split(tempString.substring(70,71))[0]);//split null character in the String.
 
         return result;
+}
+
+    static public byte[] LoginPackageEncode(LoginPackage loPkg) throws UnsupportedEncodingException {
+        final int NAME_SIZE = 20, PASSWORD_SIZE = 20;
+
+        ByteBuffer buf = ByteBuffer.allocate(1024);
+        int currentLength = 0;
+
+        ByteBuffer b_temp;
+        buf.put("log".getBytes("UTF-8"));
+
+        buf.put(TransString2ByteArray(loPkg.getName(), NAME_SIZE));
+        buf.put(TransString2ByteArray(loPkg.getPassword(), PASSWORD_SIZE));
+
+        return buf.array();
+    }
+
+    static public String LoginPackageDecode(byte[] message)
+    {
+        final int PASS_SIZE = 2, KEY_SIZE = 64;
+        int temp = 0, currentSize = 0;
+        String tempString;
+
+        tempString = TransByteArray2String(Arrays.copyOfRange(message,currentSize ,currentSize+PASS_SIZE), PASS_SIZE);
+        currentSize += PASS_SIZE;
+
+        if(!tempString.equals("OK")) return "NO";
+
+        tempString = TransByteArray2String(Arrays.copyOfRange(message, currentSize, currentSize + KEY_SIZE), KEY_SIZE);
+        currentSize += KEY_SIZE;
+
+        return tempString;
+    }
+
+//    static private byte[] TransInt2ByteArray()
+//    {
+//
+//    }
+    static private String TransByteArray2String(byte[] message, int MES_SIZE)
+    {
+        ByteBuffer buffer = ByteBuffer.allocate(MES_SIZE);
+
+        for(int i = 0; i < MES_SIZE; i++)
+        {
+            if(message[i] == 0) break;
+            buffer.put(message[i]);
+        }
+        return new String(buffer.array(), StandardCharsets.UTF_8);
+    }
+    static private byte[] TransString2ByteArray(String message, int MES_SIZE) throws UnsupportedEncodingException {
+        if(message.getBytes().length == MES_SIZE) return message.getBytes("UTF-8");
+        else // < 18
+        {
+            ByteBuffer b_temp = ByteBuffer.allocate(MES_SIZE);
+            b_temp.put(message.getBytes("UTF-8"));
+            for(int i = message.getBytes().length; i < MES_SIZE; i++)
+            {
+                b_temp.put((byte)0);
+            }
+            return b_temp.array();
+        }
     }
 }
 

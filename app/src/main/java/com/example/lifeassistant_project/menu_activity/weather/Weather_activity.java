@@ -13,7 +13,9 @@ import android.widget.TextView;
 import com.example.lifeassistant_project.R;
 import com.example.lifeassistant_project.activity_update.ClientProgress;
 import com.example.lifeassistant_project.activity_update.WeatherPackage;
+import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Weather_activity extends AppCompatActivity {
@@ -40,13 +42,16 @@ public class Weather_activity extends AppCompatActivity {
         synchronized (client)
         {
             try {
+                System.out.println("WAITTING");
                 client.wait();
+                System.out.println("GOGO");
             }
             catch (InterruptedException e)
             {
                 System.out.println(e);
             }
         }
+
         ArrayList<WeatherPackage> weatherData = client.getRcvWeatherData();
 
         int pointer;
@@ -116,8 +121,48 @@ public class Weather_activity extends AppCompatActivity {
                     break;
             }
         }
+        this.assignWeek2Text();
     }
 
+    private void assignWeek2Text()
+    {
+        final String[] weekList = new String[]{"星期日", "星期一", "星期二", "星期三", "星期四" , "星期五", "星期六"};
+
+        Date dNow = new Date();
+        SimpleDateFormat ft = new SimpleDateFormat("E");
+        String currentWeek = ft.format(dNow);
+
+        int ptr = 0;
+        if(currentWeek.equals("Sun")) ptr = 0;
+        else if(currentWeek.equals("Mon")) ptr = 1;
+        else if(currentWeek.equals("Tus")) ptr = 2;
+        else if(currentWeek.equals("Wed")) ptr = 3;
+        else if(currentWeek.equals("Thu")) ptr = 4;
+        else if(currentWeek.equals("Fri")) ptr = 5;
+        else if(currentWeek.equals("Sat")) ptr = 6;
+        else ptr = 0;
+
+        for(int i = 0; i < 7; i++)
+        {
+            if (ptr >= 7) ptr = 0;
+            TextView target;
+            int RID = 0;
+            if(i == 0) System.out.println("123");
+            else if(i == 1)RID = R.id.onedayafter;
+            else if(i == 2)RID = R.id.twodaysafter;
+            else if(i == 3)RID = R.id.threedaysafter;
+            else if(i == 4)RID = R.id.fourdaysafter;
+            else if(i == 5)RID = R.id.fivedaysafter;
+            else if(i == 6)RID = R.id.sixdaysafter;
+            else RID = R.id.onedayafter;
+
+            System.out.println(i);
+            target = (TextView) findViewById(RID);
+            if(target != null) target.setText(weekList[ptr++]);
+            else ptr++;
+
+        }
+    }
 
     private void assignCondition2Image(String current_weather,int RID)
     {

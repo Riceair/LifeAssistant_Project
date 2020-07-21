@@ -3,10 +3,13 @@ package com.example.lifeassistant_project.activity_update;
 public class LoginPackage {
     private String name;
     private String password;
+    static private String userKey = null;
 
-    public String getName() {
-        return name;
-    }
+    static public void setUserKey(String message){userKey = message;}
+
+    static public String getUserKey(){ return userKey; }
+
+    public String getName() { return name; }
 
     public void setName(String name) {
         this.name = name;

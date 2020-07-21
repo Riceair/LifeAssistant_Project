@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lifeassistant_project.activity_update.ClientProgress;
+import com.example.lifeassistant_project.activity_update.LoginPackage;
 import com.example.lifeassistant_project.activity_update.SentenceHandler;
 import com.example.lifeassistant_project.menu_activity.finance.Bookkeeping_activity;
 import com.example.lifeassistant_project.menu_activity.finance.Invoice_activity;
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         userSayButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                DEBUG_FUNCTION();
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
                 intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "請說～");
@@ -76,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        DEBUG_FUNCTION();
+//        DEBUG_FUNCTION();
 
         //登入
         View headerView=navigationView.getHeaderView(0);
@@ -91,10 +93,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     private void DEBUG_FUNCTION()
     {
-        ClientProgress client = new ClientProgress();
-        client.setChatBot("我要記帳");
-        Thread cThread = new Thread(client);
-        cThread.start();
+//        ClientProgress client = new ClientProgress();
+//        client.setChatBot("我要記帳");
+//        Thread cThread = new Thread(client);
+//        cThread.start();
+        System.out.println(LoginPackage.getUserKey());
     }
     private String dealSentenceAndRcvMessage(String message)
     {
