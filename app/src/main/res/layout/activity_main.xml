@@ -20,7 +20,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="70dp"
             android:scaleType="fitXY"
-            app:srcCompat="@drawable/help_button" />
+            app:srcCompat="@drawable/signin_button" />
 
         <TextView
             android:id="@+id/chatBotHelp"
