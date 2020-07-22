@@ -3,8 +3,14 @@ package com.example.lifeassistant_project.activity_update;
 public class LoginPackage {
     private String name;
     private String password;
+    static private String userName = "Null";
     static private String userKey = null;
+
     static private boolean isLogin = false;
+
+    static public void setUserName(String userName) { LoginPackage.userName = userName; }
+
+    static public String getUserName() { return userName; }
 
     static public void setIsLogin(boolean t) {isLogin = t;}
 

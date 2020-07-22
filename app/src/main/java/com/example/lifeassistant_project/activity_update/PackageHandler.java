@@ -157,6 +157,7 @@ public class PackageHandler
         }
         result.setMoney(temp);
         currentSize += year_size;
+        temp = 0;
         for(int i = currentSize - year_size ;i < currentSize; i++)
         {
             temp = temp << 8;
@@ -169,6 +170,7 @@ public class PackageHandler
         }
         result.setYear(temp);
         currentSize += month_size;
+        temp = 0;
         for(int i = currentSize - month_size ;i < currentSize; i++)
         {
             temp = temp << 8;
@@ -181,6 +183,7 @@ public class PackageHandler
         }
         result.setMonth(temp);
         currentSize += day_size;
+        temp = 0;
         for(int i = currentSize - day_size ;i < currentSize; i++)
         {
             temp = temp << 8;
@@ -192,18 +195,19 @@ public class PackageHandler
             temp += temp_m;
         }
         result.setDay(temp);
+
+        result.setItem(TransByteArray2String(Arrays.copyOfRange(message, currentSize, currentSize + item_size), item_size));
         currentSize += item_size;
-        for(int i = currentSize - item_size; i < currentSize; i++)
-            buffer.put(message[i]);
-        tempString = new String(buffer.array(), StandardCharsets.UTF_8);
-        buffer.clear();
-        result.setItem(tempString);
+
+        result.setDetail(TransByteArray2String(Arrays.copyOfRange(message, currentSize, currentSize + detail_size), detail_size));
         currentSize += detail_size;
-        for(int i = currentSize - detail_size; i < currentSize; i++)
-            buffer.put(message[i]);
-        tempString = new String(buffer.array(), StandardCharsets.UTF_8);
-        buffer.clear();
-        result.setDetail(tempString);
+
+//        for(int i = currentSize - detail_size; i < currentSize; i++)
+//            buffer.put(message[i]);
+//        tempString = new String(buffer.array(), StandardCharsets.UTF_8);
+//        buffer.clear();
+//        result.setDetail(tempString);
+
         currentSize += status_size;
         for(int i = currentSize - day_size ;i < currentSize; i++)
         {
@@ -611,12 +615,26 @@ public class PackageHandler
     {
         ByteBuffer buffer = ByteBuffer.allocate(MES_SIZE);
 
+        ByteBuffer temp_buf = ByteBuffer.allocate(3);
+        for(int i = 0;i < 3;i++)
+            temp_buf.put((byte)0);
+        String nullString = new String(temp_buf.array(), StandardCharsets.UTF_8);
+
         for(int i = 0; i < MES_SIZE; i++)
         {
             if(message[i] == 0) break;
             buffer.put(message[i]);
         }
-        return new String(buffer.array(), StandardCharsets.UTF_8);
+
+//        System.out.println("DDDDDDDDDDDDDDDDd");
+//        System.out.println(new String(buffer.array(), StandardCharsets.UTF_8));
+//        System.out.println(new String(buffer.array(), StandardCharsets.UTF_8).split(nullString)[0]);
+        try{
+            return new String(buffer.array(), StandardCharsets.UTF_8).split(nullString)[0];
+        }catch (Exception e)
+        {
+            return "null";
+        }
     }
     static private byte[] TransString2ByteArray(String message, int MES_SIZE) throws UnsupportedEncodingException {
         if(message.getBytes().length == MES_SIZE) return message.getBytes("UTF-8");
