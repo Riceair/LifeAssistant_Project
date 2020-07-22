@@ -91,7 +91,7 @@ public class Weather_activity extends AppCompatActivity {
                     displayText = (TextView) findViewById(R.id.Location);
                     displayText.setText(currentWeather.getCity());
                     assignCondition2Image(currentWeather.getSituation(),R.id.Conditions);
-                    assignbackground2Image(currentWeather.getSituation(),R.id.mainly);
+                    assignbackground2Image(currentWeather.getSituation(),R.id.secondary);
 
                     break;
                 case 1:
