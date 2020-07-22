@@ -39,52 +39,60 @@ public class ClientProgress implements Runnable {
         public void run()  {
             if(this.packageType.equals("bookkeeping"))
             {
-                try {
-                    final int PACKAGE_SIZE = 71;
+                synchronized (this)
+                {
+                    try {
+                        final int PACKAGE_SIZE = 71;
 
-                    Socket client = new Socket(this.address, this.port);
+                        Socket client = new Socket(this.address, this.port);
 
-                    OutputStream out = client.getOutputStream();
+                        OutputStream out = client.getOutputStream();
 
-                    // send account package
-                    out.write(PackageHandler.accountPackageEncode(this.accountPackage));
-                    out.flush();
-                    InputStream in = client.getInputStream();      // 取得輸入訊息的串流
+                        // send account package
+                        out.write(PackageHandler.accountPackageEncode(this.accountPackage));
+                        out.flush();
+                        InputStream in = client.getInputStream();      // 取得輸入訊息的串流
 
-                    StringBuffer buf = new StringBuffer();        // 建立讀取字串。
-                    ByteBuffer b_buf = getInputByteBuffer(in, 1024*16);
-                    out.close();
+                        StringBuffer buf = new StringBuffer();        // 建立讀取字串。
+                        ByteBuffer b_buf = getInputByteBuffer(in, 1024*16);
+                        out.close();
 
-                    byte[] rcvArray = Arrays.copyOfRange(b_buf.array(), 0, b_buf.array().length);
+                        byte[] rcvArray = Arrays.copyOfRange(b_buf.array(), 0, b_buf.array().length);
 
-                    if(this.accountPackage.getRequestAction() == 3)
-                    {
-                        System.out.println("Hello");
-                        ArrayList<AccountPackage> rcvAccountData = new ArrayList<AccountPackage>();
-                        for (int i = 0, currentLength = 0; i < b_buf.array().length / PACKAGE_SIZE; i++)
+                        if(this.accountPackage.getRequestAction() == 3)
                         {
-                            byte[] resultArray = Arrays.copyOfRange(b_buf.array(), currentLength+3, currentLength+PACKAGE_SIZE);
-                            rcvAccountData.add(PackageHandler.accountPackageDecode(resultArray));
-                            currentLength += PACKAGE_SIZE;
+                            System.out.println("Hello");
+                            ArrayList<AccountPackage> rcvAccountData = new ArrayList<AccountPackage>();
+                            for (int i = 0, currentLength = 0; i < b_buf.array().length / PACKAGE_SIZE; i++)
+                            {
+                                byte[] resultArray = Arrays.copyOfRange(b_buf.array(), currentLength+3, currentLength+PACKAGE_SIZE);
+                                AccountPackage temp = PackageHandler.accountPackageDecode(resultArray);
+                                if(temp.getID() == 0) break;
+                                rcvAccountData.add(temp);
+                                currentLength += PACKAGE_SIZE;
+                            }
+                            this.rcvAccountData = rcvAccountData;
+//
+//                        for(AccountPackage temp : this.rcvAccountData)
+//                        {
+//                            System.out.println(temp.getID());
+//                        }
                         }
-                        this.rcvAccountData = rcvAccountData;
-
-                        for(AccountPackage temp : this.rcvAccountData)
+                        else
                         {
-                            System.out.println(temp.getID());
+                            String rcvString = new String(rcvArray, StandardCharsets.UTF_8);
+                            System.out.println(rcvString);
                         }
-                    }
-                    else
-                    {
-                        String rcvString = new String(rcvArray, StandardCharsets.UTF_8);
-                        System.out.println(rcvString);
-                    }
 
-                    System.out.println("message send.");                    // 印出接收到的訊息。
-                    client.close();                                // 關閉 TcpSocket.
-                }catch (Exception e){
-                    System.out.println("exception");
-                    System.out.println(e);
+                        System.out.println("message send.");                    // 印出接收到的訊息。
+                        client.close();                                // 關閉 TcpSocket.
+                    }catch (Exception e){
+                        System.out.println("exception");
+                        System.out.println(e);
+                    }finally {
+                        if(this.accountPackage.getRequestAction() == 3)
+                            notify();
+                    }
                 }
             }
             else if (this.packageType.equals("weather"))

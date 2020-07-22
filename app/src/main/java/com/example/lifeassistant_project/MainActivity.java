@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lifeassistant_project.activity_update.ClientProgress;
+import com.example.lifeassistant_project.activity_update.DatabaseBehavior;
 import com.example.lifeassistant_project.activity_update.LoginPackage;
 import com.example.lifeassistant_project.activity_update.SentenceHandler;
 import com.example.lifeassistant_project.menu_activity.finance.Bookkeeping_activity;
@@ -95,7 +96,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        client.setChatBot("我要記帳");
 //        Thread cThread = new Thread(client);
 //        cThread.start();
-        System.out.println(LoginPackage.getUserKey());
+
+//        System.out.println(LoginPackage.getUserKey());
+
+        DatabaseBehavior.synchronizeServer2Client();
     }
     private String dealSentenceAndRcvMessage(String message)
     {

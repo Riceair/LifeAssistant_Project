@@ -39,6 +39,7 @@ public class AccountPackage
         this.detail = "";
         this.type = false;
         this.requestAction = 4;
+        this.user = "Null";
     }
 
     public int getID() {

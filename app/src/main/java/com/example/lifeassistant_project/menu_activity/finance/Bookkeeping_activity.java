@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.example.lifeassistant_project.R;
 import com.example.lifeassistant_project.activity_update.AccountPackage;
 import com.example.lifeassistant_project.activity_update.ClientProgress;
+import com.example.lifeassistant_project.activity_update.LoginPackage;
 
 
 import java.io.File;
@@ -111,7 +112,7 @@ public class Bookkeeping_activity extends AppCompatActivity {
         writeToBKDB();
         //
         ClientProgress client = new ClientProgress();
-        this.sendPackage.setUser("1");
+        this.sendPackage.setUser(LoginPackage.getUserName());
         client.setBookkeeping(this.sendPackage);
 //        client.setWeather();
         Thread conn = new Thread(client);

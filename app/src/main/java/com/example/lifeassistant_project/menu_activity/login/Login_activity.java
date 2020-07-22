@@ -54,6 +54,7 @@ public class Login_activity extends AppCompatActivity {
                     else
                     {
 //                        System.out.println(LoginPackage.getUserKey());
+                        LoginPackage.setUserName(loginPackage.getName());
                         LoginPackage.setIsLogin(true);
                         Login_activity.this.finish();
                     }
