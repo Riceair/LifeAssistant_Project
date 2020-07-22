@@ -178,9 +178,15 @@ public class Bookkeeping_activity extends AppCompatActivity {
 
         myDB = openOrCreateDatabase(DBNAME,MODE_PRIVATE,null);
         long result=-1L;
+        int times=0;
         while (true) {
+            times++;
+            if(times>100000){
+                Toast.makeText(this,"資料儲存過多，請刪除無用的資料",Toast.LENGTH_SHORT).show();
+                break;
+            }
             try {
-                int id = (int) (Math.random() * 99999);
+                int id = (int) (Math.random() * 99999)+1;
                 values.put("id", id);
                 // get Account Class
                 this.sendPackage = new AccountPackage(id, cost, year, month, day, type, item, (attribute == 0 ? false : true));

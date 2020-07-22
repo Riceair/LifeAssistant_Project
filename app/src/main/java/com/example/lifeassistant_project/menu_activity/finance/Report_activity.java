@@ -99,7 +99,7 @@ public class Report_activity extends AppCompatActivity {
         setData(mChart);
         setBotInf();
 
-// 獲取pieCahrt圖例
+// 獲取pieChart圖例
         Legend l = mChart.getLegend();
         l.setEnabled(true);                    //是否啟用圖列（true：下面屬性才有意義）
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
@@ -331,7 +331,13 @@ public class Report_activity extends AppCompatActivity {
             final TextView typeName = (TextView) recordlist_element.findViewById(R.id.record_type);
             TextView sum = (TextView) recordlist_element.findViewById(R.id.record_sum);
             typeName.setText(type_list.get(i));
-            sum.setText(String.valueOf(sum_list.get(i)));
+            if(inOutAttribute==1){ //支出
+                sum.setText("-$"+String.valueOf(sum_list.get(i)));
+                sum.setTextColor(Color.RED);
+            }else{ //收入
+                sum.setText("+$"+String.valueOf(sum_list.get(i)));
+                sum.setTextColor(Color.rgb(4,117,2));
+            }
             recordlist_element.setOnClickListener(new View.OnClickListener() { //綁定依照類別查詢的Activity
                 @Override
                 public void onClick(View view) {
@@ -372,6 +378,7 @@ public class Report_activity extends AppCompatActivity {
                     }
                     Intent intent=new Intent(Report_activity.this,Report_type_activity.class);
                     intent.putExtra("TYPE",typeName.getText().toString());
+                    intent.putExtra("inOutAttribute",inOutAttribute);
                     intent.putExtra("YEAR",transYear);
                     intent.putExtra("MONTH",transMonth);
                     intent.putExtra("DAY",transDay);

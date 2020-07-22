@@ -147,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.menu_weather:
                 intent=new Intent(this, Weather_activity.class);
                 this.startActivity(intent);
+                overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
                 break;
             case R.id.menu_predict_oil:
                 Toast.makeText(this,"油價",Toast.LENGTH_SHORT).show();
