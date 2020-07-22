@@ -29,12 +29,12 @@ public class Weather_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather_activity);
         Toolbar toolbar=findViewById(R.id.toolbar);
-        toolbar.setTitle("天氣");
+        toolbar.setTitle("  天氣");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-
+        getSupportActionBar().setIcon(R.drawable.weather);
         this.showWeatherData();
     }
 

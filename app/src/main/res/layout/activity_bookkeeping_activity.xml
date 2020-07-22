@@ -62,7 +62,6 @@
             android:layout_height="55dp"
             android:layout_alignBottom="@+id/dateinput"
             android:layout_alignParentRight="true"
-            android:layout_marginLeft="368dp"
             android:layout_marginRight="20dp"
             android:text="選擇日期"
             android:textSize="15dp" />
@@ -95,7 +94,6 @@
             android:layout_height="55dp"
             android:layout_alignBottom="@+id/filterinput"
             android:layout_alignParentRight="true"
-            android:layout_marginLeft="368dp"
             android:layout_marginRight="20dp"
             android:onClick="clickToReadFDB"
             android:text="選擇分類"

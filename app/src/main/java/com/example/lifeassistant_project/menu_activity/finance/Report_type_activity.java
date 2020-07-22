@@ -18,12 +18,12 @@ public class Report_type_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_type_activity);
         Toolbar toolbar=findViewById(R.id.toolbar);
-        toolbar.setTitle("報表");
+        toolbar.setTitle("  報表");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_report);
+        getSupportActionBar().setIcon(R.drawable.report);
 
         Bundle bundle = getIntent().getExtras();
         type=bundle.getString("TYPE");

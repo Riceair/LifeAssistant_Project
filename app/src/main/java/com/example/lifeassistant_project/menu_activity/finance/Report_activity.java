@@ -56,12 +56,12 @@ public class Report_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_activity);
         Toolbar toolbar=findViewById(R.id.toolbar);
-        toolbar.setTitle("報表");
+        toolbar.setTitle("   報表");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_report);
+        getSupportActionBar().setIcon(R.drawable.report);
 
         // 資料庫
         File dbDir = new File(PATH, "databases");
@@ -94,7 +94,7 @@ public class Report_activity extends AppCompatActivity {
         Calendar c = Calendar.getInstance();
         currentYear=c.get(Calendar.YEAR);
         currentMonth=c.get(Calendar.MONTH)+1;
-        getSupportActionBar().setSubtitle(String.valueOf(currentYear)+"年"+String.valueOf(currentMonth)+"月");
+        getSupportActionBar().setSubtitle("   "+String.valueOf(currentYear)+"年"+String.valueOf(currentMonth)+"月");
         ReadDBRecord(currentYear,currentMonth,0);
         setData(mChart);
         setBotInf();
@@ -149,35 +149,35 @@ public class Report_activity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.lastYear:
                 chMode="lastYear";
-                getSupportActionBar().setSubtitle(String.valueOf(currentYear-1)+"年");
+                getSupportActionBar().setSubtitle("   "+String.valueOf(currentYear-1)+"年");
                 ReadDBRecord(currentYear-1,0,0);
                 setData(mChart);
                 setBotInf();
                 break;
             case R.id.thisYear:
                 chMode="thisYear";
-                getSupportActionBar().setSubtitle(String.valueOf(currentYear)+"年");
+                getSupportActionBar().setSubtitle("   "+String.valueOf(currentYear)+"年");
                 ReadDBRecord(currentYear,0,0);
                 setData(mChart);
                 setBotInf();
                 break;
             case R.id.lastMonth:
                 chMode="lastMonth";
-                getSupportActionBar().setSubtitle(String.valueOf(currentYear)+"年"+String.valueOf(currentMonth-1)+"月");
+                getSupportActionBar().setSubtitle("   "+String.valueOf(currentYear)+"年"+String.valueOf(currentMonth-1)+"月");
                 ReadDBRecord(currentYear,currentMonth-1,0);
                 setData(mChart);
                 setBotInf();
                 break;
             case R.id.thisMonth:
                 chMode="thisMonth";
-                getSupportActionBar().setSubtitle(String.valueOf(currentYear)+"年"+String.valueOf(currentMonth)+"月");
+                getSupportActionBar().setSubtitle("   "+String.valueOf(currentYear)+"年"+String.valueOf(currentMonth)+"月");
                 ReadDBRecord(currentYear,currentMonth,0);
                 setData(mChart);
                 setBotInf();
                 break;
             case R.id.all:
                 chMode="all";
-                getSupportActionBar().setSubtitle("所有紀錄");
+                getSupportActionBar().setSubtitle("   所有紀錄");
                 ReadDBRecord(0,0,0);
                 setData(mChart);
                 setBotInf();
@@ -195,7 +195,7 @@ public class Report_activity extends AppCompatActivity {
                         chYear=year;
                         chMonth=month+1;
                         chDay=day;
-                        getSupportActionBar().setSubtitle(String.valueOf(chYear)+"年"+String.valueOf(chMonth)+"月"+String.valueOf(chDay)+"日");
+                        getSupportActionBar().setSubtitle("   "+String.valueOf(chYear)+"年"+String.valueOf(chMonth)+"月"+String.valueOf(chDay)+"日");
                         ReadDBRecord(year,month+1,day);
                         setData(mChart);
                         setBotInf();

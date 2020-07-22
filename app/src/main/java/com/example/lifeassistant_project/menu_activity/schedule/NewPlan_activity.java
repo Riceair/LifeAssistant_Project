@@ -32,11 +32,12 @@ public class NewPlan_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_plan_activity);
         Toolbar toolbar=findViewById(R.id.toolbar);
-        toolbar.setTitle("新增記事");
+        toolbar.setTitle("   新增記事");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.newstand);
 
         File dbDir = new File(PATH, "databases");
         dbDir.mkdir();

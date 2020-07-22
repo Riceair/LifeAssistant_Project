@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,67 +8,20 @@
     tools:context="com.example.lifeassistant_project.menu_activity.schedule.Planner_activity">
 
 
-    <Button
-        android:id="@+id/checkbutton"
-        android:layout_width="60dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="320dp"
-        android:layout_marginBottom="480dp"
-        android:onClick="clickViewPlan"
-        android:text="檢視" />
-
-    <ImageView
-        android:id="@+id/todaycountdecimal"
-        android:layout_width="20dp"
-        android:layout_height="30dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="250dp"
-        android:layout_marginBottom="500dp"
-        android:scaleType="fitXY"
-        app:srcCompat="@drawable/digits_0" />
-
-    <ImageView
-        android:id="@+id/todaycountdigit"
-        android:layout_width="20dp"
-        android:layout_height="30dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="270dp"
-        android:layout_marginBottom="500dp"
-        android:scaleType="fitXY"
-        app:srcCompat="@drawable/digits_2" />
-
-    <ImageView
-        android:id="@+id/stuffcountdecimal"
-        android:layout_width="20dp"
-        android:layout_height="30dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="250dp"
-        android:layout_marginBottom="470dp"
-        android:scaleType="fitXY"
-        app:srcCompat="@drawable/digits_0" />
-
-    <ImageView
-        android:id="@+id/stuffcountdigit"
-        android:layout_width="20dp"
-        android:layout_height="30dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="270dp"
-        android:layout_marginBottom="470dp"
-        android:scaleType="fitXY"
-        app:srcCompat="@drawable/digits_0" />
-
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="430dp"
-        android:layout_alignParentBottom="true"
+        android:layout_width="350dp"
+        android:layout_height="500dp"
+        android:layout_alignParentBottom="false"
+        android:layout_centerInParent="true"
+        android:background="@drawable/planner_inner_background"
         tools:context=".MainActivity">
 
         <CalendarView
             android:id="@+id/calendarView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
             android:background="@android:drawable/editbox_dropdown_light_frame"
             android:selectedWeekBackgroundColor="@android:color/holo_orange_light"
             android:unfocusedMonthDateColor="@color/colorAccent"
@@ -80,16 +32,29 @@
             android:id="@+id/addbutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/checkbutton"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
+            android:layout_marginLeft="100dp"
             android:layout_marginBottom="30dp"
             android:onClick="clickNewPlan"
             android:text=" 新增排程" />
 
+        <Button
+            android:id="@+id/checkbutton"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="false"
+            android:layout_marginLeft="80dp"
+            android:layout_marginBottom="30dp"
+            android:onClick="clickViewPlan"
+            android:text="檢視" />
+
     </RelativeLayout>
 
     <include
+        layout="@layout/drawer_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/drawer_toolbar"/>
+        android:layout_height="wrap_content" />
 </RelativeLayout>

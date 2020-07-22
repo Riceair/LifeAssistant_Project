@@ -23,11 +23,12 @@ public class Invoice_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invoice_activity);
         Toolbar toolbar=findViewById(R.id.toolbar);
-        toolbar.setTitle("兌發票");
+        toolbar.setTitle("   兌發票");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.receipt_checksum);
     }
 
     public void onbuttonclick(View view)

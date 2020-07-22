@@ -18,11 +18,12 @@ public class Planner_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_planner_activity);
         Toolbar toolbar=findViewById(R.id.toolbar);
-        toolbar.setTitle("記事");
+        toolbar.setTitle("   排程");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.newstand);
     }
 
     public void clickNewPlan(View view){

@@ -25,7 +25,7 @@ public class Login_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_activity);
         Toolbar toolbar=findViewById(R.id.toolbar);
-        toolbar.setTitle("登入");
+        toolbar.setTitle("   登入");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
