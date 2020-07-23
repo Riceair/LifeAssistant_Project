@@ -62,7 +62,7 @@ public class Report_activity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.report);
+        getSupportActionBar().setIcon(R.drawable.icon_report);
 
         // 資料庫
         File dbDir = new File(PATH, "databases");

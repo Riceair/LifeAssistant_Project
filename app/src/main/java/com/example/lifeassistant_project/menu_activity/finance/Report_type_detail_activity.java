@@ -53,7 +53,7 @@ public class Report_type_detail_activity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.report);
+        getSupportActionBar().setIcon(R.drawable.icon_report);
 
         //取得傳遞過來要Query的訊息
         Bundle bundle = getIntent().getExtras();
@@ -151,19 +151,14 @@ public class Report_type_detail_activity extends AppCompatActivity {
             final String week=" "+getWeekOfDate(date); //儲存星期幾
             detailDate.setText(strDate+week);
 
+            final int recordID = recordID_list.get(i);
             recordlist_element_detail.setOnClickListener(new View.OnClickListener() { //綁定依照類別查詢的Activity
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(Report_type_detail_activity.this,strDate+week,Toast.LENGTH_SHORT).show();
-//                    Intent intent=new Intent(Report_type_detail_activity.this,Report_type_detail_activity.class);
-//                    intent.putExtra("TYPE",type);
-//                    intent.putExtra("DETAIL",detailName.getText().toString());
-//                    intent.putExtra("inOutAttribute",inOutAttribute);
-//                    intent.putExtra("YEAR",year);
-//                    intent.putExtra("MONTH",month);
-//                    intent.putExtra("DAY",day);
-//                    Report_type_detail_activity.this.startActivity(intent);
-//                    overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
+                    Intent intent=new Intent(Report_type_detail_activity.this,Report_ultimate_activity.class);
+                    intent.putExtra("RECORDID",recordID);
+                    Report_type_detail_activity.this.startActivity(intent);
+                    overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
                 }
             });
             recordLinear.addView(recordlist_element_detail);

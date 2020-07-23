@@ -61,7 +61,7 @@ public class Bookkeeping_activity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.trailers);
+        getSupportActionBar().setIcon(R.drawable.icon_bookkeeping);
 
         // 資料庫
         File dbDir = new File(PATH, "databases");

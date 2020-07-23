@@ -60,7 +60,7 @@ public class Report_type_activity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.report);
+        getSupportActionBar().setIcon(R.drawable.icon_report);
 
         //取得傳遞過來要Query的訊息
         Bundle bundle = getIntent().getExtras();

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/receipt_checksum_background"
+    android:background="@drawable/finance_background"
     tools:context=".menu_activity.finance.Report_type_activity">
 
     <RelativeLayout
