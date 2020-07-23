@@ -511,26 +511,19 @@ public class PackageHandler
         return result;
     }
 
-    static public byte[] sentencePackageEncode(String message) throws UnsupportedEncodingException {
-        final int MES_SIZE = 75;
+    static public byte[] sentencePackageEncode(SentenceHandler sentenceHandler) throws UnsupportedEncodingException {
+        final int INTENT_SIZE = 4, OPERATE_SIZE = 4, MES_SIZE = 90;
 
         ByteBuffer buf = ByteBuffer.allocate(1024);
-        int currentLength = 0;
 
         ByteBuffer b_temp;
         buf.put("sen".getBytes("UTF-8"));
 
-        if(message.getBytes().length == MES_SIZE) buf.put(message.getBytes("UTF-8"));
-        else // < SIZE
-        {
-            b_temp = ByteBuffer.allocate(MES_SIZE);
-            b_temp.put(message.getBytes("UTF-8"));
-            for(int i = message.getBytes().length; i < MES_SIZE; i++)
-            {
-                b_temp.put((byte)0);
-            }
-            buf.put(b_temp.array());
-        }
+        buf.put(TransInt2ByteArray(sentenceHandler.getIntent(), INTENT_SIZE));
+
+        buf.put(TransInt2ByteArray(sentenceHandler.getOperation(), OPERATE_SIZE));
+
+        buf.put(TransString2ByteArray(sentenceHandler.getFulfillment(), MES_SIZE));
 
         return buf.array();
     }
@@ -589,10 +582,18 @@ public class PackageHandler
         return tempString;
     }
 
-//    static private byte[] TransInt2ByteArray()
-//    {
-//
-//    }
+    static private byte[] TransInt2ByteArray(int num, int MES_SIZE)
+    {
+        ByteBuffer b_temp = ByteBuffer.allocate(MES_SIZE);
+        Integer temp = num;
+        for(int i = 0;i < MES_SIZE;i++)
+        {
+            b_temp.put(temp.byteValue());
+            temp /= 256;
+        }
+
+        return ReverseArray.Reverse_ByteBuffer(b_temp.array());
+    }
     static private int TransByteArray2Int(byte[] message, int MES_SIZE)
     {
         int temp = 0;
@@ -626,9 +627,6 @@ public class PackageHandler
             buffer.put(message[i]);
         }
 
-//        System.out.println("DDDDDDDDDDDDDDDDd");
-//        System.out.println(new String(buffer.array(), StandardCharsets.UTF_8));
-//        System.out.println(new String(buffer.array(), StandardCharsets.UTF_8).split(nullString)[0]);
         try{
             return new String(buffer.array(), StandardCharsets.UTF_8).split(nullString)[0];
         }catch (Exception e)

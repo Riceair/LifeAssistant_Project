@@ -21,7 +21,7 @@ public class ClientProgress implements Runnable {
         public static int port = 6666;
         public static String address = "192.168.203.108";
         private String packageType = "";
-        private String sendText = "";
+        private SentenceHandler sendSentence;
         private SentenceHandler rcvSentence;
         private AccountPackage accountPackage;
         private ArrayList<AccountPackage> rcvAccountData;
@@ -156,7 +156,7 @@ public class ClientProgress implements Runnable {
                         OutputStream out = client.getOutputStream();
 
                         // send account package
-                        out.write(PackageHandler.sentencePackageEncode(this.sendText));
+                        out.write(PackageHandler.sentencePackageEncode(this.sendSentence));
                         out.flush();
                         InputStream in = client.getInputStream();      // 取得輸入訊息的串流
 
@@ -306,10 +306,10 @@ public class ClientProgress implements Runnable {
         {
             this.packageType = "weather";
         }
-        public void setChatBot(String rcvMessage)
+        public void setChatBot(SentenceHandler sentence)
         {
             this.packageType = "chatBot";
-            this.sendText = rcvMessage;
+            this.sendSentence = sentence;
         }
         public void setLogin(LoginPackage loginPackage)
         {

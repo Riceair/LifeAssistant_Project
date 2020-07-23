@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.example.lifeassistant_project.R;
 import com.example.lifeassistant_project.activity_update.ClientProgress;
+import com.example.lifeassistant_project.activity_update.DatabaseBehavior;
 import com.example.lifeassistant_project.activity_update.LoginPackage;
 import com.example.lifeassistant_project.menu_activity.finance.Report_type_activity;
 import com.google.android.material.textfield.TextInputEditText;

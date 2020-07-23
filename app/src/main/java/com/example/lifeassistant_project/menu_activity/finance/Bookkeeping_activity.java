@@ -69,7 +69,7 @@ public class Bookkeeping_activity extends AppCompatActivity {
         File FdbFile = new File(PATH+"/databases",DBNAME);
         if(!FdbFile.exists() || !FdbFile.isFile())
             copyAssets(PATH); //初始資料庫複製到路徑
-        filterinput = (EditText) findViewById(R.id.timeinput);
+        filterinput = (EditText) findViewById(R.id.filterinput);
 
         ////////////////////////////////日期/////////////////////////////////
         final TextView dateText = (TextView) findViewById(R.id.dateinput);
@@ -127,14 +127,14 @@ public class Bookkeeping_activity extends AppCompatActivity {
         int year = 0;
         int month = 0;
         int day = 0;
-        TextView textView = (TextView) findViewById(R.id.eventinput); //金額
+        TextView textView = (TextView) findViewById(R.id.costinput); //金額
         if (!textView.getText().toString().equals(""))
             cost = Integer.parseInt(textView.getText().toString());
         else {
             Toast.makeText(this,"請輸入金額",Toast.LENGTH_SHORT).show();
             return;
         }
-        textView = (TextView) findViewById(R.id.timeinput); //分類
+        textView = (TextView) findViewById(R.id.filterinput); //分類
         String type = textView.getText().toString();
         textView = (TextView) findViewById(R.id.itemsinput); //細項
         String item = textView.getText().toString();

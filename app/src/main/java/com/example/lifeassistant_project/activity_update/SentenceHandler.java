@@ -4,6 +4,13 @@ public class SentenceHandler {
     private int intent, operation;
     private String fulfillment;
 
+    public SentenceHandler()
+    {
+        this.intent = 0;
+        this.operation = 0;
+        this.fulfillment = "null";
+    }
+
     public int getOperation() { return operation; }
 
     public void setOperation(int operation) { this.operation = operation; }

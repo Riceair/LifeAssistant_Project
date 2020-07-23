@@ -17,10 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.lifeassistant_project.activity_update.ClientProgress;
-import com.example.lifeassistant_project.activity_update.DatabaseBehavior;
-import com.example.lifeassistant_project.activity_update.LoginPackage;
-import com.example.lifeassistant_project.activity_update.SentenceHandler;
+import com.example.lifeassistant_project.activity_update.*;
 import com.example.lifeassistant_project.menu_activity.finance.Bookkeeping_activity;
 import com.example.lifeassistant_project.menu_activity.finance.Invoice_activity;
 import com.example.lifeassistant_project.menu_activity.login.Login_activity;
@@ -37,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private Toolbar toolbar;
     private NavigationView navigationView;
+    private ChatbotBehavior chatbotBehavior;
 
     private ImageView userSayButton;
     private TextView userSay;
@@ -61,13 +59,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         actionBarDrawerToggle.syncState();
 
         //語音TTS
+        chatbotBehavior = new ChatbotBehavior();
         userSay=findViewById(R.id.userSay);
         chatBotSay=(TextView) findViewById(R.id.chatBotSay);
         userSayButton=findViewById(R.id.userSayButton);
         userSayButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                DEBUG_FUNCTION();
+//                DEBUG_FUNCTION();
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
                 intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "請說～");
@@ -78,6 +77,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         });
+
+        //popup window hidden
+        findViewById(R.id.popup_window).setVisibility(View.INVISIBLE);
 
         //登入
         View headerView=navigationView.getHeaderView(0);
@@ -101,29 +103,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         DatabaseBehavior.synchronizeServer2Client();
     }
-    private String dealSentenceAndRcvMessage(String message)
-    {
-        ClientProgress client = new ClientProgress();
-        client.setChatBot(message);
-        Thread cThread = new Thread(client);
-        cThread.start();
-
-        synchronized (client)
-        {
-            try {
-                System.out.println("WAITTING");
-                client.wait();
-                System.out.println("GOGOGO");
-            }
-            catch (InterruptedException e) {
-                System.out.println(e);
-            }
-        }
-
-        SentenceHandler handler = client.getRcvSentence();
-
-        return handler.getFulfillment();
-    }
 
     ////////////////////////////語音///////////////////////////////////
     @Override
@@ -132,9 +111,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(requestCode == 200){
             if(resultCode == RESULT_OK && data != null){
                 ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                System.out.println(result.get(0));
                 userSay.setText(result.get(0));
-                chatBotSay.setText(dealSentenceAndRcvMessage(result.get(0)));
+
+                System.out.println("Behavior");
+                System.out.println(chatbotBehavior.getBehaviorMode());
+                if(!chatbotBehavior.generateSendSentence(result.get(0)))
+                {
+                    System.out.println(chatbotBehavior.getErrorMessage());
+                }
+                else
+                {
+                    chatbotBehavior.sendSentence();
+                }
+
+                chatBotSay.setText(chatbotBehavior.getSentenceHandler().getFulfillment());
             }
         }
     }
