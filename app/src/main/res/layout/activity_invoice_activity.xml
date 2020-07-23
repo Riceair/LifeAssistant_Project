@@ -10,8 +10,8 @@
     tools:context="com.example.lifeassistant_project.menu_activity.finance.Invoice_activity">
 
     <RelativeLayout
-        android:layout_width="400dp"
-        android:layout_height="620dp"
+        android:layout_width="350dp"
+        android:layout_height="600dp"
         android:layout_centerInParent="true"
         android:background="@drawable/receipt_checksum_inner_background">
 
@@ -94,8 +94,8 @@
                 android:textColorHighlight="@color/design_default_color_background"
                 android:textColorHint="@color/design_default_color_background"
                 android:textColorLink="@color/design_default_color_background" />
-
         </com.google.android.material.textfield.TextInputLayout>
+
     </RelativeLayout>
 
     <include

@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -324,6 +325,14 @@ public class Report_activity extends AppCompatActivity {
 
     //設定底下顯示的資料
     private void setBotInf(){
+        //無資料設定
+        TextView noDataText=findViewById(R.id.no_data_text);
+        if(type_list.isEmpty())
+            noDataText.setVisibility(View.VISIBLE);
+        else
+            noDataText.setVisibility(View.INVISIBLE);
+
+        //底部資料設定
         LinearLayout recordLinear = (LinearLayout) findViewById(R.id.record_list); //要顯示的layout
         recordLinear.removeAllViews();
         for(int i=0;i<type_list.size();i++){
@@ -387,6 +396,12 @@ public class Report_activity extends AppCompatActivity {
                 }
             });
             recordLinear.addView(recordlist_element);
+            //新增底線
+            ImageView segment=new ImageView(this);
+            segment.setImageResource(R.drawable.segment);
+            segment.setScaleType(ImageView.ScaleType.FIT_XY);
+            recordLinear.addView(segment,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT));
         }
     }
 

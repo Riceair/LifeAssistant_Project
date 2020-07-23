@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -96,15 +97,15 @@ public class Report_type_activity extends AppCompatActivity {
         mChart.setEntryLabelTextSize(15f);            //設置pieChart圖表文本字體大小
         mChart.setDrawHoleEnabled(false);
 
-// pieChart添加數據 title設置 底部資訊設置
+// pieChart添加數據 Subtitle設置 底部資訊設置
         if(year==0){
-            getSupportActionBar().setSubtitle("所有紀錄: "+type);
+            getSupportActionBar().setSubtitle("  所有紀錄: "+type);
         }else if(month==0){
-            getSupportActionBar().setSubtitle(String.valueOf(year)+"年: "+type);
+            getSupportActionBar().setSubtitle("  "+String.valueOf(year)+"年: "+type);
         }else if(day==0){
-            getSupportActionBar().setSubtitle(String.valueOf(year)+"年"+String.valueOf(month)+"月: "+type);
+            getSupportActionBar().setSubtitle("  "+String.valueOf(year)+"年"+String.valueOf(month)+"月: "+type);
         }else{
-            getSupportActionBar().setSubtitle(String.valueOf(year)+"年"+String.valueOf(month)+"月"+String.valueOf(day)+"日: "+type);
+            getSupportActionBar().setSubtitle("  "+String.valueOf(year)+"年"+String.valueOf(month)+"月"+String.valueOf(day)+"日: "+type);
         }
         ReadDBRecord(year,month,day);
         setData(mChart);
@@ -234,6 +235,12 @@ public class Report_type_activity extends AppCompatActivity {
                 }
             });
             recordLinear.addView(recordlist_element);
+            //新增底線
+            ImageView segment=new ImageView(this);
+            segment.setImageResource(R.drawable.segment);
+            segment.setScaleType(ImageView.ScaleType.FIT_XY);
+            recordLinear.addView(segment,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT));
         }
     }
 

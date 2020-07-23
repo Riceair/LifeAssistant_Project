@@ -2,23 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:id="@+id/report_recordlist_element"
-    android:background="@color/colorAccent"
-    android:layout_height="match_parent">
+    android:background="#00000000"
+    android:layout_height="35dp">
 
     <TextView
         android:id="@+id/record_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="25dp"
-        android:text="食品酒水"
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
         android:gravity="center"
-        android:layout_weight="1" />
+        android:textColor="#FFFFFF"
+        android:text="食品酒水"
+        android:textSize="25dp" />
 
     <TextView
         android:id="@+id/record_sum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
         android:textSize="25dp"
+        android:textColor="#FFFFFF"
         android:text="200"
         android:gravity="center"
         android:layout_weight="1" />

@@ -3,20 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#4E5477"
+    android:background="@drawable/receipt_checksum_background"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
-        android:layout_width="330dp"
+        android:layout_width="350dp"
         android:layout_height="450dp"
         android:layout_centerInParent="true"
         android:layout_centerVertical="true"
-        android:layout_marginTop="68dp"
-        android:background="@drawable/main_inner_background"
+        android:background="@drawable/report_inner_background"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.227">
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/pieChart"
@@ -25,17 +26,17 @@
 
     </RelativeLayout>
 
-    <Switch
+        <Switch
         android:id="@+id/inoutSwitch"
         android:layout_width="120dp"
         android:layout_height="51dp"
-        android:layout_marginStart="288dp"
-        android:layout_marginLeft="288dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="12dp"
         android:checked="false"
         android:thumb="@drawable/report_inout_switch"
         android:track="@drawable/report_switch_background"
         app:layout_constraintBottom_toTopOf="@+id/reportScroll"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.945"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -67,6 +68,7 @@
         app:layout_constraintTop_toTopOf="@+id/inoutSwitch"
         app:layout_constraintVertical_bias="0.37" />
 
+
     <ScrollView
         android:id="@+id/reportScroll"
         android:layout_width="match_parent"
@@ -75,7 +77,7 @@
         android:background="@color/zxing_result_view"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
@@ -86,6 +88,21 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" />
     </ScrollView>
+
+    <TextView
+        android:id="@+id/no_data_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:text="查無資料"
+        android:textColor="#FFFFFF"
+        android:textSize="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.859" />
 
     <include
         android:id="@+id/include"
