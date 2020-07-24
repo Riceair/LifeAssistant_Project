@@ -16,6 +16,17 @@
         android:background="@drawable/planner_inner_background"
         tools:context=".MainActivity">
 
+        <TextView
+            android:id="@+id/Month_layout"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:gravity="center"
+            android:text="July 2020"
+            android:textColor="@color/zxing_result_view"
+            android:textSize="20sp" />
+
         <com.github.sundeepk.compactcalendarview.CompactCalendarView
             android:id="@+id/compactcalendar_view"
             android:layout_width="300dp"
@@ -32,6 +43,7 @@
             app:compactCalendarTargetHeight="250dp"
             app:compactCalendarTextColor="#000"
             app:compactCalendarTextSize="12sp" />
+
         <Button
             android:id="@+id/addbutton"
             android:layout_width="wrap_content"
@@ -41,6 +53,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="100dp"
             android:layout_marginBottom="30dp"
+            android:onClick="clickNewPlan"
             android:text=" 新增排程" />
 
         <Button
@@ -51,6 +64,7 @@
             android:layout_centerHorizontal="false"
             android:layout_marginLeft="80dp"
             android:layout_marginBottom="30dp"
+            android:onClick="clickViewPlan"
             android:text="檢視" />
 
     </RelativeLayout>
