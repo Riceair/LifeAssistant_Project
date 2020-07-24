@@ -5,11 +5,11 @@ android {
     buildToolsVersion "29.0.0"
     defaultConfig {
         applicationId "com.example.lifeassistant_project"
-        minSdkVersion 15
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        minSdkVersion 24
     }
     buildTypes {
         release {
@@ -29,4 +29,6 @@ dependencies {
     implementation 'com.journeyapps:zxing-android-embedded:3.5.0'
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'com.github.sundeepk:compact-calendar-view:3.0.0'
+
 }

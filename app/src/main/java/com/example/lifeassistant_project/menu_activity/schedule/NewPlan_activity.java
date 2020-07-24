@@ -268,8 +268,8 @@ public class NewPlan_activity extends AppCompatActivity {
                 values.put("id", id);
                 // get Account Class
                 //WOWthis.sendPackage = new SchedulePackage(id, event, Starting_year, Starting_month, Starting_day, Ending_year, Ending_month, Ending_day);
-                //WOWthis.sendPackage.setRequestAction(0);
-                //
+                this.sendPackage.setRequestAction(0);
+
                 result = myDB.insert(BK_TABLE, null, values);
                 break;
             }catch (Exception e){

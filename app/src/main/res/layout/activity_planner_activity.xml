@@ -16,18 +16,22 @@
         android:background="@drawable/planner_inner_background"
         tools:context=".MainActivity">
 
-        <CalendarView
-            android:id="@+id/calendarView"
+        <com.github.sundeepk.compactcalendarview.CompactCalendarView
+            android:id="@+id/compactcalendar_view"
             android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
-            android:background="@android:drawable/editbox_dropdown_light_frame"
-            android:selectedWeekBackgroundColor="@android:color/holo_orange_light"
-            android:unfocusedMonthDateColor="@color/colorAccent"
-            android:weekNumberColor="@color/cardview_light_background"
-            android:weekSeparatorLineColor="@android:color/background_light" />
-
+            android:layout_height="250dp"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            app:compactCalendarBackgroundColor="@color/zxing_transparent"
+            app:compactCalendarCurrentDayBackgroundColor="@android:color/holo_blue_dark"
+            app:compactCalendarCurrentSelectedDayBackgroundColor="@android:color/holo_blue_light"
+            app:compactCalendarMultiEventIndicatorColor="#000"
+            app:compactCalendarTargetHeight="250dp"
+            app:compactCalendarTextColor="#000"
+            app:compactCalendarTextSize="12sp" />
         <Button
             android:id="@+id/addbutton"
             android:layout_width="wrap_content"
@@ -37,7 +41,6 @@
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="100dp"
             android:layout_marginBottom="30dp"
-            android:onClick="clickNewPlan"
             android:text=" 新增排程" />
 
         <Button
@@ -48,7 +51,6 @@
             android:layout_centerHorizontal="false"
             android:layout_marginLeft="80dp"
             android:layout_marginBottom="30dp"
-            android:onClick="clickViewPlan"
             android:text="檢視" />
 
     </RelativeLayout>
