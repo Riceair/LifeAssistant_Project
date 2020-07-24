@@ -25,6 +25,7 @@ public class ClientProgress implements Runnable {
         private SentenceHandler sendSentence;
         private SentenceHandler rcvSentence;
         private AccountPackage accountPackage;
+        private SchedulePackage schedulePackage;
         private ArrayList<AccountPackage> rcvAccountData;
         private ArrayList<WeatherPackage> rcvWeatherData;
         private LoginPackage loginPackage;
@@ -305,6 +306,11 @@ public class ClientProgress implements Runnable {
         {
             this.packageType = "bookkeeping";
             this.accountPackage = sendPackage;
+        }
+        public void setPlan(SchedulePackage sendPackage)
+        {
+            this.packageType = "plan";
+            this.schedulePackage = sendPackage;
         }
         public void setWeather()
         {

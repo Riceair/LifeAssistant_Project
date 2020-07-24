@@ -7,6 +7,11 @@ public class SchedulePackage {
     // 0 = 新增, 1 = 刪除, 2 = 修改, 3 = 查詢, 4 = Debug.
 
     // start_time = hours of the date, and end_time is that the difference between the start_time
+    public SchedulePackage()
+    {
+
+    }
+
     public SchedulePackage(int id, String todo, int requestAction, int s_year, int s_month, int s_day, int s_hour, int s_minute, int e_year , int e_month, int e_day, int e_hour, int e_minute)
     {
         this.id = id;
