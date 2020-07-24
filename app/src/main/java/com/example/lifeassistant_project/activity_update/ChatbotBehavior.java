@@ -76,16 +76,26 @@ public class ChatbotBehavior {
         }
         else if(this.behaviorMode == 1)
         {
-            final int ID = (int) (Math.random() * 99999)+1;
-//            if(LoginPackage.getUserName().equals("Null"))
-//            {
-//                this.errorMessage = "login certification fail.";
-//                return false;
-//            }
+//          stupid method.
+            int id = (int) (Math.random() * 99999)+1;
+            boolean generateDone = false;
+            while (!generateDone)
+            {
+                generateDone = true;
+                for (int i : DatabaseBehavior.getAccountIDList())
+                {
+                    if (i == id)
+                    {
+                        id = (int) (Math.random() * 99999)+1;
+                        generateDone = false;
+                        break;
+                    }
+                }
+            }
 
             this.sendSentence.setIntent(sentenceHandler.getIntent());
             this.sendSentence.setOperation(sentenceHandler.getOperation());
-            this.sendSentence.setFulfillment(message + "@" + LoginPackage.getUserName() + "#" + ID);
+            this.sendSentence.setFulfillment(message + "@" + LoginPackage.getUserName() + "#" + id);
         }
 
         return true;

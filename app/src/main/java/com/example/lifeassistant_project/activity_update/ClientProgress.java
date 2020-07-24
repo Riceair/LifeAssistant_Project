@@ -20,6 +20,7 @@ public class ClientProgress implements Runnable {
 
         public static int port = 6666;
         public static String address = "192.168.203.108";
+        private final int CONNECTION_TIMEOUT = 5000;
         private String packageType = "";
         private SentenceHandler sendSentence;
         private SentenceHandler rcvSentence;
@@ -44,7 +45,9 @@ public class ClientProgress implements Runnable {
                     try {
                         final int PACKAGE_SIZE = 71;
 
-                        Socket client = new Socket(this.address, this.port);
+                        SocketAddress tempSocketAddress = new InetSocketAddress(this.address, this.port);
+                        Socket client = SocketFactory.getDefault().createSocket();
+                        client.connect(tempSocketAddress, CONNECTION_TIMEOUT);
 
                         OutputStream out = client.getOutputStream();
 
@@ -89,6 +92,7 @@ public class ClientProgress implements Runnable {
                     }catch (Exception e){
                         System.out.println("exception");
                         System.out.println(e);
+                        this.rcvAccountData = new ArrayList<AccountPackage>();
                     }finally {
                         if(this.accountPackage.getRequestAction() == 3)
                             notify();
@@ -105,7 +109,7 @@ public class ClientProgress implements Runnable {
 
                         SocketAddress temp = new InetSocketAddress(this.address, this.port);
                         Socket client = SocketFactory.getDefault().createSocket();
-                        client.connect(temp, 5000);
+                        client.connect(temp, CONNECTION_TIMEOUT);
 
                         OutputStream out = client.getOutputStream();
 
