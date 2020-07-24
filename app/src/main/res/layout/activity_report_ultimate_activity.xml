@@ -84,6 +84,7 @@
                 android:layout_height="wrap_content"
                 android:text="收入"
                 android:textColor="#2E2D2D"
+                android:buttonTint="#4D5463"
                 android:textSize="15dp" />
         </RadioGroup>
 
@@ -148,7 +149,7 @@
             android:layout_alignBottom="@+id/filterinput"
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp"
-            android:onClick="clickToReadFDB"
+            android:onClick="clickToShowTypeList"
             android:text="選擇分類"
             android:textSize="15dp" />
 

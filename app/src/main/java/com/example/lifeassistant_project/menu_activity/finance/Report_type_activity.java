@@ -230,7 +230,7 @@ public class Report_type_activity extends AppCompatActivity {
                     intent.putExtra("YEAR",year);
                     intent.putExtra("MONTH",month);
                     intent.putExtra("DAY",day);
-                    Report_type_activity.this.startActivity(intent);
+                    Report_type_activity.this.startActivityForResult(intent,0);
                     overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
                 }
             });
@@ -259,6 +259,18 @@ public class Report_type_activity extends AppCompatActivity {
             Report_type_activity.this.finish();
         }
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        ReadDBRecord(year,month,day);
+        setData(mChart);
+        setBotInf();
+        if(detail_list.size()==0){
+            TextView no_data_text=findViewById(R.id.no_data_text);
+            no_data_text.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

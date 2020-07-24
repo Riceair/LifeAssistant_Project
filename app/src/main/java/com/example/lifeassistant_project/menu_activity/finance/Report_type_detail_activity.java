@@ -79,22 +79,28 @@ public class Report_type_detail_activity extends AppCompatActivity {
         recordID_list.clear();
         try {
             if(month==0){
-                if(year==0) //顯示所有紀錄
+                if(year==0) { //顯示所有紀錄
                     cursor = myDB.rawQuery("select record.金額, record.年, record.月, record.日, record.id" +
                                     " from record where record.收支屬性=? and record.分類=? and record.細項=?"
-                            ,new String[]{String.valueOf(inOutAttribute),type,detail});
-                else
+                            , new String[]{String.valueOf(inOutAttribute), type, detail});
+                    getSupportActionBar().setSubtitle("  所有紀錄:"+type+"-"+detail);
+                }
+                else {
                     cursor = myDB.rawQuery("select record.金額, record.年, record.月, record.日, record.id" +
                                     " from record where record.年=? and record.收支屬性=? and record.分類=? and record.細項=?"
-                            ,new String[]{String.valueOf(year),String.valueOf(inOutAttribute),type,detail});
+                            , new String[]{String.valueOf(year), String.valueOf(inOutAttribute), type, detail});
+                    getSupportActionBar().setSubtitle("  "+String.valueOf(year)+"年: "+type+"-"+detail);
+                }
             }else if(day!=0){ //自訂日期
                 cursor = myDB.rawQuery("select record.金額, record.年, record.月, record.日, record.id" +
                                 " from record where record.年=? and record.月=? and record.日=? and record.收支屬性=? and record.分類=? and record.細項=?"
                         ,new String[]{String.valueOf(year),String.valueOf(month),String.valueOf(day),String.valueOf(inOutAttribute),type,detail});
+                getSupportActionBar().setSubtitle("  "+String.valueOf(year)+"年"+String.valueOf(month)+"月"+String.valueOf(day)+"日: "+type+"-"+detail);
             }else {
                 cursor = myDB.rawQuery("select record.金額, record.年, record.月, record.日, record.id" +
                                 " from record where record.年=? and record.月=? and record.收支屬性=? and record.分類=? and record.細項=?"
                         , new String[]{String.valueOf(year), String.valueOf(month),String.valueOf(inOutAttribute),type,detail});
+                getSupportActionBar().setSubtitle("  "+String.valueOf(year)+"年"+String.valueOf(month)+"月: "+type+"-"+detail);
             }
             if(cursor!=null) { //取得資料
                 int iRow = cursor.getCount(); // 取得資料記錄的筆數
@@ -157,7 +163,7 @@ public class Report_type_detail_activity extends AppCompatActivity {
                 public void onClick(View view) {
                     Intent intent=new Intent(Report_type_detail_activity.this,Report_ultimate_activity.class);
                     intent.putExtra("RECORDID",recordID);
-                    Report_type_detail_activity.this.startActivity(intent);
+                    Report_type_detail_activity.this.startActivityForResult(intent,0);
                     overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
                 }
             });
@@ -188,6 +194,13 @@ public class Report_type_detail_activity extends AppCompatActivity {
             Report_type_detail_activity.this.finish();
         }
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        ReadDBRecord(year,month,day);
+        setInf();
     }
 
     @Override

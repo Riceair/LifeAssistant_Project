@@ -51,6 +51,7 @@ public class Report_activity extends AppCompatActivity {
     private String chMode="thisMonth"; //儲存menu選擇的mode lastYear thisYear lastMonth thisMonth all selfChoice
     private List<String> type_list = new ArrayList<>();
     private List<Integer> sum_list = new ArrayList<>();
+    private int transYear,transMonth,transDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -350,9 +351,9 @@ public class Report_activity extends AppCompatActivity {
             recordlist_element.setOnClickListener(new View.OnClickListener() { //綁定依照類別查詢的Activity
                 @Override
                 public void onClick(View view) {
-                    int transYear=0;
-                    int transMonth=0;
-                    int transDay=0;
+                    transYear=0;
+                    transMonth=0;
+                    transDay=0;
                     switch (chMode){
                         case "lastYear":
                             transYear=currentYear-1;
@@ -391,7 +392,7 @@ public class Report_activity extends AppCompatActivity {
                     intent.putExtra("YEAR",transYear);
                     intent.putExtra("MONTH",transMonth);
                     intent.putExtra("DAY",transDay);
-                    Report_activity.this.startActivity(intent);
+                    Report_activity.this.startActivityForResult(intent,0);
                     overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
                 }
             });
@@ -413,6 +414,14 @@ public class Report_activity extends AppCompatActivity {
         int g = random.nextInt(256);
         int b = random.nextInt(256);
         return Color.rgb(r,g,b);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        ReadDBRecord(transYear,transMonth,transDay);
+        setData(mChart);
+        setBotInf();
     }
 
     @Override
