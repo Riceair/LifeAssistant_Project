@@ -29,9 +29,9 @@
             android:layout_height="55dp"
             android:layout_marginTop="20dp"
             android:layout_toRightOf="@+id/event"
-            android:hint="請輸入金額"
+            android:hint="請輸入標題"
             android:inputType="textUri"
-            android:textColor="@color/design_default_color_background"
+            android:textColor="@color/cardview_light_background"
             android:textColorHint="@color/colorAccent" />
 
         <TextView
@@ -41,7 +41,7 @@
             android:layout_below="@+id/event"
             android:layout_marginLeft="20dp"
             android:gravity="center"
-            android:text="日期"
+            android:text="開始日期"
             android:textColor="@color/design_default_color_background"
             android:textSize="20sp" />
 
@@ -53,7 +53,7 @@
             android:layout_toRightOf="@+id/date"
             android:focusable="false"
             android:hint="請選擇日期"
-            android:textColor="@color/design_default_color_background"
+            android:textColor="@color/cardview_light_background"
             android:textColorHint="@color/colorAccent" />
 
         <Button
@@ -87,7 +87,7 @@
             android:focusable="false"
             android:hint="請選擇時間"
             android:inputType="time"
-            android:textColor="@color/design_default_color_background"
+            android:textColor="@color/cardview_light_background"
             android:textColorHint="@color/colorAccent" />
 
         <Button
@@ -96,47 +96,78 @@
             android:layout_height="55dp"
             android:layout_alignBottom="@+id/timeinput"
             android:layout_alignParentRight="true"
-            android:layout_marginLeft="368dp"
             android:layout_marginRight="20dp"
-            android:onClick="clickToReadFDB"
+            android:onClick="setStartTime"
             android:text="選擇時間"
             android:textSize="15dp" />
 
 
         <TextView
-            android:id="@+id/textView5"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:gravity="center"
-            android:text="結束日期"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/description"
+            android:id="@+id/endsdate"
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:layout_below="@id/time"
             android:layout_marginLeft="20dp"
             android:gravity="center"
-            android:text="描述"
+            android:text="結束日期"
             android:textColor="@color/cardview_light_background"
             android:textSize="20sp" />
 
-        <EditText
-            android:id="@+id/descriptioninput"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/endsdateinput"
             android:layout_width="200dp"
-            android:layout_height="250dp"
-            android:layout_below="@id/timeinput"
-            android:layout_toRightOf="@id/description"
-            android:hint="請輸入詳細資訊"
-            android:textColor="@color/design_default_color_background"
+            android:layout_height="55dp"
+            android:layout_below="@id/timepicker"
+            android:layout_marginLeft="75dp"
+            android:hint="請選擇日期"
+            android:textColor="@color/cardview_light_background"
             android:textColorHint="@color/colorAccent" />
+
+        <Button
+            android:id="@+id/endsdatepicker"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_below="@id/timepicker"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:text="選擇日期" />
+
+        <TextView
+            android:id="@+id/endstime"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_below="@id/endsdate"
+            android:layout_marginLeft="20dp"
+            android:gravity="center"
+            android:text="結束時間"
+            android:textColor="@color/cardview_light_background"
+            android:textSize="20sp" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/endstimeinput"
+            android:layout_width="200dp"
+            android:layout_height="55dp"
+            android:layout_below="@id/endsdateinput"
+            android:layout_marginLeft="75dp"
+            android:hint="請選擇時間"
+            android:textColor="@color/cardview_light_background"
+            android:textColorHint="@color/colorAccent" />
+
+        <Button
+            android:id="@+id/endstimepicker"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_below="@id/endsdatepicker"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:onClick="setEndsTime"
+            android:text="選擇時間" />
 
         <Button
             android:id="@+id/savebutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/descriptioninput"
+            android:layout_below="@id/endstimeinput"
             android:layout_toLeftOf="@+id/cancelbutton"
             android:onClick="clickToUpdate"
             android:text="Save" />
@@ -145,8 +176,8 @@
             android:id="@+id/cancelbutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/descriptioninput"
-            android:layout_alignRight="@id/descriptioninput"
+            android:layout_below="@id/endstimeinput"
+            android:layout_alignRight="@id/endstimeinput"
             android:text="Cancel"
             android:textSize="15dp" />
 
