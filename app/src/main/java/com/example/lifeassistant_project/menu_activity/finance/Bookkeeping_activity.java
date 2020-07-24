@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,13 +40,18 @@ import java.util.List;
 public class Bookkeeping_activity extends AppCompatActivity {
     private static final String PATH = "/data/data/com.example.lifeassistant_project";
     private static final String DBNAME = "myDB.db";
-    private static final String FILTER_TABLE = "filter";
+    private static final String FILTER_TABLE="filter";
     private static final String BK_TABLE = "record";
 
     private SQLiteDatabase myDB;
     private Cursor cursor;
     private List<String> list = new ArrayList<>();
+    private List<String> out_list = new ArrayList<>();
+    private List<String> in_list = new ArrayList<>();
+    private List<String> self_out_list = new ArrayList<>();
+    private List<String> self_in_list = new ArrayList<>();
     private EditText filterinput;
+    private int inOutAttribute=1; //收支屬性 預設為支出
 
     // the package need to be send.
     private AccountPackage sendPackage;
@@ -69,6 +76,8 @@ public class Bookkeeping_activity extends AppCompatActivity {
         File FdbFile = new File(PATH+"/databases",DBNAME);
         if(!FdbFile.exists() || !FdbFile.isFile())
             copyAssets(PATH); //初始資料庫複製到路徑
+        ReadFDB();
+
         filterinput = (EditText) findViewById(R.id.filterinput);
 
         ////////////////////////////////日期/////////////////////////////////
@@ -93,6 +102,22 @@ public class Bookkeeping_activity extends AppCompatActivity {
             }
         });
 
+        //////////////////////////////切換收入支出//////////////////////////////
+        RadioGroup attributeinput=findViewById(R.id.attributeinput);
+        attributeinput.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedID) {
+                RadioButton checkedRadioButton=(RadioButton)radioGroup.findViewById(checkedID);
+                if(checkedRadioButton.getText().equals("支出")){
+                    inOutAttribute=1;
+                    filterinput.setText("");
+                }else{
+                    inOutAttribute=0;
+                    filterinput.setText("");
+                }
+            }
+        });
+
         Button cancel = (Button) findViewById(R.id.cancelbutton);
         cancel.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -102,7 +127,7 @@ public class Bookkeeping_activity extends AppCompatActivity {
         });
     }
 
-    /////////////////////////////////////////////////////////日期/////////////////////////////////////////////////////////
+    //日期
     private String setDataFormat(int year, int monthOfYear,int dayOfMonth){
         return String.valueOf(year)+"-"+String.valueOf(monthOfYear+1)+"-"+String.valueOf(dayOfMonth);
     }
@@ -209,85 +234,198 @@ public class Bookkeeping_activity extends AppCompatActivity {
         Bookkeeping_activity.this.finish();
     }
 
-    /////////////////////////////////////////////////////////選項資料庫/////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////選項處理/////////////////////////////////////////////////////////
+    public void clickToShowTypeList(View view){
+        ArrayList<String> arrayList;
+        if(inOutAttribute==1){
+            arrayList = new ArrayList<>(out_list);
+        }else{
+            arrayList = new ArrayList<>(in_list);
+        }
+        arrayList.add("新增選項...");
+        arrayList.add("刪除選項...");
+
+        // 將ArrayList 轉成String array
+        final String[] categoryList = new String[arrayList.size()];
+        for(int i=0;i<arrayList.size();i++){
+            categoryList[i]=arrayList.get(i);
+        }
+
+        // 建立清單彈跳視窗
+        AlertDialog.Builder dialog_list = new AlertDialog.Builder(Bookkeeping_activity.this);
+        dialog_list.setItems(categoryList,new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which){
+                if (categoryList[which].equals("新增選項..."))
+                    addDBbox();
+                else if(categoryList[which].equals("刪除選項..."))
+                    delDBbox();
+                else filterinput.setText(categoryList[which]);
+            }
+        });
+        dialog_list.show();
+    }
+
     //讀資料庫
-    public void clickToReadFDB(View view) {
-        // 2. 準備資料庫
+    public void ReadFDB() {
+        // 準備資料庫
+        out_list.clear();
+        in_list.clear();
+        self_out_list.clear();
+        self_in_list.clear();
         myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
         try {
-            cursor = myDB.query(FILTER_TABLE, null, null, null,
-                    null, null, null);
+            //取得支出的List
+            cursor = myDB.rawQuery("select filter.name from filter where filter.type=1",null);
             if(cursor!=null) {
                 int iRow = cursor.getCount(); // 取得資料記錄的筆數
                 cursor.moveToFirst();
                 for(int i=0; i<iRow; i++) {
                     String name = cursor.getString(0);
-                    list.add(name);
+                    out_list.add(name);
                     cursor.moveToNext();
                 }
-                // 3. 準備ArrayList去接資料庫的list
-                final ArrayList<String> arrayList = new ArrayList<>(list);
-                arrayList.add("新增選項...");
-                // 4. 將ArrayList 轉成String array
-                final String[] categoryList = new String[arrayList.size()];
-                for(int i=0;i<arrayList.size();i++){
-                    categoryList[i]=arrayList.get(i);
-                }
+            } else {
+                Toast.makeText(this,"類別讀取失敗",Toast.LENGTH_SHORT).show();
+            }
 
-                // 建立清單彈跳視窗
-                AlertDialog.Builder dialog_list = new AlertDialog.Builder(Bookkeeping_activity.this);
-                dialog_list.setItems(categoryList,new DialogInterface.OnClickListener(){
-                   @Override
-                   public void onClick(DialogInterface dialog, int which){
-                       if (categoryList[which].equals("新增選項..."))
-                           addDBbox();
-                       else filterinput.setText(categoryList[which]);
-                   }
-                });
-                dialog_list.show();
-                // 5. 關閉 DB
-                myDB.close();
-                list.clear();
-                arrayList.clear();
+            //取得收入的List
+            cursor = myDB.rawQuery("select filter.name from filter where filter.type=0",null);
+            if(cursor!=null) {
+                int iRow = cursor.getCount(); // 取得資料記錄的筆數
+                cursor.moveToFirst();
+                for(int i=0; i<iRow; i++) {
+                    String name = cursor.getString(0);
+                    in_list.add(name);
+                    cursor.moveToNext();
+                }
+            } else {
+                Toast.makeText(this,"類別讀取失敗",Toast.LENGTH_SHORT).show();
             }
-            else {
-                Toast.makeText(this,"Hint 1: 請將db準備好!",Toast.LENGTH_SHORT).show();
+
+            //取得使用者自訂支出的List
+            cursor = myDB.rawQuery("select filter.name from filter where filter.type=1 and filter.isDefault!=1",null);
+            if(cursor!=null) {
+                int iRow = cursor.getCount(); // 取得資料記錄的筆數
+                cursor.moveToFirst();
+                for(int i=0; i<iRow; i++) {
+                    String name = cursor.getString(0);
+                    self_out_list.add(name);
+                    cursor.moveToNext();
+                }
+            } else {
+                Toast.makeText(this,"類別讀取失敗",Toast.LENGTH_SHORT).show();
             }
+
+            //取得使用者自訂收入的List
+            cursor = myDB.rawQuery("select filter.name from filter where filter.type=0 and filter.isDefault!=1",null);
+            if(cursor!=null) {
+                int iRow = cursor.getCount(); // 取得資料記錄的筆數
+                cursor.moveToFirst();
+                for(int i=0; i<iRow; i++) {
+                    String name = cursor.getString(0);
+                    self_in_list.add(name);
+                    cursor.moveToNext();
+                }
+            } else {
+                Toast.makeText(this,"類別讀取失敗",Toast.LENGTH_SHORT).show();
+            }
+            myDB.close();
         }
         catch (Exception e) {
             Toast.makeText(this,e.toString(),Toast.LENGTH_SHORT).show();
         }
     }
 
-    //資料庫新增介面
+    //類別資料庫新增介面
     private void addDBbox(){
         final EditText editText = new EditText(this);
         new AlertDialog.Builder(Bookkeeping_activity.this)
                 .setTitle("請輸入要新增的類別")
                 .setView(editText)
-                .setPositiveButton("確定", new DialogInterface.OnClickListener() {
+                .setNegativeButton("確定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         addToDB(editText.getText().toString());
                     }
+                }).setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {}
                 }).show();
     }
-    //資料庫新增
+    //類別資料庫新增
     private void addToDB(String newCategory){
         if(newCategory.equals("")) return;
         ContentValues values = new ContentValues();
         values.put("name",newCategory);
+        values.put("type",inOutAttribute);
+        values.put("isDefault",0);
         myDB = openOrCreateDatabase(DBNAME,MODE_PRIVATE,null);
         long result = myDB.insert(FILTER_TABLE,null,values);
         if(result!=-1L){
-            myDB.close();
             filterinput.setText(newCategory);
             Toast.makeText(Bookkeeping_activity.this,"類別新增成功",Toast.LENGTH_SHORT).show();
         }
         else{
-            Toast.makeText(Bookkeeping_activity.this,"類別新增失敗",Toast.LENGTH_SHORT).show();
+            Toast.makeText(Bookkeeping_activity.this,"已存在該類別",Toast.LENGTH_SHORT).show();
         }
+        myDB.close();
+        ReadFDB();
     }
+    //類別資料庫刪除介面
+    private void delDBbox(){
+        ArrayList<String> arrayList;
+        if(inOutAttribute==1){
+            arrayList = new ArrayList<>(self_out_list);
+        }else{
+            arrayList = new ArrayList<>(self_in_list);
+        }
+        if(arrayList.size()==0){
+            Toast.makeText(this,"無可刪除的類別",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // 將ArrayList 轉成String array
+        final String[] categoryList = new String[arrayList.size()];
+        for(int i=0;i<arrayList.size();i++){
+            categoryList[i]=arrayList.get(i);
+        }
+
+        // 建立清單彈跳視窗
+        final int[] chose = new int[1];
+        AlertDialog.Builder dialog_list = new AlertDialog.Builder(Bookkeeping_activity.this);
+        dialog_list.setItems(categoryList,new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which){
+                chose[0] =which;
+                new AlertDialog.Builder(Bookkeeping_activity.this)
+                        .setTitle("確定刪除").setNegativeButton("確定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                delToDB(categoryList[chose[0]]);
+                            }
+                        }).setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {}
+                        }).show();
+            }
+        });
+        dialog_list.show();
+    }
+    //類別資料庫刪除
+    private void delToDB(String delCategory){
+        myDB = openOrCreateDatabase(DBNAME,MODE_PRIVATE,null);
+        int result=myDB.delete(FILTER_TABLE,"name="+delCategory,null);
+        if(result!=-1L){
+            filterinput.setText("");
+            Toast.makeText(Bookkeeping_activity.this,"類別刪除成功",Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(Bookkeeping_activity.this,"類別刪除失敗",Toast.LENGTH_SHORT).show();
+        }
+        myDB.close();
+        ReadFDB();
+    }
+    /////////////////////////////////////////////////////////選項處理/////////////////////////////////////////////////////////
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
