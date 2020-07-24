@@ -9,7 +9,14 @@ public class SchedulePackage {
     // start_time = hours of the date, and end_time is that the difference between the start_time
     public SchedulePackage()
     {
-
+        this.id = 0;
+        this.todo = "";
+        this.requestAction = 4;
+        this.year = 1970;
+        this.month = 1;
+        this.day = 1;
+        this.start_time = 0;
+        this.end_time = 0;
     }
 
     public SchedulePackage(int id, String todo, int requestAction, int s_year, int s_month, int s_day, int s_hour, int s_minute, int e_year , int e_month, int e_day, int e_hour, int e_minute)
@@ -42,30 +49,30 @@ public class SchedulePackage {
 
     public void setEndDateInFormat(int year, int month, int day, int hour, int minute)
     {
-        int detHour = 0;
+        int detTime = 0;
         int[] monthDay = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
 
-        detHour += hour - (this.start_time / 100);
-        detHour += (day - (this.day)) * 24;
+        detTime += hour;
+        detTime += (day - (this.day)) * 24;
         if(month != this.month)
         {
             if(month > this.month)
             {
-                if((this.year % 4 == 0 && this.year % 4 != 0) || (this.year % 400 == 0))
+                if((this.year % 4 == 0 && this.year % 100 != 0) || (this.year % 400 == 0))
                     monthDay[1] += 1;
                 for(int ptr = this.month - 1; ptr < (month - 1); ptr++)
                 {
-                    detHour += (monthDay[ptr] * 24);
+                    detTime += (monthDay[ptr] * 24);
                 }
             }
             else
             {
-                if((year % 4 == 0 && year % 4 != 0) || (year % 400 == 0))
+                if(((this.year + 1) % 4 == 0 && (this.year + 1) % 100 != 0) || ((this.year + 1) % 400 == 0))
                     monthDay[1] += 1;
                 for(int ptr = month - 1 ; ptr < (this.month - 1); ptr++)
                 {
-                    detHour -= (monthDay[ptr] * 24);
+                    detTime -= (monthDay[ptr] * 24);
                 }
             }
         }
@@ -74,22 +81,29 @@ public class SchedulePackage {
         {
             for(int ptr = this.year ; ptr < year ; ptr++)
             {
-                if((ptr % 4 == 0 && ptr % 4 != 0) || (ptr % 400 == 0))
-                    detHour += 366 * 24;
+                if((ptr % 4 == 0 && ptr % 100 != 0) || (ptr % 400 == 0))
+                {
+                    if((ptr == this.year && this.month <= 2) || (ptr == year && month > 2))
+                        detTime += 366 * 24;
+                    else if(ptr != this.year && ptr != year)
+                        detTime += 366 * 24;
+                    else
+                        detTime += 365 * 24;
+                }
                 else
-                    detHour += 365 * 24;
+                    detTime += 365 * 24;
             }
         }
-        else
+        else if(year < this.year)
         {
             this.end_time = -1;
             System.out.println("Set Time Error! You need to set StartDate before set EndDate.");
             return;
         }
 
-        detHour = detHour * 100 + minute;
+        detTime = detTime * 100 + minute;
 
-        this.end_time = detHour;
+        this.end_time = detTime;
     }
 
     public int getID() {
