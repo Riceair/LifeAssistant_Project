@@ -48,6 +48,10 @@ public class NewPlan_activity extends AppCompatActivity {
     private TimePickerDialog endstimePickerDialog;
     private List<String> list = new ArrayList<>();
     private SchedulePackage sendPackage;
+    private int Starting_hour;
+    private int Starting_minute;
+    private int Ending_hour;
+    private int Ending_minute;
     ArrayList<String> stuffList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +131,8 @@ public class NewPlan_activity extends AppCompatActivity {
             @Override
         public void onTimeSet(TimePicker view,int hourOfDay,int minute){
                 timeText.setText(hourOfDay+":"+minute);
+                Starting_hour=hourOfDay;
+                Starting_minute=minute;
             }
         },calendar.get(Calendar.HOUR_OF_DAY),calendar.get(calendar.MINUTE),false);
         //////////////////
@@ -136,6 +142,8 @@ public class NewPlan_activity extends AppCompatActivity {
             @Override
             public void onTimeSet(TimePicker view,int hourOfDay,int minute){
                 endstimeText.setText(hourOfDay+":"+minute);
+                Ending_hour=hourOfDay;
+                Ending_minute=minute;
             }
         },calendar.get(Calendar.HOUR_OF_DAY),calendar.get(calendar.MINUTE),false);
         //////////////////
@@ -234,10 +242,16 @@ public class NewPlan_activity extends AppCompatActivity {
         list.clear();
         ContentValues values = new ContentValues();
         values.put("事項",event);
-        values.put("開始日期",startingDate);
-        values.put("開始時間",startingDate);
-        values.put("結束日期",endingDate);
-        values.put("結束時間",endingTime);
+        values.put("開始年",Starting_hour);
+        values.put("開始月",Starting_month);
+        values.put("開始日",Starting_day);
+        values.put("開始小時",Starting_hour);
+        values.put("開始分",Starting_minute);
+        values.put("結束年",Ending_year);
+        values.put("結束月",Ending_month);
+        values.put("結束日",Ending_day);
+        values.put("結束小時",Ending_hour);
+        values.put("結束分",Ending_minute);
 
 
         myDB = openOrCreateDatabase(DBNAME,MODE_PRIVATE,null);
@@ -253,8 +267,8 @@ public class NewPlan_activity extends AppCompatActivity {
                 int id = (int) (Math.random() * 99999)+1;
                 values.put("id", id);
                 // get Account Class
-                this.sendPackage = new SchedulePackage(id, event, Starting_year, Starting_month, Starting_day, Ending_year, Ending_month, Ending_day);
-                this.sendPackage.setRequestAction(0);
+                //WOWthis.sendPackage = new SchedulePackage(id, event, Starting_year, Starting_month, Starting_day, Ending_year, Ending_month, Ending_day);
+                //WOWthis.sendPackage.setRequestAction(0);
                 //
                 result = myDB.insert(BK_TABLE, null, values);
                 break;
