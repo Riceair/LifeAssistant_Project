@@ -152,7 +152,6 @@ public class Planner_activity extends AppCompatActivity {
 //                    stuffNameList.add(stuffName);
                     cursor.moveToNext();
                 }
-
                 // 5. 關閉 DB
                 myDB.close();
             }
