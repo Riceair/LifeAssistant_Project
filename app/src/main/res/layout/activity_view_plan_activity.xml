@@ -8,21 +8,32 @@
     tools:context=".menu_activity.schedule.ViewPlan_activity">
 
     <Button
-        android:id="@+id/backbutton"
+        android:id="@+id/addButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@id/mainly"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="100dp"
+        android:onClick="clickNewPlan"
+        android:text="新增" />
+
+    <Button
+        android:id="@+id/backbutton"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/mainly"
+        android:layout_alignRight="@id/mainly"
+        android:layout_alignParentBottom="false"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"
+        android:onClick="clickBackPlanner"
         android:text="回生活" />
 
     <LinearLayout
-        android:layout_width="380dp"
-        android:layout_height="600dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="70dp"
+        android:id="@+id/mainly"
+        android:layout_width="350dp"
+        android:layout_height="500dp"
+        android:layout_alignParentBottom="false"
+        android:layout_centerInParent="true"
         android:background="@drawable/new_stuff_inner_background"
         android:orientation="vertical">
 

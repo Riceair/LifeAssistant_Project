@@ -3,6 +3,7 @@ package com.example.lifeassistant_project.menu_activity.schedule;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -60,17 +61,10 @@ public class ViewPlan_activity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String clickedItem=(String) list.getItemAtPosition(position);
-                Toast.makeText(ViewPlan_activity.this,clickedItem,Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(view.getContext(),NewPlan_activity.class);
+                view.getContext().startActivity(intent);
             }
         });
-
-
-
-
-
-
-
-
 
 
 
@@ -92,7 +86,7 @@ public class ViewPlan_activity extends AppCompatActivity {
                     stuffList.add(stuffName);
                     cursor.moveToNext();
                 }
-                Toast.makeText(this,stuffList.get(0),Toast.LENGTH_SHORT).show();
+
                 // 5. 關閉 DB
                 myDB.close();
             }
@@ -147,7 +141,14 @@ public class ViewPlan_activity extends AppCompatActivity {
         }
         return true;
     }
-
+    public void clickNewPlan(View view){
+        Intent intent = new Intent(view.getContext(),NewPlan_activity.class);
+        view.getContext().startActivity(intent);
+    }
+    public void clickBackPlanner(View view){
+        Intent intent = new Intent(view.getContext(),Planner_activity.class);
+        view.getContext().startActivity(intent);
+    }
     @Override
     public void finish() {
         super.finish();
