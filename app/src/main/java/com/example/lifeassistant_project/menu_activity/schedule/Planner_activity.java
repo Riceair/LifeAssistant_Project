@@ -70,7 +70,7 @@ public class Planner_activity extends AppCompatActivity {
         if(!FdbFile.exists() || !FdbFile.isFile())
             copyAssets(PATH); //初始資料庫複製到路徑
 
-        ReadDBRecord();
+//        ReadDBRecord();
 
         ///////////
 
@@ -80,7 +80,10 @@ public class Planner_activity extends AppCompatActivity {
 
         // 這是在初始化日期格式，轉成mileseconds
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-
+        //測試用
+        stuffList.add("2020/07/21 16:00:00");
+        stuffEndingList.add("2020/08/01 16:00:00");
+        stuffNameList.add("Test");
         for (int i=0;i<stuffList.size();i++)
         {
             String myDate=stuffList.get(i);
@@ -92,11 +95,12 @@ public class Planner_activity extends AppCompatActivity {
                 Date endingDate = sdf.parse(myEndingDate);
                 long endingmillis=endingDate.getTime();
                 // 這是在加事情
-                for (long m=millis;m<endingmillis;m++)
-                {
+                long m=millis;
+                while (m < endingmillis) {
                     Event ev1 = new Event(Color.GREEN, m, mystuffName);
                     compactCalendarView.addEvent(ev1);
-                }
+                    m=m+86400000;
+               }
 
 
             } catch (ParseException e) {
@@ -104,7 +108,7 @@ public class Planner_activity extends AppCompatActivity {
             }
 
         }
-        Event ev1 = new Event(Color.GREEN, 1433701251000L, "Some extra data that I want to store.");
+        Event ev1 = new Event(Color.GREEN, 1596196800000L, "Some extra data that I want to store.");
         compactCalendarView.addEvent(ev1);
 
         // Added event 2 GMT: Sun, 07 Jun 2015 19:10:51 GMT
@@ -144,12 +148,12 @@ public class Planner_activity extends AppCompatActivity {
                 int iRow = cursor.getCount(); // 取得資料記錄的筆數
                 cursor.moveToFirst();
                 for (int i=0;i<iRow;i++){
-                    String stuffTime = cursor.getString(3)+"/"+cursor.getString(2)+"/"+cursor.getString(1)+" "+cursor.getString(4)+":00:00";
-                    String stuffEndingTime = cursor.getString(3)+"/"+cursor.getString(2)+"/"+cursor.getString(1)+" "+cursor.getString(5)+":00:00";
-                    String stuffName = cursor.getString(0);
-                    stuffList.add(stuffTime);
-                    stuffEndingList.add(stuffEndingTime);
-                    stuffNameList.add(stuffName);
+//                    String stuffTime = cursor.getString(3)+"/"+cursor.getString(2)+"/"+cursor.getString(1)+" "+cursor.getString(4)+":00:00";
+//                    String stuffEndingTime = cursor.getString(3)+"/"+cursor.getString(2)+"/"+cursor.getString(1)+" "+cursor.getString(5)+":00:00";
+//                    String stuffName = cursor.getString(0);
+//                    stuffList.add(stuffTime);
+//                    stuffEndingList.add(stuffEndingTime);
+//                    stuffNameList.add(stuffName);
                     cursor.moveToNext();
                 }
 
