@@ -79,7 +79,7 @@ public class Planner_activity extends AppCompatActivity {
         if(!FdbFile.exists() || !FdbFile.isFile())
             copyAssets(PATH); //初始資料庫複製到路徑
 
-//        ReadDBRecord();
+ReadDBRecord();
         ///////////
 
 
@@ -87,9 +87,9 @@ public class Planner_activity extends AppCompatActivity {
         // 這是在初始化日期格式，轉成mileseconds
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         //測試用
-        stuffList.add("2020/07/21 16:00:00");
-        stuffEndingList.add("2020/08/18 17:00:00");
-        stuffNameList.add("Test");
+        //stuffList.add("2020/07/21 16:00:00");
+        //stuffEndingList.add("2020/08/18 17:00:00");
+        //stuffNameList.add("Test");
         for (int i=0;i<stuffList.size();i++)
         {
             String myDate=stuffList.get(i);
@@ -107,8 +107,6 @@ public class Planner_activity extends AppCompatActivity {
                     compactCalendarView.addEvent(ev1);
                     m=m+86400000;
                }
-
-
             } catch (ParseException e) {
                 e.printStackTrace();
             }
