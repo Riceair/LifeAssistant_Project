@@ -74,13 +74,13 @@ public class Planner_activity extends AppCompatActivity {
 
         ///////////
 
-
         // Set first day of week to Monday, defaults to Monday so calling setFirstDayOfWeek is not necessary
         // Use constants provided by Java Calendar class
         compactCalendarView.setFirstDayOfWeek(Calendar.MONDAY);
 
         // 這是在初始化日期格式，轉成mileseconds
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
         for (int i=0;i<stuffList.size();i++)
         {
             String myDate=stuffList.get(i);
