@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/mainly"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="100dp"
+        android:layout_marginRight="80dp"
         android:onClick="clickNewPlan"
         android:text=" 新增排程" />
 
