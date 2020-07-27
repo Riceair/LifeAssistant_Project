@@ -23,38 +23,38 @@ public class DatabaseBehavior {
     {
         myDB = SQLiteDatabase.openOrCreateDatabase(PATH + "/databases/" + DBNAME, null);
 
-        ClientProgress client = new ClientProgress();
-        AccountPackage selectAccount = new AccountPackage();
-        selectAccount.setRequestAction(3);
-        selectAccount.setID(0); //select all records.
-        client.setBookkeeping(selectAccount);
-        Thread cThread = new Thread(client);
-        cThread.start();
-
-        synchronized (client)
-        {
-            try
-            {
-                System.out.println("WAITING");
-                client.wait();
-                System.out.println("GOGO");
-            }catch (Exception e)
-            {
-                System.out.println(e);
-            }
-        }
-
-        ArrayList<AccountPackage> serverAccountList = client.getRcvAccountData();
-        if(serverAccountList.size() == 0)
-        {
-            System.out.println("Connection failed.");
-            return;
-        }
-
-        for (AccountPackage ele : serverAccountList)
-        {
-            accountIDList.add(ele.getID());
-        }
+//        ClientProgress client = new ClientProgress();
+//        AccountPackage selectAccount = new AccountPackage();
+//        selectAccount.setRequestAction(3);
+//        selectAccount.setID(0); //select all records.
+//        client.setBookkeeping(selectAccount);
+//        Thread cThread = new Thread(client);
+//        cThread.start();
+//
+//        synchronized (client)
+//        {
+//            try
+//            {
+//                System.out.println("WAITING");
+//                client.wait();
+//                System.out.println("GOGO");
+//            }catch (Exception e)
+//            {
+//                System.out.println(e);
+//            }
+//        }
+//
+//        ArrayList<AccountPackage> serverAccountList = client.getRcvAccountData();
+//        if(serverAccountList.size() == 0)
+//        {
+//            System.out.println("Connection failed.");
+//            return;
+//        }
+//
+//        for (AccountPackage ele : serverAccountList)
+//        {
+//            accountIDList.add(ele.getID());
+//        }
     }
 
     public static void synchronizeServer2Client()
@@ -67,6 +67,7 @@ public class DatabaseBehavior {
         AccountPackage selectAccount = new AccountPackage();
         selectAccount.setRequestAction(3);
         selectAccount.setUser(LoginPackage.getUserName());
+        if(!selectAccount.getUser().equals("Null")) selectAccount.setID(1);
         client.setBookkeeping(selectAccount);
         Thread cThread = new Thread(client);
         cThread.start();
@@ -75,9 +76,9 @@ public class DatabaseBehavior {
         {
             try
             {
-                System.out.println("WAITING");
+//                System.out.println("WAITING");
                 client.wait();
-                System.out.println("GOGO");
+//                System.out.println("GOGO");
             }catch (Exception e)
             {
                 System.out.println(e);

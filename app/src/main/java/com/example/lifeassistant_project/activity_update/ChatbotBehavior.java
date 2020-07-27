@@ -60,6 +60,7 @@ public class ChatbotBehavior {
         {
             this.behaviorMode = 1;
         }
+
         if(this.sendSentence.getIntent() == 1 || this.sendSentence.getIntent() == 2)
         {
             DatabaseBehavior.synchronizeServer2Client();
@@ -78,20 +79,20 @@ public class ChatbotBehavior {
         {
 //          stupid method.
             int id = (int) (Math.random() * 99999)+1;
-            boolean generateDone = false;
-            while (!generateDone)
-            {
-                generateDone = true;
-                for (int i : DatabaseBehavior.getAccountIDList())
-                {
-                    if (i == id)
-                    {
-                        id = (int) (Math.random() * 99999)+1;
-                        generateDone = false;
-                        break;
-                    }
-                }
-            }
+//            boolean generateDone = false;
+//            while (!generateDone)
+//            {
+//                generateDone = true;
+//                for (int i : DatabaseBehavior.getAccountIDList())
+//                {
+//                    if (i == id)
+//                    {
+//                        id = (int) (Math.random() * 99999)+1;
+//                        generateDone = false;
+//                        break;
+//                    }
+//                }
+//            }
 
             this.sendSentence.setIntent(sentenceHandler.getIntent());
             this.sendSentence.setOperation(sentenceHandler.getOperation());

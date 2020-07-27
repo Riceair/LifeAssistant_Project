@@ -57,6 +57,7 @@ public class Login_activity extends AppCompatActivity {
 //                        System.out.println(LoginPackage.getUserKey());
                         LoginPackage.setUserName(loginPackage.getName());
                         LoginPackage.setIsLogin(true);
+                        DatabaseBehavior.synchronizeServer2Client();
                         Login_activity.this.finish();
                     }
                 }
