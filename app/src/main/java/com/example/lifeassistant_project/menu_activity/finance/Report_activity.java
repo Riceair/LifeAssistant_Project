@@ -51,6 +51,7 @@ public class Report_activity extends AppCompatActivity {
     private String chMode="thisMonth"; //儲存menu選擇的mode lastYear thisYear lastMonth thisMonth all selfChoice
     private List<String> type_list = new ArrayList<>();
     private List<Integer> sum_list = new ArrayList<>();
+    private List<Integer> color_default_list = new ArrayList<>();
     private int transYear,transMonth,transDay;
 
     @Override
@@ -65,6 +66,7 @@ public class Report_activity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setIcon(R.drawable.icon_report);
 
+        setDefulatColor();
         // 資料庫
         File dbDir = new File(PATH, "databases");
         dbDir.mkdir();
@@ -297,9 +299,13 @@ public class Report_activity extends AppCompatActivity {
         int length = type_list.size();
         ArrayList<PieEntry> pieEntryList = new ArrayList<PieEntry>();
         ArrayList<Integer> colors = new ArrayList<Integer>();
-        for (int i=0;i<length;i++){
-            colors.add(randomColor());
+        for (int i = 0; i < length; i++) {
+            if(i<color_default_list.size())
+                colors.add(color_default_list.get(i));
+            else
+                colors.add(randomColor());
         }
+
         // #FF8000 	#FF9224 #EA7500 #FFAF60 	#FF8040 #FF8F59 	#FF9D6F
         //圓形圖實體 PieEntry
         for (int i=0;i<length;i++){
@@ -315,8 +321,8 @@ public class Report_activity extends AppCompatActivity {
         //最終資料 PieData
         PieData pieData = new PieData(pieDataSet);
         pieData.setDrawValues(true);            //設置是否顯示資料實體(百分比，true:以下屬性才有意義)
-        pieData.setValueTextColor(Color.WHITE);  //設置所有DataSet內資料實體（百分比）的文本顏色
-        pieData.setValueTextSize(12f);          //設置所有DataSet內資料實體（百分比）的文本字體大小
+        pieData.setValueTextColor(Color.BLACK);  //設置所有DataSet內資料實體（百分比）的文本顏色
+        pieData.setValueTextSize(20f);          //設置所有DataSet內資料實體（百分比）的文本字體大小
         //pieData.setValueTypeface(mTfLight);     //設置所有DataSet內資料實體（百分比）的文本字體樣式
         pieData.setValueFormatter(new PercentFormatter());//設置所有DataSet內資料實體（百分比）的文本字體格式
         mChart.setData(pieData);
@@ -416,6 +422,15 @@ public class Report_activity extends AppCompatActivity {
         return Color.rgb(r,g,b);
     }
 
+    private void setDefulatColor() {
+        color_default_list.add(Color.rgb(205,104,57));
+        color_default_list.add(Color.rgb(139,101,8));
+        color_default_list.add(Color.rgb(67,110,238));
+        color_default_list.add(Color.rgb(34,139,34));
+        color_default_list.add(Color.rgb(160,32,240));
+        color_default_list.add(Color.rgb(65,105,225));
+        color_default_list.add(Color.rgb(255,127,36));
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

@@ -158,7 +158,7 @@ public class Report_ultimate_activity extends AppCompatActivity {
         }
     }
 
-    //////////////////////////////////////////////////////修改與刪除資料///////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////修改與刪除記帳資料///////////////////////////////////////////////////////
     public void clickToUpdate(View view){
         if(costinput.getText().toString().equals("")){
             Toast.makeText(this,"請輸入金額",Toast.LENGTH_SHORT).show();
@@ -193,12 +193,21 @@ public class Report_ultimate_activity extends AppCompatActivity {
     }
 
     public void clickToDelete(View view){
-        myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
-        myDB.delete("record","id="+recordID,null);
-        myDB.close();
-        finish();
+        new AlertDialog.Builder(Report_ultimate_activity.this)
+                .setTitle("確定刪除").setNegativeButton("確定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
+                myDB.delete("record","id="+recordID,null);
+                myDB.close();
+                finish();
+            }
+        }).setPositiveButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {}
+        }).show();
     }
-    //////////////////////////////////////////////////////修改與刪除資料///////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////修改與刪除記帳資料///////////////////////////////////////////////////////
 
     /////////////////////////////////////////////////////////類別選項處理/////////////////////////////////////////////////////////
     //類別選項顯示(按下選擇類別)
