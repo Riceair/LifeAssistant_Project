@@ -8,7 +8,7 @@
 
     <RelativeLayout
         android:layout_width="350dp"
-        android:layout_height="500dp"
+        android:layout_height="450dp"
         android:layout_centerInParent="true"
         android:background="@drawable/new_stuff_background">
 
@@ -167,7 +167,8 @@
             android:id="@+id/savebutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/endstimeinput"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="50dp"
             android:layout_toLeftOf="@+id/cancelbutton"
             android:onClick="clickToUpdate"
             android:text="Save" />
@@ -176,8 +177,9 @@
             android:id="@+id/cancelbutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/endstimeinput"
             android:layout_alignRight="@id/endstimeinput"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="50dp"
             android:text="Cancel"
             android:textSize="15dp" />
 

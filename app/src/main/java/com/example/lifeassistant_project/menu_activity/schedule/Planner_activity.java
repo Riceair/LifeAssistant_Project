@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class Planner_activity extends AppCompatActivity {
     private static final String TAG = "Planner_activity";
@@ -53,6 +54,7 @@ public class Planner_activity extends AppCompatActivity {
     private ArrayList<String> stuffEndingList = new ArrayList<>();
     private ArrayList<String> stuffNameList = new ArrayList<>();
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_planner_activity);
@@ -63,8 +65,13 @@ public class Planner_activity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setIcon(R.drawable.newstand);
-        final TextView monthlayout = (TextView) findViewById(R.id.Month_layout);
+        //初始化日曆頭標與語系
         final CompactCalendarView compactCalendarView = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
+        compactCalendarView.setLocale(TimeZone.getTimeZone("GMT-8:00"),Locale.CHINESE);
+        compactCalendarView.setUseThreeLetterAbbreviation(true);
+        final TextView monthlayout = (TextView) findViewById(R.id.Month_layout);
+        monthlayout.setText(dateFormatForMonth.format(compactCalendarView.getFirstDayOfCurrentMonth()));
+        compactCalendarView.setFirstDayOfWeek(Calendar.MONDAY);
         //這是資料庫
         File dbDir = new File(PATH, "databases");
         dbDir.mkdir();
@@ -73,18 +80,15 @@ public class Planner_activity extends AppCompatActivity {
             copyAssets(PATH); //初始資料庫複製到路徑
 
 //        ReadDBRecord();
-
         ///////////
 
-        // Set first day of week to Monday, defaults to Monday so calling setFirstDayOfWeek is not necessary
-        // Use constants provided by Java Calendar class
-        compactCalendarView.setFirstDayOfWeek(Calendar.MONDAY);
+
 
         // 這是在初始化日期格式，轉成mileseconds
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         //測試用
         stuffList.add("2020/07/21 16:00:00");
-        stuffEndingList.add("2020/08/01 16:00:00");
+        stuffEndingList.add("2020/08/18 17:00:00");
         stuffNameList.add("Test");
         for (int i=0;i<stuffList.size();i++)
         {
@@ -98,8 +102,8 @@ public class Planner_activity extends AppCompatActivity {
                 long endingmillis=endingDate.getTime();
                 // 這是在加事情
                 long m=millis;
-                while (m < endingmillis) {
-                    Event ev1 = new Event(Color.GREEN, m, mystuffName);
+                while (m <= endingmillis) {
+                    Event ev1 = new Event(Color.RED, m, mystuffName);
                     compactCalendarView.addEvent(ev1);
                     m=m+86400000;
                }
@@ -110,36 +114,28 @@ public class Planner_activity extends AppCompatActivity {
             }
 
         }
-        Event ev1 = new Event(Color.GREEN, 1596196800000L, "Some extra data that I want to store.");
-        compactCalendarView.addEvent(ev1);
 
-        // Added event 2 GMT: Sun, 07 Jun 2015 19:10:51 GMT
-        Event ev2 = new Event(Color.GREEN, 1433704251000L);
-        compactCalendarView.addEvent(ev2);
-
-        // Query for events on Sun, 07 Jun 2015 GMT.
-        // Time is not relevant when querying for events, since events are returned by day.
-        // So you can pass in any arbitary DateTime and you will receive all events for that day.
-        List<Event> events = compactCalendarView.getEvents(1433701251000L); // can also take a Date object
-
+        //Query
+        //List<Event> events = compactCalendarView.getEvents(1597320075000L); // can also take a Date object
         // events has size 2 with the 2 events inserted previously
-        Log.d(TAG, "Events: " + events);
-
+        //Log.d(TAG, "Events: " + events);
         // define a listener to receive callbacks when certain events happen.
         compactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
-            public void onDayClick(Date dateClicked) {
+            public void onDayClick(Date dateClicked)
+            {
                 List<Event> events = compactCalendarView.getEvents(dateClicked);
                 Log.d(TAG, "Day was clicked: " + dateClicked + " with events " + events);
             }
 
             @Override
-            public void onMonthScroll(Date firstDayOfNewMonth) {
+            public void onMonthScroll(Date firstDayOfNewMonth)
+            {
                 Log.d(TAG, "Month was scrolled to: " + firstDayOfNewMonth);
                 monthlayout.setText(dateFormatForMonth.format(compactCalendarView.getFirstDayOfCurrentMonth()));
             }
         });
-        monthlayout.setText(dateFormatForMonth.format(compactCalendarView.getFirstDayOfCurrentMonth()));
+
     }
     private void ReadDBRecord(){
         myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
@@ -174,11 +170,11 @@ public class Planner_activity extends AppCompatActivity {
 
                     cursor.moveToNext();
                 }
-
                 // 5. 關閉 DB
                 myDB.close();
             }
-            else {
+            else
+                {
                 Toast.makeText(this,"Hint 1: 請將db準備好!",Toast.LENGTH_SHORT).show();
             }
         }
