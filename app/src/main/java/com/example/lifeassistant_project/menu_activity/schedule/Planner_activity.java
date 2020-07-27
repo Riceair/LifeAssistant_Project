@@ -28,6 +28,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,7 +47,9 @@ public class Planner_activity extends AppCompatActivity {
     private static final String BK_TABLE = "record";
     private SQLiteDatabase myDB;
     private Cursor cursor;
-
+    private ArrayList<String> stuffList = new ArrayList<>();
+    private ArrayList<String> stuffEndingList = new ArrayList<>();
+    private ArrayList<String> stuffNameList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +71,7 @@ public class Planner_activity extends AppCompatActivity {
             copyAssets(PATH); //初始資料庫複製到路徑
 
         ReadDBRecord();
-        ArrayList<String> stuffList = new ArrayList<>();
+
         ///////////
 
 
@@ -76,7 +79,31 @@ public class Planner_activity extends AppCompatActivity {
         // Use constants provided by Java Calendar class
         compactCalendarView.setFirstDayOfWeek(Calendar.MONDAY);
 
-        // Add event 1 on Sun, 07 Jun 2015 18:20:51 GMT
+        // 這是在初始化日期格式，轉成mileseconds
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        for (int i=0;i<stuffList.size();i++)
+        {
+            String myDate=stuffList.get(i);
+            String myEndingDate=stuffEndingList.get(i);
+            String mystuffName=stuffNameList.get(i);
+            try {
+                Date date = sdf.parse(myDate);
+                long millis = date.getTime();
+                Date endingDate = sdf.parse(myEndingDate);
+                long endingmillis=endingDate.getTime();
+                // 這是在加事情
+                for (long m=millis;m<endingmillis;m++)
+                {
+                    Event ev1 = new Event(Color.GREEN, m, mystuffName);
+                    compactCalendarView.addEvent(ev1);
+                }
+
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        }
         Event ev1 = new Event(Color.GREEN, 1433701251000L, "Some extra data that I want to store.");
         compactCalendarView.addEvent(ev1);
 
@@ -117,7 +144,12 @@ public class Planner_activity extends AppCompatActivity {
                 int iRow = cursor.getCount(); // 取得資料記錄的筆數
                 cursor.moveToFirst();
                 for (int i=0;i<iRow;i++){
-                    String stuffTime = cursor.getString(3)+"-"+cursor.getString(2)+"-"+cursor.getString(1)+"日) （時間：Starts at"+cursor.getString(4)+"點/ Ends at: "+cursor.getString(5)+"點)";
+                    String stuffTime = cursor.getString(3)+"/"+cursor.getString(2)+"/"+cursor.getString(1)+" "+cursor.getString(4)+":00:00";
+                    String stuffEndingTime = cursor.getString(3)+"/"+cursor.getString(2)+"/"+cursor.getString(1)+" "+cursor.getString(5)+":00:00";
+                    String stuffName = cursor.getString(0);
+                    stuffList.add(stuffTime);
+                    stuffEndingList.add(stuffEndingTime);
+                    stuffNameList.add(stuffName);
                     cursor.moveToNext();
                 }
 
