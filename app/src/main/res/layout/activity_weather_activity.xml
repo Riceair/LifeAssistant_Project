@@ -11,7 +11,7 @@
     <RelativeLayout
         android:id="@+id/secondary"
         android:layout_width="380dp"
-        android:layout_height="720dp"
+        android:layout_height="680dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="45dp"
         android:background="@drawable/weather_bg_sunny">
