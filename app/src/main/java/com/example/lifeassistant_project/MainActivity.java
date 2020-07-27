@@ -11,9 +11,14 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView userSay;
     private TextView chatBotSay;
 
+    private boolean isQuestion=false;
+    private final String[] helpTitle={"如何使用我","天氣指令","排成指令","記帳指令","報表指令","兌發票指令"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,6 +136,68 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    //說明提示
+    public void clickToGetHelp(View view){
+        //基本物件與天氣設為INVISIBLE 使用說明顯示VISIBLE
+        findViewById(R.id.popup_window).setVisibility(View.INVISIBLE);
+        findViewById(R.id.basic_item).setVisibility(View.INVISIBLE);
+        findViewById(R.id.question_item).setVisibility(View.VISIBLE);
+
+        //顯示動畫
+        Animation animation = new AlphaAnimation(1.0f,0.0f);
+        animation.setDuration(500);
+        findViewById(R.id.basic_item).setAnimation(animation);
+        animation.startNow();
+
+        animation = AnimationUtils.loadAnimation(this,R.anim.translate_up);
+        findViewById(R.id.question_item).setAnimation(animation);
+        animation.startNow();
+
+        //返回鍵設置
+        isQuestion=true;
+        findViewById(R.id.help_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+        LinearLayout help_list = findViewById(R.id.help_list);
+        for(int i=0;i<helpTitle.length;i++){
+            LinearLayout main_help_element= (LinearLayout) getLayoutInflater().inflate(R.layout.main_help_element,null);
+            TextView help_title = main_help_element.findViewById(R.id.help_title);
+            final ImageView show_more = main_help_element.findViewById(R.id.show_more);
+
+            help_title.setText(helpTitle[i]);
+            main_help_element.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    show_more.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
+                }
+            });
+
+            //新增上底線
+            ImageView seg=new ImageView(this);
+            seg.setImageResource(R.drawable.segment);
+            seg.setScaleType(ImageView.ScaleType.FIT_XY);
+            help_list.addView(seg,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT));
+            //
+            help_list.addView(main_help_element);
+            //新增下底線
+            ImageView segment=new ImageView(this);
+            segment.setImageResource(R.drawable.segment);
+            segment.setScaleType(ImageView.ScaleType.FIT_XY);
+            help_list.addView(segment,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT));
+        }
+        ImageView segment=new ImageView(this);
+        segment.setImageResource(R.drawable.segment);
+        segment.setScaleType(ImageView.ScaleType.FIT_XY);
+        help_list.addView(segment,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+    }
+
     ///////////////////////////Navigation Drawer/////////////////////////////
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -138,9 +207,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 intent=new Intent(this, Weather_activity.class);
                 this.startActivity(intent);
                 overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
-                break;
-            case R.id.menu_predict_oil:
-                Toast.makeText(this,"油價",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menu_fin_bookkeeping:
                 intent=new Intent(this, Bookkeeping_activity.class);
@@ -170,6 +236,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onBackPressed(){
         if(drawerLayout.isDrawerOpen(GravityCompat.START)){
             drawerLayout.closeDrawer(GravityCompat.START);
+        }else if(isQuestion){
+            isQuestion=false;
+            Animation animation = AnimationUtils.loadAnimation(MainActivity.this,R.anim.translate_down);
+            findViewById(R.id.question_item).setAnimation(animation);
+            findViewById(R.id.question_item).setVisibility(View.INVISIBLE);
+            animation.startNow();
+
+            animation = new AlphaAnimation(0.0f,1.0f);
+            animation.setDuration(1000);
+            findViewById(R.id.basic_item).setAnimation(animation);
+            findViewById(R.id.basic_item).setVisibility(View.VISIBLE);
+            animation.startNow();
         }else{
             super.onBackPressed();
         }

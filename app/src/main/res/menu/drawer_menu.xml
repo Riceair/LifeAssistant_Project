@@ -7,16 +7,11 @@
                 android:id="@+id/menu_weather"
                 android:icon="@drawable/ic_baseline_cloud_24"
                 android:title="天氣" />
-        </menu>
-    </item>
 
-
-    <item android:title="預測">
-        <menu>
             <item
-                android:id="@+id/menu_predict_oil"
-                android:icon="@drawable/ic_baseline_battery_std_24"
-                android:title="油價" />
+                android:id="@+id/menu_schedule"
+                android:icon="@android:drawable/ic_menu_today"
+                android:title="排程" />
         </menu>
     </item>
 
@@ -34,16 +29,6 @@
                 android:id="@+id/menu_fin_invoice"
                 android:icon="@android:drawable/ic_menu_set_as"
                 android:title="兌發票" />
-        </menu>
-    </item>
-
-
-    <item android:title="生活">
-        <menu>
-            <item
-                android:id="@+id/menu_schedule"
-                android:icon="@android:drawable/ic_menu_today"
-                android:title="排程" />
         </menu>
     </item>
 

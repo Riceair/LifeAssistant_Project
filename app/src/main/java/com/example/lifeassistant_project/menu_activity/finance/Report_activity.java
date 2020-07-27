@@ -423,7 +423,7 @@ public class Report_activity extends AppCompatActivity {
     }
 
     private void setDefulatColor() {
-        color_default_list.add(Color.rgb(205,104,57));
+        color_default_list.add(Color.rgb(252,104,3));
         color_default_list.add(Color.rgb(139,101,8));
         color_default_list.add(Color.rgb(67,110,238));
         color_default_list.add(Color.rgb(34,139,34));
