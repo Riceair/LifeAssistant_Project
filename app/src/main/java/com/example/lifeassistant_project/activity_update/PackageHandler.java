@@ -13,7 +13,7 @@ public class PackageHandler
     }
 
     static public byte[] accountPackageEncode(AccountPackage acPkg) throws UnsupportedEncodingException {
-        final int ID_size = 4, money_size = 4, year_size = 1, month_size = 1, day_size = 1, item_size = 18, detail_size = 18, status_size = 1, action_size = 1, user_size = 20;
+        final int ID_size = 4, money_size = 4, year_size = 4, month_size = 1, day_size = 1, item_size = 18, detail_size = 18, status_size = 1, action_size = 1, user_size = 20;
 
         ByteBuffer buf = ByteBuffer.allocate(1024);
         int currentLength = 0;
@@ -128,7 +128,7 @@ public class PackageHandler
 
     static public AccountPackage accountPackageDecode(byte[] message)
     {
-        final int ID_size = 4, money_size = 4, year_size = 1, month_size = 1, day_size = 1, item_size = 18, detail_size = 18, status_size = 1, user_size = 20;
+        final int ID_size = 4, money_size = 4, year_size = 4, month_size = 1, day_size = 1, item_size = 18, detail_size = 18, status_size = 1, action_size = 1, user_size = 20;
         AccountPackage result = new AccountPackage();
         int temp = 0, currentSize = ID_size;
         ByteBuffer buffer = ByteBuffer.allocate(1024);
@@ -209,7 +209,7 @@ public class PackageHandler
 //        result.setDetail(tempString);
 
         currentSize += status_size;
-        for(int i = currentSize - day_size ;i < currentSize; i++)
+        for(int i = currentSize - status_size ;i < currentSize; i++)
         {
             temp = temp << 8;
             int temp_m = (int)message[i];
@@ -221,6 +221,9 @@ public class PackageHandler
         }
         if(temp > 0) result.setType(true);
         else result.setType(false);
+
+        result.setRequestAction(TransByteArray2Int(Arrays.copyOfRange(message, currentSize, currentSize + action_size), action_size));
+        currentSize += action_size;
 
         currentSize += user_size;
         for(int i = currentSize - user_size; i < currentSize; i++)

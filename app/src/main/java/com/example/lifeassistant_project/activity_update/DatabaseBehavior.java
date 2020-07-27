@@ -4,7 +4,9 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.view.ContextThemeWrapper;
 
+import java.io.*;
 import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -21,8 +23,6 @@ public class DatabaseBehavior {
 
     public static void init()
     {
-        myDB = SQLiteDatabase.openOrCreateDatabase(PATH + "/databases/" + DBNAME, null);
-
 //        ClientProgress client = new ClientProgress();
 //        AccountPackage selectAccount = new AccountPackage();
 //        selectAccount.setRequestAction(3);
@@ -61,7 +61,9 @@ public class DatabaseBehavior {
     {
         System.out.println("Synchronize start.");
 
+        myDB = SQLiteDatabase.openOrCreateDatabase(PATH + "/databases/" + DBNAME, null);
         ArrayList<AccountPackage> clientAccountList = getClientAccountList(myDB, cursor);
+
 
         ClientProgress client = new ClientProgress();
         AccountPackage selectAccount = new AccountPackage();

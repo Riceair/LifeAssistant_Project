@@ -44,7 +44,7 @@ public class ClientProgress implements Runnable {
                 synchronized (this)
                 {
                     try {
-                        final int PACKAGE_SIZE = 71;
+                        final int PACKAGE_SIZE = 75;
 
                         SocketAddress tempSocketAddress = new InetSocketAddress(this.address, this.port);
                         Socket client = SocketFactory.getDefault().createSocket();
