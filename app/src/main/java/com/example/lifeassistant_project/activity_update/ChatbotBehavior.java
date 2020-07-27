@@ -66,6 +66,15 @@ public class ChatbotBehavior {
             DatabaseBehavior.synchronizeServer2Client();
         }
     }
+    public String getResponse()
+    {
+        if(this.sentenceHandler.getIntent() == 0 && this.sentenceHandler.getOperation() == 0)
+        {
+            return this.sentenceHandler.getFulfillment();
+        }
+//        else if(this.sentenceHandler.getIntent() )
+        return null;
+    }
     public boolean generateSendSentence(String message)
     {
         this.sendSentence = new SentenceHandler();

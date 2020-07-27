@@ -6,6 +6,8 @@ public class SchedulePackage {
     private int requestAction; // request 需要執行的行為
     // 0 = 新增, 1 = 刪除, 2 = 修改, 3 = 查詢, 4 = Debug.
 
+    private ScheduleDate startDate, endDate;
+
     // start_time = hours of the date, and end_time is that the difference between the start_time
     public SchedulePackage()
     {
@@ -106,6 +108,62 @@ public class SchedulePackage {
         this.end_time = detTime;
     }
 
+    public ScheduleDate getStartDateInFormat()
+    {
+        if(this.startDate == null)
+        {
+            ScheduleDate result = new ScheduleDate();
+
+            result.setYear(this.year);
+            result.setMonth(this.month);
+            result.setDay(this.day);
+            result.setHour(this.start_time / 100);
+            result.setMinute(this.start_time % 100);
+
+            this.startDate = result;
+        }
+        return this.startDate;
+    }
+
+    public ScheduleDate getEndDateInFormat()
+    {
+        if(this.endDate == null)
+        {
+            ScheduleDate result = new ScheduleDate();
+
+            result.setMinute(this.end_time % 100);
+            int tempHour = this.end_time / 100;
+            result.setHour(tempHour % 24);
+
+            result.setDay(this.day);
+            result.setMonth(this.month);
+            result.setYear(this.year);
+
+            int[] monthDay = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+            if((result.getYear() % 4 == 0 && result.getYear() % 100 != 0) || (result.getYear() % 400 == 0))
+                monthDay[1] = 29;
+
+            result.setDay(result.getDay() + (tempHour / 24));
+            while(result.getDay() > monthDay[result.getMonth() - 1])
+            {
+                result.setDay(result.getDay() - monthDay[result.getMonth() - 1]);
+                result.setMonth(result.getMonth() + 1);
+                if(result.getMonth() > 12)
+                {
+                    result.setYear(result.getYear() + 1);
+                    if((result.getYear() % 4 == 0 && result.getYear() % 100 != 0) || (result.getYear() % 400 == 0))
+                        monthDay[1] = 29;
+                    else
+                        monthDay[1] = 28;
+                    result.setMonth(1);
+                }
+            }
+
+            this.endDate = result;
+        }
+        return this.endDate;
+    }
+
     public int getID() {
         return id;
     }
@@ -167,3 +225,4 @@ public class SchedulePackage {
     public void setRequestAction(int requestAction) { this.requestAction = requestAction; }
 
 }
+

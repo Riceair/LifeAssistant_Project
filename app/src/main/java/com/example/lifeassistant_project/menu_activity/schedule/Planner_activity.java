@@ -19,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lifeassistant_project.R;
+import com.example.lifeassistant_project.activity_update.ScheduleDate;
+import com.example.lifeassistant_project.activity_update.SchedulePackage;
 import com.example.lifeassistant_project.menu_activity.finance.Report_type_activity;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
@@ -148,12 +150,28 @@ public class Planner_activity extends AppCompatActivity {
                 int iRow = cursor.getCount(); // 取得資料記錄的筆數
                 cursor.moveToFirst();
                 for (int i=0;i<iRow;i++){
-//                    String stuffTime = cursor.getString(3)+"/"+cursor.getString(2)+"/"+cursor.getString(1)+" "+cursor.getString(4)+":00:00";
-//                    String stuffEndingTime = cursor.getString(3)+"/"+cursor.getString(2)+"/"+cursor.getString(1)+" "+cursor.getString(5)+":00:00";
-//                    String stuffName = cursor.getString(0);
-//                    stuffList.add(stuffTime);
-//                    stuffEndingList.add(stuffEndingTime);
-//                    stuffNameList.add(stuffName);
+                    SchedulePackage temp = new SchedulePackage(
+                            0,
+                            cursor.getString(0),
+                            cursor.getInt(1),
+                            cursor.getInt(2),
+                            cursor.getInt(3),
+                            cursor.getInt(4),
+                            cursor.getInt(5));
+                    String tempString = new String(Integer.toString(temp.getStartDateInFormat().getYear()) + "/" +
+                            String.format("%02d", temp.getStartDateInFormat().getMonth()) + "/" +
+                            String.format("%02d", temp.getStartDateInFormat().getDay()) + " " +
+                            String.format("%02d", temp.getStartDateInFormat().getHour()) + ":" +
+                            String.format("%02d", temp.getStartDateInFormat().getMinute()) + ":00");
+                    stuffList.add(tempString);
+                    tempString = new String(Integer.toString(temp.getEndDateInFormat().getYear()) + "/" +
+                            String.format("%02d", temp.getEndDateInFormat().getMonth()) + "/" +
+                            String.format("%02d", temp.getEndDateInFormat().getDay()) + " " +
+                            String.format("%02d", temp.getEndDateInFormat().getHour()) + ":" +
+                            String.format("%02d", temp.getEndDateInFormat().getMinute()) + ":00");
+                    stuffEndingList.add(tempString);
+                    stuffNameList.add(temp.getTodo());
+
                     cursor.moveToNext();
                 }
 
