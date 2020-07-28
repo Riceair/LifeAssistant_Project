@@ -5,8 +5,7 @@ public class ChatbotBehavior {
     /*
     0 -> Default mode. To detect what user want to do with chatBot with nature language.
     1 -> Ready mode. The chatBot detect user's intent, and ready to listen to user's detail operation.
-    2 ->
-
+    2 -> Undefined.
     */
 
     public int getBehaviorMode() {
@@ -42,9 +41,7 @@ public class ChatbotBehavior {
         synchronized (client)
         {
             try {
-                System.out.println("WAITTING");
                 client.wait();
-                System.out.println("GOGOGO");
             }
             catch (InterruptedException e) {
                 System.out.println(e);
@@ -72,7 +69,38 @@ public class ChatbotBehavior {
         {
             return this.sentenceHandler.getFulfillment();
         }
-//        else if(this.sentenceHandler.getIntent() )
+        else if(this.sentenceHandler.getIntent() == 1)
+        {
+            switch (this.sentenceHandler.getOperation())
+            {
+                case 1:
+                    return "好的！請說出您想要記下的帳目。（您可以告訴我：記帳金額、時間、以及類型）";
+                case 2:
+                    return "已將您告訴我的記帳項目刪除完畢。";
+                case 3:
+                    return "修改記帳??";
+                case 4:
+                    return "好的！以下是您欲查詢的記帳項目：";
+            }
+        }
+        else if(this.sentenceHandler.getIntent() == 2)
+        {
+            switch (this.sentenceHandler.getOperation())
+            {
+                case 1:
+                    return "好的！請說出您想要我記住的事情。";
+                case 2:
+                    return "好的！我已經將這件事項刪除完畢。";
+                case 3:
+                    return "修改行程??";
+                case 4:
+                    return "好的，以下是您的行程：";
+            }
+        }
+        else
+        {
+            return "Error! intent or operation code has exception.";
+        }
         return null;
     }
     public boolean generateSendSentence(String message)
@@ -86,22 +114,7 @@ public class ChatbotBehavior {
         }
         else if(this.behaviorMode == 1)
         {
-//          stupid method.
             int id = (int) (Math.random() * 99999)+1;
-//            boolean generateDone = false;
-//            while (!generateDone)
-//            {
-//                generateDone = true;
-//                for (int i : DatabaseBehavior.getAccountIDList())
-//                {
-//                    if (i == id)
-//                    {
-//                        id = (int) (Math.random() * 99999)+1;
-//                        generateDone = false;
-//                        break;
-//                    }
-//                }
-//            }
 
             this.sendSentence.setIntent(sentenceHandler.getIntent());
             this.sendSentence.setOperation(sentenceHandler.getOperation());

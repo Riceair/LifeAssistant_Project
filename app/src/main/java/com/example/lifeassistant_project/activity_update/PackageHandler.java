@@ -13,23 +13,15 @@ public class PackageHandler
     }
 
     static public byte[] accountPackageEncode(AccountPackage acPkg) throws UnsupportedEncodingException {
-        final int ID_size = 4, money_size = 4, year_size = 4, month_size = 1, day_size = 1, item_size = 18, detail_size = 18, status_size = 1, action_size = 1, user_size = 20;
+        final int ID_size = 4, money_size = 4, year_size = 4, month_size = 1, day_size = 1, item_size = 18, detail_size = 18, receipt_size = 2, note_size = 90, status_size = 1, action_size = 1, user_size = 20;
 
         ByteBuffer buf = ByteBuffer.allocate(1024);
-        int currentLength = 0;
 
         ByteBuffer b_temp;
         buf.put("acc".getBytes("UTF-8"));
         Integer temp = new Integer(0);
 
-        b_temp = ByteBuffer.allocate(ID_size);
-        temp = acPkg.getID();
-        for(int i = 0;i < ID_size;i++)
-        {
-            b_temp.put(temp.byteValue());
-            temp /= 256;
-        }
-        buf.put(ReverseArray.Reverse_ByteBuffer(b_temp.array()));
+        buf.put(TransInt2ByteArray(acPkg.getID(), ID_size));
 
         b_temp = ByteBuffer.allocate(money_size);
         temp = acPkg.getMoney();
@@ -91,6 +83,9 @@ public class PackageHandler
             buf.put(b_temp.array());
         }
 
+        buf.put(TransString2ByteArray(acPkg.getReceipt(), receipt_size));
+        buf.put(TransString2ByteArray(acPkg.getNote(), note_size));
+
         b_temp = ByteBuffer.allocate(status_size);
         if(acPkg.getType()) temp = 1;
         else temp = 0;
@@ -128,7 +123,7 @@ public class PackageHandler
 
     static public AccountPackage accountPackageDecode(byte[] message)
     {
-        final int ID_size = 4, money_size = 4, year_size = 4, month_size = 1, day_size = 1, item_size = 18, detail_size = 18, status_size = 1, action_size = 1, user_size = 20;
+        final int ID_size = 4, money_size = 4, year_size = 4, month_size = 1, day_size = 1, item_size = 18, detail_size = 18, receipt_size = 2, note_size = 90, status_size = 1, action_size = 1, user_size = 20;
         AccountPackage result = new AccountPackage();
         int temp = 0, currentSize = ID_size;
         ByteBuffer buffer = ByteBuffer.allocate(1024);
@@ -201,6 +196,12 @@ public class PackageHandler
 
         result.setDetail(TransByteArray2String(Arrays.copyOfRange(message, currentSize, currentSize + detail_size), detail_size));
         currentSize += detail_size;
+
+        result.setReceipt(TransByteArray2String(Arrays.copyOfRange(message, currentSize, currentSize + receipt_size), receipt_size));
+        currentSize += receipt_size;
+
+        result.setNote(TransByteArray2String(Arrays.copyOfRange(message, currentSize, currentSize + note_size), note_size));
+        currentSize += note_size;
 
 //        for(int i = currentSize - detail_size; i < currentSize; i++)
 //            buffer.put(message[i]);

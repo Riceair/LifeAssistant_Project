@@ -3,7 +3,7 @@ package com.example.lifeassistant_project.activity_update;
 public class AccountPackage
 {
     private int ID, money, year, month, day;
-    private String item, detail, user;
+    private String item, detail, receipt, note, user;
     private boolean type; // True for 支出
     private int requestAction; // request 需要執行的行為
     // 0 = 新增, 1 = 刪除, 2 = 修改, 3 = 查詢, 4 = Debug.
@@ -26,7 +26,10 @@ public class AccountPackage
         this.item = item;
         this.detail = detail;
         this.type = type;
+        this.receipt = "";
+        this.note = "";
         this.requestAction = 4;
+        this.user = "Null";
     }
     public AccountPackage()
     {
@@ -38,6 +41,8 @@ public class AccountPackage
         this.item = "";
         this.detail = "";
         this.type = false;
+        this.receipt = "";
+        this.note = "";
         this.requestAction = 4;
         this.user = "Null";
     }
@@ -97,6 +102,14 @@ public class AccountPackage
     public void setDetail(String detail) {
         this.detail = detail;
     }
+
+    public String getReceipt() { return receipt; }
+
+    public void setReceipt(String receipt) { this.receipt = receipt; }
+
+    public String getNote() { return note; }
+
+    public void setNote(String note) { this.note = note; }
 
     public boolean getType() {
         return type;
