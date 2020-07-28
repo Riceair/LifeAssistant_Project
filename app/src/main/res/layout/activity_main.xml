@@ -144,15 +144,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <TextView
-                    android:id="@+id/help_back"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp"
-                    android:textColor="@color/cardview_light_background"
-                    android:textSize="30dp"
-                    android:text="返回"
-                    android:gravity="right"/>
+<!--                <TextView-->
+<!--                    android:id="@+id/help_back"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginRight="20dp"-->
+<!--                    android:textColor="@color/cardview_light_background"-->
+<!--                    android:textSize="30dp"-->
+<!--                    android:text="返回"-->
+<!--                    android:gravity="right"/>-->
                 <!--    Java add item    -->
 
             </LinearLayout>
