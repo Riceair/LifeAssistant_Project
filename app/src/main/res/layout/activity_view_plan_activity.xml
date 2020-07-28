@@ -8,16 +8,6 @@
     tools:context=".menu_activity.schedule.ViewPlan_activity">
 
     <Button
-        android:id="@+id/addButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/mainly"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="100dp"
-        android:onClick="clickNewPlan"
-        android:text="新增" />
-
-    <Button
         android:id="@+id/backbutton"
         android:layout_width="80dp"
         android:layout_height="wrap_content"

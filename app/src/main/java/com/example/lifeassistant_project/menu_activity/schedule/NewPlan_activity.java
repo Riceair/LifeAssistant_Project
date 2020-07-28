@@ -1,8 +1,10 @@
 package com.example.lifeassistant_project.menu_activity.schedule;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -18,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.lifeassistant_project.R;
+import com.example.lifeassistant_project.activity_update.ClientProgress;
 import com.example.lifeassistant_project.activity_update.SchedulePackage;
 
 import java.io.File;
@@ -49,8 +53,16 @@ public class NewPlan_activity extends AppCompatActivity {
     private int Ending_hour;
     private int Ending_minute;
     private String datewasclicked;
+    private String timewasclicked;
+    private String endingdatewasclicked;
+    private String endingtimewasclicked;
+    private String namewasfilledin;
+    // the package need to be send.
 
-    ArrayList<String> stuffList = new ArrayList<>();
+
+    private ArrayList<String> stuffList = new ArrayList<>();
+    private ArrayList<String> stuffEndingList = new ArrayList<>();
+    private ArrayList<String> stuffNameList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +77,11 @@ public class NewPlan_activity extends AppCompatActivity {
         GregorianCalendar calendar = new GregorianCalendar();
         Bundle bundle = getIntent().getExtras();
         datewasclicked=bundle.getString("clickeddate");
+        timewasclicked=bundle.getString("clickedtime");
+        namewasfilledin=bundle.getString("clickedname");
+        endingtimewasclicked=bundle.getString("clickedendingtime");
+        endingdatewasclicked=bundle.getString("clickedendingdate");
+        //這是讀資料庫
         File dbDir = new File(PATH, "databases");
         dbDir.mkdir();
         File FdbFile = new File(PATH+"/databases",DBNAME);
@@ -72,6 +89,15 @@ public class NewPlan_activity extends AppCompatActivity {
             copyAssets(PATH); //初始資料庫複製到路徑
 
 
+
+
+
+        ReadDBRecord();
+
+
+//這是承接事項
+        final TextView nameText = (TextView) findViewById(R.id.eventinput);
+        nameText.setText(namewasfilledin);
 
         //這是開始日期
         final TextView dateText = (TextView) findViewById(R.id.dateinput);
@@ -95,9 +121,10 @@ public class NewPlan_activity extends AppCompatActivity {
                 },mYear,mMonth,mDay).show();
             }
         });
+        //這是結束日期
         final TextView endsdateText = (TextView) findViewById(R.id.endsdateinput);
 
-        endsdateText.setText(datewasclicked);
+        endsdateText.setText(endingdatewasclicked);
         Button endsdatePicker = (Button) findViewById(R.id.endsdatepicker);
         endsdatePicker.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -116,7 +143,7 @@ public class NewPlan_activity extends AppCompatActivity {
             }
         });
         ///////////
-        //這是結束日期
+
         Button cancel = (Button) findViewById(R.id.cancelbutton);
         cancel.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -127,6 +154,7 @@ public class NewPlan_activity extends AppCompatActivity {
         ////////////
         //這是開始時間
         final TextView timeText = (TextView) findViewById(R.id.timeinput);
+        timeText.setText(timewasclicked);
         timePickerDialog=new TimePickerDialog(this,new TimePickerDialog.OnTimeSetListener(){
             @Override
         public void onTimeSet(TimePicker view,int hourOfDay,int minute){
@@ -138,6 +166,7 @@ public class NewPlan_activity extends AppCompatActivity {
         //////////////////
         //這是結束時間
         final TextView endstimeText = (TextView) findViewById(R.id.endstimeinput);
+        endstimeText.setText(endingtimewasclicked);
         endstimePickerDialog=new TimePickerDialog(this,new TimePickerDialog.OnTimeSetListener(){
             @Override
             public void onTimeSet(TimePicker view,int hourOfDay,int minute){
@@ -168,6 +197,51 @@ public class NewPlan_activity extends AppCompatActivity {
         overridePendingTransition(0,R.anim.translate_out);
     }
 
+    private void ReadDBRecord(){
+        myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
+        try {
+            cursor = myDB.rawQuery("select schedule_record.事情, schedule_record.年,schedule_record.月,schedule_record.日,schedule_record.開始時間,schedule_record.結束時間 from schedule_record",null);
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            if(cursor!=null) {
+                int iRow = cursor.getCount(); // 取得資料記錄的筆數
+                cursor.moveToFirst();
+                for (int i=0;i<iRow;i++){
+                    SchedulePackage temp = new SchedulePackage(
+                            0,
+                            cursor.getString(0),
+                            cursor.getInt(1),
+                            cursor.getInt(2),
+                            cursor.getInt(3),
+                            cursor.getInt(4),
+                            cursor.getInt(5));
+                    String tempString = new String(Integer.toString(temp.getStartDateInFormat().getYear()) + "/" +
+                            String.format("%02d", temp.getStartDateInFormat().getMonth()) + "/" +
+                            String.format("%02d", temp.getStartDateInFormat().getDay()) + " " +
+                            String.format("%02d", temp.getStartDateInFormat().getHour()) + ":" +
+                            String.format("%02d", temp.getStartDateInFormat().getMinute()) + ":00");
+                    stuffList.add(tempString);
+                    tempString = new String(Integer.toString(temp.getEndDateInFormat().getYear()) + "/" +
+                            String.format("%02d", temp.getEndDateInFormat().getMonth()) + "/" +
+                            String.format("%02d", temp.getEndDateInFormat().getDay()) + " " +
+                            String.format("%02d", temp.getEndDateInFormat().getHour()) + ":" +
+                            String.format("%02d", temp.getEndDateInFormat().getMinute()) + ":00");
+                    stuffEndingList.add(tempString);
+                    stuffNameList.add(temp.getTodo());
+
+                    cursor.moveToNext();
+                }
+                // 5. 關閉 DB
+                myDB.close();
+            }
+            else
+            {
+                Toast.makeText(this,"Hint 1: 請將db準備好!",Toast.LENGTH_SHORT).show();
+            }
+        }
+        catch (Exception e) {
+            Toast.makeText(this,e.toString(),Toast.LENGTH_SHORT).show();
+        }
+    }
     private void copyAssets(String path) {
         InputStream in = null;
         OutputStream out = null;
@@ -183,7 +257,7 @@ public class NewPlan_activity extends AppCompatActivity {
         }
     }
     /////////////////////////////////////////////////////////排程資料庫/////////////////////////////////////////////////////////
-    private void writeToBKDB(){
+    private void writeToSCDB(){
         //將表單內容讀入
         int Starting_year = 0;
         int Starting_month = 0;
@@ -191,7 +265,6 @@ public class NewPlan_activity extends AppCompatActivity {
         int Ending_year = 0;
         int Ending_month = 0;
         int Ending_day = 0;
-
         String event="0";
         TextView textView = (TextView) findViewById(R.id.eventinput); //事項
         if (!textView.getText().toString().equals(""))
@@ -267,7 +340,8 @@ public class NewPlan_activity extends AppCompatActivity {
                 int id = (int) (Math.random() * 99999)+1;
                 values.put("id", id);
                 // get Account Class
-                //WOWthis.sendPackage = new SchedulePackage(id, event, Starting_year, Starting_month, Starting_day, Ending_year, Ending_month, Ending_day);
+                this.sendPackage = new SchedulePackage(id, event, 0, Starting_year, Starting_month, Starting_day,
+                        Starting_hour, Starting_minute, Ending_year,Ending_month, Ending_day,Ending_hour,Ending_minute);
                 this.sendPackage.setRequestAction(0);
 
                 result = myDB.insert(BK_TABLE, null, values);
@@ -285,6 +359,34 @@ public class NewPlan_activity extends AppCompatActivity {
         }
 
         NewPlan_activity.this.finish();
+    }
+    public void clickToUpdate(View view){
+        writeToSCDB();
+        //
+        ClientProgress client = new ClientProgress();
+
+        client.setPlan(this.sendPackage);
+//        client.setWeather();
+        Thread conn = new Thread(client);
+        conn.start();
+        //
+    }
+    public void clickToDelete(View view){
+       final EditText eventbox = (EditText) findViewById(R.id.eventinput);
+       final String eventname=eventbox.getText().toString();
+        new AlertDialog.Builder(NewPlan_activity.this)
+                .setTitle("確定刪除").setNegativeButton("確定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
+                myDB.delete("schedule_record","事情="+eventname,null);
+                myDB.close();
+                finish();
+            }
+        }).setPositiveButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {}
+        }).show();
     }
     //////////
     /*

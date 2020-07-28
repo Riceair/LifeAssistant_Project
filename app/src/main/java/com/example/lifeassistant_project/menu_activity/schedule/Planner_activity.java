@@ -51,6 +51,7 @@ public class Planner_activity extends AppCompatActivity {
     private ArrayList<String> stuffEndingList = new ArrayList<>();
     private ArrayList<String> stuffNameList = new ArrayList<>();
     public String datewasclicked;
+    private String namewasfilledin;
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,8 @@ public class Planner_activity extends AppCompatActivity {
         final TextView monthlayout = (TextView) findViewById(R.id.Month_layout);
         monthlayout.setText(dateFormatForMonth.format(compactCalendarView.getFirstDayOfCurrentMonth()));
         compactCalendarView.setFirstDayOfWeek(Calendar.MONDAY);
+        Date datenow =new Date();
+        datewasclicked=formatter.format(datenow);
         //這是資料庫
         File dbDir = new File(PATH, "databases");
         dbDir.mkdir();
@@ -122,6 +125,8 @@ ReadDBRecord();
             {
                 List<Event> events = compactCalendarView.getEvents(dateClicked);
                 datewasclicked=formatter.format(dateClicked);
+
+                namewasfilledin="";
                 Log.d(TAG, "Day was clicked: " + dateClicked + " with events " + events);
             }
 
@@ -208,6 +213,7 @@ ReadDBRecord();
     public void clickNewPlan(View view){
         Intent intent = new Intent(view.getContext(),NewPlan_activity.class);
         intent.putExtra("clickeddate",datewasclicked);
+        intent.putExtra("clickedname",namewasfilledin);
         view.getContext().startActivity(intent);
     }
 
