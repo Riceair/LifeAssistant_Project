@@ -1,7 +1,5 @@
 package com.example.lifeassistant_project.menu_activity.weather;
 
-import android.icu.lang.UCharacter;
-import android.media.Image;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -9,15 +7,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import com.example.lifeassistant_project.R;
 import com.example.lifeassistant_project.activity_update.ClientProgress;
 import com.example.lifeassistant_project.activity_update.WeatherPackage;
-import com.example.lifeassistant_project.menu_activity.finance.Report_type_activity;
-
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.*;

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/finance_background"
-    tools:context=".menu_activity.finance.Report_ultimate_activity">
+    tools:context=".menu_activity.finance.report.Report_ultimate_activity">
 
     <RelativeLayout
         android:layout_width="350dp"
@@ -171,6 +171,7 @@
             android:layout_below="@+id/filterpicker"
             android:layout_toRightOf="@+id/items"
             android:hint="請輸入項目"
+            android:inputType="textPersonName"
             android:textColor="#2E2D2D"
             android:textColorHint="#4D5463" />
 

@@ -1,10 +1,8 @@
 package com.example.lifeassistant_project.menu_activity.login;
 
-import android.media.Image;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
-import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -15,9 +13,7 @@ import com.example.lifeassistant_project.R;
 import com.example.lifeassistant_project.activity_update.ClientProgress;
 import com.example.lifeassistant_project.activity_update.DatabaseBehavior;
 import com.example.lifeassistant_project.activity_update.LoginPackage;
-import com.example.lifeassistant_project.menu_activity.finance.Report_type_activity;
 import com.google.android.material.textfield.TextInputEditText;
-import org.w3c.dom.Text;
 
 public class Login_activity extends AppCompatActivity {
 

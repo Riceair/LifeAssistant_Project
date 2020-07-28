@@ -121,6 +121,7 @@ public class ViewPlan_activity extends AppCompatActivity {
 
                     cursor.moveToNext();
                 }
+
                 // 5. 關閉 DB
                 myDB.close();
             }

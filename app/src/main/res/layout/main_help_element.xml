@@ -4,7 +4,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:gravity="center"
-    android:layout_height="70dp">
+    android:layout_height="90dp">
 
     <TextView
         android:id="@+id/help_title"
@@ -13,7 +13,7 @@
         android:gravity="center"
         android:layout_weight="3"
         android:textColor="@color/cardview_light_background"
-        android:textSize="35dp"
+        android:textSize="40dp"
         android:text="功能" />
 
     <ImageView
