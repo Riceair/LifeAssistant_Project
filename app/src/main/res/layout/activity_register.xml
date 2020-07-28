@@ -32,7 +32,7 @@
             android:layout_marginTop="30dp"
             android:gravity="center"
             android:text="您好！歡迎加入\n我將成為你貼心的生活助理"
-            android:textSize="20sp" />
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/welcomeText2"
