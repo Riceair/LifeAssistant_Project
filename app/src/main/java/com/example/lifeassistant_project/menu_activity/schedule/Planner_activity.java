@@ -13,15 +13,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lifeassistant_project.R;
-import com.example.lifeassistant_project.activity_update.ScheduleDate;
 import com.example.lifeassistant_project.activity_update.SchedulePackage;
-import com.example.lifeassistant_project.menu_activity.finance.Report_type_activity;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 
@@ -42,8 +38,9 @@ public class Planner_activity extends AppCompatActivity {
     private Calendar currentCalender = Calendar.getInstance(Locale.getDefault());
     private SimpleDateFormat dateFormatForDisplaying = new SimpleDateFormat("dd-M-yyyy hh:mm:ss a", Locale.getDefault());
     private SimpleDateFormat dateFormatForMonth = new SimpleDateFormat("MMM - yyyy", Locale.getDefault());
+    public SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
     private boolean shouldShow = false;
-    private CompactCalendarView compactCalendarView;
+    public CompactCalendarView compactCalendarView;
     private static final String PATH = "/data/data/com.example.lifeassistant_project";
     private static final String DBNAME = "myDB.db";
     private static final String FILTER_TABLE = "filter";
@@ -53,6 +50,7 @@ public class Planner_activity extends AppCompatActivity {
     private ArrayList<String> stuffList = new ArrayList<>();
     private ArrayList<String> stuffEndingList = new ArrayList<>();
     private ArrayList<String> stuffNameList = new ArrayList<>();
+    public String datewasclicked;
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,9 +85,9 @@ ReadDBRecord();
         // 這是在初始化日期格式，轉成mileseconds
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         //測試用
-        //stuffList.add("2020/07/21 16:00:00");
-        //stuffEndingList.add("2020/08/18 17:00:00");
-        //stuffNameList.add("Test");
+        stuffList.add("2020/07/21 16:00:00");
+        stuffEndingList.add("2020/08/18 17:00:00");
+        stuffNameList.add("Test");
         for (int i=0;i<stuffList.size();i++)
         {
             String myDate=stuffList.get(i);
@@ -123,6 +121,7 @@ ReadDBRecord();
             public void onDayClick(Date dateClicked)
             {
                 List<Event> events = compactCalendarView.getEvents(dateClicked);
+                datewasclicked=formatter.format(dateClicked);
                 Log.d(TAG, "Day was clicked: " + dateClicked + " with events " + events);
             }
 
@@ -208,6 +207,7 @@ ReadDBRecord();
     }
     public void clickNewPlan(View view){
         Intent intent = new Intent(view.getContext(),NewPlan_activity.class);
+        intent.putExtra("clickeddate",datewasclicked);
         view.getContext().startActivity(intent);
     }
 

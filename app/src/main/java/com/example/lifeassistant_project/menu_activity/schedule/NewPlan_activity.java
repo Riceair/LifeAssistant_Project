@@ -1,28 +1,24 @@
 package com.example.lifeassistant_project.menu_activity.schedule;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.GestureDetector;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.example.lifeassistant_project.R;
 import com.example.lifeassistant_project.activity_update.SchedulePackage;
-import com.example.lifeassistant_project.menu_activity.finance.Bookkeeping_activity;
-import com.example.lifeassistant_project.menu_activity.finance.Report_type_activity;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -52,6 +48,8 @@ public class NewPlan_activity extends AppCompatActivity {
     private int Starting_minute;
     private int Ending_hour;
     private int Ending_minute;
+    private String datewasclicked;
+
     ArrayList<String> stuffList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +63,8 @@ public class NewPlan_activity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setIcon(R.drawable.newstand);
         GregorianCalendar calendar = new GregorianCalendar();
-
+        Bundle bundle = getIntent().getExtras();
+        datewasclicked=bundle.getString("clickeddate");
         File dbDir = new File(PATH, "databases");
         dbDir.mkdir();
         File FdbFile = new File(PATH+"/databases",DBNAME);
@@ -77,7 +76,8 @@ public class NewPlan_activity extends AppCompatActivity {
         //這是開始日期
         final TextView dateText = (TextView) findViewById(R.id.dateinput);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        dateText.setText(formatter.format(new java.util.Date()));
+    dateText.setText(datewasclicked);
+
         Button datePicker = (Button) findViewById(R.id.datepicker);
         datePicker.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -97,7 +97,7 @@ public class NewPlan_activity extends AppCompatActivity {
         });
         final TextView endsdateText = (TextView) findViewById(R.id.endsdateinput);
 
-        endsdateText.setText(formatter.format(new java.util.Date()));
+        endsdateText.setText(datewasclicked);
         Button endsdatePicker = (Button) findViewById(R.id.endsdatepicker);
         endsdatePicker.setOnClickListener(new View.OnClickListener(){
             @Override

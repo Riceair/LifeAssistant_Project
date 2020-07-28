@@ -1,4 +1,4 @@
-package com.example.lifeassistant_project.menu_activity.finance;
+package com.example.lifeassistant_project.menu_activity.finance.report;
 
 import androidx.appcompat.app.AppCompatActivity;
 

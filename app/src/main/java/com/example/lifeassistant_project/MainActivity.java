@@ -9,9 +9,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.view.LayoutInflater;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -26,8 +27,9 @@ import com.example.lifeassistant_project.activity_update.*;
 import com.example.lifeassistant_project.menu_activity.finance.Bookkeeping_activity;
 import com.example.lifeassistant_project.menu_activity.finance.Invoice_activity;
 import com.example.lifeassistant_project.menu_activity.login.Login_activity;
+import com.example.lifeassistant_project.menu_activity.login.register_activity;
 import com.example.lifeassistant_project.menu_activity.schedule.Planner_activity;
-import com.example.lifeassistant_project.menu_activity.finance.Report_activity;
+import com.example.lifeassistant_project.menu_activity.finance.report.Report_activity;
 import com.example.lifeassistant_project.menu_activity.weather.Weather_activity;
 import com.google.android.material.navigation.NavigationView;
 
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView chatBotSay;
 
     private boolean isQuestion=false;
-    private final String[] helpTitle={"如何使用我","天氣指令","排成指令","記帳指令","報表指令","兌發票指令"};
+    private final String[] helpTitle={"如何使用","天氣指令","排成指令","記帳指令","報表指令","發票指令"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         actionBarDrawerToggle.syncState();
+
+        setHelp();
 
         //語音TTS
         chatbotBehavior = new ChatbotBehavior();
@@ -97,6 +101,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view){
                 Intent intent=new Intent(MainActivity.this,Login_activity.class);
+                MainActivity.this.startActivity(intent);
+                overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
+            }
+        });
+        //註冊
+
+        ImageView RegImg=headerView.findViewById(R.id.RegImg);
+        RegImg.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent=new Intent(MainActivity.this,register_activity.class);
                 MainActivity.this.startActivity(intent);
             }
         });
@@ -149,8 +164,55 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    //說明提示
+    //////////////////////////////說明提示////////////////////////////
+    //help設置
+    private void setHelp(){
+        //重設
+        LinearLayout help_list = findViewById(R.id.help_list);
+        help_list.removeAllViews();
+
+        //返回鍵設置
+        TextView help_back=new TextView(this);
+        help_back.setTextColor(Color.WHITE);
+        help_back.setGravity(Gravity.RIGHT);
+        help_back.setText("返回");
+        help_back.setTextSize(30f);
+        help_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+        help_list.addView(help_back);
+
+        for(int i=0;i<helpTitle.length;i++){
+            LinearLayout main_help_element= (LinearLayout) getLayoutInflater().inflate(R.layout.main_help_element,null);
+            TextView help_title = main_help_element.findViewById(R.id.help_title);
+            final ImageView show_more = main_help_element.findViewById(R.id.show_more);
+
+            //新增上底線
+            ImageView seg=new ImageView(this);
+            seg.setImageResource(R.drawable.segment);
+            seg.setScaleType(ImageView.ScaleType.FIT_XY);
+            help_list.addView(seg,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT));
+            //Help element加入
+            help_list.addView(main_help_element);
+            //新增下底線
+            ImageView segment=new ImageView(this);
+            segment.setImageResource(R.drawable.segment_gray);
+            segment.setScaleType(ImageView.ScaleType.FIT_XY);
+            help_list.addView(segment,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT));
+
+            help_title.setText(helpTitle[i]);
+            main_help_element.setOnClickListener(new MainHelpItemOnClickListener(this,help_list,show_more,new String[]{"說出我要記帳\n聊天機器人可能會幫你記帳","123","你好"}));
+        }
+    }
+
+    //說明按鍵觸發
     public void clickToGetHelp(View view){
+        isQuestion=true;
         //基本物件與天氣設為INVISIBLE 使用說明顯示VISIBLE
         findViewById(R.id.popup_window).setVisibility(View.INVISIBLE);
         findViewById(R.id.basic_item).setVisibility(View.INVISIBLE);
@@ -165,50 +227,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         animation = AnimationUtils.loadAnimation(this,R.anim.translate_up);
         findViewById(R.id.question_item).setAnimation(animation);
         animation.startNow();
-
-        //返回鍵設置
-        isQuestion=true;
-        findViewById(R.id.help_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
-
-        LinearLayout help_list = findViewById(R.id.help_list);
-        for(int i=0;i<helpTitle.length;i++){
-            LinearLayout main_help_element= (LinearLayout) getLayoutInflater().inflate(R.layout.main_help_element,null);
-            TextView help_title = main_help_element.findViewById(R.id.help_title);
-            final ImageView show_more = main_help_element.findViewById(R.id.show_more);
-
-            help_title.setText(helpTitle[i]);
-            main_help_element.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    show_more.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
-                }
-            });
-
-            //新增上底線
-            ImageView seg=new ImageView(this);
-            seg.setImageResource(R.drawable.segment);
-            seg.setScaleType(ImageView.ScaleType.FIT_XY);
-            help_list.addView(seg,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT));
-            //
-            help_list.addView(main_help_element);
-            //新增下底線
-            ImageView segment=new ImageView(this);
-            segment.setImageResource(R.drawable.segment);
-            segment.setScaleType(ImageView.ScaleType.FIT_XY);
-            help_list.addView(segment,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT));
-        }
-        ImageView segment=new ImageView(this);
-        segment.setImageResource(R.drawable.segment);
-        segment.setScaleType(ImageView.ScaleType.FIT_XY);
-        help_list.addView(segment,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
     }
 
     ///////////////////////////Navigation Drawer/////////////////////////////
@@ -261,6 +279,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             findViewById(R.id.basic_item).setAnimation(animation);
             findViewById(R.id.basic_item).setVisibility(View.VISIBLE);
             animation.startNow();
+
+            setHelp();
         }else{
             super.onBackPressed();
         }
