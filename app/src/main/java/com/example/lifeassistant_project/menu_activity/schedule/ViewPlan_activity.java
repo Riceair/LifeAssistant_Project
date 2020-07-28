@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.lifeassistant_project.R;
+import com.example.lifeassistant_project.activity_update.SchedulePackage;
 import com.example.lifeassistant_project.menu_activity.finance.Report_type_activity;
 
 import java.io.File;
@@ -32,9 +33,10 @@ public class ViewPlan_activity extends AppCompatActivity {
 
     private SQLiteDatabase myDB;
     private Cursor cursor;
-    ArrayList<String> stuffList = new ArrayList<>();
-    ArrayList<String> dateList = new ArrayList<>();
-    ArrayList<String> timeList = new ArrayList<>();
+
+    private ArrayList<String> stuffList = new ArrayList<>();
+    private ArrayList<String> stuffEndingList = new ArrayList<>();
+    private ArrayList<String> stuffNameList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,13 +57,26 @@ public class ViewPlan_activity extends AppCompatActivity {
             copyAssets(PATH); //初始資料庫複製到路徑
 
         ReadDBRecord();
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, stuffList);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, stuffNameList);
         list.setAdapter(arrayAdapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String clickedItem=(String) list.getItemAtPosition(position);
+//                String clickedItem=(String) list.getItemAtPosition(position);
                 Intent intent = new Intent(view.getContext(),NewPlan_activity.class);
+                String[] parts = stuffList.get(position).split(" ");
+                String[] endingparts = stuffEndingList.get(position).split(" ");
+                String datewasclicked = parts[0];
+                String timewasclicked = parts[1];
+                String endingdatewasclicked = endingparts[0];
+                String endingtimewasclicked = endingparts[1];
+                String namewasfilledin=stuffNameList.get(position);
+                intent.putExtra("clickeddate",datewasclicked);
+                intent.putExtra("clickedtime",timewasclicked);
+                intent.putExtra("clickedname",namewasfilledin);
+                intent.putExtra("clickedendingdate",endingdatewasclicked);
+                intent.putExtra("clickedendingtime",endingtimewasclicked);
+
                 view.getContext().startActivity(intent);
             }
         });
@@ -82,15 +97,35 @@ public class ViewPlan_activity extends AppCompatActivity {
                 int iRow = cursor.getCount(); // 取得資料記錄的筆數
                 cursor.moveToFirst();
                 for (int i=0;i<iRow;i++){
-                    String stuffName = cursor.getString(0)+" ("+cursor.getString(1)+"年"+cursor.getString(2)+"月"+cursor.getString(3)+"日) （時間：Starts at"+cursor.getString(4)+"點/ Ends at: "+cursor.getString(5)+"點)";
-                    stuffList.add(stuffName);
+                    SchedulePackage temp = new SchedulePackage(
+                            0,
+                            cursor.getString(0),
+                            cursor.getInt(1),
+                            cursor.getInt(2),
+                            cursor.getInt(3),
+                            cursor.getInt(4),
+                            cursor.getInt(5));
+                    String tempString = new String(Integer.toString(temp.getStartDateInFormat().getYear()) + "/" +
+                            String.format("%02d", temp.getStartDateInFormat().getMonth()) + "/" +
+                            String.format("%02d", temp.getStartDateInFormat().getDay()) + " " +
+                            String.format("%02d", temp.getStartDateInFormat().getHour()) + ":" +
+                            String.format("%02d", temp.getStartDateInFormat().getMinute()) + ":00");
+                    stuffList.add(tempString);
+                    tempString = new String(Integer.toString(temp.getEndDateInFormat().getYear()) + "/" +
+                            String.format("%02d", temp.getEndDateInFormat().getMonth()) + "/" +
+                            String.format("%02d", temp.getEndDateInFormat().getDay()) + " " +
+                            String.format("%02d", temp.getEndDateInFormat().getHour()) + ":" +
+                            String.format("%02d", temp.getEndDateInFormat().getMinute()) + ":00");
+                    stuffEndingList.add(tempString);
+                    stuffNameList.add(temp.getTodo());
+
                     cursor.moveToNext();
                 }
-
                 // 5. 關閉 DB
                 myDB.close();
             }
-            else {
+            else
+            {
                 Toast.makeText(this,"Hint 1: 請將db準備好!",Toast.LENGTH_SHORT).show();
             }
         }
@@ -141,10 +176,7 @@ public class ViewPlan_activity extends AppCompatActivity {
         }
         return true;
     }
-    public void clickNewPlan(View view){
-        Intent intent = new Intent(view.getContext(),NewPlan_activity.class);
-        view.getContext().startActivity(intent);
-    }
+
     public void clickBackPlanner(View view){
         Intent intent = new Intent(view.getContext(),Planner_activity.class);
         view.getContext().startActivity(intent);
