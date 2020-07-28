@@ -26,6 +26,7 @@ import com.example.lifeassistant_project.activity_update.*;
 import com.example.lifeassistant_project.menu_activity.finance.Bookkeeping_activity;
 import com.example.lifeassistant_project.menu_activity.finance.Invoice_activity;
 import com.example.lifeassistant_project.menu_activity.login.Login_activity;
+import com.example.lifeassistant_project.menu_activity.login.register_activity;
 import com.example.lifeassistant_project.menu_activity.schedule.Planner_activity;
 import com.example.lifeassistant_project.menu_activity.finance.Report_activity;
 import com.example.lifeassistant_project.menu_activity.weather.Weather_activity;
@@ -95,6 +96,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view){
                 Intent intent=new Intent(MainActivity.this,Login_activity.class);
+                MainActivity.this.startActivity(intent);
+            }
+        });
+        //註冊
+
+        ImageView RegImg=headerView.findViewById(R.id.RegImg);
+        RegImg.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent=new Intent(MainActivity.this,register_activity.class);
                 MainActivity.this.startActivity(intent);
             }
         });

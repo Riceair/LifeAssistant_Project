@@ -24,4 +24,22 @@
         android:text="按此登入"
         android:textColor="@color/cardview_light_background" />
 
+    <ImageView
+        android:id="@+id/RegImg"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="false"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/reg_button" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_toLeftOf="@id/RegImg"
+        android:text="尚未加入嗎？按此註冊"
+        android:textColor="@color/cardview_light_background" />
+
 </RelativeLayout>

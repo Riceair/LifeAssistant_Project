@@ -33,13 +33,14 @@
 
             <ImageView
                 android:id="@+id/chatBotHelpImg"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="70dp"
-                android:scaleType="fitXY"
+                android:layout_marginTop="73dp"
+                android:layout_marginRight="6dp"
                 android:onClick="clickToGetHelp"
-                app:srcCompat="@drawable/help_button" />
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/moreinfo_button" />
 
             <TextView
                 android:id="@+id/chatBotSay"
