@@ -21,11 +21,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.lifeassistant_project.R;
-import com.example.lifeassistant_project.activity_update.AccountPackage;
 import com.example.lifeassistant_project.activity_update.ClientProgress;
-import com.example.lifeassistant_project.activity_update.LoginPackage;
 import com.example.lifeassistant_project.activity_update.SchedulePackage;
-import com.example.lifeassistant_project.menu_activity.finance.Report_ultimate_activity;
 
 import java.io.File;
 import java.io.FileOutputStream;

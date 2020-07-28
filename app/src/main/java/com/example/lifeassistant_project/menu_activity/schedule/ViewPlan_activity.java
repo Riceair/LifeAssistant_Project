@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import com.example.lifeassistant_project.R;
 import com.example.lifeassistant_project.activity_update.SchedulePackage;
-import com.example.lifeassistant_project.menu_activity.finance.Report_type_activity;
 
 import java.io.File;
 import java.io.FileOutputStream;
