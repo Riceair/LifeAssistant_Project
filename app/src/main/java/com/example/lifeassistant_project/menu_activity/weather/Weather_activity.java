@@ -1,5 +1,8 @@
 package com.example.lifeassistant_project.menu_activity.weather;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -8,15 +11,26 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.lifeassistant_project.R;
 import com.example.lifeassistant_project.activity_update.ClientProgress;
 import com.example.lifeassistant_project.activity_update.WeatherPackage;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Weather_activity extends AppCompatActivity {
+    private static final String PATH = "/data/data/com.example.lifeassistant_project";
+    private static final String DBNAME = "myDB.db";
+    private SQLiteDatabase myDB;
+    private Cursor cursor;
+    String CURRENT_CITY="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,12 +43,43 @@ public class Weather_activity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setIcon(R.drawable.weather);
+
+        //取得Location
+        Bundle bundle = getIntent().getExtras();
+        CURRENT_CITY = bundle.getString("AdminArea");
+
+        //資料庫
+        File dbDir = new File(PATH, "databases");
+        dbDir.mkdir();
+        File FdbFile = new File(PATH+"/databases",DBNAME);
+        if(!FdbFile.exists() || !FdbFile.isFile())
+            copyAssets(PATH); //初始資料庫複製到路徑
+
         this.showWeatherData();
     }
 
     private void showWeatherData()
     {
-        final String CURRENT_CITY = "基隆市"; //this is for testing
+        if(CURRENT_CITY.equals("")){ //定位失敗
+            myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null); //取得資料庫過去取得的位置資料
+            try{
+                cursor = myDB.rawQuery("select Location from history_weather",null);
+                if(cursor!=null){
+                    cursor.moveToFirst();
+                    CURRENT_CITY=cursor.getString(0);
+                }
+                myDB.close();
+            }catch (Exception e){}
+        }else if(CURRENT_CITY.startsWith("台")){
+            CURRENT_CITY="臺"+CURRENT_CITY.substring(1);
+        }
+        //將現在的位置設為過去的位置資料
+        myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
+        ContentValues values=new ContentValues();
+        values.put("Location",CURRENT_CITY);
+        myDB.update("history_weather",values,"id=1",null);
+        myDB.close();
+
         final int WEEK_SIZE = 14;
 
         ClientProgress client = new ClientProgress();
@@ -57,7 +102,7 @@ public class Weather_activity extends AppCompatActivity {
         ArrayList<WeatherPackage> weatherData = client.getRcvWeatherData();
         if(weatherData.size() == 0)
         {
-            System.out.println("can't get data");
+            Toast.makeText(this,"無網路連線",Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -301,5 +346,32 @@ public class Weather_activity extends AppCompatActivity {
     public void finish() {
         super.finish();
         overridePendingTransition(0,R.anim.translate_out);
+    }
+
+    //第一次開啟App才會啟用
+    private void copyAssets(String path) {
+        InputStream in = null;
+        OutputStream out = null;
+        try {
+            in = getAssets().open(DBNAME);
+            out = new FileOutputStream(PATH + "/databases/" + DBNAME);
+            copyFile(in, out);
+            in.close();
+            out.flush();
+            out.close();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+    /*
+     * 一既有的工具程式，可將來源 InputStream 物件所指向的資料串流
+     * 拷貝到OutputStream 物件所指向的資料串流去
+     */
+    private void copyFile(InputStream in, OutputStream out) throws IOException {
+        byte[] buffer = new byte[in.available()];
+        int read;
+        while((read = in.read(buffer)) != -1){
+            out.write(buffer, 0, read);
+        }
     }
 }

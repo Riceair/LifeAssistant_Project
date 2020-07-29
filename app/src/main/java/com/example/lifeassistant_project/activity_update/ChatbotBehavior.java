@@ -99,6 +99,7 @@ public class ChatbotBehavior {
         }
         else
         {
+            System.out.println(this.sentenceHandler.getIntent());
             return "Error! intent or operation code has exception.";
         }
         return null;
