@@ -77,7 +77,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         userSayButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                DEBUG_FUNCTION();
+                // for DEBUG
+//                DEBUG_FUNCTION();
+
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
                 intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "請說～");
@@ -116,14 +118,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     private void DEBUG_FUNCTION()
     {
-//        ClientProgress client = new ClientProgress();
-//        client.setChatBot("我要記帳");
-//        Thread cThread = new Thread(client);
-//        cThread.start();
+//        DatabaseBehavior.synchronizeServer2Client();
 
-//        System.out.println(LoginPackage.getUserKey());
-
-        DatabaseBehavior.synchronizeServer2Client();
+//        TextView tempText = findViewById(R.id.DEBUG_TEXT);
+//        System.out.println(tempText.getText());
+//
+//        userSay.setText(tempText.getText());
+//
+//        System.out.println("Behavior");
+//        System.out.println(chatbotBehavior.getBehaviorMode());
+//        if(!chatbotBehavior.generateSendSentence(tempText.getText().toString()))
+//        {
+//            System.out.println(chatbotBehavior.getErrorMessage());
+//        }
+//        else
+//        {
+//            chatbotBehavior.sendSentence();
+//        }
+//
+//        chatBotSay.setText(chatbotBehavior.getResponse());
     }
 
     ////////////////////////////語音///////////////////////////////////
