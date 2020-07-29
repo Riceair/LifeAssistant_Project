@@ -5,7 +5,7 @@
     android:id="@+id/mainly"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/weather_main_background"
+    android:background="@drawable/planner_background"
     tools:context=".menu_activity.weather.Weather_activity">
 
     <RelativeLayout
@@ -328,7 +328,7 @@
             android:text="暴雪"
             android:textColor="@android:color/background_light"
             android:textColorHint="@color/colorPrimaryDark"
-            android:textSize="26sp" />
+            android:textSize="20dp" />
 
         <TextView
             android:id="@+id/threedaytemperature"
