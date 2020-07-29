@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -167,7 +168,7 @@ public class NewPlan_activity extends AppCompatActivity {
 
     private String setDataFormat(int year, int monthOfYear,int dayOfMonth){
 
-        return String.valueOf(year)+"-"+String.format("%02d",monthOfYear)+"-"+String.format("%02d",dayOfMonth);
+        return String.valueOf(year)+"-"+String.format("%02d",monthOfYear+1)+"-"+String.format("%02d",dayOfMonth);
     }
 
     @Override
@@ -203,13 +204,13 @@ public class NewPlan_activity extends AppCompatActivity {
                             cursor.getInt(4),
                             cursor.getInt(5));
                     String tempString = new String(Integer.toString(temp.getStartDateInFormat().getYear()) + "/" +
-                            String.format("%02d", temp.getStartDateInFormat().getMonth()) + "/" +
+                            String.format("%02d", temp.getStartDateInFormat().getMonth()) + "-" +
                             String.format("%02d", temp.getStartDateInFormat().getDay()) + " " +
                             String.format("%02d", temp.getStartDateInFormat().getHour()) + ":" +
                             String.format("%02d", temp.getStartDateInFormat().getMinute()) + ":00");
                     stuffList.add(tempString);
-                    tempString = new String(Integer.toString(temp.getEndDateInFormat().getYear()) + "/" +
-                            String.format("%02d", temp.getEndDateInFormat().getMonth()) + "/" +
+                    tempString = new String(Integer.toString(temp.getEndDateInFormat().getYear()) + "-" +
+                            String.format("%02d", temp.getEndDateInFormat().getMonth()) + "-" +
                             String.format("%02d", temp.getEndDateInFormat().getDay()) + " " +
                             String.format("%02d", temp.getEndDateInFormat().getHour()) + ":" +
                             String.format("%02d", temp.getEndDateInFormat().getMinute()) + ":00");
@@ -368,7 +369,7 @@ public class NewPlan_activity extends AppCompatActivity {
             Toast.makeText(this,"新增失敗",Toast.LENGTH_SHORT).show();
         }
 
-NewPlan_activity.this.finish();
+finish();
     }
     public void clickToUpdateSC(View view){
         writeToSCDB();
@@ -387,8 +388,12 @@ NewPlan_activity.this.finish();
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 //                myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
-                myDB.delete("schedule_record","事情="+eventname,null);
+                myDB.execSQL("DELETE FROM " + SC_TABLE+ " WHERE "+"事情"+"='"+eventname+"'");
                 myDB.close();
+                Intent intent = new Intent();
+
+
+                setResult(RESULT_OK,intent);
                finish();
             }
         }).setPositiveButton("取消", new DialogInterface.OnClickListener() {

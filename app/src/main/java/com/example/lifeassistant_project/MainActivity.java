@@ -113,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View view){
                 Intent intent=new Intent(MainActivity.this,register_activity.class);
                 MainActivity.this.startActivity(intent);
+                overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
             }
         });
     }

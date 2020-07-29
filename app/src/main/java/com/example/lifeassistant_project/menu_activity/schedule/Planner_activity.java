@@ -77,17 +77,18 @@ public class Planner_activity extends AppCompatActivity {
         File FdbFile = new File(PATH+"/databases",DBNAME);
         if(!FdbFile.exists() || !FdbFile.isFile())
             copyAssets(PATH); //初始資料庫複製到路徑
+        ReadDBRecord();
 
-ReadDBRecord();
-        ///////////
+
+
 
 
 
         // 這是在初始化日期格式，轉成mileseconds
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         //測試用
-        stuffList.add("2020/07/21 16:00:00");
-        stuffEndingList.add("2020/08/18 17:00:00");
+        stuffList.add("2020-06-21 16:00:00");
+        stuffEndingList.add("2020-06-22 17:00:00");
         stuffNameList.add("Test");
         for (int i=0;i<stuffList.size();i++)
         {
@@ -105,12 +106,27 @@ ReadDBRecord();
                     Event ev1 = new Event(Color.RED, m, mystuffName);
                     compactCalendarView.addEvent(ev1);
                     m=m+86400000;
-               }
+                }
             } catch (ParseException e) {
                 e.printStackTrace();
             }
 
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         //Query
         //List<Event> events = compactCalendarView.getEvents(1597320075000L); // can also take a Date object
@@ -182,7 +198,37 @@ ReadDBRecord();
             Toast.makeText(this,e.toString(),Toast.LENGTH_SHORT).show();
         }
     }
+public void initial()
+{
+    // 這是在初始化日期格式，轉成mileseconds
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    //測試用
+//    stuffList.add("2020-07-21 16:00:00");
+//    stuffEndingList.add("2020-08-18 17:00:00");
+//    stuffNameList.add("Test");
+    for (int i=0;i<stuffList.size();i++)
+    {
+        String myDate=stuffList.get(i);
+        String myEndingDate=stuffEndingList.get(i);
+        String mystuffName=stuffNameList.get(i);
+        try {
+            Date date = sdf.parse(myDate);
+            long millis = date.getTime();
+            Date endingDate = sdf.parse(myEndingDate);
+            long endingmillis=endingDate.getTime();
+            // 這是在加事情
+            long m=millis;
+            while (m <= endingmillis) {
+                Event ev1 = new Event(Color.RED, m, mystuffName);
+                compactCalendarView.addEvent(ev1);
+                m=m+86400000;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
+    }
+}
     private void copyAssets(String path) {
         InputStream in = null;
         OutputStream out = null;
@@ -212,9 +258,15 @@ ReadDBRecord();
         Intent intent = new Intent(view.getContext(),NewPlan_activity.class);
         intent.putExtra("clickeddate",datewasclicked);
         intent.putExtra("clickedname",namewasfilledin);
-        view.getContext().startActivity(intent);
+        startActivityForResult(intent,0);
     }
+    @Override
+    protected void onActivityResult(int requestCode,int resultCode,Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+       ReadDBRecord();
+       initial();
 
+    }
     public void clickTodayPlan(View view){
         Intent intent = new Intent(view.getContext(),ViewPlan_activity.class);
         view.getContext().startActivity(intent);

@@ -77,7 +77,8 @@ public class ViewPlan_activity extends AppCompatActivity {
                 intent.putExtra("clickedendingdate",endingdatewasclicked);
                 intent.putExtra("clickedendingtime",endingtimewasclicked);
 
-                view.getContext().startActivity(intent);
+           ViewPlan_activity.this.startActivityForResult(intent,0);
+
             }
         });
 
@@ -141,8 +142,20 @@ public class ViewPlan_activity extends AppCompatActivity {
 
 
 
+    @Override
+        protected void onActivityResult(int requestCode,int resultCode,Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0) {
+            if (resultCode == RESULT_OK) {
+                Intent intent = new Intent();
 
+                setResult(RESULT_OK,intent);
+                finish();
 
+            }
+        }
+
+    }
 
     private void copyAssets(String path) {
         InputStream in = null;

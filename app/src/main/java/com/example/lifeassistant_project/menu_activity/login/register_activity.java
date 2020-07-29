@@ -3,9 +3,12 @@ package com.example.lifeassistant_project.menu_activity.login;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+
 import android.os.Bundle;
 
+
 import com.example.lifeassistant_project.R;
+
 
 public class register_activity extends AppCompatActivity {
 

@@ -54,13 +54,13 @@
                     android:textSize="30sp"/>
 
             <ImageView
-                    android:id="@+id/userSayButton"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="30dp"
-                    app:srcCompat="@drawable/toggle_speak"/>
+                android:id="@+id/userSayButton"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="50dp"
+                app:srcCompat="@drawable/toggle_speak" />
 
             <TextView
                     android:id="@+id/userSay"
