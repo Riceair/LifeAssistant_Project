@@ -21,6 +21,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lifeassistant_project.R;
+import com.example.lifeassistant_project.activity_update.AccountPackage;
+import com.example.lifeassistant_project.activity_update.ClientProgress;
+import com.example.lifeassistant_project.activity_update.LoginPackage;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -186,17 +189,45 @@ public class Report_ultimate_activity extends AppCompatActivity {
         values.put("備註",quotesinput.getText().toString());
         values.put("收支屬性",inOutAttribute);
         myDB.update("record",values,"id="+recordID,null);
+
+        //connect to server.
+        ClientProgress client = new ClientProgress();
+        AccountPackage updAccount = new AccountPackage();
+        updAccount.setID(recordID);
+        updAccount.setMoney(Integer.valueOf(costinput.getText().toString()));
+        updAccount.setYear(year);
+        updAccount.setMonth(month);
+        updAccount.setDay(day);
+        updAccount.setItem(filterinput.getText().toString());
+        updAccount.setDetail(itemsinput.getText().toString());
+        updAccount.setReceipt(receiptinput.getText().toString());
+        updAccount.setNote(quotesinput.getText().toString());
+        updAccount.setType(inOutAttribute == 0 ? false : true);
+        updAccount.setRequestAction(2);
+        updAccount.setUser(LoginPackage.getUserName());
+        client.setBookkeeping(updAccount);
+        new Thread(client).start();
+
         myDB.close();
         finish();
     }
 
     public void clickToDelete(View view){
         new AlertDialog.Builder(Report_ultimate_activity.this)
-                .setTitle("確定刪除").setNegativeButton("確定", new DialogInterface.OnClickListener() {
+                .setTitle("確定刪除嗎？").setNegativeButton("確定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
                 myDB.delete("record","id="+recordID,null);
+
+                // connect to server.
+                ClientProgress client = new ClientProgress();
+                AccountPackage delAccount = new AccountPackage();
+                delAccount.setID(recordID);
+                delAccount.setRequestAction(1);
+                client.setBookkeeping(delAccount);
+                new Thread(client).start();
+
                 myDB.close();
                 finish();
             }

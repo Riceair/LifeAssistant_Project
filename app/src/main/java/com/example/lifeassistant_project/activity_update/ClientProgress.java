@@ -44,7 +44,7 @@ public class ClientProgress implements Runnable {
                 synchronized (this)
                 {
                     try {
-                        final int PACKAGE_SIZE = 167;
+                        final int PACKAGE_SIZE = 168;
 
                         SocketAddress tempSocketAddress = new InetSocketAddress(this.address, this.port);
                         Socket client = SocketFactory.getDefault().createSocket();
@@ -53,7 +53,9 @@ public class ClientProgress implements Runnable {
                         OutputStream out = client.getOutputStream();
 
                         // send account package
+                        System.out.println("???");
                         out.write(PackageHandler.accountPackageEncode(this.accountPackage));
+                        System.out.println("????");
                         out.flush();
                         InputStream in = client.getInputStream();      // 取得輸入訊息的串流
 

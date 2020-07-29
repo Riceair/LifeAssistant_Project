@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView chatBotSay;
 
     private boolean isQuestion=false;
-    private final String[] helpTitle={"如何使用","天氣指令","排成指令","記帳指令","報表指令","發票指令"};
+    private final String[] helpTitle={"如何使用","天氣指令","排程指令","記帳指令","報表指令","發票指令"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,10 +116,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
     }
-    private void DEBUG_FUNCTION()
-    {
-//        DatabaseBehavior.synchronizeServer2Client();
-
+//    private void DEBUG_FUNCTION()
+//    {
+////        DatabaseBehavior.synchronizeServer2Client();
+//
 //        TextView tempText = findViewById(R.id.DEBUG_TEXT);
 //        System.out.println(tempText.getText());
 //
@@ -137,8 +137,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        }
 //
 //        chatBotSay.setText(chatbotBehavior.getResponse());
-    }
-
+//    }
+//
     ////////////////////////////語音///////////////////////////////////
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
