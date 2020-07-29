@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -21,11 +20,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.lifeassistant_project.R;
-import com.example.lifeassistant_project.activity_update.AccountPackage;
+
 import com.example.lifeassistant_project.activity_update.ClientProgress;
-import com.example.lifeassistant_project.activity_update.LoginPackage;
+
 import com.example.lifeassistant_project.activity_update.SchedulePackage;
-import com.example.lifeassistant_project.menu_activity.finance.Report_ultimate_activity;
+
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -42,8 +41,7 @@ public class NewPlan_activity extends AppCompatActivity {
     private static final String PATH = "/data/data/com.example.lifeassistant_project";
     private static final String DBNAME = "myDB.db";
     private static final String FILTER_TABLE = "filter";
-    private static final String BK_TABLE = "record";
-
+    private static final String SC_TABLE = "schedule_record";
     private SQLiteDatabase myDB;
     private Cursor cursor;
     private int mYear, mMonth, mDay;
@@ -51,18 +49,12 @@ public class NewPlan_activity extends AppCompatActivity {
     private TimePickerDialog endstimePickerDialog;
     private List<String> list = new ArrayList<>();
     private SchedulePackage sendPackage;
-    private int Starting_hour;
-    private int Starting_minute;
-    private int Ending_hour;
-    private int Ending_minute;
     private String datewasclicked;
     private String timewasclicked;
     private String endingdatewasclicked;
     private String endingtimewasclicked;
     private String namewasfilledin;
     // the package need to be send.
-
-
     private ArrayList<String> stuffList = new ArrayList<>();
     private ArrayList<String> stuffEndingList = new ArrayList<>();
     private ArrayList<String> stuffNameList = new ArrayList<>();
@@ -90,22 +82,16 @@ public class NewPlan_activity extends AppCompatActivity {
         File FdbFile = new File(PATH+"/databases",DBNAME);
         if(!FdbFile.exists() || !FdbFile.isFile())
             copyAssets(PATH); //初始資料庫複製到路徑
-
-
-
-
-
-        ReadDBRecord();
+            ReadDBRecord();
 
 
 //這是承接事項
         final TextView nameText = (TextView) findViewById(R.id.eventinput);
         nameText.setText(namewasfilledin);
-
         //這是開始日期
         final TextView dateText = (TextView) findViewById(R.id.dateinput);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-    dateText.setText(datewasclicked);
+        dateText.setText(datewasclicked);
 
         Button datePicker = (Button) findViewById(R.id.datepicker);
         datePicker.setOnClickListener(new View.OnClickListener(){
@@ -161,9 +147,8 @@ public class NewPlan_activity extends AppCompatActivity {
         timePickerDialog=new TimePickerDialog(this,new TimePickerDialog.OnTimeSetListener(){
             @Override
         public void onTimeSet(TimePicker view,int hourOfDay,int minute){
-                timeText.setText(hourOfDay+":"+minute);
-                Starting_hour=hourOfDay;
-                Starting_minute=minute;
+                timeText.setText(String.format("%02d",hourOfDay)+":"+String.format("%02d",minute)+":00");
+
             }
         },calendar.get(Calendar.HOUR_OF_DAY),calendar.get(calendar.MINUTE),false);
         //////////////////
@@ -173,16 +158,16 @@ public class NewPlan_activity extends AppCompatActivity {
         endstimePickerDialog=new TimePickerDialog(this,new TimePickerDialog.OnTimeSetListener(){
             @Override
             public void onTimeSet(TimePicker view,int hourOfDay,int minute){
-                endstimeText.setText(hourOfDay+":"+minute);
-                Ending_hour=hourOfDay;
-                Ending_minute=minute;
+                endstimeText.setText(String.format("%02d",hourOfDay)+":"+String.format("%02d",minute)+":00");
+
             }
         },calendar.get(Calendar.HOUR_OF_DAY),calendar.get(calendar.MINUTE),false);
         //////////////////
     }
 
     private String setDataFormat(int year, int monthOfYear,int dayOfMonth){
-        return String.valueOf(year)+"-"+String.valueOf(monthOfYear+1)+"-"+String.valueOf(dayOfMonth);
+
+        return String.valueOf(year)+"-"+String.format("%02d",monthOfYear)+"-"+String.format("%02d",dayOfMonth);
     }
 
     @Override
@@ -265,75 +250,97 @@ public class NewPlan_activity extends AppCompatActivity {
         int Starting_year = 0;
         int Starting_month = 0;
         int Starting_day = 0;
+        int Starting_hour=0;
+        int Starting_minute=0;
+        int Ending_hour=0;
+        int Ending_minute=0;
         int Ending_year = 0;
         int Ending_month = 0;
         int Ending_day = 0;
         String event="0";
         TextView textView = (TextView) findViewById(R.id.eventinput); //事項
-        if (!textView.getText().toString().equals(""))
-            event = (String) textView.getText();
-        else {
-            Toast.makeText(this,"請輸入事項",Toast.LENGTH_LONG).show();
-            return;
-        }
+//        if (!textView.getText().toString().equals(""))
+            event = textView.getText().toString();
+//        else {
+//            Toast.makeText(this,"請輸入事項",Toast.LENGTH_LONG).show();
+//            return;
+//        }
 
         textView = (TextView) findViewById(R.id.dateinput); //開始日期
         String startingDate = textView.getText().toString();
-        if (!startingDate.equals("")) {
-            Starting_year = Integer.parseInt(startingDate.substring(0, 4));
-            Starting_month = Integer.parseInt(startingDate.substring(5,startingDate.indexOf('-',5)));
-            Starting_day = Integer.parseInt(startingDate.substring(startingDate.indexOf('-',5)+1,startingDate.length()));
-        }
+//        if (!startingDate.equals("")) {
+            String[] startingparts=startingDate.split("-");
+            Starting_year =Integer.parseInt(startingparts[0]);
+            Starting_month = Integer.parseInt(startingparts[1]);
+            Starting_day =Integer.parseInt(startingparts[2]);
+//        }
 
         textView = (TextView) findViewById(R.id.timeinput); //開始時間
         String startingTime = textView.getText().toString();
-
-        if(startingDate.equals("")) {
-            Toast.makeText(this,"請選擇開始日期",Toast.LENGTH_SHORT).show();
-            return;
-        }else if(startingTime.equals("")){
-            Toast.makeText(this,"請輸入開始時間",Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (!startingTime.equals("")) {
+            String[] startingTimeparts=startingTime.split(":");
+            Starting_hour =Integer.parseInt(startingTimeparts[0]);
+            Starting_minute = Integer.parseInt(startingTimeparts[1]);
+//
+//        }
+//        if(startingDate.equals("")) {
+//            Toast.makeText(this,"請選擇開始日期",Toast.LENGTH_SHORT).show();
+//            return;
+//        }else if(startingTime.equals("")){
+//            Toast.makeText(this,"請輸入開始時間",Toast.LENGTH_SHORT).show();
+//            return;
+//        }
 
         textView = (TextView) findViewById(R.id.endsdateinput); //結束日期
         String endingDate =textView.getText().toString();
-        if (!startingDate.equals("")) {
-            Ending_year = Integer.parseInt(startingDate.substring(0, 4));
-            Ending_month = Integer.parseInt(startingDate.substring(5,startingDate.indexOf('-',5)));
-            Ending_day = Integer.parseInt(startingDate.substring(startingDate.indexOf('-',5)+1,startingDate.length()));
-        }
+//        if (!startingDate.equals("")) {
+            String[] endingparts=endingDate.split("-");
+            Ending_year =Integer.parseInt(endingparts[0]);
+            Ending_month = Integer.parseInt(endingparts[1]);
+            Ending_day =Integer.parseInt(endingparts[2]);
+//
+//        }
 
         textView = (TextView) findViewById(R.id.endstimeinput); //結束時間
         String endingTime = textView.getText().toString();
+//        if (!startingDate.equals("")) {
+            String[] endingTimeparts=endingTime.split(":");
+            Ending_hour =Integer.parseInt(endingTimeparts[0]);
+            Ending_minute = Integer.parseInt(endingTimeparts[1]);
+//
+//        }
 
-        if(endingDate.equals("")) {
-            Toast.makeText(this,"請選擇結束日期",Toast.LENGTH_SHORT).show();
-            return;
-        }else if(endingTime.equals("")){
-            Toast.makeText(this,"請輸入結束時間",Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if(endingDate.equals("")) {
+//            Toast.makeText(this,"請選擇結束日期",Toast.LENGTH_SHORT).show();
+//            return;
+//        }else if(endingTime.equals("")){
+//            Toast.makeText(this,"請輸入結束時間",Toast.LENGTH_SHORT).show();
+//            return;
+//        }
 
         list.clear();
         ContentValues values = new ContentValues();
-        values.put("事項",event);
-        values.put("開始年",Starting_hour);
-        values.put("開始月",Starting_month);
-        values.put("開始日",Starting_day);
-        values.put("開始小時",Starting_hour);
-        values.put("開始分",Starting_minute);
-        values.put("結束年",Ending_year);
-        values.put("結束月",Ending_month);
-        values.put("結束日",Ending_day);
-        values.put("結束小時",Ending_hour);
-        values.put("結束分",Ending_minute);
+        values.put("事情",event);
+        values.put("年",Starting_year);
+        values.put("月",Starting_month);
+        values.put("日",Starting_day);
+        values.put("開始時間",Starting_hour);
+        values.put("結束時間",Ending_hour);
+
 
 
         myDB = openOrCreateDatabase(DBNAME,MODE_PRIVATE,null);
+
+
+
+
+
+
         long result=-1L;
         int times=0;
+
         while (true) {
+
             times++;
             if(times>100000){
                 Toast.makeText(this,"資料儲存過多，請刪除無用的資料",Toast.LENGTH_SHORT).show();
@@ -347,7 +354,7 @@ public class NewPlan_activity extends AppCompatActivity {
                         Starting_hour, Starting_minute, Ending_year,Ending_month, Ending_day,Ending_hour,Ending_minute);
                 this.sendPackage.setRequestAction(0);
 
-                result = myDB.insert(BK_TABLE, null, values);
+                result = myDB.insert(SC_TABLE, null, values);
                 break;
             }catch (Exception e){
                 continue;
@@ -361,30 +368,28 @@ public class NewPlan_activity extends AppCompatActivity {
             Toast.makeText(this,"新增失敗",Toast.LENGTH_SHORT).show();
         }
 
-        NewPlan_activity.this.finish();
+NewPlan_activity.this.finish();
     }
-    public void clickToUpdate(View view){
+    public void clickToUpdateSC(View view){
         writeToSCDB();
-        //
         ClientProgress client = new ClientProgress();
-
         client.setPlan(this.sendPackage);
-//        client.setWeather();
         Thread conn = new Thread(client);
         conn.start();
-        //
     }
-    public void clickToDelete(View view){
-       final EditText eventbox = (EditText) findViewById(R.id.eventinput);
+    public void clickToDel(View view){
+        myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
+//       final EditText eventbox = (EditText) findViewById(R.id.eventinput);
+        final TextView eventbox = (TextView) findViewById(R.id.eventinput);
        final String eventname=eventbox.getText().toString();
         new AlertDialog.Builder(NewPlan_activity.this)
-                .setTitle("確定刪除").setNegativeButton("確定", new DialogInterface.OnClickListener() {
+                .setTitle("確定刪除"+eventname+"?").setNegativeButton("確定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
+//                myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
                 myDB.delete("schedule_record","事情="+eventname,null);
                 myDB.close();
-                finish();
+               finish();
             }
         }).setPositiveButton("取消", new DialogInterface.OnClickListener() {
             @Override

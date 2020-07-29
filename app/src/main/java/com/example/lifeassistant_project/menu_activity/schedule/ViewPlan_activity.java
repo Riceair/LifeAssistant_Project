@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.example.lifeassistant_project.R;
 import com.example.lifeassistant_project.activity_update.SchedulePackage;
-import com.example.lifeassistant_project.menu_activity.finance.Report_type_activity;
+
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -105,14 +105,14 @@ public class ViewPlan_activity extends AppCompatActivity {
                             cursor.getInt(3),
                             cursor.getInt(4),
                             cursor.getInt(5));
-                    String tempString = new String(Integer.toString(temp.getStartDateInFormat().getYear()) + "/" +
-                            String.format("%02d", temp.getStartDateInFormat().getMonth()) + "/" +
+                    String tempString = new String(Integer.toString(temp.getStartDateInFormat().getYear()) + "-" +
+                            String.format("%02d", temp.getStartDateInFormat().getMonth()) + "-" +
                             String.format("%02d", temp.getStartDateInFormat().getDay()) + " " +
                             String.format("%02d", temp.getStartDateInFormat().getHour()) + ":" +
                             String.format("%02d", temp.getStartDateInFormat().getMinute()) + ":00");
                     stuffList.add(tempString);
-                    tempString = new String(Integer.toString(temp.getEndDateInFormat().getYear()) + "/" +
-                            String.format("%02d", temp.getEndDateInFormat().getMonth()) + "/" +
+                    tempString = new String(Integer.toString(temp.getEndDateInFormat().getYear()) + "-" +
+                            String.format("%02d", temp.getEndDateInFormat().getMonth()) + "-" +
                             String.format("%02d", temp.getEndDateInFormat().getDay()) + " " +
                             String.format("%02d", temp.getEndDateInFormat().getHour()) + ":" +
                             String.format("%02d", temp.getEndDateInFormat().getMinute()) + ":00");

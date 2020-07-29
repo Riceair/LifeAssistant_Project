@@ -43,8 +43,6 @@ public class Planner_activity extends AppCompatActivity {
     public CompactCalendarView compactCalendarView;
     private static final String PATH = "/data/data/com.example.lifeassistant_project";
     private static final String DBNAME = "myDB.db";
-    private static final String FILTER_TABLE = "filter";
-    private static final String BK_TABLE = "record";
     private SQLiteDatabase myDB;
     private Cursor cursor;
     private ArrayList<String> stuffList = new ArrayList<>();
@@ -86,7 +84,7 @@ ReadDBRecord();
 
 
         // 這是在初始化日期格式，轉成mileseconds
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         //測試用
         stuffList.add("2020/07/21 16:00:00");
         stuffEndingList.add("2020/08/18 17:00:00");
@@ -156,14 +154,14 @@ ReadDBRecord();
                             cursor.getInt(3),
                             cursor.getInt(4),
                             cursor.getInt(5));
-                    String tempString = new String(Integer.toString(temp.getStartDateInFormat().getYear()) + "/" +
-                            String.format("%02d", temp.getStartDateInFormat().getMonth()) + "/" +
+                    String tempString = new String(Integer.toString(temp.getStartDateInFormat().getYear()) + "-" +
+                            String.format("%02d", temp.getStartDateInFormat().getMonth()) + "-" +
                             String.format("%02d", temp.getStartDateInFormat().getDay()) + " " +
                             String.format("%02d", temp.getStartDateInFormat().getHour()) + ":" +
                             String.format("%02d", temp.getStartDateInFormat().getMinute()) + ":00");
                     stuffList.add(tempString);
-                    tempString = new String(Integer.toString(temp.getEndDateInFormat().getYear()) + "/" +
-                            String.format("%02d", temp.getEndDateInFormat().getMonth()) + "/" +
+                    tempString = new String(Integer.toString(temp.getEndDateInFormat().getYear()) + "-" +
+                            String.format("%02d", temp.getEndDateInFormat().getMonth()) + "-" +
                             String.format("%02d", temp.getEndDateInFormat().getDay()) + " " +
                             String.format("%02d", temp.getEndDateInFormat().getHour()) + ":" +
                             String.format("%02d", temp.getEndDateInFormat().getMinute()) + ":00");

@@ -7,6 +7,7 @@
         <item name="colorPrimary">#00FF9800</item>
         <item name="colorPrimaryDark">#83ACF3</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
@@ -19,6 +20,7 @@
 <!--        <item name="colorPrimaryDark">#0083ACF3</item>-->
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowFullscreen">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
