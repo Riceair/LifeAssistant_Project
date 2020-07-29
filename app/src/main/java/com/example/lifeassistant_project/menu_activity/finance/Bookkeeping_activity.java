@@ -31,7 +31,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,13 +44,16 @@ public class Bookkeeping_activity extends AppCompatActivity {
 
     private SQLiteDatabase myDB;
     private Cursor cursor;
+    private int recordID;
+    private TextView costinput,dateinput,filterinput,itemsinput,receiptinput,quotesinput;
+    private RadioButton outlay,income;
     private List<String> list = new ArrayList<>();
     private List<String> out_list = new ArrayList<>();
     private List<String> in_list = new ArrayList<>();
     private List<String> self_out_list = new ArrayList<>();
     private List<String> self_in_list = new ArrayList<>();
-    private EditText filterinput;
     private int inOutAttribute=1; //收支屬性 預設為支出
+    private boolean isBookkeeping;
 
     // the package need to be send.
     private AccountPackage sendPackage;
@@ -76,14 +78,25 @@ public class Bookkeeping_activity extends AppCompatActivity {
         File FdbFile = new File(PATH+"/databases",DBNAME);
         if(!FdbFile.exists() || !FdbFile.isFile())
             copyAssets(PATH); //初始資料庫複製到路徑
-        ReadFDB();
 
-        filterinput = (EditText) findViewById(R.id.filterinput);
+        bind();
+
+        //確認是屬於新增還是修改記帳
+        Bundle bundle=getIntent().getExtras();
+        if(bundle.getString("CALL").equals("bookkeeping"))
+            isBookkeeping=true;
+        else {
+            recordID = bundle.getInt("RECORDID");
+            findViewById(R.id.deletebutton).setVisibility(View.VISIBLE);
+            getSupportActionBar().setTitle("  編輯記帳");
+            ReadDBRecord(); //讀取該筆資料的內容
+            isBookkeeping=false;
+        }
+        ReadFDB(); //讀取類別選項的資料
 
         ////////////////////////////////日期/////////////////////////////////
-        final TextView dateText = (TextView) findViewById(R.id.dateinput);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        dateText.setText(formatter.format(new java.util.Date()));
+        dateinput.setText(formatter.format(new java.util.Date()));
         Button datePicker = (Button) findViewById(R.id.datepicker);
         datePicker.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -96,7 +109,7 @@ public class Bookkeeping_activity extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
                         String format = setDataFormat(year,month,day);
-                        dateText.setText(format);
+                        dateinput.setText(format);
                     }
                 },mYear,mMonth,mDay).show();
             }
@@ -117,14 +130,6 @@ public class Bookkeeping_activity extends AppCompatActivity {
                 }
             }
         });
-
-        Button cancel = (Button) findViewById(R.id.cancelbutton);
-        cancel.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Bookkeeping_activity.this.finish();
-            }
-        });
     }
 
     //日期
@@ -132,8 +137,94 @@ public class Bookkeeping_activity extends AppCompatActivity {
         return String.valueOf(year)+"-"+String.valueOf(monthOfYear+1)+"-"+String.valueOf(dayOfMonth);
     }
 
-    /////////////////////////////////////////////////////////連網/////////////////////////////////////////////////////////
+    private void bind(){
+        costinput=findViewById(R.id.costinput);
+        dateinput=findViewById(R.id.dateinput);
+        filterinput=findViewById(R.id.filterinput);
+        itemsinput=findViewById(R.id.itemsinput);
+        receiptinput=findViewById(R.id.receiptinput);
+        quotesinput=findViewById(R.id.quotesinput);
+        outlay=findViewById(R.id.outlay);
+        income=findViewById(R.id.income);
+    }
+
+    ////////////////////////////////////////////檢視記帳 前置處理/////////////////////////////////
+    //讀資料庫
+    private void ReadDBRecord(){
+        myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
+        try{
+            cursor=myDB.rawQuery("select * from record where record.id=?",new String[]{String.valueOf(recordID)});
+            if(cursor!=null){
+                cursor.moveToFirst();
+                setInf();
+            }else{
+                Toast.makeText(this,"資料庫無資料",Toast.LENGTH_SHORT).show();
+            }
+            myDB.close();
+        }catch (Exception e){
+            Toast.makeText(this,e.toString(),Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    //依照資料庫讀進的資料填入
+    private void setInf(){
+        costinput.setText(String.valueOf(cursor.getInt(0)));
+        mYear=cursor.getInt(1);
+        mMonth=cursor.getInt(2);
+        mDay=cursor.getInt(3);
+        dateinput.setText(mYear+"-"+mMonth+"-"+mDay);
+        filterinput.setText(cursor.getString(4));
+        itemsinput.setText(cursor.getString(5));
+        if(cursor.getString(6)!=null)
+            receiptinput.setText(cursor.getString(6));
+        if(cursor.getString(7)!=null)
+            quotesinput.setText(cursor.getString(7));
+        inOutAttribute=cursor.getInt(8);
+        if(inOutAttribute==1){
+            outlay.setChecked(true);
+        }else{
+            income.setChecked(true);
+        }
+    }
+
+    /////////////////////////////////////////////////////////記帳 click Event/////////////////////////////////////////////////////////
     public void clickToUpdate(View view){
+        if(isBookkeeping)
+            addBookkeepingUpdate();
+        else
+            modBookkeepingUpdate();
+    }
+
+    public void ToCancel(View view){
+        this.finish();
+    }
+
+    public void clickToDelete(View view){
+        new AlertDialog.Builder(Bookkeeping_activity.this)
+                .setTitle("確定刪除嗎？").setNegativeButton("確定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
+                myDB.delete("record","id="+recordID,null);
+
+                // connect to server.
+                ClientProgress client = new ClientProgress();
+                AccountPackage delAccount = new AccountPackage();
+                delAccount.setID(recordID);
+                delAccount.setRequestAction(1);
+                client.setBookkeeping(delAccount);
+                new Thread(client).start();
+
+                myDB.close();
+                finish();
+            }
+        }).setPositiveButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {}
+        }).show();
+    }
+
+    private void addBookkeepingUpdate(){
         writeToBKDB();
         //
         ClientProgress client = new ClientProgress();
@@ -145,7 +236,59 @@ public class Bookkeeping_activity extends AppCompatActivity {
         //
     }
 
-    /////////////////////////////////////////////////////////記帳資料庫/////////////////////////////////////////////////////////
+    private void modBookkeepingUpdate(){
+        if(costinput.getText().toString().equals("")){
+            Toast.makeText(this,"請輸入金額",Toast.LENGTH_SHORT).show();
+            return;
+        }else if(filterinput.getText().toString().equals("")){
+            Toast.makeText(this,"請選擇分類",Toast.LENGTH_SHORT).show();
+            return;
+        }else if(itemsinput.getText().toString().equals("")){
+            Toast.makeText(this,"請輸入細項",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String date = dateinput.getText().toString();
+        int year = Integer.parseInt(date.substring(0, 4));
+        int month = Integer.parseInt(date.substring(5,date.indexOf('-',5)));
+        int day = Integer.parseInt(date.substring(date.indexOf('-',5)+1,date.length()));
+
+        myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
+        ContentValues values=new ContentValues();
+        values.put("金額",costinput.getText().toString());
+        values.put("年",year);
+        values.put("月",month);
+        values.put("日",day);
+        values.put("分類",filterinput.getText().toString());
+        values.put("細項",itemsinput.getText().toString());
+        values.put("發票",receiptinput.getText().toString());
+        values.put("備註",quotesinput.getText().toString());
+        values.put("收支屬性",inOutAttribute);
+        myDB.update("record",values,"id="+recordID,null);
+
+        //connect to server.
+        ClientProgress client = new ClientProgress();
+        AccountPackage updAccount = new AccountPackage();
+        updAccount.setID(recordID);
+        updAccount.setMoney(Integer.valueOf(costinput.getText().toString()));
+        updAccount.setYear(year);
+        updAccount.setMonth(month);
+        updAccount.setDay(day);
+        updAccount.setItem(filterinput.getText().toString());
+        updAccount.setDetail(itemsinput.getText().toString());
+        updAccount.setReceipt(receiptinput.getText().toString());
+        updAccount.setNote(quotesinput.getText().toString());
+        updAccount.setType(inOutAttribute == 0 ? false : true);
+        updAccount.setRequestAction(2);
+        updAccount.setUser(LoginPackage.getUserName());
+        client.setBookkeeping(updAccount);
+        new Thread(client).start();
+
+        myDB.close();
+        finish();
+    }
+
+    //紀錄一筆資料
     private void writeToBKDB(){
         //將表單內容讀入
         int cost = 0;
@@ -234,7 +377,8 @@ public class Bookkeeping_activity extends AppCompatActivity {
         Bookkeeping_activity.this.finish();
     }
 
-    /////////////////////////////////////////////////////////選項處理/////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////類別選項處理/////////////////////////////////////////////////////////
+    //類別選項顯示(按下選擇類別)
     public void clickToShowTypeList(View view){
         ArrayList<String> arrayList;
         if(inOutAttribute==1){
@@ -349,9 +493,9 @@ public class Bookkeeping_activity extends AppCompatActivity {
                         addToDB(editText.getText().toString());
                     }
                 }).setPositiveButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {}
-                }).show();
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {}
+        }).show();
     }
     //類別資料庫新增
     private void addToDB(String newCategory){
@@ -400,14 +544,14 @@ public class Bookkeeping_activity extends AppCompatActivity {
                 chose[0] =which;
                 new AlertDialog.Builder(Bookkeeping_activity.this)
                         .setTitle("確定刪除").setNegativeButton("確定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                delToDB(categoryList[chose[0]]);
-                            }
-                        }).setPositiveButton("取消", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {}
-                        }).show();
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        delToDB(categoryList[chose[0]]);
+                    }
+                }).setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {}
+                }).show();
             }
         });
         dialog_list.show();
@@ -425,7 +569,7 @@ public class Bookkeeping_activity extends AppCompatActivity {
         myDB.close();
         ReadFDB();
     }
-    /////////////////////////////////////////////////////////選項處理/////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////類別選項處理/////////////////////////////////////////////////////////
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){

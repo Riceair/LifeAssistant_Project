@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lifeassistant_project.R;
+import com.example.lifeassistant_project.menu_activity.finance.Bookkeeping_activity;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -160,7 +161,8 @@ public class Report_type_detail_activity extends AppCompatActivity {
             recordlist_element_detail.setOnClickListener(new View.OnClickListener() { //綁定依照類別查詢的Activity
                 @Override
                 public void onClick(View view) {
-                    Intent intent=new Intent(Report_type_detail_activity.this,Report_ultimate_activity.class);
+                    Intent intent=new Intent(Report_type_detail_activity.this, Bookkeeping_activity.class);
+                    intent.putExtra("CALL","modBookkeeping");
                     intent.putExtra("RECORDID",recordID);
                     Report_type_detail_activity.this.startActivityForResult(intent,0);
                     overridePendingTransition(R.anim.translate_in,R.anim.translate_out);

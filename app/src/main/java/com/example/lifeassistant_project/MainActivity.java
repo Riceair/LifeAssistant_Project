@@ -260,6 +260,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.menu_fin_bookkeeping:
                 intent=new Intent(this, Bookkeeping_activity.class);
+                intent.putExtra("CALL","bookkeeping");
                 this.startActivity(intent);
                 overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
                 break;
