@@ -1,15 +1,14 @@
 package com.example.lifeassistant_project.activity_update;
 
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.content.res.AssetManager;
 import android.view.ContextThemeWrapper;
 
 import java.io.*;
 import java.util.ArrayList;
 
-import static android.content.Context.MODE_PRIVATE;
 
 public class DatabaseBehavior {
     private static final String PATH = "/data/data/com.example.lifeassistant_project";
@@ -19,43 +18,15 @@ public class DatabaseBehavior {
 
     private static ArrayList<Integer> accountIDList = new ArrayList<Integer>();
 
-    public static ArrayList<Integer> getAccountIDList() { return accountIDList; }
-
-    public static void init()
-    {
-//        ClientProgress client = new ClientProgress();
-//        AccountPackage selectAccount = new AccountPackage();
-//        selectAccount.setRequestAction(3);
-//        selectAccount.setID(0); //select all records.
-//        client.setBookkeeping(selectAccount);
-//        Thread cThread = new Thread(client);
-//        cThread.start();
+//    public static void init()
+//    {
+//        File dbDir = new File(PATH, "databases");
+//        dbDir.mkdir();
+//        File FdbFile = new File(PATH+"/databases",DBNAME);
+//        if(!FdbFile.exists() || !FdbFile.isFile())
+//            copyAssets(PATH); //初始資料庫複製到路徑
 //
-//        synchronized (client)
-//        {
-//            try
-//            {
-//                System.out.println("WAITING");
-//                client.wait();
-//                System.out.println("GOGO");
-//            }catch (Exception e)
-//            {
-//                System.out.println(e);
-//            }
-//        }
-//
-//        ArrayList<AccountPackage> serverAccountList = client.getRcvAccountData();
-//        if(serverAccountList.size() == 0)
-//        {
-//            System.out.println("Connection failed.");
-//            return;
-//        }
-//
-//        for (AccountPackage ele : serverAccountList)
-//        {
-//            accountIDList.add(ele.getID());
-//        }
-    }
+//    }
 
     public static void synchronizeServer2Client()
     {
@@ -68,7 +39,7 @@ public class DatabaseBehavior {
         ClientProgress client = new ClientProgress();
         AccountPackage selectAccount = new AccountPackage();
         selectAccount.setRequestAction(3);
-        selectAccount.setUser(LoginPackage.getUserName());
+        selectAccount.setUser(LoginHandler.getUserName());
         if(!selectAccount.getUser().equals("Null")) selectAccount.setID(1);
         client.setBookkeeping(selectAccount);
         Thread cThread = new Thread(client);
@@ -78,9 +49,7 @@ public class DatabaseBehavior {
         {
             try
             {
-//                System.out.println("WAITING");
                 client.wait();
-//                System.out.println("GOGO");
             }catch (Exception e)
             {
                 System.out.println(e);
@@ -163,7 +132,7 @@ public class DatabaseBehavior {
             tempAccount.setDetail(cursor.getString(5)); //Detail
             tempAccount.setType(cursor.getInt(8) == 0 ? false : true);     //Type
             tempAccount.setID(cursor.getInt(9));       //ID
-            tempAccount.setUser(LoginPackage.getUserName());
+            tempAccount.setUser(LoginHandler.getUserName());
 
 
             resultList.add(tempAccount);

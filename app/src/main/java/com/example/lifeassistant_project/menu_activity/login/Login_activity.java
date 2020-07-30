@@ -1,5 +1,6 @@
 package com.example.lifeassistant_project.menu_activity.login;
 
+import android.content.SharedPreferences;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
@@ -10,15 +11,14 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.lifeassistant_project.R;
-import com.example.lifeassistant_project.activity_update.ClientProgress;
-import com.example.lifeassistant_project.activity_update.DatabaseBehavior;
+import com.example.lifeassistant_project.activity_update.LoginHandler;
 import com.example.lifeassistant_project.activity_update.LoginPackage;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class Login_activity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_activity);
         Toolbar toolbar=findViewById(R.id.toolbar);
@@ -38,22 +38,9 @@ public class Login_activity extends AppCompatActivity {
                     System.out.println("Error! Client need to give input message.");
                 else
                 {
-                    String userKey = LoginCertification(loginPackage);
-                    LoginPackage.setUserKey(userKey);
-                    if(userKey.equals("NO"))
+                    if(LoginHandler.Login(loginPackage))
                     {
-                        System.out.println("Certification Fail."); //need to be conduct functionality.
-                    }
-                    else if(userKey.equals("FA"))
-                    {
-                        System.out.println("Connection Fail.");
-                    }
-                    else
-                    {
-//                        System.out.println(LoginPackage.getUserKey());
-                        LoginPackage.setUserName(loginPackage.getName());
-                        LoginPackage.setIsLogin(true);
-                        DatabaseBehavior.synchronizeServer2Client();
+                        saveInformation(loginPackage.getName(), loginPackage.getPassword());
                         Login_activity.this.finish();
                     }
                 }
@@ -61,27 +48,6 @@ public class Login_activity extends AppCompatActivity {
         });
     }
 
-    private String LoginCertification(LoginPackage loginPackage)
-    {
-        ClientProgress client = new ClientProgress();
-        client.setLogin(loginPackage);
-        Thread cThread = new Thread(client);
-        cThread.start();
-
-        synchronized (client)
-        {
-            try {
-                System.out.println("WAITTING");
-                client.wait(3000);
-                System.out.println("GOGOGO");
-            }
-            catch (InterruptedException e) {
-                System.out.println(e);
-            }
-        }
-
-        return client.getRcvUserKey();
-    }
     private LoginPackage getClientLoginInfo()
     {
         LoginPackage loginPackage = new LoginPackage();
@@ -90,6 +56,15 @@ public class Login_activity extends AppCompatActivity {
         targetText = (TextInputEditText) findViewById(R.id.account_password);
         loginPackage.setPassword(targetText.getText().toString());
         return loginPackage;
+    }
+
+    //used for store user's account content.
+    public void saveInformation(String username,String password) {
+        SharedPreferences shared = getSharedPreferences("shared", MODE_PRIVATE);
+        SharedPreferences.Editor editor = shared.edit();
+        editor.putString("username", username);
+        editor.putString("password", password);
+        editor.commit();
     }
 
     @Override

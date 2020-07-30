@@ -369,7 +369,7 @@ public class NewPlan_activity extends AppCompatActivity {
             Toast.makeText(this,"新增失敗",Toast.LENGTH_SHORT).show();
         }
 
-finish();
+        finish();
     }
     public void clickToUpdateSC(View view){
         writeToSCDB();

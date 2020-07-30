@@ -1,5 +1,6 @@
 package com.example.lifeassistant_project;
 
+import android.content.SharedPreferences;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view) {
                 // for DEBUG
-//                DEBUG_FUNCTION();
+                DEBUG_FUNCTION(1);
 
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -122,6 +123,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
             }
         });
+
+        //Remeber user's content
+        SharedPreferences shared = getSharedPreferences("shared", MODE_PRIVATE);
+        if(shared.contains("username") && shared.contains("password")){
+            System.out.println("User content:");
+            System.out.println(shared.getString("username", "null"));
+            System.out.println(shared.getString("password", "null"));
+            LoginPackage loginPackage = new LoginPackage(shared.getString("username", "null"), shared.getString("password", "null"));
+            LoginHandler.Login(loginPackage);
+        } else {
+            System.out.println("There is no user's content!");
+        }
+
         //註冊
 
         ImageView RegImg=headerView.findViewById(R.id.RegImg);
@@ -134,29 +148,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
     }
-//    private void DEBUG_FUNCTION()
-//    {
-////        DatabaseBehavior.synchronizeServer2Client();
-//
-//        TextView tempText = findViewById(R.id.DEBUG_TEXT);
-//        System.out.println(tempText.getText());
-//
-//        userSay.setText(tempText.getText());
-//
-//        System.out.println("Behavior");
-//        System.out.println(chatbotBehavior.getBehaviorMode());
-//        if(!chatbotBehavior.generateSendSentence(tempText.getText().toString()))
-//        {
-//            System.out.println(chatbotBehavior.getErrorMessage());
-//        }
-//        else
-//        {
-//            chatbotBehavior.sendSentence();
-//        }
-//
-//        chatBotSay.setText(chatbotBehavior.getResponse());
-//    }
-//
+//    新增記帳 今天午餐500元
+    private void DEBUG_FUNCTION(int debugCode)
+    {
+        switch (debugCode)
+        {
+            case -1:
+                break;
+            case 0:
+                DatabaseBehavior.synchronizeServer2Client();
+                break;
+            case 1:
+//          FOR CHATBOT DEBUG
+                TextView tempText = findViewById(R.id.DEBUG_TEXT);
+                System.out.println(tempText.getText());
+
+                userSay.setText(tempText.getText());
+
+                System.out.println("Behavior");
+                System.out.println(chatbotBehavior.getBehaviorMode());
+                if(!chatbotBehavior.generateSendSentence(tempText.getText().toString()))
+                {
+                    System.out.println(chatbotBehavior.getErrorMessage());
+                }
+                else
+                {
+                    chatbotBehavior.sendSentence();
+                }
+
+                chatBotSay.setText(chatbotBehavior.getResponse());
+                break;
+            case 2:
+                System.out.println(LoginHandler.getUserKey());
+
+                LoginHandler.setUserName("key");
+                System.out.println(LoginHandler.checkAuthorization());
+        }
+    }
+
     ////////////////////////////語音///////////////////////////////////
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

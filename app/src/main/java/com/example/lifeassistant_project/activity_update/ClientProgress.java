@@ -53,9 +53,7 @@ public class ClientProgress implements Runnable {
                         OutputStream out = client.getOutputStream();
 
                         // send account package
-                        System.out.println("???");
                         out.write(PackageHandler.accountPackageEncode(this.accountPackage));
-                        System.out.println("????");
                         out.flush();
                         InputStream in = client.getInputStream();      // 取得輸入訊息的串流
 
@@ -67,7 +65,6 @@ public class ClientProgress implements Runnable {
 
                         if(this.accountPackage.getRequestAction() == 3)
                         {
-                            System.out.println("Hello");
                             ArrayList<AccountPackage> rcvAccountData = new ArrayList<AccountPackage>();
                             for (int i = 0, currentLength = 0; i < b_buf.array().length / PACKAGE_SIZE; i++)
                             {
@@ -193,7 +190,7 @@ public class ClientProgress implements Runnable {
                 {
                     try {
                         System.out.println("log");
-                        final int PACKAGE_SIZE = 69;
+                        final int RCV_PACKAGE_SIZE = 69;
                         Socket client = new Socket(this.address, this.port);
 
                         OutputStream out = client.getOutputStream();
@@ -205,7 +202,7 @@ public class ClientProgress implements Runnable {
 
                         StringBuffer buf = new StringBuffer();        // 建立讀取字串。
 
-                        ByteBuffer b_buf = getInputByteBuffer(in, PACKAGE_SIZE);
+                        ByteBuffer b_buf = getInputByteBuffer(in, RCV_PACKAGE_SIZE);
                         out.close();
 
                         byte[] rcvArray = Arrays.copyOfRange(b_buf.array(), 3, b_buf.array().length);

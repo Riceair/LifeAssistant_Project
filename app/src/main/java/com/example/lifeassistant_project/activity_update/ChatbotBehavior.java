@@ -119,7 +119,7 @@ public class ChatbotBehavior {
 
             this.sendSentence.setIntent(sentenceHandler.getIntent());
             this.sendSentence.setOperation(sentenceHandler.getOperation());
-            this.sendSentence.setFulfillment(message + "@" + LoginPackage.getUserName() + "#" + id);
+            this.sendSentence.setFulfillment(message + "@" + LoginHandler.getUserName() + "#" + id);
         }
 
         return true;
