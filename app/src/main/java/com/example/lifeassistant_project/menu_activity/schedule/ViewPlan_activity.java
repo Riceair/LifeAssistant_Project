@@ -48,14 +48,14 @@ public class ViewPlan_activity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setIcon(R.drawable.newstand);
-        final ListView list = findViewById(R.id.list);
+
 
         File dbDir = new File(PATH, "databases");
         dbDir.mkdir();
         File FdbFile = new File(PATH+"/databases",DBNAME);
         if(!FdbFile.exists() || !FdbFile.isFile())
             copyAssets(PATH); //初始資料庫複製到路徑
-
+        final ListView list = findViewById(R.id.list);
         ReadDBRecord();
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, stuffNameList);
         list.setAdapter(arrayAdapter);
@@ -90,6 +90,9 @@ public class ViewPlan_activity extends AppCompatActivity {
 
 
     private void ReadDBRecord(){
+        stuffList.clear();
+        stuffEndingList.clear();
+        stuffNameList.clear();
         myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
         try {
             cursor = myDB.rawQuery("select schedule_record.事情, schedule_record.年,schedule_record.月,schedule_record.日,schedule_record.開始時間,schedule_record.結束時間 from schedule_record",null);
@@ -135,28 +138,19 @@ public class ViewPlan_activity extends AppCompatActivity {
             Toast.makeText(this,e.toString(),Toast.LENGTH_SHORT).show();
         }
     }
-
-
-
-
-
-
-
     @Override
         protected void onActivityResult(int requestCode,int resultCode,Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
                 Intent intent = new Intent();
-
                 setResult(RESULT_OK,intent);
                 finish();
-
             }
         }
 
-    }
 
+    }
     private void copyAssets(String path) {
         InputStream in = null;
         OutputStream out = null;
@@ -194,6 +188,7 @@ public class ViewPlan_activity extends AppCompatActivity {
     public void clickBackPlanner(View view){
         Intent intent = new Intent(view.getContext(),Planner_activity.class);
         view.getContext().startActivity(intent);
+
     }
     @Override
     public void finish() {

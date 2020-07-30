@@ -3,8 +3,8 @@
     package="com.example.lifeassistant_project">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -15,7 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".menu_activity.login.register_activity"></activity>
+        <activity
+            android:name=".menu_activity.login.Register_activity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".menu_activity.finance.report.Report_type_detail_activity"
             android:screenOrientation="portrait"

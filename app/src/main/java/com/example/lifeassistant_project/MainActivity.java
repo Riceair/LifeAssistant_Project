@@ -23,7 +23,6 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,7 +38,7 @@ import com.example.lifeassistant_project.activity_update.*;
 import com.example.lifeassistant_project.menu_activity.finance.Bookkeeping_activity;
 import com.example.lifeassistant_project.menu_activity.finance.Invoice_activity;
 import com.example.lifeassistant_project.menu_activity.login.Login_activity;
-import com.example.lifeassistant_project.menu_activity.login.register_activity;
+import com.example.lifeassistant_project.menu_activity.login.Register_activity;
 import com.example.lifeassistant_project.menu_activity.schedule.Planner_activity;
 import com.example.lifeassistant_project.menu_activity.finance.report.Report_activity;
 import com.example.lifeassistant_project.menu_activity.weather.Weather_activity;
@@ -142,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         RegImg.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Intent intent=new Intent(MainActivity.this,register_activity.class);
+                Intent intent=new Intent(MainActivity.this, Register_activity.class);
                 MainActivity.this.startActivity(intent);
                 overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
             }
