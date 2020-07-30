@@ -41,7 +41,6 @@ public class Planner_activity extends AppCompatActivity {
     public SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
     private boolean shouldShow = false;
     public CompactCalendarView compactCalendarView;
-    private static final String PATH = "/data/data/com.example.lifeassistant_project";
     private static final String DBNAME = "myDB.db";
     private SQLiteDatabase myDB;
     private Cursor cursor;
@@ -71,12 +70,6 @@ public class Planner_activity extends AppCompatActivity {
         compactCalendarView.setFirstDayOfWeek(Calendar.MONDAY);
         Date datenow =new Date();
         datewasclicked=formatter.format(datenow);
-        //這是資料庫
-        File dbDir = new File(PATH, "databases");
-        dbDir.mkdir();
-        File FdbFile = new File(PATH+"/databases",DBNAME);
-        if(!FdbFile.exists() || !FdbFile.isFile())
-            copyAssets(PATH); //初始資料庫複製到路徑
         ReadDBRecord();
         initial(null);
         //Query
@@ -196,31 +189,6 @@ public class Planner_activity extends AppCompatActivity {
 
         }
 
-    }
-    private void copyAssets(String path) {
-        InputStream in = null;
-        OutputStream out = null;
-        try {
-            in = getAssets().open(DBNAME);
-            out = new FileOutputStream(PATH + "/databases/" + DBNAME);
-            copyFile(in, out);
-            in.close();
-            out.flush();
-            out.close();
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-    }
-    /*
-     * 一既有的工具程式，可將來源 InputStream 物件所指向的資料串流
-     * 拷貝到OutputStream 物件所指向的資料串流去
-     */
-    private void copyFile(InputStream in, OutputStream out) throws IOException {
-        byte[] buffer = new byte[in.available()];
-        int read;
-        while((read = in.read(buffer)) != -1){
-            out.write(buffer, 0, read);
-        }
     }
     public void clickNewPlan(View view){
         Intent intent = new Intent(view.getContext(),NewPlan_activity.class);

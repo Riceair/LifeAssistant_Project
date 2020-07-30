@@ -21,7 +21,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
             android:text="輸入註冊資訊以繼續"
-            android:textSize="25dp" />
+            android:textSize="30dp" />
 
         <!--        <TextView-->
         <!--            android:id="@+id/image_choose_text"-->
@@ -71,6 +71,7 @@
             android:layout_alignTop="@+id/account_inputbox"
             android:layout_alignLeft="@+id/account_inputbox"
             android:layout_marginLeft="10dp"
+            android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
             android:inputType="textEmailAddress"
             android:maxLength="20"
             android:hint="請輸入帳號" />
@@ -84,7 +85,7 @@
             android:layout_marginLeft="5dp"
             android:textSize="16dp"
             android:gravity="center"
-            android:text="英數混雜、長度最長20"/>
+            android:text="英數混雜(長度至少6最長20)"/>
 
         <TextView
             android:id="@+id/pw_text"
@@ -114,6 +115,7 @@
             android:layout_alignLeft="@+id/pw_inputbox"
             android:layout_marginLeft="10dp"
             android:inputType="textPassword"
+            android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
             android:maxLength="20"
             android:hint="請輸入密碼" />
 
@@ -126,7 +128,7 @@
             android:layout_marginLeft="5dp"
             android:gravity="center"
             android:textSize="16dp"
-            android:text="英數混雜、長度最長20"/>
+            android:text="英數混雜(長度至少6最長20)"/>
 
         <TextView
             android:id="@+id/pw_check_text"
@@ -156,6 +158,7 @@
             android:layout_alignLeft="@+id/pw_check_inputbox"
             android:layout_marginLeft="10dp"
             android:inputType="textPassword"
+            android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
             android:maxLength="20"
             android:hint="請再次輸入密碼" />
 
@@ -170,7 +173,7 @@
             android:gravity="center"
             android:textSize="16dp"
             android:textColor="#FF0000"
-            android:text="請確認密碼是否相同"/>
+            android:text="請輸入相同的密碼"/>
 
         <ImageView
             android:id="@+id/continuebutton"
@@ -179,6 +182,7 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/pw_check_inputbox"
             android:layout_marginTop="50dp"
+            android:onClick="clickToRegister"
             android:src="@drawable/arrowbutton" />
 
     </RelativeLayout>

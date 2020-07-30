@@ -30,7 +30,6 @@ import java.util.Date;
 import java.util.List;
 
 public class Report_type_detail_activity extends AppCompatActivity {
-    private static final String PATH = "/data/data/com.example.lifeassistant_project";
     private static final String DBNAME = "myDB.db";
     private SQLiteDatabase myDB;
     private Cursor cursor;
@@ -208,32 +207,5 @@ public class Report_type_detail_activity extends AppCompatActivity {
     public void finish() {
         super.finish();
         overridePendingTransition(0,R.anim.translate_out);
-    }
-
-    //第一次開啟App才會啟用
-    private void copyAssets(String path) {
-        InputStream in = null;
-        OutputStream out = null;
-        try {
-            in = getAssets().open(DBNAME);
-            out = new FileOutputStream(PATH + "/databases/" + DBNAME);
-            copyFile(in, out);
-            in.close();
-            out.flush();
-            out.close();
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-    }
-    /*
-     * 一既有的工具程式，可將來源 InputStream 物件所指向的資料串流
-     * 拷貝到OutputStream 物件所指向的資料串流去
-     */
-    private void copyFile(InputStream in, OutputStream out) throws IOException {
-        byte[] buffer = new byte[in.available()];
-        int read;
-        while((read = in.read(buffer)) != -1){
-            out.write(buffer, 0, read);
-        }
     }
 }
