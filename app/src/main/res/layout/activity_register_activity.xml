@@ -14,12 +14,22 @@
         android:background="@drawable/regsite_inner_background">
 
 
+        <ImageView
+            android:id="@+id/reg_logo"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/regsite_logo" />
+
         <TextView
             android:id="@+id/welcomeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/reg_logo"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="15dp"
             android:text="輸入註冊資訊以繼續"
             android:textSize="30dp" />
 
@@ -48,8 +58,8 @@
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:layout_below="@+id/welcomeText"
-            android:layout_marginTop="60dp"
             android:layout_marginLeft="40dp"
+            android:layout_marginTop="15dp"
             android:gravity="center"
             android:text="帳號: "
             android:textSize="20dp" />
@@ -179,9 +189,9 @@
             android:id="@+id/continuebutton"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_centerHorizontal="true"
             android:layout_below="@+id/pw_check_inputbox"
-            android:layout_marginTop="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
             android:onClick="clickToRegister"
             android:src="@drawable/arrowbutton" />
 
