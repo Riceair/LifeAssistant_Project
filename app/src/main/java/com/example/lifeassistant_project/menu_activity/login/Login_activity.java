@@ -54,12 +54,46 @@ public class Login_activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Login_activity.this,Register_activity.class);
-                Login_activity.this.startActivity(intent);
+                Login_activity.this.startActivityForResult(intent,11);
                 overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
             }
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==11){
+            if(resultCode==11){
+                Bundle bundle = data.getExtras();
+                String account=bundle.getString("ACCOUNT");
+                String password=bundle.getString("PASSWORD");
+                ////////////////////////
+            }
+        }
+    }
+
+    private String LoginCertification(LoginPackage loginPackage)
+    {
+        ClientProgress client = new ClientProgress();
+        client.setLogin(loginPackage);
+        Thread cThread = new Thread(client);
+        cThread.start();
+
+        synchronized (client)
+        {
+            try {
+                System.out.println("WAITTING");
+                client.wait(3000);
+                System.out.println("GOGOGO");
+            }
+            catch (InterruptedException e) {
+                System.out.println(e);
+            }
+        }
+
+        return client.getRcvUserKey();
+    }
     private LoginPackage getClientLoginInfo()
     {
         LoginPackage loginPackage = new LoginPackage();

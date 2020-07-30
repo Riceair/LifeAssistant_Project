@@ -41,7 +41,6 @@ import java.util.List;
 public class NewPlan_activity extends AppCompatActivity {
     private static final String PATH = "/data/data/com.example.lifeassistant_project";
     private static final String DBNAME = "myDB.db";
-    private static final String FILTER_TABLE = "filter";
     private static final String SC_TABLE = "schedule_record";
     private SQLiteDatabase myDB;
     private Cursor cursor;
@@ -78,12 +77,7 @@ public class NewPlan_activity extends AppCompatActivity {
         namewasfilledin = bundle.getString("clickedname");
         endingtimewasclicked = bundle.getString("clickedendingtime");
         endingdatewasclicked = bundle.getString("clickedendingdate");
-        //這是讀資料庫
-        File dbDir = new File(PATH, "databases");
-        dbDir.mkdir();
-        File FdbFile = new File(PATH + "/databases", DBNAME);
-        if (!FdbFile.exists() || !FdbFile.isFile())
-            copyAssets(PATH); //初始資料庫複製到路徑
+
         ReadDBRecord();
         //這是承接事項
         final TextView nameText = (TextView) findViewById(R.id.eventinput);
@@ -232,21 +226,6 @@ public class NewPlan_activity extends AppCompatActivity {
             }
         } catch (Exception e) {
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void copyAssets(String path) {
-        InputStream in = null;
-        OutputStream out = null;
-        try {
-            in = getAssets().open(DBNAME);
-            out = new FileOutputStream(PATH + "/databases/" + DBNAME);
-            copyFile(in, out);
-            in.close();
-            out.flush();
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -411,14 +390,6 @@ public class NewPlan_activity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
             }
         }).show();
-    }
-
-    private void copyFile(InputStream in, OutputStream out) throws IOException {
-        byte[] buffer = new byte[in.available()];
-        int read;
-        while ((read = in.read(buffer)) != -1) {
-            out.write(buffer, 0, read);
-        }
     }
     public void setStartDateInFormat(int year, int month, int day, int hour, int minute)
     {
