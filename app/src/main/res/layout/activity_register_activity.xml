@@ -58,8 +58,8 @@
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:layout_below="@+id/welcomeText"
-            android:layout_marginTop="60dp"
             android:layout_marginLeft="40dp"
+            android:layout_marginTop="15dpdp"
             android:gravity="center"
             android:text="帳號: "
             android:textSize="20dp" />
