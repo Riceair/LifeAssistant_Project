@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bookkeeping_background"
+    tools:context=".menu_activity.login.Register_activity">
+
+    <RelativeLayout
+        android:layout_width="350dp"
+        android:layout_height="600dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/regsite_inner_background">
+
+
+        <TextView
+            android:id="@+id/welcomeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:text="輸入註冊資訊以繼續"
+            android:textSize="25dp" />
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/image_choose_text"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="60dp"-->
+        <!--            android:layout_below="@+id/welcomeText"-->
+        <!--            android:layout_marginTop="10dp"-->
+        <!--            android:layout_marginLeft="40dp"-->
+        <!--            android:gravity="center"-->
+        <!--            android:textSize="20dp"-->
+        <!--            android:text="頭像選擇: "/>-->
+
+        <!--        <ImageView-->
+        <!--            android:id="@+id/image_choose_button"-->
+        <!--            android:layout_width="60dp"-->
+        <!--            android:layout_height="60dp"-->
+        <!--            android:layout_alignTop="@+id/image_choose_text"-->
+        <!--            android:layout_toRightOf="@+id/image_choose_text"-->
+        <!--            android:scaleType="fitXY"-->
+        <!--            app:srcCompat="@drawable/login_button" />-->
+
+        <TextView
+            android:id="@+id/account_text"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_below="@+id/welcomeText"
+            android:layout_marginTop="60dp"
+            android:layout_marginLeft="40dp"
+            android:gravity="center"
+            android:text="帳號: "
+            android:textSize="20dp" />
+
+
+        <ImageView
+            android:id="@+id/account_inputbox"
+            android:layout_width="210dp"
+            android:layout_height="60dp"
+            android:layout_alignTop="@+id/account_text"
+            android:layout_toRightOf="@+id/account_text"
+            android:scaleType="fitXY"
+            android:src="@drawable/fillin_frame" />
+
+        <EditText
+            android:id="@+id/account_input"
+            android:layout_width="190dp"
+            android:layout_height="55dp"
+            android:layout_alignTop="@+id/account_inputbox"
+            android:layout_alignLeft="@+id/account_inputbox"
+            android:layout_marginLeft="10dp"
+            android:inputType="textEmailAddress"
+            android:maxLength="20"
+            android:hint="請輸入帳號" />
+
+        <TextView
+            android:id="@+id/account_hint"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:layout_below="@+id/account_inputbox"
+            android:layout_alignLeft="@+id/account_inputbox"
+            android:layout_marginLeft="5dp"
+            android:textSize="16dp"
+            android:gravity="center"
+            android:text="英數混雜、長度最長20"/>
+
+        <TextView
+            android:id="@+id/pw_text"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:layout_alignLeft="@+id/account_text"
+            android:layout_below="@id/account_text"
+            android:layout_marginTop="30dp"
+            android:text="密碼: "
+            android:textSize="20dp" />
+
+        <ImageView
+            android:id="@+id/pw_inputbox"
+            android:layout_width="210dp"
+            android:layout_height="60dp"
+            android:layout_alignTop="@+id/pw_text"
+            android:layout_toRightOf="@+id/pw_text"
+            android:scaleType="fitXY"
+            android:src="@drawable/fillin_frame" />
+
+        <EditText
+            android:id="@+id/pw_input"
+            android:layout_width="190dp"
+            android:layout_height="55dp"
+            android:layout_alignTop="@+id/pw_inputbox"
+            android:layout_alignLeft="@+id/pw_inputbox"
+            android:layout_marginLeft="10dp"
+            android:inputType="textPassword"
+            android:maxLength="20"
+            android:hint="請輸入密碼" />
+
+        <TextView
+            android:id="@+id/pw_hint"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:layout_below="@+id/pw_inputbox"
+            android:layout_alignLeft="@+id/pw_inputbox"
+            android:layout_marginLeft="5dp"
+            android:gravity="center"
+            android:textSize="16dp"
+            android:text="英數混雜、長度最長20"/>
+
+        <TextView
+            android:id="@+id/pw_check_text"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:layout_below="@+id/pw_text"
+            android:layout_alignLeft="@+id/pw_text"
+            android:layout_marginTop="30dp"
+            android:text="確認密碼: "
+            android:textSize="20dp" />
+
+        <ImageView
+            android:id="@+id/pw_check_inputbox"
+            android:layout_width="168dp"
+            android:layout_height="60dp"
+            android:layout_alignTop="@+id/pw_check_text"
+            android:layout_toRightOf="@+id/pw_check_text"
+            android:scaleType="fitXY"
+            android:src="@drawable/fillin_frame" />
+
+        <EditText
+            android:id="@+id/pw_check_input"
+            android:layout_width="148dp"
+            android:layout_height="55dp"
+            android:layout_alignTop="@+id/pw_check_inputbox"
+            android:layout_alignLeft="@+id/pw_check_inputbox"
+            android:layout_marginLeft="10dp"
+            android:inputType="textPassword"
+            android:maxLength="20"
+            android:hint="請再次輸入密碼" />
+
+        <TextView
+            android:id="@+id/pw_check_hint"
+            android:visibility="invisible"
+            android:layout_width="160dp"
+            android:layout_height="30dp"
+            android:layout_below="@+id/pw_check_inputbox"
+            android:layout_alignLeft="@+id/pw_check_inputbox"
+            android:layout_marginLeft="5dp"
+            android:gravity="center"
+            android:textSize="16dp"
+            android:textColor="#FF0000"
+            android:text="請確認密碼是否相同"/>
+
+        <ImageView
+            android:id="@+id/continuebutton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/pw_check_inputbox"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/arrowbutton" />
+
+    </RelativeLayout>
+
+    <include
+        layout="@layout/drawer_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</RelativeLayout>
