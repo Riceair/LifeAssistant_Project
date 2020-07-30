@@ -73,27 +73,6 @@ public class Login_activity extends AppCompatActivity {
         }
     }
 
-    private String LoginCertification(LoginPackage loginPackage)
-    {
-        ClientProgress client = new ClientProgress();
-        client.setLogin(loginPackage);
-        Thread cThread = new Thread(client);
-        cThread.start();
-
-        synchronized (client)
-        {
-            try {
-                System.out.println("WAITTING");
-                client.wait(3000);
-                System.out.println("GOGOGO");
-            }
-            catch (InterruptedException e) {
-                System.out.println(e);
-            }
-        }
-
-        return client.getRcvUserKey();
-    }
     private LoginPackage getClientLoginInfo()
     {
         LoginPackage loginPackage = new LoginPackage();
