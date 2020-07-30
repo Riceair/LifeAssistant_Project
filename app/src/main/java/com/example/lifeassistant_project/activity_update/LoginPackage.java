@@ -3,22 +3,18 @@ package com.example.lifeassistant_project.activity_update;
 public class LoginPackage {
     private String name;
     private String password;
-    static private String userName = "Null";
-    static private String userKey = null;
 
-    static private boolean isLogin = false;
+    public LoginPackage()
+    {
+        this.name = "Null";
+        this.password = "Null";
+    }
 
-    static public void setUserName(String userName) { LoginPackage.userName = userName; }
-
-    static public String getUserName() { return userName; }
-
-    static public void setIsLogin(boolean t) {isLogin = t;}
-
-    static public boolean getIsLogin() { return isLogin; }
-
-    static public void setUserKey(String message){userKey = message;}
-
-    static public String getUserKey(){ return userKey; }
+    public LoginPackage(String name, String password)
+    {
+        this.name = name;
+        this.password = password;
+    }
 
     public String getName() { return name; }
 

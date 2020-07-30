@@ -1,5 +1,6 @@
 package com.example.lifeassistant_project.menu_activity.login;
 
+import android.content.SharedPreferences;
 import android.content.Intent;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -13,8 +14,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.lifeassistant_project.R;
-import com.example.lifeassistant_project.activity_update.ClientProgress;
-import com.example.lifeassistant_project.activity_update.DatabaseBehavior;
+import com.example.lifeassistant_project.activity_update.LoginHandler;
 import com.example.lifeassistant_project.activity_update.LoginPackage;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -41,22 +41,9 @@ public class Login_activity extends AppCompatActivity {
                     Toast.makeText(Login_activity.this,"請輸入正確的帳號密碼",Toast.LENGTH_SHORT).show();
                 else
                 {
-                    String userKey = LoginCertification(loginPackage);
-                    LoginPackage.setUserKey(userKey);
-                    if(userKey.equals("NO"))
+                    if(LoginHandler.Login(loginPackage))
                     {
-                        Toast.makeText(Login_activity.this,"請輸入正確的帳號密碼",Toast.LENGTH_SHORT).show(); //need to be conduct functionality.
-                    }
-                    else if(userKey.equals("FA"))
-                    {
-                        Toast.makeText(Login_activity.this,"請輸入正確的帳號密碼",Toast.LENGTH_SHORT).show();
-                    }
-                    else
-                    {
-//                        System.out.println(LoginPackage.getUserKey());
-                        LoginPackage.setUserName(loginPackage.getName());
-                        LoginPackage.setIsLogin(true);
-                        DatabaseBehavior.synchronizeServer2Client();
+                        saveInformation(loginPackage.getName(), loginPackage.getPassword());
                         Login_activity.this.finish();
                     }
                 }
@@ -67,33 +54,25 @@ public class Login_activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Login_activity.this,Register_activity.class);
-                Login_activity.this.startActivity(intent);
+                Login_activity.this.startActivityForResult(intent,11);
                 overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
             }
         });
     }
 
-    private String LoginCertification(LoginPackage loginPackage)
-    {
-        ClientProgress client = new ClientProgress();
-        client.setLogin(loginPackage);
-        Thread cThread = new Thread(client);
-        cThread.start();
-
-        synchronized (client)
-        {
-            try {
-                System.out.println("WAITTING");
-                client.wait(3000);
-                System.out.println("GOGOGO");
-            }
-            catch (InterruptedException e) {
-                System.out.println(e);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==11){
+            if(resultCode==11){
+                Bundle bundle = data.getExtras();
+                String account=bundle.getString("ACCOUNT");
+                String password=bundle.getString("PASSWORD");
+                ////////////////////////
             }
         }
-
-        return client.getRcvUserKey();
     }
+
     private LoginPackage getClientLoginInfo()
     {
         LoginPackage loginPackage = new LoginPackage();
@@ -102,6 +81,15 @@ public class Login_activity extends AppCompatActivity {
         targetText = (TextInputEditText) findViewById(R.id.account_password);
         loginPackage.setPassword(targetText.getText().toString());
         return loginPackage;
+    }
+
+    //used for store user's account content.
+    public void saveInformation(String username,String password) {
+        SharedPreferences shared = getSharedPreferences("shared", MODE_PRIVATE);
+        SharedPreferences.Editor editor = shared.edit();
+        editor.putString("username", username);
+        editor.putString("password", password);
+        editor.commit();
     }
 
     @Override

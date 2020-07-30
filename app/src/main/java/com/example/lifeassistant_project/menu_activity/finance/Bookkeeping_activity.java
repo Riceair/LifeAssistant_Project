@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.example.lifeassistant_project.R;
 import com.example.lifeassistant_project.activity_update.AccountPackage;
 import com.example.lifeassistant_project.activity_update.ClientProgress;
+import com.example.lifeassistant_project.activity_update.LoginHandler;
 import com.example.lifeassistant_project.activity_update.LoginPackage;
 
 
@@ -37,7 +38,6 @@ import java.util.Calendar;
 import java.util.List;
 
 public class Bookkeeping_activity extends AppCompatActivity {
-    private static final String PATH = "/data/data/com.example.lifeassistant_project";
     private static final String DBNAME = "myDB.db";
     private static final String FILTER_TABLE="filter";
     private static final String BK_TABLE = "record";
@@ -71,13 +71,6 @@ public class Bookkeeping_activity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setIcon(R.drawable.icon_bookkeeping);
-
-        // 資料庫
-        File dbDir = new File(PATH, "databases");
-        dbDir.mkdir();
-        File FdbFile = new File(PATH+"/databases",DBNAME);
-        if(!FdbFile.exists() || !FdbFile.isFile())
-            copyAssets(PATH); //初始資料庫複製到路徑
 
         bind();
 
@@ -228,7 +221,7 @@ public class Bookkeeping_activity extends AppCompatActivity {
         writeToBKDB();
         //
         ClientProgress client = new ClientProgress();
-        this.sendPackage.setUser(LoginPackage.getUserName());
+        this.sendPackage.setUser(LoginHandler.getUserName());
         client.setBookkeeping(this.sendPackage);
 //        client.setWeather();
         Thread conn = new Thread(client);
@@ -280,7 +273,7 @@ public class Bookkeeping_activity extends AppCompatActivity {
         updAccount.setNote(quotesinput.getText().toString());
         updAccount.setType(inOutAttribute == 0 ? false : true);
         updAccount.setRequestAction(2);
-        updAccount.setUser(LoginPackage.getUserName());
+        updAccount.setUser(LoginHandler.getUserName());
         client.setBookkeeping(updAccount);
         new Thread(client).start();
 
@@ -583,32 +576,5 @@ public class Bookkeeping_activity extends AppCompatActivity {
     public void finish() {
         super.finish();
         overridePendingTransition(0,R.anim.translate_out);
-    }
-
-    //第一次開啟App才會啟用
-    private void copyAssets(String path) {
-        InputStream in = null;
-        OutputStream out = null;
-        try {
-            in = getAssets().open(DBNAME);
-            out = new FileOutputStream(PATH + "/databases/" + DBNAME);
-            copyFile(in, out);
-            in.close();
-            out.flush();
-            out.close();
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-    }
-    /*
-     * 一既有的工具程式，可將來源 InputStream 物件所指向的資料串流
-     * 拷貝到OutputStream 物件所指向的資料串流去
-     */
-    private void copyFile(InputStream in, OutputStream out) throws IOException {
-        byte[] buffer = new byte[in.available()];
-        int read;
-        while((read = in.read(buffer)) != -1){
-            out.write(buffer, 0, read);
-        }
     }
 }

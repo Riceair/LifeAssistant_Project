@@ -555,12 +555,19 @@ public class PackageHandler
 }
 
     static public byte[] LoginPackageEncode(LoginPackage loPkg) throws UnsupportedEncodingException {
-        final int NAME_SIZE = 20, PASSWORD_SIZE = 20;
+        final int NAME_SIZE = 20;
+        int PASSWORD_SIZE;
+        if (loPkg.getName().equals("key"))
+        {
+            PASSWORD_SIZE = 64;
+        }
+        else
+        {
+            PASSWORD_SIZE = 20;
+        }
 
         ByteBuffer buf = ByteBuffer.allocate(1024);
-        int currentLength = 0;
 
-        ByteBuffer b_temp;
         buf.put("log".getBytes("UTF-8"));
 
         buf.put(TransString2ByteArray(loPkg.getName(), NAME_SIZE));
