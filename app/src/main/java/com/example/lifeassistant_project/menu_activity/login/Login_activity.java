@@ -68,7 +68,12 @@ public class Login_activity extends AppCompatActivity {
                 Bundle bundle = data.getExtras();
                 String account=bundle.getString("ACCOUNT");
                 String password=bundle.getString("PASSWORD");
-                ////////////////////////
+                LoginPackage regloginpackage=new LoginPackage(account,password);
+                if(LoginHandler.Login(regloginpackage))
+                {
+                    saveInformation(regloginpackage.getName(), regloginpackage.getPassword());
+                    Login_activity.this.finish();
+                }
             }
         }
     }
