@@ -53,6 +53,7 @@ public class Weather_activity extends AppCompatActivity {
     private void showWeatherData()
     {
         if(CURRENT_CITY.equals("")){ //定位失敗
+            Toast.makeText(this,"請開啟定位以取得定位資訊",Toast.LENGTH_SHORT).show();
             myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null); //取得資料庫過去取得的位置資料
             try{
                 cursor = myDB.rawQuery("select Location from history_weather",null);

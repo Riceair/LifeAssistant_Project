@@ -36,7 +36,7 @@ import android.widget.Toast;
 
 import com.example.lifeassistant_project.activity_update.*;
 import com.example.lifeassistant_project.menu_activity.finance.Bookkeeping_activity;
-import com.example.lifeassistant_project.menu_activity.finance.Invoice_activity;
+import com.example.lifeassistant_project.menu_activity.finance.invoice.Invoice_activity;
 import com.example.lifeassistant_project.menu_activity.login.Login_activity;
 import com.example.lifeassistant_project.menu_activity.login.Register_activity;
 import com.example.lifeassistant_project.menu_activity.schedule.Planner_activity;
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view){
                 Intent intent=new Intent(MainActivity.this, Register_activity.class);
-                MainActivity.this.startActivity(intent);
+                MainActivity.this.startActivityForResult(intent,11);
                 overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
             }
         });
@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(MainActivity.this, Register_activity.class);
-                MainActivity.this.startActivity(intent);
+                MainActivity.this.startActivityForResult(intent,11);
                 overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
             }
         });
@@ -228,6 +228,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
 
                 chatBotSay.setText(chatbotBehavior.getResponse());
+            }
+        }
+        else if(requestCode==11){
+            if(resultCode==11){
+                Bundle bundle = data.getExtras();
+                String account=bundle.getString("ACCOUNT");
+                String password=bundle.getString("PASSWORD");
+                LoginPackage regloginpackage=new LoginPackage(account,password);
+                if(LoginHandler.Login(regloginpackage))
+                {
+                    saveInformation(regloginpackage.getName(), regloginpackage.getPassword());
+                }
             }
         }
     }
@@ -438,6 +450,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onProviderDisabled(String provider) {}
     ////////////////////////////////////////取得定位////////////////////////////////////////
+
+    //used for store user's account content.
+    public void saveInformation(String username,String password) {
+        SharedPreferences shared = getSharedPreferences("shared", MODE_PRIVATE);
+        SharedPreferences.Editor editor = shared.edit();
+        editor.putString("username", username);
+        editor.putString("password", password);
+        editor.commit();
+    }
 
     //返回鍵
     @Override

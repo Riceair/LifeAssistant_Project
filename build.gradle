@@ -18,6 +18,8 @@ allprojects {
     repositories {
         google()
         jcenter()
+
+        //圓餅圖API
         maven{url"https://jitpack.io"}
     }
 }

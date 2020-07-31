@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.lifeassistant_project">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -15,9 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".menu_activity.login.Register_activity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+
         <activity
             android:name=".menu_activity.finance.report.Report_type_detail_activity"
             android:screenOrientation="portrait"
@@ -27,13 +26,23 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".menu_activity.login.Login_activity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".menu_activity.finance.report.Report_activity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".menu_activity.login.Register_activity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".menu_activity.finance.Bookkeeping_activity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".menu_activity.finance.invoice.Invoice_activity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".menu_activity.finance.invoice.Invoice_qr_activity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".menu_activity.schedule.ViewPlan_activity"
             android:screenOrientation="portrait"
@@ -47,15 +56,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".menu_activity.finance.Invoice_activity"
+            android:name=".menu_activity.login.Login_activity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".menu_activity.weather.Weather_activity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".menu_activity.finance.Bookkeeping_activity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

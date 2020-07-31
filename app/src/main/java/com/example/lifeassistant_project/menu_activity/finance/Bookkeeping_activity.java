@@ -182,6 +182,19 @@ public class Bookkeeping_activity extends AppCompatActivity {
 
     /////////////////////////////////////////////////////////記帳 click Event/////////////////////////////////////////////////////////
     public void clickToUpdate(View view){
+        if(costinput.getText().toString().equals("")){
+            Toast.makeText(this,"請輸入金額",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(filterinput.getText().toString().equals("")){
+            Toast.makeText(this,"請選擇分類",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(itemsinput.getText().toString().equals("")){
+            Toast.makeText(this,"請輸入細項",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if(isBookkeeping)
             addBookkeepingUpdate();
         else

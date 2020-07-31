@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bookkeeping_background"
+    android:background="@drawable/login_background"
     tools:context=".menu_activity.login.Register_activity">
 
     <RelativeLayout
@@ -14,42 +14,32 @@
         android:background="@drawable/regsite_inner_background">
 
 
+        <ImageView
+            android:id="@+id/reg_logo"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/regsite_logo" />
+
         <TextView
             android:id="@+id/welcomeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/reg_logo"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="15dp"
             android:text="輸入註冊資訊以繼續"
             android:textSize="30dp" />
-
-        <!--        <TextView-->
-        <!--            android:id="@+id/image_choose_text"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="60dp"-->
-        <!--            android:layout_below="@+id/welcomeText"-->
-        <!--            android:layout_marginTop="10dp"-->
-        <!--            android:layout_marginLeft="40dp"-->
-        <!--            android:gravity="center"-->
-        <!--            android:textSize="20dp"-->
-        <!--            android:text="頭像選擇: "/>-->
-
-        <!--        <ImageView-->
-        <!--            android:id="@+id/image_choose_button"-->
-        <!--            android:layout_width="60dp"-->
-        <!--            android:layout_height="60dp"-->
-        <!--            android:layout_alignTop="@+id/image_choose_text"-->
-        <!--            android:layout_toRightOf="@+id/image_choose_text"-->
-        <!--            android:scaleType="fitXY"-->
-        <!--            app:srcCompat="@drawable/login_button" />-->
 
         <TextView
             android:id="@+id/account_text"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:layout_below="@+id/welcomeText"
-            android:layout_marginTop="60dp"
             android:layout_marginLeft="40dp"
+            android:layout_marginTop="15dp"
             android:gravity="center"
             android:text="帳號: "
             android:textSize="20dp" />
@@ -179,9 +169,9 @@
             android:id="@+id/continuebutton"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_below="@+id/pw_check_hint"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/pw_check_inputbox"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="5dp"
             android:onClick="clickToRegister"
             android:src="@drawable/arrowbutton" />
 
