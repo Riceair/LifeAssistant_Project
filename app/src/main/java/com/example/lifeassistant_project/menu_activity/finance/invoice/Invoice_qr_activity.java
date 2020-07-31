@@ -7,6 +7,7 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.renderscript.Sampler;
 import android.util.SparseArray;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
@@ -90,8 +91,7 @@ public class Invoice_qr_activity extends AppCompatActivity {
                         @Override
                         public void run() {
                             String invoice_info=qrCodes.valueAt(0).displayValue;
-                            System.out.println(invoice_info);
-                            if(invoice_info.startsWith("*")){
+                            if(!isInvoice(invoice_info)){
                                 Toast.makeText(Invoice_qr_activity.this,"請掃描左側的QR code",Toast.LENGTH_SHORT).show();
                             }
                             else{
@@ -106,6 +106,15 @@ public class Invoice_qr_activity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private boolean isInvoice(String info){
+        String regFirst2="[A-Z]{2}";
+        if(info.length()>15 && info.substring(0,2).matches(regFirst2)
+                && Integer.valueOf(info.substring(13,15))<=12 && Integer.valueOf(info.substring(13,15))>=1)
+            return true;
+        else
+            return false;
     }
 
     @Override
