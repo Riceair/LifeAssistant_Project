@@ -14,8 +14,8 @@
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-<!--        <item name="colorPrimary">#00FF9800</item>-->
-        <item name="colorPrimary">#83ACF3</item>
+        <item name="colorPrimary">#00FF9800</item>
+<!--        <item name="colorPrimary">#83ACF3</item>-->
         <item name="colorPrimaryDark">#AFAEAB</item>
 <!--        <item name="colorPrimaryDark">#0083ACF3</item>-->
         <item name="colorAccent">#989693</item>
