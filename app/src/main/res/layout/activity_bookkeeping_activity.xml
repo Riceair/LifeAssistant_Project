@@ -10,7 +10,7 @@
         android:layout_width="350dp"
         android:layout_height="600dp"
         android:layout_centerInParent="true"
-        android:background="@drawable/bookkeeping_inner_background2">
+        android:background="@drawable/bookkeeping_inner_background">
 
         <ImageView
             android:id="@+id/deletebutton"
@@ -139,6 +139,7 @@
             android:layout_toRightOf="@+id/filter"
             android:focusable="false"
             android:hint="請選擇類別"
+            android:onClick="clickToShowTypeList"
             android:textColor="#2E2D2D"
             android:textColorHint="#4D5463" />
 

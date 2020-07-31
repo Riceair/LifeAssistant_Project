@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:layout_alignParentBottom="false"
     android:background="@drawable/finance_background"
-    tools:context="com.example.lifeassistant_project.menu_activity.finance.Invoice_activity">
+    tools:context="com.example.lifeassistant_project.menu_activity.finance.invoice.Invoice_activity">
 
     <RelativeLayout
         android:layout_width="350dp"

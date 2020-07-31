@@ -36,7 +36,7 @@ import android.widget.Toast;
 
 import com.example.lifeassistant_project.activity_update.*;
 import com.example.lifeassistant_project.menu_activity.finance.Bookkeeping_activity;
-import com.example.lifeassistant_project.menu_activity.finance.Invoice_activity;
+import com.example.lifeassistant_project.menu_activity.finance.invoice.Invoice_activity;
 import com.example.lifeassistant_project.menu_activity.login.Login_activity;
 import com.example.lifeassistant_project.menu_activity.login.Register_activity;
 import com.example.lifeassistant_project.menu_activity.schedule.Planner_activity;
