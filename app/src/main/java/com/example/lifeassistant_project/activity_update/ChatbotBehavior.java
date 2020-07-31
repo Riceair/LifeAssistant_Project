@@ -71,12 +71,16 @@ public class ChatbotBehavior {
         }
         else if(this.sentenceHandler.getIntent() == 1)
         {
+            System.out.println("記帳");
             switch (this.sentenceHandler.getOperation())
             {
                 case 1:
+//                    if(this.sentenceHandler.getFulfillment().equals("請重新輸入"))
+//                        return "不好意思，我沒有聽懂您的意思，請再說一次。";
+//                    else
                     return "好的！請說出您想要記下的帳目。（您可以告訴我：記帳金額、時間、以及類型）";
                 case 2:
-                    return "已將您告訴我的記帳項目刪除完畢。";
+                    return "好的！請告訴我您想刪除哪一時間的帳目。";
                 case 3:
                     return "修改記帳??";
                 case 4:
@@ -90,7 +94,7 @@ public class ChatbotBehavior {
                 case 1:
                     return "好的！請說出您想要我記住的事情。";
                 case 2:
-                    return "好的！我已經將這件事項刪除完畢。";
+                    return "好的！請告訴我您想刪除哪一時間的行程。";
                 case 3:
                     return "修改行程??";
                 case 4:
@@ -107,11 +111,13 @@ public class ChatbotBehavior {
     public boolean generateSendSentence(String message)
     {
         this.sendSentence = new SentenceHandler();
+        String detMessage = checkForChineseNumber(message);
+        System.out.println(detMessage);
         if(this.behaviorMode == 0)
         {
             this.sendSentence.setIntent(0);
             this.sendSentence.setOperation(0);
-            this.sendSentence.setFulfillment(message);
+            this.sendSentence.setFulfillment(detMessage+ "@" + LoginHandler.getUserName());
         }
         else if(this.behaviorMode == 1)
         {
@@ -119,9 +125,24 @@ public class ChatbotBehavior {
 
             this.sendSentence.setIntent(sentenceHandler.getIntent());
             this.sendSentence.setOperation(sentenceHandler.getOperation());
-            this.sendSentence.setFulfillment(message + "@" + LoginHandler.getUserName() + "#" + id);
+            this.sendSentence.setFulfillment(detMessage + "@" + LoginHandler.getUserName() + "#" + id);
         }
 
         return true;
+    }
+    private String checkForChineseNumber(String message)
+    {
+        String resultString = new String(message);
+        resultString = message.replace('一', '1');
+        resultString = resultString.replace('二', '2');
+        resultString = resultString.replace('三', '3');
+        resultString = resultString.replace('四', '4');
+        resultString = resultString.replace('五', '5');
+        resultString = resultString.replace('六', '6');
+        resultString = resultString.replace('七', '7');
+        resultString = resultString.replace('八', '8');
+        resultString = resultString.replace('九', '9');
+
+        return resultString;
     }
 }

@@ -50,6 +50,7 @@ public class Invoice_activity extends AppCompatActivity {
                 if (!scanContent.equals(""))
                 {
                     Toast.makeText(getApplicationContext(),"掃描內容: "+scanContent.toString(), Toast.LENGTH_LONG).show();
+                    System.out.println("掃描內容: "+scanContent.toString());
                 }
             }
         }
