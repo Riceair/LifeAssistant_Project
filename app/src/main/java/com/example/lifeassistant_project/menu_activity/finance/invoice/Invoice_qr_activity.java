@@ -61,8 +61,10 @@ public class Invoice_qr_activity extends AppCompatActivity {
             public void surfaceCreated(SurfaceHolder surfaceHolder) {
                 //取得照相機權限
                 if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA)
-                        != PackageManager.PERMISSION_GRANTED)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(Invoice_qr_activity.this,new String[]{Manifest.permission.CAMERA},1);
                     return;
+                }
                 try{
                     cameraSource.start(surfaceHolder);
                 }catch (IOException e){
