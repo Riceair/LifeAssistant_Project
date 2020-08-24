@@ -49,6 +49,7 @@ public class Planner_activity extends AppCompatActivity {
     private ArrayList<String> stuffNameList = new ArrayList<>();
     public String datewasclicked;
     private String namewasfilledin;
+    public Integer status=0;
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,8 +193,10 @@ public class Planner_activity extends AppCompatActivity {
     }
     public void clickNewPlan(View view){
         Intent intent = new Intent(view.getContext(),NewPlan_activity.class);
+        status=1;
         intent.putExtra("clickeddate",datewasclicked);
         intent.putExtra("clickedname",namewasfilledin);
+        intent.putExtra("clickedstatus",status);
         startActivityForResult(intent,0);
     }
     @Override
