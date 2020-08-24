@@ -17,13 +17,14 @@
 
         <Button
             android:id="@+id/backbutton"
-            android:layout_width="80dp"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:background="@drawable/action_transparent"
             android:onClick="clickBackPlanner"
-            android:text="回生活" />
+            android:text="回生活"
+            android:textSize="15dp" />
     </RelativeLayout>
 
     <LinearLayout
