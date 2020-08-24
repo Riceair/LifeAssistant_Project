@@ -7,17 +7,6 @@
     android:background="@drawable/planner_background"
     tools:context=".menu_activity.schedule.ViewPlan_activity">
 
-    <Button
-        android:id="@+id/backbutton"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/mainly"
-        android:layout_alignRight="@id/mainly"
-        android:layout_alignParentBottom="false"
-        android:layout_centerHorizontal="true"
-        android:onClick="clickBackPlanner"
-        android:text="回生活" />
-
     <LinearLayout
         android:id="@+id/mainly"
         android:layout_width="350dp"
@@ -29,7 +18,7 @@
 
         <ListView
             android:id="@+id/list"
-            android:layout_width="330dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp" />

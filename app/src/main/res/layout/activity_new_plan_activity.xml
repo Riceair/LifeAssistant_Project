@@ -6,15 +6,26 @@
     android:layout_height="match_parent"
     android:background="@drawable/planner_background">
 
-    <Button
-        android:id="@+id/deletebutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:id="@+id/tabs"
+        android:layout_width="130dp"
+        android:layout_height="35dp"
         android:layout_above="@id/mainly"
         android:layout_alignRight="@id/mainly"
-        android:layout_alignParentRight="false"
-        android:onClick="clickToDel"
-        android:text="刪除此筆紀錄" />
+        android:background="@drawable/tabs">
+
+        <Button
+            android:id="@+id/deletebutton"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="false"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/action_transparent"
+            android:onClick="clickToDel"
+            android:text="刪除此筆紀錄"
+            android:textColor="@android:color/holo_red_dark" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/mainly"
@@ -67,17 +78,6 @@
             android:textColor="@color/cardview_light_background"
             android:textColorHint="@color/colorAccent" />
 
-        <Button
-            android:id="@+id/datepicker"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_alignBottom="@+id/dateinput"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="368dp"
-            android:layout_marginRight="20dp"
-            android:text="選擇日期"
-            android:textSize="15dp" />
-
         <TextView
             android:id="@+id/time"
             android:layout_width="55dp"
@@ -101,17 +101,6 @@
             android:textColor="@color/cardview_light_background"
             android:textColorHint="@color/colorAccent" />
 
-        <Button
-            android:id="@+id/timepicker"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_alignBottom="@+id/timeinput"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:onClick="setStartTime"
-            android:text="選擇時間"
-            android:textSize="15dp" />
-
 
         <TextView
             android:id="@+id/endsdate"
@@ -133,15 +122,6 @@
             android:hint="請選擇日期"
             android:textColor="@color/cardview_light_background"
             android:textColorHint="@color/colorAccent" />
-
-        <Button
-            android:id="@+id/endsdatepicker"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_below="@id/timepicker"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:text="選擇日期" />
 
         <TextView
             android:id="@+id/endstime"
@@ -165,33 +145,79 @@
             android:textColorHint="@color/colorAccent" />
 
         <Button
+            android:id="@+id/savebutton"
+            android:layout_width="70dp"
+            android:layout_height="35dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="80dp"
+            android:layout_toLeftOf="@+id/cancelbutton"
+            android:background="@drawable/assure_button"
+            android:onClick="clickToUpdateSC"
+            android:text="新增" />
+
+        <Button
+            android:id="@+id/datepicker"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_alignBottom="@+id/dateinput"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="368dp"
+            android:layout_marginRight="17dp"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/action_transparent"
+            android:text="選擇\n日期"
+            android:textColor="@color/ic_launcher_background"
+            android:textSize="15dp" />
+
+        <Button
+            android:id="@+id/endsdatepicker"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_below="@id/timepicker"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="17dp"
+            android:background="@drawable/action_transparent"
+            android:text="選擇\n日期"
+            android:textColor="@color/ic_launcher_background" />
+
+        <Button
             android:id="@+id/endstimepicker"
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:layout_below="@id/endsdatepicker"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="17dp"
+            android:background="@drawable/action_transparent"
             android:onClick="setEndsTime"
-            android:text="選擇時間" />
+            android:text="選擇\n時間"
+            android:textColor="@color/ic_launcher_background" />
 
         <Button
-            android:id="@+id/savebutton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="50dp"
-            android:layout_toLeftOf="@+id/cancelbutton"
-            android:onClick="clickToUpdateSC"
-            android:text="Save" />
+            android:id="@+id/timepicker"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_alignBottom="@+id/timeinput"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="17dp"
+            android:layout_marginBottom="2dp"
+            android:background="@drawable/action_transparent"
+            android:onClick="setStartTime"
+            android:text="選擇\n時間"
+            android:textColor="@color/ic_launcher_background"
+            android:textSize="15dp" />
 
         <Button
             android:id="@+id/cancelbutton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="35dp"
             android:layout_alignRight="@id/endstimeinput"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="50dp"
-            android:text="Cancel"
+            android:layout_marginBottom="80dp"
+            android:background="@drawable/cancel_button"
+            android:text="取消"
             android:textSize="15dp" />
 
 

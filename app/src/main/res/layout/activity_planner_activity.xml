@@ -8,35 +8,46 @@
     tools:context="com.example.lifeassistant_project.menu_activity.schedule.Planner_activity">
 
 
-    <Button
-        android:id="@+id/checkbutton"
-        android:layout_width="60dp"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:id="@+id/tabs"
+        android:layout_width="210dp"
+        android:layout_height="45dp"
         android:layout_above="@id/mainly"
         android:layout_alignRight="@id/mainly"
-        android:onClick="clickViewPlan"
-        android:text="檢視" />
+        android:background="@drawable/tabs">
 
-    <Button
-        android:id="@+id/addbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/mainly"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="80dp"
-        android:onClick="clickNewPlan"
-        android:text=" 新增排程" />
+        <ImageView
+            android:id="@+id/refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:onClick="initial"
+            app:srcCompat="@drawable/refresh_button" />
 
-    <ImageView
-        android:id="@+id/refresh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/mainly"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="180dp"
-        android:layout_marginBottom="7dp"
-        android:onClick="initial"
-        app:srcCompat="@drawable/refresh_button" />
+        <Button
+            android:id="@+id/addbutton"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/refresh"
+            android:background="@drawable/action_transparent"
+            android:onClick="clickNewPlan"
+            android:text=" 新增排程"
+            android:textSize="16dp" />
+
+        <Button
+            android:id="@+id/checkbutton"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/addbutton"
+            android:background="@drawable/action_transparent"
+            android:onClick="clickViewPlan"
+            android:text="檢視"
+            android:textSize="16dp" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/mainly"

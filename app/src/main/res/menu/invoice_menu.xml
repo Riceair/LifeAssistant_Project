@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/prevInv"
+        android:title="01~02月"/>
+    <item
+        android:id="@+id/recInv"
+        android:title="03~04月"/>
+</menu>

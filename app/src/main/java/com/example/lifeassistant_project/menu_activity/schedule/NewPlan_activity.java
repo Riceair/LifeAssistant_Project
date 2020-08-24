@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -58,6 +59,7 @@ public class NewPlan_activity extends AppCompatActivity {
     private ArrayList<String> stuffEndingList = new ArrayList<>();
     private ArrayList<String> stuffNameList = new ArrayList<>();
     private int year,month,day,start_time,end_time;
+    private Integer status=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +79,13 @@ public class NewPlan_activity extends AppCompatActivity {
         namewasfilledin = bundle.getString("clickedname");
         endingtimewasclicked = bundle.getString("clickedendingtime");
         endingdatewasclicked = bundle.getString("clickedendingdate");
+        status=bundle.getInt("clickedstatus");
+        if (status==1)
+        {
+            RelativeLayout tabs = findViewById(R.id.tabs);
 
+            tabs.setVisibility(View.GONE);
+        }
         ReadDBRecord();
         //這是承接事項
         final TextView nameText = (TextView) findViewById(R.id.eventinput);
@@ -351,7 +359,7 @@ public class NewPlan_activity extends AppCompatActivity {
             Toast.makeText(this, "新增失敗", Toast.LENGTH_SHORT).show();
         }
 
-        finish();
+
 
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
@@ -379,11 +387,9 @@ public class NewPlan_activity extends AppCompatActivity {
 //                myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
                 myDB.execSQL("DELETE FROM " + SC_TABLE + " WHERE " + "事情" + "='" + eventname + "'");
                 myDB.close();
-//                Intent intent = new Intent();
-//                setResult(RESULT_OK, intent);
+                Intent intent = new Intent();
+                setResult(2, intent);
                 finish();
-                Intent intent = new Intent(view.getContext(),Planner_activity.class);
-                view.getContext().startActivity(intent);
             }
         }).setPositiveButton("取消", new DialogInterface.OnClickListener() {
             @Override

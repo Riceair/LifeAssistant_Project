@@ -49,6 +49,7 @@ public class Planner_activity extends AppCompatActivity {
     private ArrayList<String> stuffNameList = new ArrayList<>();
     public String datewasclicked;
     private String namewasfilledin;
+    public Integer status=0;
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +98,7 @@ public class Planner_activity extends AppCompatActivity {
         });
 
     }
+
     private void ReadDBRecord(){
         stuffList.clear();
         stuffEndingList.clear();
@@ -192,15 +194,22 @@ public class Planner_activity extends AppCompatActivity {
     }
     public void clickNewPlan(View view){
         Intent intent = new Intent(view.getContext(),NewPlan_activity.class);
+        status=1;
         intent.putExtra("clickeddate",datewasclicked);
         intent.putExtra("clickedname",namewasfilledin);
+        intent.putExtra("clickedstatus",status);
         startActivityForResult(intent,0);
     }
     @Override
     protected void onActivityResult(int requestCode,int resultCode,Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-    ReadDBRecord();
-    initial(null);
+        ReadDBRecord();
+        initial(null);
+
+        if (requestCode == 0) {
+            if(resultCode==RESULT_OK)
+                Toast.makeText(this,"事項新增成功",Toast.LENGTH_SHORT).show();
+        }
 
 
     }
