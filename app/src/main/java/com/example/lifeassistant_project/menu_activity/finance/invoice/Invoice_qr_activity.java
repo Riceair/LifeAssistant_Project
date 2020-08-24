@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.renderscript.Sampler;
 import android.util.SparseArray;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -98,10 +99,10 @@ public class Invoice_qr_activity extends AppCompatActivity {
                             }
                             else{
                                 String invoice_id=invoice_info.substring(0,2)+"-"+invoice_info.substring(2,10); //發票號碼
+                                invoice_text.setText(invoice_id);
                                 String invoice_id_last3=invoice_info.substring(7,10); //發票末三碼
                                 String invoice_year=invoice_info.substring(10,13); //發票年份
                                 String invoice_month=invoice_info.substring(13,15); //發票月份
-                                invoice_text.setText(invoice_id);
                             }
                         }
                     });
@@ -112,9 +113,13 @@ public class Invoice_qr_activity extends AppCompatActivity {
 
     private boolean isInvoice(String info){
         String regFirst2="[A-Z]{2}";
-        if(info.length()>15 && info.substring(0,2).matches(regFirst2)
-                && Integer.valueOf(info.substring(13,15))<=12 && Integer.valueOf(info.substring(13,15))>=1)
-            return true;
+        String regNum15="[0-9]{15}";
+        if(info.length()>=78 && info.substring(0,2).matches(regFirst2) && info.substring(2,17).matches(regNum15)) { //確認前兩碼是否字母 發票號碼與日期是否確
+            if (Integer.valueOf(info.substring(13, 15)) <= 12 && Integer.valueOf(info.substring(13, 15)) >= 1) //確認月份是否合法
+                return true;
+            else
+                return false;
+        }
         else
             return false;
     }

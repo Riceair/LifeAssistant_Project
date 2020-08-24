@@ -35,6 +35,8 @@ public class ViewPlan_activity extends AppCompatActivity {
     private ArrayList<String> stuffList = new ArrayList<>();
     private ArrayList<String> stuffEndingList = new ArrayList<>();
     private ArrayList<String> stuffNameList = new ArrayList<>();
+    private ListView list;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,8 +49,12 @@ public class ViewPlan_activity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setIcon(R.drawable.newstand);
 
-        final ListView list = findViewById(R.id.list);
+        list = findViewById(R.id.list);
         ReadDBRecord();
+        setList();
+    }
+
+    private void setList(){
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, stuffNameList);
         list.setAdapter(arrayAdapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -69,17 +75,11 @@ public class ViewPlan_activity extends AppCompatActivity {
                 intent.putExtra("clickedendingdate",endingdatewasclicked);
                 intent.putExtra("clickedendingtime",endingtimewasclicked);
 
-           ViewPlan_activity.this.startActivityForResult(intent,0);
+                ViewPlan_activity.this.startActivityForResult(intent,0);
 
             }
         });
-
-
-
-
     }
-
-
 
     private void ReadDBRecord(){
         stuffList.clear();
@@ -134,11 +134,8 @@ public class ViewPlan_activity extends AppCompatActivity {
         protected void onActivityResult(int requestCode,int resultCode,Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0) {
-            if (resultCode == RESULT_OK) {
-                Intent intent = new Intent();
-                setResult(RESULT_OK,intent);
-                finish();
-            }
+            ReadDBRecord();
+            setList();
         }
 
 
@@ -152,11 +149,6 @@ public class ViewPlan_activity extends AppCompatActivity {
         return true;
     }
 
-    public void clickBackPlanner(View view){
-        Intent intent = new Intent(view.getContext(),Planner_activity.class);
-        view.getContext().startActivity(intent);
-
-    }
     @Override
     public void finish() {
         super.finish();

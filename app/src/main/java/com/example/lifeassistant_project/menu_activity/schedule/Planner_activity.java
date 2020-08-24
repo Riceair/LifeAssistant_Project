@@ -98,6 +98,7 @@ public class Planner_activity extends AppCompatActivity {
         });
 
     }
+
     private void ReadDBRecord(){
         stuffList.clear();
         stuffEndingList.clear();
@@ -166,7 +167,6 @@ public class Planner_activity extends AppCompatActivity {
             String[] myDateparts = myDate.split(" ");
             String myStartingDate  = myDateparts[0]+" 00:00:00";
 
-            Toast.makeText(this,"事項更新完成",Toast.LENGTH_SHORT).show();
             String myEndingDate=stuffEndingList.get(i);
             String mystuffName=stuffNameList.get(i);
             try {
@@ -202,8 +202,13 @@ public class Planner_activity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode,int resultCode,Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-    ReadDBRecord();
-    initial(null);
+        ReadDBRecord();
+        initial(null);
+
+        if (requestCode == 0) {
+            if(resultCode==RESULT_OK)
+                Toast.makeText(this,"事項新增成功",Toast.LENGTH_SHORT).show();
+        }
 
 
     }

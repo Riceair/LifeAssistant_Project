@@ -22,7 +22,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="230dp"
-            android:onClick="onbuttonclick"
+            android:onClick="clickToQRScan"
             android:text="使用掃描器" />
 
         <Button
@@ -32,7 +32,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="40dp"
-            android:text="好"
+            android:text="確認"
             android:textSize="15dp" />
 
         <TextView

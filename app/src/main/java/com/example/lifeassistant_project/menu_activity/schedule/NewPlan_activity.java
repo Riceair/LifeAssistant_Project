@@ -387,11 +387,9 @@ public class NewPlan_activity extends AppCompatActivity {
 //                myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
                 myDB.execSQL("DELETE FROM " + SC_TABLE + " WHERE " + "事情" + "='" + eventname + "'");
                 myDB.close();
-//                Intent intent = new Intent();
-//                setResult(RESULT_OK, intent);
+                Intent intent = new Intent();
+                setResult(2, intent);
                 finish();
-                Intent intent = new Intent(view.getContext(),Planner_activity.class);
-                view.getContext().startActivity(intent);
             }
         }).setPositiveButton("取消", new DialogInterface.OnClickListener() {
             @Override
