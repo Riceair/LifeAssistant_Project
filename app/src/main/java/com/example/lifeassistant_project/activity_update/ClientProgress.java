@@ -19,7 +19,7 @@ import java.util.Arrays;
 public class ClientProgress implements Runnable {
 
         public static int port = 6666;
-        public static String address = "192.168.203.108";
+        public static String address = "192.168.203.115";
         private final int CONNECTION_TIMEOUT = 5000;
         private String packageType = "";
         private SentenceHandler sendSentence;
