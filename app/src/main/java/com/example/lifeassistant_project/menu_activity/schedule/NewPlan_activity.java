@@ -359,7 +359,7 @@ public class NewPlan_activity extends AppCompatActivity {
             Toast.makeText(this, "新增失敗", Toast.LENGTH_SHORT).show();
         }
 
-        finish();
+
 
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
