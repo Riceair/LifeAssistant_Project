@@ -10,7 +10,7 @@
 
     <RelativeLayout
         android:id="@+id/tabs"
-        android:layout_width="230dp"
+        android:layout_width="210dp"
         android:layout_height="45dp"
         android:layout_above="@id/mainly"
         android:layout_alignRight="@id/mainly"
@@ -39,7 +39,7 @@
 
         <Button
             android:id="@+id/checkbutton"
-            android:layout_width="70dp"
+            android:layout_width="50dp"
             android:layout_height="30dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/addbutton"
