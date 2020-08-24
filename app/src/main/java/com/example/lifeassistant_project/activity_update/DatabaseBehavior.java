@@ -18,16 +18,6 @@ public class DatabaseBehavior {
 
     private static ArrayList<Integer> accountIDList = new ArrayList<Integer>();
 
-//    public static void init()
-//    {
-//        File dbDir = new File(PATH, "databases");
-//        dbDir.mkdir();
-//        File FdbFile = new File(PATH+"/databases",DBNAME);
-//        if(!FdbFile.exists() || !FdbFile.isFile())
-//            copyAssets(PATH); //初始資料庫複製到路徑
-//
-//    }
-
     public static void synchronizeServer2Client()
     {
         System.out.println("Synchronize start.");
@@ -70,8 +60,8 @@ public class DatabaseBehavior {
             values.put("日",ele.getDay());
             values.put("分類",ele.getItem());
             values.put("細項",ele.getDetail());
-            values.put("發票","null");
-            values.put("備註","null");
+            values.put("發票",ele.getReceipt());
+            values.put("備註",ele.getNote());
             values.put("id", ele.getID());
             values.put("收支屬性",ele.getType() ? 1 : 0);
 

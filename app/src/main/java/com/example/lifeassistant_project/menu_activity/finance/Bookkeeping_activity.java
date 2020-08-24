@@ -363,7 +363,7 @@ public class Bookkeeping_activity extends AppCompatActivity {
                 int id = (int) (Math.random() * 99999)+1;
                 values.put("id", id);
                 // get Account Class
-                this.sendPackage = new AccountPackage(id, cost, year, month, day, type, item, (attribute == 0 ? false : true));
+                this.sendPackage = new AccountPackage(id, cost, year, month, day, type, item, (attribute == 0 ? false : true), receipt, quote);
                 this.sendPackage.setRequestAction(0);
                 //
                 result = myDB.insert(BK_TABLE, null, values);

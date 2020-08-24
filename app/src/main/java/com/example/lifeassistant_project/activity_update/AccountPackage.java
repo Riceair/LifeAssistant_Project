@@ -16,7 +16,7 @@ public class AccountPackage
         this.requestAction = requestAction;
     }
 
-    public AccountPackage(int ID, int money, int year, int month, int day, String item, String detail, boolean type)
+    public AccountPackage(int ID, int money, int year, int month, int day, String item, String detail, boolean type, String receipt, String note)
     {
         this.ID = ID;
         this.money = money;
@@ -26,8 +26,8 @@ public class AccountPackage
         this.item = item;
         this.detail = detail;
         this.type = type;
-        this.receipt = "";
-        this.note = "";
+        this.receipt = receipt;
+        this.note = note;
         this.requestAction = 4;
         this.user = "Null";
     }

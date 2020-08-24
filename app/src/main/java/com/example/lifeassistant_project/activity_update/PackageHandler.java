@@ -210,6 +210,7 @@ public class PackageHandler
 //        result.setDetail(tempString);
 
         currentSize += status_size;
+        temp = 0;
         for(int i = currentSize - status_size ;i < currentSize; i++)
         {
             temp = temp << 8;
@@ -591,6 +592,16 @@ public class PackageHandler
         currentSize += KEY_SIZE;
 
         return tempString;
+    }
+
+    static public byte[] ReceiptQRPackageEncode() throws UnsupportedEncodingException
+    {
+        ByteBuffer buf = ByteBuffer.allocate(1024);
+
+        ByteBuffer b_temp;
+        buf.put("rqr".getBytes("UTF-8"));
+
+        return buf.array();
     }
 
     static private byte[] TransInt2ByteArray(int num, int MES_SIZE)
