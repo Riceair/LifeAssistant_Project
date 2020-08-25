@@ -149,7 +149,7 @@ public class Planner_activity extends AppCompatActivity {
     }
     public void initial(View view)
     {
-
+        ReadDBRecord();
         //初始化日曆頭標與語系
         final CompactCalendarView compactCalendarView = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
         compactCalendarView.setLocale(TimeZone.getTimeZone("GMT-8:00"),Locale.CHINESE);
@@ -167,6 +167,7 @@ public class Planner_activity extends AppCompatActivity {
             String[] myDateparts = myDate.split(" ");
             String myStartingDate  = myDateparts[0]+" 00:00:00";
 
+            Toast.makeText(this,"事項更新完成",Toast.LENGTH_SHORT).show();
             String myEndingDate=stuffEndingList.get(i);
             String mystuffName=stuffNameList.get(i);
             try {
@@ -204,12 +205,6 @@ public class Planner_activity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         ReadDBRecord();
         initial(null);
-
-        if (requestCode == 0) {
-            if(resultCode==RESULT_OK)
-                Toast.makeText(this,"事項新增成功",Toast.LENGTH_SHORT).show();
-        }
-
 
     }
     public void clickTodayPlan(View view){
