@@ -217,6 +217,8 @@ public class Invoice_activity extends AppCompatActivity {
             } else if (item.getItemId() == R.id.recInv) {
                 getSupportActionBar().setSubtitle("   " + getMonTitle(recepitContainerRec.getMonth()));
             }
+            TextView receiptsewrial=findViewById(R.id.receiptsewrial);
+            receiptsewrial.setText("");
         }
         if(item.getItemId()==android.R.id.home){
             Invoice_activity.this.finish();
