@@ -138,7 +138,7 @@ public class ViewPlan_activity extends AppCompatActivity {
 
             ReadDBRecord();
             setList();
-
+            finish();
             Intent intent = new Intent(getApplicationContext(), Planner_activity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.putExtra("EXIT", true); startActivity(intent);
@@ -148,7 +148,13 @@ public class ViewPlan_activity extends AppCompatActivity {
 
 
     }
+    public void clickBackPlanner(View view){
+        Intent intent = new Intent(getApplicationContext(), Planner_activity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("EXIT", true); startActivity(intent);
+        startActivityForResult(intent, 3);
 
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         if(item.getItemId()==android.R.id.home){

@@ -41,9 +41,9 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="事件標題"
+            android:text="事件\n標題"
             android:textColor="@color/design_default_color_background"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
 
         <EditText
             android:id="@+id/eventinput"
@@ -63,9 +63,9 @@
             android:layout_below="@+id/event"
             android:layout_marginLeft="20dp"
             android:gravity="center"
-            android:text="開始日期"
+            android:text="開始\n日期"
             android:textColor="@color/design_default_color_background"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
 
         <EditText
             android:id="@+id/dateinput"
@@ -85,9 +85,9 @@
             android:layout_below="@+id/date"
             android:layout_marginLeft="20dp"
             android:gravity="center"
-            android:text="開始時間"
+            android:text="開始\n時間"
             android:textColor="@color/design_default_color_background"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
 
         <EditText
             android:id="@+id/timeinput"
@@ -109,9 +109,9 @@
             android:layout_below="@id/time"
             android:layout_marginLeft="20dp"
             android:gravity="center"
-            android:text="結束日期"
+            android:text="結束\n日期"
             android:textColor="@color/cardview_light_background"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/endsdateinput"
@@ -130,9 +130,9 @@
             android:layout_below="@id/endsdate"
             android:layout_marginLeft="20dp"
             android:gravity="center"
-            android:text="結束時間"
+            android:text="結束\n時間"
             android:textColor="@color/cardview_light_background"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/endstimeinput"
@@ -216,9 +216,10 @@
             android:layout_alignRight="@id/endstimeinput"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="80dp"
-            android:background="@drawable/cancel_button"
+            android:background="@drawable/action_transparent"
             android:text="取消"
-            android:textSize="15dp" />
+            android:textColor="@color/ic_launcher_background"
+            android:textSize="17dp" />
 
 
     </RelativeLayout>
