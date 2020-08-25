@@ -88,9 +88,9 @@
 
         <TextView
             android:id="@+id/invoice_reword"
-            android:layout_width="100dp"
+            android:layout_width="150dp"
             android:layout_height="40dp"
-            android:layout_marginBottom="80dp"
+            android:layout_marginBottom="150dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:gravity="center"
@@ -100,16 +100,34 @@
             android:text="未中獎"
             android:textSize="25dp" />
 
-        <Button
-            android:id="@+id/okbutton"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="150dp"
-            android:onClick="clickToCheckReward"
-            android:text="確認"
-            android:textSize="15dp" />
+        <LinearLayout
+            android:id="@+id/invoice_reword_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:orientation="horizontal"
+            android:layout_above="@+id/invoice_reword"
+            android:layout_marginBottom="-80dp"
+            android:layout_centerHorizontal="true">
+
+            <TextView
+                android:id="@+id/invoice_first5"
+                android:layout_width="65dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:background="#3F4040"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp"
+                android:text="12345" />
+
+            <TextView
+                android:id="@+id/invoice_last3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp"
+                android:text="678"/>
+        </LinearLayout>
     </RelativeLayout>
 
     <include

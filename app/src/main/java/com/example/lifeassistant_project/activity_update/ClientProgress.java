@@ -293,7 +293,9 @@ public class ClientProgress implements Runnable {
                     final int DATE_SIZE = 8, HIT_NUMBER_SIZE = 56, TOTAL_HIT_SIZE = DATE_SIZE + HIT_NUMBER_SIZE + 3;
                     System.out.println("receiptQR");
 
-                    Socket client = new Socket(this.address, this.port);
+                    SocketAddress temp = new InetSocketAddress(this.address, this.port);
+                    Socket client = SocketFactory.getDefault().createSocket();
+                    client.connect(temp, CONNECTION_TIMEOUT);
 
                     OutputStream out = client.getOutputStream();
 
