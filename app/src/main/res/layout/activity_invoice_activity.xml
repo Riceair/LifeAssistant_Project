@@ -15,26 +15,6 @@
         android:layout_centerInParent="true"
         android:background="@drawable/receipt_checksum_inner_background">
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="230dp"
-            android:onClick="clickToQRScan"
-            android:text="使用掃描器" />
-
-        <Button
-            android:id="@+id/okbutton"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="40dp"
-            android:text="確認"
-            android:textSize="15dp" />
-
         <TextView
             android:id="@+id/welcometext"
             android:layout_width="110dp"
@@ -50,19 +30,6 @@
             tools:text="歡迎來到" />
 
         <TextView
-            android:id="@+id/more"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="200dp"
-            android:text="或是，你可以..."
-            android:textColor="@android:color/background_light"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            tools:text="或是，你可以..." />
-
-        <TextView
             android:id="@+id/welcometext2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -74,13 +41,36 @@
             android:textStyle="bold"
             tools:text="發票兌獎" />
 
+        <Button
+            android:id="@+id/button"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="300dp"
+            android:onClick="clickToQRScan"
+            android:text="使用掃描器" />
+
+        <TextView
+            android:id="@+id/more"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="270dp"
+            android:text="或是，你可以..."
+            android:textColor="@android:color/background_light"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:text="或是，你可以..." />
+
         <ImageView
             android:id="@+id/reciptbox"
             android:layout_width="150dp"
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="120dp"
+            android:layout_marginBottom="200dp"
             android:background="@android:drawable/editbox_background_normal"/>
 
         <EditText
@@ -96,6 +86,30 @@
             android:textColor="@color/design_default_color_on_secondary"
             android:textColorHint="#979494" />
 
+        <TextView
+            android:id="@+id/invoice_reword"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="80dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:background="#FF5722"
+            android:textColor="#FFFFFF"
+            android:text="未中獎"
+            android:textSize="25dp" />
+
+        <Button
+            android:id="@+id/okbutton"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="150dp"
+            android:onClick="clickToCheckReward"
+            android:text="確認"
+            android:textSize="15dp" />
     </RelativeLayout>
 
     <include
