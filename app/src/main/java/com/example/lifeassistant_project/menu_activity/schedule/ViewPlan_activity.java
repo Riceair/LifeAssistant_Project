@@ -138,11 +138,7 @@ public class ViewPlan_activity extends AppCompatActivity {
 
             ReadDBRecord();
             setList();
-            finish();
-            Intent intent = new Intent(getApplicationContext(), Planner_activity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.putExtra("EXIT", true); startActivity(intent);
-            startActivityForResult(intent, 3);
+
 
         }
 
