@@ -7,108 +7,33 @@
     android:background="@drawable/finance_background">
 
     <RelativeLayout
+        android:id="@+id/tabs"
+        android:layout_width="130dp"
+        android:layout_height="35dp"
+        android:layout_above="@id/mainly"
+        android:layout_alignRight="@id/mainly"
+        android:background="@drawable/tabs"
+        android:visibility="invisible">
+
+        <Button
+            android:id="@+id/deletebutton"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="false"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/action_transparent"
+            android:onClick="clickToDel"
+            android:text="刪除此筆紀錄"
+            android:textColor="@android:color/holo_red_dark" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/mainly"
         android:layout_width="350dp"
-        android:layout_height="600dp"
+        android:layout_height="520dp"
         android:layout_centerInParent="true"
         android:background="@drawable/bookkeeping_inner_background">
-
-        <ImageView
-            android:id="@+id/deletebutton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/costinput"
-            android:layout_alignBottom="@+id/costinput"
-            android:visibility="invisible"
-            android:onClick="clickToDelete"
-            android:layout_marginTop="17dp"
-            android:layout_marginEnd="23dp"
-            android:layout_marginRight="23dp"
-            app:srcCompat="@drawable/delete" />
-
-        <TextView
-            android:id="@+id/cost"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:text="金額"
-            android:textColor="#2E2D2D"
-            android:textSize="20sp" />
-
-        <EditText
-            android:id="@+id/costinput"
-            android:layout_width="200dp"
-            android:layout_height="55dp"
-            android:layout_marginTop="20dp"
-            android:layout_toRightOf="@+id/cost"
-            android:hint="請輸入金額"
-            android:inputType="number"
-            android:textColor="#2E2D2D"
-            android:textColorHint="#4D5463" />
-
-        <TextView
-            android:id="@+id/attribute"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_below="@+id/cost"
-            android:layout_marginLeft="20dp"
-            android:gravity="center"
-            android:text="屬性"
-            android:textColor="#2E2D2D"
-            android:textSize="20sp" />
-
-        <RadioGroup
-            android:id="@+id/attributeinput"
-            android:layout_width="200dp"
-            android:layout_height="55dp"
-            android:layout_below="@+id/costinput"
-            android:layout_toRightOf="@+id/attribute"
-
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/outlay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="支出"
-                android:textColor="#2E2D2D"
-                android:buttonTint="#4D5463"
-                android:textSize="15dp" />
-
-            <RadioButton
-                android:id="@+id/income"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="收入"
-                android:textColor="#2E2D2D"
-                android:buttonTint="#4D5463"
-                android:textSize="15dp" />
-        </RadioGroup>
-
-        <TextView
-            android:id="@+id/date"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_below="@+id/attribute"
-            android:layout_marginLeft="20dp"
-            android:gravity="center"
-            android:text="日期"
-            android:textColor="#2E2D2D"
-            android:textSize="20sp" />
-
-        <EditText
-            android:id="@+id/dateinput"
-            android:layout_width="200dp"
-            android:layout_height="55dp"
-            android:layout_below="@+id/attributeinput"
-            android:layout_toRightOf="@+id/date"
-            android:focusable="false"
-            android:hint="請選擇日期"
-            android:textColor="#2E2D2D"
-            android:textColorHint="#4D5463" />
 
         <Button
             android:id="@+id/datepicker"
@@ -119,29 +44,6 @@
             android:layout_marginRight="20dp"
             android:text="選擇日期"
             android:textSize="15dp" />
-
-        <TextView
-            android:id="@+id/filter"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_below="@+id/date"
-            android:layout_marginLeft="20dp"
-            android:gravity="center"
-            android:text="分類"
-            android:textColor="#2E2D2D"
-            android:textSize="20sp" />
-
-        <EditText
-            android:id="@+id/filterinput"
-            android:layout_width="200dp"
-            android:layout_height="55dp"
-            android:layout_below="@+id/dateinput"
-            android:layout_toRightOf="@+id/filter"
-            android:focusable="false"
-            android:hint="請選擇類別"
-            android:onClick="clickToShowTypeList"
-            android:textColor="#2E2D2D"
-            android:textColorHint="#4D5463" />
 
         <Button
             android:id="@+id/filterpicker"
@@ -154,29 +56,69 @@
             android:text="選擇分類"
             android:textSize="15dp" />
 
-        <TextView
-            android:id="@+id/items"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_below="@+id/filter"
-            android:layout_marginLeft="20dp"
-            android:gravity="center"
-            android:text="細項"
-            android:textColor="#2E2D2D"
-            android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/itemsinput"
+            android:id="@+id/quotesinput"
             android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_below="@+id/receiptinput"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_toRightOf="@+id/quotes"
+            android:hint="請輸入詳細資訊"
+            android:textColor="@color/ic_launcher_background"
+            android:textColorHint="@color/ic_launcher_background" />
+
+        <TextView
+            android:id="@+id/cost"
+            android:layout_width="55dp"
             android:layout_height="55dp"
-            android:layout_below="@+id/filterpicker"
-            android:layout_toRightOf="@+id/items"
-            android:hint="請輸入項目"
-            android:inputType="textPersonName"
-            android:textColor="#2E2D2D"
-            android:textColorHint="#4D5463" />
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="金額"
+            android:textColor="@color/ic_launcher_background"
+            android:textColorHint="@color/ic_launcher_background" />
+        android:textSize="20sp" />
 
+        <TextView
+            android:id="@+id/attribute"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_below="@+id/cost"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="0dp"
+            android:gravity="center"
+            android:text="屬性"
+            android:textColor="@color/ic_launcher_background"
+            android:textColorHint="@color/ic_launcher_background" />
+        android:textSize="20sp" />
 
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_below="@+id/attribute"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="-1dp"
+            android:gravity="center"
+            android:text="日期"
+            android:textColor="@color/ic_launcher_background"
+            android:textColorHint="@color/ic_launcher_background" />
+        android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/filter"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_below="@+id/date"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="0dp"
+            android:gravity="center"
+            android:text="分類"
+            android:textColor="@color/ic_launcher_background"
+            android:textColorHint="@color/ic_launcher_background" />
+        android:textSize="20sp" />
 
         <TextView
             android:id="@+id/receipt"
@@ -184,22 +126,25 @@
             android:layout_height="55dp"
             android:layout_below="@+id/items"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="0dp"
             android:gravity="center"
             android:text="發票"
-            android:textColor="#2E2D2D"
-            android:textSize="20sp" />
+            android:textColor="@color/ic_launcher_background"
+            android:textColorHint="@color/ic_launcher_background" />
+        android:textSize="20sp" />
 
-        <EditText
-            android:id="@+id/receiptinput"
-            android:layout_width="200dp"
+        <TextView
+            android:id="@+id/items"
+            android:layout_width="55dp"
             android:layout_height="55dp"
-            android:layout_below="@+id/itemsinput"
-            android:layout_toRightOf="@+id/receipt"
-            android:hint="請輸入發票後三碼"
-            android:inputType="number"
-            android:maxLength="3"
-            android:textColor="#2E2D2D"
-            android:textColorHint="#4D5463" />
+            android:layout_below="@+id/filter"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="0dp"
+            android:gravity="center"
+            android:text="細項"
+            android:textColor="@color/ic_launcher_background"
+            android:textColorHint="@color/ic_launcher_background" />
+        android:textSize="20sp" />
 
         <TextView
             android:id="@+id/quotes"
@@ -207,38 +152,140 @@
             android:layout_height="55dp"
             android:layout_below="@+id/receipt"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="0dp"
             android:gravity="center"
             android:text="備註"
-            android:textColor="#2E2D2D"
-            android:textSize="20dp" />
+            android:textColor="@color/ic_launcher_background"
+            android:textColorHint="@color/ic_launcher_background" />
+        android:textSize="20dp" />
 
         <EditText
-            android:id="@+id/quotesinput"
+            android:id="@+id/itemsinput"
             android:layout_width="200dp"
-            android:layout_height="155dp"
-            android:layout_below="@+id/receiptinput"
-            android:layout_toRightOf="@+id/quotes"
-            android:hint="請輸入詳細資訊"
+            android:layout_height="55dp"
+            android:layout_below="@+id/filterpicker"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="4dp"
+            android:layout_toRightOf="@+id/items"
+            android:hint="請輸入項目"
+            android:inputType="textPersonName"
             android:textColor="#2E2D2D"
-            android:textColorHint="#4D5463" />
+            android:textColorHighlight="@color/ic_launcher_background"
+            android:textColorHint="@color/ic_launcher_background" />
+
+        <EditText
+            android:id="@+id/receiptinput"
+            android:layout_width="200dp"
+            android:layout_height="55dp"
+            android:layout_below="@+id/itemsinput"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_toRightOf="@+id/receipt"
+            android:hint="請輸入發票後三碼"
+            android:inputType="number"
+            android:maxLength="3"
+            android:textColor="#2E2D2D"
+            android:textColorHighlight="@color/ic_launcher_background"
+            android:textColorHint="@color/ic_launcher_background" />
+
+        <EditText
+            android:id="@+id/filterinput"
+            android:layout_width="200dp"
+            android:layout_height="55dp"
+            android:layout_below="@+id/dateinput"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_toRightOf="@+id/filter"
+            android:focusable="false"
+            android:hint="請選擇類別"
+            android:onClick="clickToShowTypeList"
+            android:textColor="#2E2D2D"
+            android:textColorHighlight="@color/ic_launcher_background"
+            android:textColorHint="@color/ic_launcher_background" />
+
+        <EditText
+            android:id="@+id/dateinput"
+            android:layout_width="200dp"
+            android:layout_height="55dp"
+            android:layout_below="@+id/attributeinput"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="-1dp"
+            android:layout_toRightOf="@+id/date"
+            android:focusable="false"
+            android:hint="請選擇日期"
+            android:textColor="@color/ic_launcher_background"
+            android:textColorHighlight="@color/ic_launcher_background"
+            android:textColorHint="@color/ic_launcher_background" />
+
+        <RadioGroup
+            android:id="@+id/attributeinput"
+            android:layout_width="200dp"
+            android:layout_height="55dp"
+            android:layout_below="@+id/costinput"
+            android:layout_marginLeft="0dp"
+
+            android:layout_marginTop="0dp"
+            android:layout_toRightOf="@+id/attribute"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/outlay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/ic_launcher_background"
+                android:checked="true"
+                android:text="支出"
+                android:textColor="@color/ic_launcher_background"
+                android:textColorHint="@color/ic_launcher_background" />
+
+            <RadioButton
+                android:id="@+id/income"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/ic_launcher_background"
+                android:text="收入"
+                android:textColor="@color/ic_launcher_background"
+                android:textSize="15dp" />
+            android:textSize="15dp" />
+
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/costinput"
+            android:layout_width="200dp"
+            android:layout_height="55dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/cost"
+            android:hint="請輸入金額"
+            android:inputType="number"
+            android:textColor="@color/ic_launcher_background"
+            android:textColorHint="@color/ic_launcher_background" />
+        android:textColorHint="#4D5463" />
 
         <Button
             android:id="@+id/savebutton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
             android:layout_below="@+id/quotesinput"
+            android:layout_marginTop="10dp"
             android:layout_toLeftOf="@+id/cancelbutton"
+            android:background="@drawable/assure_button"
             android:onClick="clickToUpdate"
-            android:text="Save" />
+            android:text="儲存" />
 
         <Button
             android:id="@+id/cancelbutton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
             android:layout_below="@+id/quotesinput"
             android:layout_alignRight="@+id/quotesinput"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/action_transparent"
             android:onClick="ToCancel"
-            android:text="Cancel"
+            android:text="取消"
+            android:textColor="@color/ic_launcher_background"
             android:textSize="15dp" />
 
     </RelativeLayout>
