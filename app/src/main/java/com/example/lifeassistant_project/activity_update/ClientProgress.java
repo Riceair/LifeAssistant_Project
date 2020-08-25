@@ -229,7 +229,7 @@ public class ClientProgress implements Runnable {
             {
                 try
                 {
-                    final int DATE_SIZE = 8, HIT_NUMBER_SIZE = 15, TOTAL_HIT_SIZE = DATE_SIZE + HIT_NUMBER_SIZE + 3;
+                    final int DATE_SIZE = 8, HIT_NUMBER_SIZE = 56, TOTAL_HIT_SIZE = DATE_SIZE + HIT_NUMBER_SIZE + 3;
                     System.out.println("receiptQR");
 
                     Socket client = new Socket(this.address, this.port);
@@ -249,6 +249,7 @@ public class ClientProgress implements Runnable {
                     for(int i = 0 ;i < b_buf.array().length; i += TOTAL_HIT_SIZE)
                     {
                         int ptr = i;
+                        System.out.println(PackageHandler.TransByteArray2String(b_buf.array(), b_buf.array().length));
                         if(!PackageHandler.TransByteArray2String(Arrays.copyOfRange(b_buf.array(), ptr, ptr + 3), 3).equals("rqr"))
                             break;
 
@@ -256,6 +257,7 @@ public class ClientProgress implements Runnable {
                         byte[] rcvArray = Arrays.copyOfRange(b_buf.array(), ptr, ptr + DATE_SIZE + HIT_NUMBER_SIZE);
                         ReceiptContainer rcvReceipt = PackageHandler.ReceiptQRPackageDecode(rcvArray);
                         resultList.add(rcvReceipt);
+                        System.out.println("???");
                     }
                     this.rcvReceiptContainer = resultList;
 

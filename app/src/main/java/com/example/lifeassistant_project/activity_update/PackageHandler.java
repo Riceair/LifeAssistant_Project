@@ -607,7 +607,7 @@ public class PackageHandler
 
     static public ReceiptContainer ReceiptQRPackageDecode(byte[] message)
     {
-        final int DATE_SIZE = 8, HIT_NUMBER_SIZE = 15;
+        final int DATE_SIZE = 8, HIT_NUMBER_SIZE = 56;
         int currentSize = 0;
         ReceiptContainer result = new ReceiptContainer();
         String tempString;
@@ -619,10 +619,10 @@ public class PackageHandler
 
         tempString = TransByteArray2String(Arrays.copyOfRange(message, currentSize, currentSize + HIT_NUMBER_SIZE), HIT_NUMBER_SIZE);
         ArrayList<String> stringBuf = new ArrayList<String>();
-        for(int i = 0;i < HIT_NUMBER_SIZE; i += 3)
+        for(int i = 0;i < HIT_NUMBER_SIZE; i += 8)
         {
-            String subTemp = tempString.substring(i, i + 3);
-            if (subTemp.equals("xxx")) break;
+            String subTemp = tempString.substring(i, i + 8);
+            if (subTemp.equals("xxxxxxxx")) break;
             stringBuf.add(subTemp);
         }
         result.setHitNumber(stringBuf);
