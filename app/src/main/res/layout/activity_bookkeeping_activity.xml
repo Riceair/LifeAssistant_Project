@@ -213,7 +213,7 @@
             android:layout_toRightOf="@+id/date"
             android:focusable="false"
             android:hint="請選擇日期"
-            android:textColor="#2E2D2D"
+            android:textColor="@color/ic_launcher_background"
             android:textColorHighlight="@color/ic_launcher_background"
             android:textColorHint="@color/ic_launcher_background" />
 
