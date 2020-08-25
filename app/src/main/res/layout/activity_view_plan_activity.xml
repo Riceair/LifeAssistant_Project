@@ -22,7 +22,7 @@
             android:layout_marginLeft="10dp"
             android:background="@drawable/action_transparent"
             android:onClick="clickBackPlanner"
-            android:text="回生活" />
+            android:text="回到行事曆" />
     </RelativeLayout>
 
     <LinearLayout
