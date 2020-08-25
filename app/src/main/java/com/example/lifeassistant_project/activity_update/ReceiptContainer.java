@@ -3,8 +3,8 @@ package com.example.lifeassistant_project.activity_update;
 import java.util.ArrayList;
 
 public class ReceiptContainer {
-    public String year, month;
-    public ArrayList<String> hitNumber;
+    private String year, month;
+    private ArrayList<String> hitNumber;
 
     public String getYear() {
         return year;
