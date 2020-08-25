@@ -17,6 +17,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -80,7 +81,9 @@ public class Bookkeeping_activity extends AppCompatActivity {
             isBookkeeping=true;
         else {
             recordID = bundle.getInt("RECORDID");
-            findViewById(R.id.deletebutton).setVisibility(View.VISIBLE);
+
+            RelativeLayout tabs = findViewById(R.id.tabs);
+            tabs.setVisibility(View.VISIBLE);
             getSupportActionBar().setTitle("  編輯記帳");
             ReadDBRecord(); //讀取該筆資料的內容
             isBookkeeping=false;
