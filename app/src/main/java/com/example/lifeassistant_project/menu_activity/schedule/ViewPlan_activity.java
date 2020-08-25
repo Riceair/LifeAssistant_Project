@@ -23,6 +23,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.security.AccessController;
 import java.util.ArrayList;
 
 public class ViewPlan_activity extends AppCompatActivity {
@@ -36,7 +37,7 @@ public class ViewPlan_activity extends AppCompatActivity {
     private ArrayList<String> stuffEndingList = new ArrayList<>();
     private ArrayList<String> stuffNameList = new ArrayList<>();
     private ListView list;
-
+    public View view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,13 +135,26 @@ public class ViewPlan_activity extends AppCompatActivity {
         protected void onActivityResult(int requestCode,int resultCode,Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0) {
+
             ReadDBRecord();
             setList();
+            finish();
+            Intent intent = new Intent(getApplicationContext(), Planner_activity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("EXIT", true); startActivity(intent);
+            startActivityForResult(intent, 3);
+
         }
 
 
     }
+    public void clickBackPlanner(View view){
+        Intent intent = new Intent(getApplicationContext(), Planner_activity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("EXIT", true); startActivity(intent);
+        startActivityForResult(intent, 3);
 
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         if(item.getItemId()==android.R.id.home){
@@ -153,5 +167,8 @@ public class ViewPlan_activity extends AppCompatActivity {
     public void finish() {
         super.finish();
         overridePendingTransition(0,R.anim.translate_out);
+
     }
+
+
 }
