@@ -239,7 +239,7 @@ public class PackageHandler
     }
 
     static public byte[] schedulePackageEncode(SchedulePackage scPkg) throws UnsupportedEncodingException {
-        final int ID_SIZE = 4, TODO_SIZE = 36, YEAR_SIZE = 1, MONTH_SIZE = 1, DAY_SIZE = 1, START_TIME_SIZE = 4, END_TIME_SIZE = 4;
+        final int ID_SIZE = 4, TODO_SIZE = 36, YEAR_SIZE = 4, MONTH_SIZE = 1, DAY_SIZE = 1, START_TIME_SIZE = 4, END_TIME_SIZE = 4, USER_SIZE = 20;
 
         ByteBuffer buf = ByteBuffer.allocate(1024);
         int currentLength = 0;
@@ -314,12 +314,25 @@ public class PackageHandler
         }
         buf.put(ReverseArray.Reverse_ByteBuffer(b_temp.array()));
 
+        if(scPkg.getUser().getBytes().length == USER_SIZE) buf.put(scPkg.getUser().getBytes("UTF-8"));
+        else // < 18
+        {
+            b_temp = ByteBuffer.allocate(USER_SIZE);
+            b_temp.put(scPkg.getUser().getBytes("UTF-8"));
+            for(int i = scPkg.getUser().getBytes().length; i < USER_SIZE; i++)
+            {
+                b_temp.put((byte)0);
+            }
+            buf.put(b_temp.array());
+        }
+//        System.out.println(buf.array().length);
+
         return buf.array();
     }
 
     static public SchedulePackage schedulePackageDecode(byte[] message)
     {
-        final int ID_SIZE = 4, TODO_SIZE = 36, YEAR_SIZE = 1, MONTH_SIZE = 1, DAY_SIZE = 1, START_TIME_SIZE = 4, END_TIME_SIZE = 4;
+        final int ID_SIZE = 4, TODO_SIZE = 36, YEAR_SIZE = 4, MONTH_SIZE = 1, DAY_SIZE = 1, START_TIME_SIZE = 4, END_TIME_SIZE = 4, USER_SIZE = 20;
         SchedulePackage result = new SchedulePackage();
         int temp = 0, currentSize = ID_SIZE;
         ByteBuffer buffer = ByteBuffer.allocate(1024);
@@ -412,6 +425,9 @@ public class PackageHandler
             temp += temp_m;
         }
         result.setEnd_time(temp);
+
+        result.setUser(TransByteArray2String(Arrays.copyOfRange(message, currentSize, currentSize + USER_SIZE), USER_SIZE));
+        currentSize += USER_SIZE;
 
         return result;
     }
@@ -685,7 +701,7 @@ public class PackageHandler
     }
     static public byte[] TransString2ByteArray(String message, int MES_SIZE) throws UnsupportedEncodingException {
         if(message.getBytes().length == MES_SIZE) return message.getBytes("UTF-8");
-        else // < 18
+        else // < MES_SIZE
         {
             ByteBuffer b_temp = ByteBuffer.allocate(MES_SIZE);
             b_temp.put(message.getBytes("UTF-8"));

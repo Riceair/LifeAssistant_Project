@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
         //popup window hidden
-        findViewById(R.id.popup_window).setVisibility(View.INVISIBLE);
+        findViewById(R.id.popup_window).setVisibility(View.VISIBLE);
 
         //登入
         View headerView=navigationView.getHeaderView(0);

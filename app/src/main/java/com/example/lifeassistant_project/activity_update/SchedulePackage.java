@@ -2,7 +2,7 @@ package com.example.lifeassistant_project.activity_update;
 
 public class SchedulePackage {
     private int id, year, month, day, start_time, end_time;
-    private String todo;
+    private String todo, user;
     private int requestAction; // request 需要執行的行為
     // 0 = 新增, 1 = 刪除, 2 = 修改, 3 = 查詢, 4 = Debug.
 
@@ -19,6 +19,7 @@ public class SchedulePackage {
         this.day = 1;
         this.start_time = 0;
         this.end_time = 0;
+        this.user = "Null";
     }
 
     public SchedulePackage(int id, String todo, int requestAction, int s_year, int s_month, int s_day, int s_hour, int s_minute, int e_year , int e_month, int e_day, int e_hour, int e_minute)
@@ -28,6 +29,7 @@ public class SchedulePackage {
         this.requestAction = requestAction;
         this.setStartDateInFormat(s_year, s_month, s_day, s_hour, s_minute);
         this.setEndDateInFormat(e_year, e_month, e_day, e_hour, e_minute);
+        this.user = "Null";
     }
 
     public SchedulePackage(int id, String todo, int year, int month, int day, int start_time, int end_time)
@@ -39,6 +41,7 @@ public class SchedulePackage {
         this.day = day;
         this.start_time = start_time;
         this.end_time = end_time;
+        this.user = "Null";
     }
 
     public void setStartDateInFormat(int year, int month, int day, int hour, int minute)
@@ -223,6 +226,10 @@ public class SchedulePackage {
     public int getRequestAction() { return requestAction; }
 
     public void setRequestAction(int requestAction) { this.requestAction = requestAction; }
+
+    public String getUser(){ return this.user;}
+
+    public void setUser(String user){this.user = user;}
 
 }
 
