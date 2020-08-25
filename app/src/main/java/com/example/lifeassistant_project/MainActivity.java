@@ -213,7 +213,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 synchronized (client)
                 {
                     try {
-                        client.wait();
+                        client.wait(5000);
                     }catch (InterruptedException e)
                     {
                         System.out.println(e);
