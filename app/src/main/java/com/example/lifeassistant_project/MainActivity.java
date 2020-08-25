@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view) {
                 // for DEBUG
-//                DEBUG_FUNCTION(1);
+//                DEBUG_FUNCTION(3);
 
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -204,6 +204,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 LoginHandler.setUserName("key");
                 System.out.println(LoginHandler.checkAuthorization());
+                break;
+            case 3:
+                ClientProgress client = new ClientProgress();
+                client.setReceiptQR();
+                Thread cThread = new Thread(client);
+                cThread.start();
+                synchronized (client)
+                {
+                    try {
+                        client.wait();
+                    }catch (InterruptedException e)
+                    {
+                        System.out.println(e);
+                    }
+                }
+
+                ArrayList<ReceiptContainer> tempList = client.getRcvReceiptContainer();
+
+                for(ReceiptContainer r : tempList)
+                {
+                    System.out.println(r.getYear());
+                    System.out.println(r.getMonth());
+                    for(String str : r.getHitNumber())
+                    {
+                        System.out.println(str);
+                    }
+                }
         }
     }
 

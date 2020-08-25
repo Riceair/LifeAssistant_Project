@@ -3,6 +3,7 @@ package com.example.lifeassistant_project.activity_update;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class PackageHandler
@@ -604,7 +605,33 @@ public class PackageHandler
         return buf.array();
     }
 
-    static private byte[] TransInt2ByteArray(int num, int MES_SIZE)
+    static public ReceiptContainer ReceiptQRPackageDecode(byte[] message)
+    {
+        final int DATE_SIZE = 8, HIT_NUMBER_SIZE = 15;
+        int currentSize = 0;
+        ReceiptContainer result = new ReceiptContainer();
+        String tempString;
+
+        tempString = TransByteArray2String(Arrays.copyOfRange(message, currentSize, currentSize + DATE_SIZE), DATE_SIZE);
+        result.setYear(tempString.substring(0, 4));
+        result.setMonth(tempString.substring(4, 6));
+        currentSize += DATE_SIZE;
+
+        tempString = TransByteArray2String(Arrays.copyOfRange(message, currentSize, currentSize + HIT_NUMBER_SIZE), HIT_NUMBER_SIZE);
+        ArrayList<String> stringBuf = new ArrayList<String>();
+        for(int i = 0;i < HIT_NUMBER_SIZE; i += 3)
+        {
+            String subTemp = tempString.substring(i, i + 3);
+            if (subTemp.equals("xxx")) break;
+            stringBuf.add(subTemp);
+        }
+        result.setHitNumber(stringBuf);
+        currentSize += HIT_NUMBER_SIZE;
+
+        return result;
+    }
+
+    static public byte[] TransInt2ByteArray(int num, int MES_SIZE)
     {
         ByteBuffer b_temp = ByteBuffer.allocate(MES_SIZE);
         Integer temp = num;
@@ -616,7 +643,7 @@ public class PackageHandler
 
         return ReverseArray.Reverse_ByteBuffer(b_temp.array());
     }
-    static private int TransByteArray2Int(byte[] message, int MES_SIZE)
+    static public int TransByteArray2Int(byte[] message, int MES_SIZE)
     {
         int temp = 0;
         ByteBuffer buffer = ByteBuffer.allocate(1024);
@@ -634,7 +661,7 @@ public class PackageHandler
 
         return temp;
     }
-    static private String TransByteArray2String(byte[] message, int MES_SIZE)
+    static public String TransByteArray2String(byte[] message, int MES_SIZE)
     {
         ByteBuffer buffer = ByteBuffer.allocate(MES_SIZE);
 
@@ -656,7 +683,7 @@ public class PackageHandler
             return "null";
         }
     }
-    static private byte[] TransString2ByteArray(String message, int MES_SIZE) throws UnsupportedEncodingException {
+    static public byte[] TransString2ByteArray(String message, int MES_SIZE) throws UnsupportedEncodingException {
         if(message.getBytes().length == MES_SIZE) return message.getBytes("UTF-8");
         else // < 18
         {

@@ -82,9 +82,7 @@ public class Weather_activity extends AppCompatActivity {
         synchronized (client)
         {
             try {
-                System.out.println("WAITTING");
                 client.wait();
-                System.out.println("GOGO");
             }
             catch (InterruptedException e)
             {
