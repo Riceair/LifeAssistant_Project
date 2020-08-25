@@ -25,6 +25,7 @@ import com.example.lifeassistant_project.R;
 
 import com.example.lifeassistant_project.activity_update.ClientProgress;
 
+import com.example.lifeassistant_project.activity_update.LoginHandler;
 import com.example.lifeassistant_project.activity_update.SchedulePackage;
 
 
@@ -389,10 +390,10 @@ public class NewPlan_activity extends AppCompatActivity {
     public void clickToUpdateSC(View view) {
         writeToSCDB();
         ClientProgress client = new ClientProgress();
+        this.sendPackage.setUser(LoginHandler.getUserName());
         client.setPlan(this.sendPackage);
         Thread conn = new Thread(client);
         conn.start();
-
     }
 
     public void clickToDel(final View view) {

@@ -27,6 +27,7 @@ public class ClientProgress implements Runnable {
     private AccountPackage accountPackage;
     private SchedulePackage schedulePackage;
     private ArrayList<AccountPackage> rcvAccountData;
+    private ArrayList<SchedulePackage> rcvScheduleData;
     private ArrayList<WeatherPackage> rcvWeatherData;
     private ArrayList<ReceiptContainer> rcvReceiptContainer;
     private LoginPackage loginPackage;
@@ -97,6 +98,66 @@ public class ClientProgress implements Runnable {
                     this.rcvAccountData = new ArrayList<AccountPackage>();
                 }finally {
                     if(this.accountPackage.getRequestAction() == 3)
+                        notify();
+                }
+            }
+        }
+        else if (this.packageType.equals("plan"))
+        {
+            synchronized (this)
+            {
+                try {
+                    final int PACKAGE_SIZE = 78;
+
+                    SocketAddress tempSocketAddress = new InetSocketAddress(this.address, this.port);
+                    Socket client = SocketFactory.getDefault().createSocket();
+                    client.connect(tempSocketAddress, CONNECTION_TIMEOUT);
+
+                    OutputStream out = client.getOutputStream();
+
+                    // send account package
+                    out.write(PackageHandler.schedulePackageEncode(this.schedulePackage));
+                    out.flush();
+                    InputStream in = client.getInputStream();      // 取得輸入訊息的串流
+
+                    StringBuffer buf = new StringBuffer();        // 建立讀取字串。
+                    ByteBuffer b_buf = getInputByteBuffer(in, 1024*16);
+                    out.close();
+
+                    byte[] rcvArray = Arrays.copyOfRange(b_buf.array(), 0, b_buf.array().length);
+
+                    if(this.schedulePackage.getRequestAction() == 3)
+                    {
+                        ArrayList<SchedulePackage> rcvScheduleData = new ArrayList<SchedulePackage>();
+                        for (int i = 0, currentLength = 0; i < b_buf.array().length / PACKAGE_SIZE; i++)
+                        {
+                            byte[] resultArray = Arrays.copyOfRange(b_buf.array(), currentLength+3, currentLength+PACKAGE_SIZE);
+                            SchedulePackage temp = PackageHandler.schedulePackageDecode(resultArray);
+                            if(temp.getID() == 0) break;
+                            rcvScheduleData.add(temp);
+                            currentLength += PACKAGE_SIZE;
+                        }
+                        this.rcvScheduleData = rcvScheduleData;
+//
+//                        for(AccountPackage temp : this.rcvAccountData)
+//                        {
+//                            System.out.println(temp.getID());
+//                        }
+                    }
+                    else
+                    {
+                        String rcvString = new String(rcvArray, StandardCharsets.UTF_8);
+                        System.out.println(rcvString);
+                    }
+
+                    System.out.println("message send.");                    // 印出接收到的訊息。
+                    client.close();                                // 關閉 TcpSocket.
+                }catch (Exception e){
+                    System.out.println("exception");
+                    System.out.println(e);
+                    this.rcvScheduleData = new ArrayList<SchedulePackage>();
+                }finally {
+                    if(this.schedulePackage.getRequestAction() == 3)
                         notify();
                 }
             }
