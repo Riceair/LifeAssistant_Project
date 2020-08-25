@@ -407,9 +407,14 @@ public class NewPlan_activity extends AppCompatActivity {
 //                myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
                 myDB.execSQL("DELETE FROM " + SC_TABLE + " WHERE " + "事情" + "='" + eventname + "'");
                 myDB.close();
-               Intent intent = new Intent();
-                setResult(2, intent);
+               //Intent intent = new Intent();
+                //setResult(2, intent);
                 finish();
+
+                Intent intent = new Intent(getApplicationContext(), Planner_activity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("EXIT", true); startActivity(intent);
+                startActivityForResult(intent, 3);
 
             }
         }).setPositiveButton("取消", new DialogInterface.OnClickListener() {
