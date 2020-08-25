@@ -9,7 +9,7 @@
 
     <RelativeLayout
         android:layout_width="350dp"
-        android:layout_height="600dp"
+        android:layout_height="550dp"
         android:layout_centerInParent="true"
         android:background="@drawable/regsite_inner_background">
 
@@ -157,16 +157,16 @@
 
         <TextView
             android:id="@+id/pw_check_hint"
-            android:visibility="invisible"
             android:layout_width="160dp"
             android:layout_height="30dp"
             android:layout_below="@+id/pw_check_inputbox"
             android:layout_alignLeft="@+id/pw_check_inputbox"
             android:layout_marginLeft="5dp"
             android:gravity="center"
-            android:textSize="16dp"
+            android:text="請輸入相同的密碼"
             android:textColor="#FF0000"
-            android:text="請輸入相同的密碼"/>
+            android:textSize="16dp"
+            android:visibility="invisible" />
 
         <ImageView
             android:id="@+id/continuebutton"
@@ -174,7 +174,6 @@
             android:layout_height="36dp"
             android:layout_below="@+id/pw_check_hint"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
             android:onClick="clickToRegister"
             android:src="@drawable/arrowbutton" />
 
