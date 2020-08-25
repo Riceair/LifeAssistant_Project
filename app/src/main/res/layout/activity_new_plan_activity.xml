@@ -154,7 +154,7 @@
             android:layout_toLeftOf="@+id/cancelbutton"
             android:background="@drawable/assure_button"
             android:onClick="clickToUpdateSC"
-            android:text="新增" />
+            android:text="修改" />
 
         <Button
             android:id="@+id/datepicker"

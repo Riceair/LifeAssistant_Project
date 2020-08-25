@@ -80,12 +80,15 @@ public class NewPlan_activity extends AppCompatActivity {
         endingtimewasclicked = bundle.getString("clickedendingtime");
         endingdatewasclicked = bundle.getString("clickedendingdate");
         status=bundle.getInt("clickedstatus");
+        RelativeLayout tabs = findViewById(R.id.tabs);
+        Button addbutton = (Button) findViewById(R.id.savebutton);
         if (status==1)
         {
-            RelativeLayout tabs = findViewById(R.id.tabs);
 
             tabs.setVisibility(View.GONE);
+            addbutton.setText("新增");
         }
+
         ReadDBRecord();
         //這是承接事項
         final TextView nameText = (TextView) findViewById(R.id.eventinput);
@@ -254,12 +257,16 @@ public class NewPlan_activity extends AppCompatActivity {
         TextView textView = (TextView) findViewById(R.id.eventinput); //事項
         //        if (!textView.getText().toString().equals(""))
         event = textView.getText().toString();
-        //        else {
-        //            Toast.makeText(this,"請輸入事項",Toast.LENGTH_LONG).show();
-        //            return;
-        //        }
+                if (textView.getText().toString().equals("")) {
+                    Toast.makeText(this,"請輸入事項",Toast.LENGTH_LONG).show();
+                    return;
+                }
 
         textView = (TextView) findViewById(R.id.dateinput); //開始日期
+        if (textView.getText().toString().equals("")) {
+            Toast.makeText(this,"請輸入日期",Toast.LENGTH_LONG).show();
+            return;
+        }
         String startingDate = textView.getText().toString();
         //        if (!startingDate.equals("")) {
         String[] startingparts = startingDate.split("-");
@@ -268,7 +275,12 @@ public class NewPlan_activity extends AppCompatActivity {
         Starting_day = Integer.parseInt(startingparts[2]);
         //        }
 
+
         textView = (TextView) findViewById(R.id.timeinput); //開始時間
+        if (textView.getText().toString().equals("")) {
+            Toast.makeText(this,"請輸入時間",Toast.LENGTH_LONG).show();
+            return;
+        }
         String startingTime = textView.getText().toString();
         //        if (!startingTime.equals("")) {
         String[] startingTimeparts = startingTime.split(":");
@@ -287,6 +299,10 @@ public class NewPlan_activity extends AppCompatActivity {
         //        }
 
         textView = (TextView) findViewById(R.id.endsdateinput); //結束日期
+        if (textView.getText().toString().equals("")) {
+            Toast.makeText(this,"請輸入結束日期",Toast.LENGTH_LONG).show();
+            return;
+        }
         String endingDate = textView.getText().toString();
         //        if (!startingDate.equals("")) {
         String[] endingparts = endingDate.split("-");
@@ -297,6 +313,10 @@ public class NewPlan_activity extends AppCompatActivity {
         //        }
 
         textView = (TextView) findViewById(R.id.endstimeinput); //結束時間
+        if (textView.getText().toString().equals("")) {
+            Toast.makeText(this,"請輸入結束時間",Toast.LENGTH_LONG).show();
+            return;
+        }
         String endingTime = textView.getText().toString();
         //        if (!startingDate.equals("")) {
         String[] endingTimeparts = endingTime.split(":");
