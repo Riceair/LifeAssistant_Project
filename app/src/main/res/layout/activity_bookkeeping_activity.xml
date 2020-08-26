@@ -23,7 +23,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:background="@drawable/action_transparent"
-            android:onClick="clickToDel"
+            android:onClick="clickToDelete"
             android:text="刪除此筆紀錄"
             android:textColor="@android:color/holo_red_dark" />
     </RelativeLayout>
@@ -169,7 +169,7 @@
             android:layout_toRightOf="@+id/items"
             android:hint="請輸入項目"
             android:inputType="textPersonName"
-            android:textColor="#2E2D2D"
+            android:textColor="@color/ic_launcher_background"
             android:textColorHighlight="@color/ic_launcher_background"
             android:textColorHint="@color/ic_launcher_background" />
 
@@ -184,7 +184,7 @@
             android:hint="請輸入發票後三碼"
             android:inputType="number"
             android:maxLength="3"
-            android:textColor="#2E2D2D"
+            android:textColor="@color/ic_launcher_background"
             android:textColorHighlight="@color/ic_launcher_background"
             android:textColorHint="@color/ic_launcher_background" />
 
@@ -199,7 +199,7 @@
             android:focusable="false"
             android:hint="請選擇類別"
             android:onClick="clickToShowTypeList"
-            android:textColor="#2E2D2D"
+            android:textColor="@color/ic_launcher_background"
             android:textColorHighlight="@color/ic_launcher_background"
             android:textColorHint="@color/ic_launcher_background" />
 

@@ -9,6 +9,7 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -18,6 +19,10 @@ import android.widget.Toast;
 import com.example.lifeassistant_project.R;
 import com.example.lifeassistant_project.activity_update.ClientProgress;
 import com.example.lifeassistant_project.activity_update.packages.ReceiptContainer;
+import com.example.lifeassistant_project.activity_update.packages.ReceiptContainer;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
 
 public class Invoice_activity extends AppCompatActivity {
     private boolean isInvoiceUpdate;
@@ -79,10 +84,12 @@ public class Invoice_activity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 if(receiptserial.getText().toString().length()==3){
-                    if(getSupportActionBar().getSubtitle().toString().equals("   "+getMonTitle(recepitContainerPre.getMonth()))){
-                        checkReward(receiptserial.getText().toString(),recepitContainerPre);
-                    }else{
-                        checkReward(receiptserial.getText().toString(),recepitContainerRec);
+                    if(isInvoiceUpdate) {
+                        if (getSupportActionBar().getSubtitle().toString().equals("   " + getMonTitle(recepitContainerPre.getMonth()))) {
+                            checkReward(receiptserial.getText().toString(), recepitContainerPre);
+                        } else {
+                            checkReward(receiptserial.getText().toString(), recepitContainerRec);
+                        }
                     }
                 }
             }
@@ -91,7 +98,7 @@ public class Invoice_activity extends AppCompatActivity {
 
     private void checkReward(String myNumber,ReceiptContainer receiptContainer){
         TextView invoice_rewards=findViewById(R.id.invoice_rewards);
-        LinearLayout invoice_rewards_number=findViewById(R.id.invoice_rewards_number);
+        LinearLayout invoice_rewards_number=findViewById(R.id.invoice_rewords_number);
         TextView invoice_first5=findViewById(R.id.invoice_first5);
         TextView invoice_last3=findViewById(R.id.invoice_last3);
         boolean isReward=false;
@@ -168,6 +175,9 @@ public class Invoice_activity extends AppCompatActivity {
     public void clickToQRScan(View view)
     {
         Intent intent=new Intent(this,Invoice_qr_activity.class);
+        intent.putExtra("isInvoiceUpdate",isInvoiceUpdate);
+        intent.putExtra("recepitContainerPre", new Gson().toJson(recepitContainerPre));
+        intent.putExtra("recepitContainerRec", new Gson().toJson(recepitContainerRec));
         startActivity(intent);
         overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
     }

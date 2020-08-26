@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/finance_background"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@drawable/finance_background">
 
     <RelativeLayout
         android:id="@+id/mainly"
@@ -12,19 +12,18 @@
         android:layout_height="450dp"
         android:layout_centerInParent="true"
         android:layout_centerVertical="true"
+        android:layout_marginTop="8dp"
         android:background="@drawable/report_inner_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.227">
+        app:layout_constraintTop_toBottomOf="@+id/include"
+        app:layout_constraintVertical_bias="0.023">
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/pieChart"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
     </RelativeLayout>
 
     <Switch
@@ -92,14 +91,13 @@
 
     <TextView
         android:id="@+id/no_data_text"
-        android:layout_width="70dp"
-        android:layout_height="30dp"
-        android:background="@drawable/rewards_bonus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
         android:gravity="center"
         android:text="查無資料"
         android:textColor="#FFFFFF"
-        android:textSize="13dp"
-        android:visibility="visible"
+        android:textSize="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

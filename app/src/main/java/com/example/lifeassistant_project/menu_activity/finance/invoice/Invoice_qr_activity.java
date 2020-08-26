@@ -5,20 +5,28 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lifeassistant_project.R;
+import com.example.lifeassistant_project.activity_update.ReceiptContainer;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 
@@ -27,7 +35,14 @@ public class Invoice_qr_activity extends AppCompatActivity {
     private CameraSource cameraSource;
     private BarcodeDetector barcodeDetector;
     private TextView invoice_reword;
+    private LinearLayout invoice_reword_number;
+    private TextView invoice_first5;
+    private TextView invoice_last3;
     private TextView invoice_text;
+    private TextView reword_amount;
+
+    private boolean isInvoiceUpdate;
+    private ReceiptContainer recepitContainerPre,recepitContainerRec;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +56,12 @@ public class Invoice_qr_activity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setIcon(R.drawable.receipt_checksum);
 
+        Bundle bundle=getIntent().getExtras();
+        isInvoiceUpdate=bundle.getBoolean("isInvoiceUpdate");
+        recepitContainerPre=new Gson().fromJson(bundle.getString("recepitContainerPre"),ReceiptContainer.class);
+        recepitContainerRec= new Gson().fromJson(bundle.getString("recepitContainerRec"),ReceiptContainer.class);
+
+        if(!isInvoiceUpdate) Toast.makeText(this,"尚未取得兌獎資訊",Toast.LENGTH_SHORT).show();
         bind();
         qrCodeSet();
     }
@@ -52,6 +73,10 @@ public class Invoice_qr_activity extends AppCompatActivity {
         cameraSource = new CameraSource.Builder(this,barcodeDetector).setAutoFocusEnabled(true).build();
         invoice_reword=findViewById(R.id.invoice_rewards);
         invoice_text=findViewById(R.id.invoice_text);
+        invoice_reword_number=findViewById(R.id.invoice_rewords_number);
+        invoice_first5=findViewById(R.id.invoice_first5);
+        invoice_last3=findViewById(R.id.invoice_last3);
+        reword_amount=findViewById(R.id.reword_amount);
     }
 
     private void qrCodeSet(){
@@ -87,7 +112,7 @@ public class Invoice_qr_activity extends AppCompatActivity {
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
                 final SparseArray<Barcode>qrCodes=detections.getDetectedItems();
-                if(qrCodes.size()!=0){
+                if(qrCodes.size()!=0 && isInvoiceUpdate){
                     invoice_text.post(new Runnable() {
                         @Override
                         public void run() {
@@ -98,13 +123,17 @@ public class Invoice_qr_activity extends AppCompatActivity {
                             else{
                                 String invoice_id=invoice_info.substring(0,2)+"-"+invoice_info.substring(2,10); //發票號碼
                                 invoice_text.setText(invoice_id);
-                                String invoice_id_last3=invoice_info.substring(7,10); //發票末三碼
+                                String invoice_number=invoice_info.substring(2,10); //發票碼
                                 String invoice_year=invoice_info.substring(10,13); //發票年份
                                 String invoice_month=invoice_info.substring(13,15); //發票月份
+                                if(isInvoiceUpdate) {
+                                    checkInvoice(invoice_number, Integer.valueOf(invoice_year) + 1911, Integer.valueOf(invoice_month));
+                                }
                             }
                         }
                     });
                 }
+                else Toast.makeText(Invoice_qr_activity.this,"未取得發票資料",Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -120,6 +149,153 @@ public class Invoice_qr_activity extends AppCompatActivity {
         }
         else
             return false;
+    }
+
+    private void checkInvoice(String number,int year,int month){
+        if((year==Integer.valueOf(recepitContainerPre.getYear()) && month<Integer.valueOf(recepitContainerPre.getMonth())) ||
+                year<Integer.valueOf(recepitContainerPre.getYear())){
+            invoice_reword.setText("已過期");
+            invoice_reword.setBackgroundColor(Color.BLACK);
+            invoice_reword.setVisibility(View.VISIBLE);
+            invoice_reword_number.setVisibility(View.INVISIBLE);
+            reword_amount.setVisibility(View.INVISIBLE);
+            return;
+        }
+        if((year==Integer.valueOf(recepitContainerRec.getYear()) && month>Integer.valueOf(recepitContainerRec.getMonth())+1) ||
+                year>Integer.valueOf(recepitContainerRec.getYear())){
+            invoice_reword.setText("尚未開獎");
+            invoice_reword.setBackgroundColor(Color.BLACK);
+            invoice_reword.setVisibility(View.VISIBLE);
+            invoice_reword_number.setVisibility(View.INVISIBLE);
+            reword_amount.setVisibility(View.INVISIBLE);
+            return;
+        }
+
+        if(year==Integer.valueOf(recepitContainerPre.getYear()) &&
+                (month==Integer.valueOf(recepitContainerPre.getMonth()) || month==Integer.valueOf(recepitContainerPre.getMonth())+1)){
+            checkReword(number,recepitContainerPre);
+        }else if(year==Integer.valueOf(recepitContainerRec.getYear()) &&
+                (month==Integer.valueOf(recepitContainerRec.getMonth()) || month==Integer.valueOf(recepitContainerRec.getMonth())+1)){
+            checkReword(number,recepitContainerRec);
+        }
+    }
+
+    private void checkReword(String number,ReceiptContainer receiptContainer){
+        if(receiptContainer.getHitNumber().get(0).equals(number)){
+            invoice_reword.setText("特別獎!!");
+            invoice_reword.setBackgroundResource(R.drawable.rewards_bonus);
+            invoice_reword.setVisibility(View.VISIBLE);
+
+            //印出中獎碼全碼
+            invoice_first5.setText("");
+            invoice_last3.setText(receiptContainer.getHitNumber().get(0));
+            invoice_reword_number.setVisibility(View.VISIBLE);
+
+            //印出中獎金額
+            reword_amount.setText("一千萬元");
+            reword_amount.setVisibility(View.VISIBLE);
+            return;
+        }
+
+        if(receiptContainer.getHitNumber().get(1).equals(number)){
+            invoice_reword.setText("特獎!!");
+            invoice_reword.setBackgroundResource(R.drawable.rewards_bonus);
+            invoice_reword.setVisibility(View.VISIBLE);
+
+            //印出中獎碼全碼
+            invoice_first5.setText("");
+            invoice_last3.setText(receiptContainer.getHitNumber().get(1));
+            invoice_reword_number.setVisibility(View.VISIBLE);
+
+            //印出中獎金額
+            reword_amount.setText("二百萬元");
+            reword_amount.setVisibility(View.VISIBLE);
+            return;
+        }
+
+        for (int i = 2; i < receiptContainer.getHitNumber().size() - 1; i++) {
+            if (receiptContainer.getHitNumber().get(i).substring(5).equals(number.substring(5))) {
+                checkJackPot(number,receiptContainer.getHitNumber().get(i));
+                return;
+            }
+        }
+
+        if(receiptContainer.getHitNumber().get(receiptContainer.getHitNumber().size()-1).substring(5).equals(number.substring(5))){
+            invoice_reword.setText("六獎!!");
+            invoice_reword.setBackgroundResource(R.drawable.rewards_general);
+            invoice_reword.setVisibility(View.VISIBLE);
+
+            //印出中獎碼全碼
+            invoice_first5.setText("");
+            invoice_last3.setText(receiptContainer.getHitNumber().get(receiptContainer.getHitNumber().size()-1).substring(5));
+            invoice_reword_number.setVisibility(View.VISIBLE);
+
+            //印出中獎金額
+            reword_amount.setText("200元");
+            reword_amount.setVisibility(View.VISIBLE);
+            return;
+        }
+
+        invoice_reword.setText("未中獎");
+        invoice_reword.setVisibility(View.VISIBLE);
+        invoice_reword.setBackgroundColor(Color.BLACK);
+        invoice_reword_number.setVisibility(View.INVISIBLE);
+        reword_amount.setVisibility(View.INVISIBLE);
+    }
+
+    //檢查頭獎~五獎
+    private void checkJackPot(String number,String hitNumber){
+        String award=""; //獎項
+        String money=""; //金額
+        int hitAward=5;
+
+        for(int i=0;i<number.length();i++){
+            if(hitNumber.substring(i).equals(number.substring(i))){
+                hitAward=i;
+                break;
+            }
+        }
+
+        switch (hitAward){
+            case 0:
+                award="頭獎";
+                money="二十萬元";
+                break;
+            case 1:
+                award="二獎";
+                money="四萬元";
+                break;
+            case 2:
+                award="三獎";
+                money="一萬元";
+                break;
+            case 3:
+                award="四獎";
+                money="4000元";
+                break;
+            case 4:
+                award="五獎";
+                money="1000元";
+                break;
+            default:
+                award="六獎";
+                money="200元";
+                break;
+        }
+
+        //印出獎項
+        invoice_reword.setText(award);
+        invoice_reword.setBackgroundResource(R.drawable.rewards_general);
+        invoice_reword.setVisibility(View.VISIBLE);
+
+        //印出中獎碼全碼
+        invoice_first5.setText(Html.fromHtml("<u>"+hitNumber.substring(0,hitAward)+"</u>"));
+        invoice_last3.setText(hitNumber.substring(hitAward));
+        invoice_reword_number.setVisibility(View.VISIBLE);
+
+        //印出中獎金額
+        reword_amount.setText(money);
+        reword_amount.setVisibility(View.VISIBLE);
     }
 
     @Override
