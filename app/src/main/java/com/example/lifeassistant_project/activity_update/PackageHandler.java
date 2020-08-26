@@ -239,7 +239,8 @@ public class PackageHandler
     }
 
     static public byte[] schedulePackageEncode(SchedulePackage scPkg) throws UnsupportedEncodingException {
-        final int ID_SIZE = 4, TODO_SIZE = 36, YEAR_SIZE = 4, MONTH_SIZE = 1, DAY_SIZE = 1, START_TIME_SIZE = 4, END_TIME_SIZE = 4, USER_SIZE = 20;
+        final int ID_SIZE = 4, TODO_SIZE = 36, YEAR_SIZE = 4, MONTH_SIZE = 1, DAY_SIZE = 1,
+                START_TIME_SIZE = 4, END_TIME_SIZE = 4, OPERATION_CODE_SIZE = 1, USER_SIZE = 20;
 
         ByteBuffer buf = ByteBuffer.allocate(1024);
         int currentLength = 0;
@@ -257,17 +258,7 @@ public class PackageHandler
         }
         buf.put(ReverseArray.Reverse_ByteBuffer(b_temp.array()));
 
-        if(scPkg.getTodo().getBytes().length == TODO_SIZE) buf.put(scPkg.getTodo().getBytes("UTF-8"));
-        else // < 18
-        {
-            b_temp = ByteBuffer.allocate(TODO_SIZE);
-            b_temp.put(scPkg.getTodo().getBytes("UTF-8"));
-            for(int i = scPkg.getTodo().getBytes().length; i < TODO_SIZE; i++)
-            {
-                b_temp.put((byte)0);
-            }
-            buf.put(b_temp.array());
-        }
+        buf.put(TransString2ByteArray(scPkg.getTodo(), TODO_SIZE));
 
         b_temp = ByteBuffer.allocate(YEAR_SIZE);
         temp = scPkg.getYear();
@@ -314,6 +305,15 @@ public class PackageHandler
         }
         buf.put(ReverseArray.Reverse_ByteBuffer(b_temp.array()));
 
+        b_temp = ByteBuffer.allocate(OPERATION_CODE_SIZE);
+        temp = scPkg.getRequestAction();
+        for(int i = 0;i < OPERATION_CODE_SIZE;i++)
+        {
+            b_temp.put(temp.byteValue());
+            temp /= 256;
+        }
+        buf.put(ReverseArray.Reverse_ByteBuffer(b_temp.array()));
+
         if(scPkg.getUser().getBytes().length == USER_SIZE) buf.put(scPkg.getUser().getBytes("UTF-8"));
         else // < 18
         {
@@ -332,11 +332,14 @@ public class PackageHandler
 
     static public SchedulePackage schedulePackageDecode(byte[] message)
     {
-        final int ID_SIZE = 4, TODO_SIZE = 36, YEAR_SIZE = 4, MONTH_SIZE = 1, DAY_SIZE = 1, START_TIME_SIZE = 4, END_TIME_SIZE = 4, USER_SIZE = 20;
+        final int ID_SIZE = 4, TODO_SIZE = 36, YEAR_SIZE = 4, MONTH_SIZE = 1, DAY_SIZE = 1,
+                START_TIME_SIZE = 4, END_TIME_SIZE = 4, OPERATION_CODE_SIZE = 1, USER_SIZE = 20;
+
         SchedulePackage result = new SchedulePackage();
         int temp = 0, currentSize = ID_SIZE;
         ByteBuffer buffer = ByteBuffer.allocate(1024);
         String tempString;
+
         for(int i = 0;i < currentSize; i++)
         {
             temp = temp << 8;
@@ -349,12 +352,8 @@ public class PackageHandler
         }
         result.setID(temp);
 
+        result.setTodo(TransByteArray2String(Arrays.copyOfRange(message, currentSize, currentSize + TODO_SIZE), TODO_SIZE));
         currentSize += TODO_SIZE;
-        for(int i = currentSize - TODO_SIZE; i < currentSize; i++)
-            buffer.put(message[i]);
-        tempString = new String(buffer.array(), StandardCharsets.UTF_8);
-        buffer.clear();
-        result.setTodo(tempString);
 
         currentSize += YEAR_SIZE;
         temp = 0;
@@ -425,6 +424,9 @@ public class PackageHandler
             temp += temp_m;
         }
         result.setEnd_time(temp);
+
+        result.setRequestAction(TransByteArray2Int(Arrays.copyOfRange(message, currentSize, currentSize + OPERATION_CODE_SIZE), OPERATION_CODE_SIZE));
+        currentSize += OPERATION_CODE_SIZE;
 
         result.setUser(TransByteArray2String(Arrays.copyOfRange(message, currentSize, currentSize + USER_SIZE), USER_SIZE));
         currentSize += USER_SIZE;

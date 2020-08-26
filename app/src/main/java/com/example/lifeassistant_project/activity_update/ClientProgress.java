@@ -35,6 +35,7 @@ public class ClientProgress implements Runnable {
 
     public ArrayList<WeatherPackage> getRcvWeatherData(){ return this.rcvWeatherData; }
     public ArrayList<AccountPackage> getRcvAccountData(){ return this.rcvAccountData; }
+    public ArrayList<SchedulePackage> getRcvScheduleData() { return this.rcvScheduleData; }
     public ArrayList<ReceiptContainer> getRcvReceiptContainer() { return rcvReceiptContainer; }
     public SentenceHandler getRcvSentence() { return this.rcvSentence; }
     public String getRcvUserKey() { return this.rcvUserKey; }
@@ -107,6 +108,7 @@ public class ClientProgress implements Runnable {
             synchronized (this)
             {
                 try {
+                    System.out.println("Plan");
                     final int PACKAGE_SIZE = 78;
 
                     SocketAddress tempSocketAddress = new InetSocketAddress(this.address, this.port);

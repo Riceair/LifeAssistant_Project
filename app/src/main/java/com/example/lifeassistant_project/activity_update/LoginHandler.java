@@ -23,7 +23,7 @@ public class LoginHandler {
             LoginHandler.userKey = resultKey;
             LoginHandler.userName = loginPackage.getName();
             LoginHandler.isLogin = true;
-            DatabaseBehavior.synchronizeServer2Client();
+            DatabaseBehavior.synchronizeData();
             return true;
         }
     }

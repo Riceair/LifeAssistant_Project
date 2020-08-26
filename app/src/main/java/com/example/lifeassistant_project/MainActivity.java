@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
         //popup window hidden
-        findViewById(R.id.popup_window).setVisibility(View.INVISIBLE);
+        findViewById(R.id.popup_window).setVisibility(View.VISIBLE);
 
         //登入
         View headerView=navigationView.getHeaderView(0);
@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case -1:
                 break;
             case 0:
-                DatabaseBehavior.synchronizeServer2Client();
+                DatabaseBehavior.synchronizeServer2Client_Account();
                 break;
             case 1:
 //          FOR CHATBOT DEBUG
@@ -244,8 +244,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                 userSay.setText(result.get(0));
 
-                System.out.println("Behavior");
-                System.out.println(chatbotBehavior.getBehaviorMode());
+//                System.out.println("Behavior");
+//                System.out.println(chatbotBehavior.getBehaviorMode());
                 if(!chatbotBehavior.generateSendSentence(result.get(0)))
                 {
                     System.out.println(chatbotBehavior.getErrorMessage());
@@ -256,6 +256,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
 
                 chatBotSay.setText(chatbotBehavior.getResponse());
+                //if operation is searching.
+                if(chatbotBehavior.getSentenceHandler().getOperation() == 4)
+                {
+                    findViewById(R.id.popup_window).setVisibility(View.VISIBLE);
+
+                }
             }
         }
         else if(requestCode==11){

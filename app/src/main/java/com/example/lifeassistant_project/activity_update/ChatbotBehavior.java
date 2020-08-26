@@ -30,7 +30,7 @@ public class ChatbotBehavior {
         this.behaviorMode = 0;
         this.client = new ClientProgress();
         this.sentenceHandler = new SentenceHandler();
-        this.errorMessage = "";
+        this.errorMessage = "default error message.";
     }
     public void sendSentence()
     {
@@ -60,7 +60,7 @@ public class ChatbotBehavior {
 
         if(this.sendSentence.getIntent() == 1 || this.sendSentence.getIntent() == 2)
         {
-            DatabaseBehavior.synchronizeServer2Client();
+            DatabaseBehavior.synchronizeServer2Client_Account();
         }
     }
     public String getResponse()
