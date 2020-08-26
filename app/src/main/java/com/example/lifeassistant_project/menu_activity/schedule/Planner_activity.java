@@ -167,7 +167,7 @@ public class Planner_activity extends AppCompatActivity {
             String[] myDateparts = myDate.split(" ");
             String myStartingDate  = myDateparts[0]+" 00:00:00";
 
-            Toast.makeText(this,"事項更新完成",Toast.LENGTH_SHORT).show();
+
             String myEndingDate=stuffEndingList.get(i);
             String mystuffName=stuffNameList.get(i);
             try {
@@ -186,7 +186,7 @@ public class Planner_activity extends AppCompatActivity {
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
-                Toast.makeText(this,"事項更新完成",Toast.LENGTH_SHORT).show();
+
             }
 
         }

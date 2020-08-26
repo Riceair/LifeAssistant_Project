@@ -30,7 +30,7 @@
     <ScrollView
         android:id="@+id/reportScroll"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="180dp"
         android:layout_alignParentBottom="true"
         android:background="@color/zxing_result_view"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -49,12 +49,13 @@
 
     <TextView
         android:id="@+id/no_data_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:background="@drawable/rewards_bonus"
         android:text="查無資料"
         android:textColor="#FFFFFF"
-        android:textSize="40dp"
+        android:textSize="20dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
