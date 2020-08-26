@@ -21,7 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lifeassistant_project.R;
-import com.example.lifeassistant_project.activity_update.ReceiptContainer;
+
+import com.example.lifeassistant_project.activity_update.packages.ReceiptContainer;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
