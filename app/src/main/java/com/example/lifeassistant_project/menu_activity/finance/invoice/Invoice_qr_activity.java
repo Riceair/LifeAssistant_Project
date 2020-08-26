@@ -7,9 +7,7 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.renderscript.Sampler;
 import android.util.SparseArray;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -52,7 +50,7 @@ public class Invoice_qr_activity extends AppCompatActivity {
         barcodeDetector=new BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.QR_CODE).build();
         cameraSource=new CameraSource.Builder(this,barcodeDetector).setRequestedPreviewSize(300,300).build();
         cameraSource = new CameraSource.Builder(this,barcodeDetector).setAutoFocusEnabled(true).build();
-        invoice_reword=findViewById(R.id.invoice_reword);
+        invoice_reword=findViewById(R.id.invoice_rewards);
         invoice_text=findViewById(R.id.invoice_text);
     }
 
