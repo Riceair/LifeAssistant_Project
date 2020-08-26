@@ -17,11 +17,6 @@ import com.example.lifeassistant_project.R;
 import com.example.lifeassistant_project.activity_update.ClientProgress;
 import com.example.lifeassistant_project.activity_update.WeatherPackage;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -29,7 +24,7 @@ public class Weather_activity extends AppCompatActivity {
     private static final String DBNAME = "myDB.db";
     private SQLiteDatabase myDB;
     private Cursor cursor;
-    String CURRENT_CITY="";
+    String currentCity ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,31 +40,31 @@ public class Weather_activity extends AppCompatActivity {
 
         //取得Location
         Bundle bundle = getIntent().getExtras();
-        CURRENT_CITY = bundle.getString("AdminArea");
+        currentCity = bundle.getString("AdminArea");
 
         this.showWeatherData();
     }
 
     private void showWeatherData()
     {
-        if(CURRENT_CITY.equals("")){ //定位失敗
+        if(currentCity.equals("")){ //定位失敗
             Toast.makeText(this,"請開啟定位以取得定位資訊",Toast.LENGTH_SHORT).show();
             myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null); //取得資料庫過去取得的位置資料
             try{
                 cursor = myDB.rawQuery("select Location from history_weather",null);
                 if(cursor!=null){
                     cursor.moveToFirst();
-                    CURRENT_CITY=cursor.getString(0);
+                    currentCity =cursor.getString(0);
                 }
                 myDB.close();
             }catch (Exception e){}
-        }else if(CURRENT_CITY.startsWith("台")){
-            CURRENT_CITY="臺"+CURRENT_CITY.substring(1);
+        }else if(currentCity.startsWith("台")){
+            currentCity ="臺"+ currentCity.substring(1);
         }
         //將現在的位置設為過去的位置資料
         myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
         ContentValues values=new ContentValues();
-        values.put("Location",CURRENT_CITY);
+        values.put("Location", currentCity);
         myDB.update("history_weather",values,"id=1",null);
         myDB.close();
 
@@ -100,11 +95,15 @@ public class Weather_activity extends AppCompatActivity {
         int pointer;
         for (pointer = 0;pointer < weatherData.size(); pointer++)
         {
-            if(weatherData.get(pointer).getCity().equals(CURRENT_CITY)) break;
+            if(weatherData.get(pointer).getCity().equals(currentCity)) break;
         }
 
-        if(pointer == weatherData.size() - 1)
-            System.out.println("ERROR!");
+        if(pointer == weatherData.size())
+        {
+            System.out.println("Location error! set current city to default.");
+            currentCity = "基隆市";
+            pointer = 0;
+        }
 
         for(int i = 0;i < WEEK_SIZE; i++)
         {

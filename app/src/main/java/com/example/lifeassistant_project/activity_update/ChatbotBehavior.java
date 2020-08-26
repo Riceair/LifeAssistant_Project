@@ -101,6 +101,10 @@ public class ChatbotBehavior {
                     return "好的，以下是您的行程：";
             }
         }
+        else if(this.sentenceHandler.getIntent() == 3)
+        {
+            
+        }
         else
         {
             System.out.println(this.sentenceHandler.getIntent());

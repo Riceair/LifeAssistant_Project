@@ -189,7 +189,7 @@ public class ClientProgress implements Runnable {
                     ArrayList<WeatherPackage> weatherData = new ArrayList<WeatherPackage>();
                     for (int i = 0, currentLength = 0; i < b_buf.array().length / PACKAGE_SIZE; i++)
                     {
-                        System.out.println(i);
+//                        System.out.println(i);
                         byte[] resultArray = Arrays.copyOfRange(b_buf.array(), currentLength+3, currentLength+PACKAGE_SIZE);
                         weatherData.add(PackageHandler.weatherPackageDecode(resultArray));
                         currentLength += PACKAGE_SIZE;
@@ -254,7 +254,9 @@ public class ClientProgress implements Runnable {
                 try {
                     System.out.println("log");
                     final int RCV_PACKAGE_SIZE = 69;
-                    Socket client = new Socket(this.address, this.port);
+                    SocketAddress temp = new InetSocketAddress(this.address, this.port);
+                    Socket client = SocketFactory.getDefault().createSocket();
+                    client.connect(temp, CONNECTION_TIMEOUT);
 
                     OutputStream out = client.getOutputStream();
 
