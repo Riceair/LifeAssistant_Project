@@ -48,7 +48,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="330dp"
-            android:background="@drawable/action_transparent"
+            android:background="#E1C7C7"
             android:onClick="clickToQRScan"
             android:text="使用掃描器"
             android:textColor="#0027FF"
@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="270dp"
+            android:layout_marginBottom="290dp"
             android:text="或是，你可以..."
             android:textColor="@android:color/background_light"
             android:textSize="20sp"
@@ -73,7 +73,7 @@
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="220dp"
+            android:layout_marginBottom="240dp"
             android:background="@android:drawable/editbox_background_normal" />
 
         <EditText
@@ -95,16 +95,16 @@
             android:layout_height="35dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="150dp"
+            android:layout_marginBottom="200dp"
             android:background="@drawable/rewards_exile"
             android:gravity="center"
             android:text="未中獎"
             android:textColor="@color/zxing_status_text"
             android:textSize="15dp"
-            android:visibility="visible" />
+            android:visibility="invisible" />
 
         <LinearLayout
-            android:id="@+id/invoice_rewards_number"
+            android:id="@+id/invoice_rewords_number"
             android:layout_width="100dp"
             android:layout_height="30dp"
             android:layout_above="@+id/invoice_rewards"
@@ -112,7 +112,7 @@
             android:layout_marginBottom="-80dp"
             android:background="@drawable/tabs4receipt"
             android:orientation="horizontal"
-            android:visibility="visible">
+            android:visibility="invisible">
 
             <TextView
                 android:id="@+id/invoice_first5"
@@ -120,7 +120,7 @@
                 android:layout_height="32dp"
                 android:gravity="center"
                 android:text="12345"
-                android:textColor="#FFFFFF"
+                android:textColor="#F1DFDF"
                 android:textSize="18dp" />
 
             <TextView
@@ -128,7 +128,7 @@
                 android:layout_width="35dp"
                 android:layout_height="32dp"
                 android:text="678"
-                android:textColor="@color/design_default_color_on_secondary"
+                android:textColor="#05F805"
                 android:textSize="18dp" />
         </LinearLayout>
     </RelativeLayout>

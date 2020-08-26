@@ -35,4 +35,7 @@ dependencies {
 
     //圓餅圖 API
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    //Gson Activity傳遞物件用
+    implementation 'com.google.code.gson:gson:2.3.1'
 }
