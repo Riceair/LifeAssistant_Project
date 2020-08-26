@@ -59,8 +59,10 @@ public class NewPlan_activity extends AppCompatActivity {
     private ArrayList<String> stuffList = new ArrayList<>();
     private ArrayList<String> stuffEndingList = new ArrayList<>();
     private ArrayList<String> stuffNameList = new ArrayList<>();
+    private ArrayList<Integer> stuffIDList = new ArrayList<>();
     private int year,month,day,start_time,end_time;
-    private Integer status=0;
+    private Integer status=0,selid=0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,7 @@ public class NewPlan_activity extends AppCompatActivity {
         endingtimewasclicked = bundle.getString("clickedendingtime");
         endingdatewasclicked = bundle.getString("clickedendingdate");
         status=bundle.getInt("clickedstatus");
+        selid=bundle.getInt("clickedID");
         RelativeLayout tabs = findViewById(R.id.tabs);
         Button addbutton = (Button) findViewById(R.id.savebutton);
         if (status==1)
@@ -199,16 +202,17 @@ public class NewPlan_activity extends AppCompatActivity {
         stuffList.clear();
         stuffEndingList.clear();
         stuffNameList.clear();
+        stuffIDList.clear();
         myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
         try {
-            cursor = myDB.rawQuery("select schedule_record.事情, schedule_record.年,schedule_record.月,schedule_record.日,schedule_record.開始時間,schedule_record.結束時間 from schedule_record", null);
+            cursor = myDB.rawQuery("select schedule_record.事情, schedule_record.年,schedule_record.月,schedule_record.日,schedule_record.開始時間,schedule_record.結束時間,schedule_record.id from schedule_record", null);
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             if (cursor != null) {
                 int iRow = cursor.getCount(); // 取得資料記錄的筆數
                 cursor.moveToFirst();
                 for (int i = 0; i < iRow; i++) {
                     SchedulePackage temp = new SchedulePackage(
-                            0,
+                            cursor.getInt(6),
                             cursor.getString(0),
                             cursor.getInt(1),
                             cursor.getInt(2),
@@ -228,7 +232,7 @@ public class NewPlan_activity extends AppCompatActivity {
                             String.format("%02d", temp.getEndDateInFormat().getMinute()) + ":00");
                     stuffEndingList.add(tempString);
                     stuffNameList.add(temp.getTodo());
-
+                    stuffIDList.add(temp.getID());
                     cursor.moveToNext();
                 }
                 // 5. 關閉 DB
@@ -258,10 +262,10 @@ public class NewPlan_activity extends AppCompatActivity {
         TextView textView = (TextView) findViewById(R.id.eventinput); //事項
         //        if (!textView.getText().toString().equals(""))
         event = textView.getText().toString();
-                if (textView.getText().toString().equals("")) {
-                    Toast.makeText(this,"請輸入事項",Toast.LENGTH_LONG).show();
-                    return;
-                }
+        if (textView.getText().toString().equals("")) {
+            Toast.makeText(this,"請輸入事項",Toast.LENGTH_LONG).show();
+            return;
+        }
 
         textView = (TextView) findViewById(R.id.dateinput); //開始日期
         if (textView.getText().toString().equals("")) {
@@ -408,7 +412,7 @@ public class NewPlan_activity extends AppCompatActivity {
 //                myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
                 myDB.execSQL("DELETE FROM " + SC_TABLE + " WHERE " + "事情" + "='" + eventname + "'");
                 myDB.close();
-               //Intent intent = new Intent();
+                //Intent intent = new Intent();
                 //setResult(2, intent);
                 finish();
 

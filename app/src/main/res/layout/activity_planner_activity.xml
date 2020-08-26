@@ -10,20 +10,11 @@
 
     <RelativeLayout
         android:id="@+id/tabs"
-        android:layout_width="210dp"
+        android:layout_width="150dp"
         android:layout_height="45dp"
         android:layout_above="@id/mainly"
         android:layout_alignRight="@id/mainly"
         android:background="@drawable/tabs">
-
-        <ImageView
-            android:id="@+id/refresh"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:onClick="initial"
-            app:srcCompat="@drawable/refresh_button" />
 
         <Button
             android:id="@+id/addbutton"
@@ -31,7 +22,7 @@
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_toRightOf="@id/refresh"
+
             android:background="@drawable/action_transparent"
             android:onClick="clickNewPlan"
             android:text=" 新增排程"

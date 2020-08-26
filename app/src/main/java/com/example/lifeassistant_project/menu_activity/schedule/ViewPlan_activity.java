@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.example.lifeassistant_project.R;
 import com.example.lifeassistant_project.activity_update.SchedulePackage;
 
-
+import android.widget.Toast;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -36,6 +36,7 @@ public class ViewPlan_activity extends AppCompatActivity {
     private ArrayList<String> stuffList = new ArrayList<>();
     private ArrayList<String> stuffEndingList = new ArrayList<>();
     private ArrayList<String> stuffNameList = new ArrayList<>();
+    private ArrayList<Integer> stuffIDList = new ArrayList<>();
     private ListView list;
     public View view;
     @Override
@@ -70,11 +71,14 @@ public class ViewPlan_activity extends AppCompatActivity {
                 String endingdatewasclicked = endingparts[0];
                 String endingtimewasclicked = endingparts[1];
                 String namewasfilledin=stuffNameList.get(position);
+                Integer idwasfilledin=stuffIDList.get(position);
                 intent.putExtra("clickeddate",datewasclicked);
                 intent.putExtra("clickedtime",timewasclicked);
                 intent.putExtra("clickedname",namewasfilledin);
                 intent.putExtra("clickedendingdate",endingdatewasclicked);
                 intent.putExtra("clickedendingtime",endingtimewasclicked);
+                intent.putExtra("clickedID",idwasfilledin);
+
 
                 ViewPlan_activity.this.startActivityForResult(intent,0);
 
@@ -82,20 +86,21 @@ public class ViewPlan_activity extends AppCompatActivity {
         });
     }
 
-    private void ReadDBRecord(){
+    private void ReadDBRecord() {
         stuffList.clear();
         stuffEndingList.clear();
         stuffNameList.clear();
+        stuffIDList.clear();
         myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
         try {
-            cursor = myDB.rawQuery("select schedule_record.事情, schedule_record.年,schedule_record.月,schedule_record.日,schedule_record.開始時間,schedule_record.結束時間 from schedule_record",null);
+            cursor = myDB.rawQuery("select schedule_record.事情, schedule_record.年,schedule_record.月,schedule_record.日,schedule_record.開始時間,schedule_record.結束時間,schedule_record.id from schedule_record", null);
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            if(cursor!=null) {
+            if (cursor != null) {
                 int iRow = cursor.getCount(); // 取得資料記錄的筆數
                 cursor.moveToFirst();
-                for (int i=0;i<iRow;i++){
+                for (int i = 0; i < iRow; i++) {
                     SchedulePackage temp = new SchedulePackage(
-                            0,
+                            cursor.getInt(6),
                             cursor.getString(0),
                             cursor.getInt(1),
                             cursor.getInt(2),
@@ -115,20 +120,16 @@ public class ViewPlan_activity extends AppCompatActivity {
                             String.format("%02d", temp.getEndDateInFormat().getMinute()) + ":00");
                     stuffEndingList.add(tempString);
                     stuffNameList.add(temp.getTodo());
-
+                    stuffIDList.add(temp.getID());
                     cursor.moveToNext();
                 }
-
                 // 5. 關閉 DB
                 myDB.close();
+            } else {
+                Toast.makeText(this, "Hint 1: 請將db準備好!", Toast.LENGTH_SHORT).show();
             }
-            else
-            {
-                Toast.makeText(this,"Hint 1: 請將db準備好!",Toast.LENGTH_SHORT).show();
-            }
-        }
-        catch (Exception e) {
-            Toast.makeText(this,e.toString(),Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
     @Override
