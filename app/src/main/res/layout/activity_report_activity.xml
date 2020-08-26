@@ -33,7 +33,7 @@
         android:layout_height="40dp"
         android:layout_marginBottom="12dp"
         android:checked="false"
-        android:thumb="@drawable/report_in_switch"
+        android:thumb="@drawable/report_inout_switch"
         android:track="@drawable/report_switch_background"
         app:layout_constraintBottom_toTopOf="@+id/reportScroll"
         app:layout_constraintEnd_toEndOf="parent"
