@@ -116,7 +116,6 @@
                     android:background="@android:drawable/menuitem_background"
                     android:scaleType="fitXY"
                     android:src="@drawable/assure_button"/>
-
             <ImageButton
                     android:id="@+id/cancelButton"
                     android:layout_width="150dp"
