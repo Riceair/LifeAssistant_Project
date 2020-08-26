@@ -25,15 +25,10 @@ import com.example.lifeassistant_project.R;
 
 import com.example.lifeassistant_project.activity_update.ClientProgress;
 
-import com.example.lifeassistant_project.activity_update.LoginHandler;
-import com.example.lifeassistant_project.activity_update.SchedulePackage;
+import com.example.lifeassistant_project.activity_update.static_handler.LoginHandler;
+import com.example.lifeassistant_project.activity_update.packages.SchedulePackage;
 
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;

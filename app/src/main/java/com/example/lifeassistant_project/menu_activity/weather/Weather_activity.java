@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.example.lifeassistant_project.R;
 import com.example.lifeassistant_project.activity_update.ClientProgress;
-import com.example.lifeassistant_project.activity_update.WeatherPackage;
+import com.example.lifeassistant_project.activity_update.packages.WeatherPackage;
 
 import java.text.SimpleDateFormat;
 import java.util.*;

@@ -1,4 +1,4 @@
-package com.example.lifeassistant_project.activity_update;
+package com.example.lifeassistant_project.activity_update.packages;
 
 import java.util.ArrayList;
 

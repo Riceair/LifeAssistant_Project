@@ -15,15 +15,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.lifeassistant_project.R;
-import com.example.lifeassistant_project.activity_update.SchedulePackage;
+import com.example.lifeassistant_project.activity_update.packages.SchedulePackage;
 
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.security.AccessController;
 import java.util.ArrayList;
 
 public class ViewPlan_activity extends AppCompatActivity {

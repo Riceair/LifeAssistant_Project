@@ -1,6 +1,6 @@
-package com.example.lifeassistant_project.activity_update;
+package com.example.lifeassistant_project.activity_update.packages;
 
-public class SchedulePackage {
+public class SchedulePackage extends DataPackage{
     private int id, year, month, day, start_time, end_time;
     private String todo, user;
     private int requestAction; // request 需要執行的行為

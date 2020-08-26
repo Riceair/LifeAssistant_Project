@@ -17,15 +17,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lifeassistant_project.R;
-import com.example.lifeassistant_project.activity_update.SchedulePackage;
+import com.example.lifeassistant_project.activity_update.packages.SchedulePackage;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;

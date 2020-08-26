@@ -1,8 +1,11 @@
-package com.example.lifeassistant_project.activity_update;
+package com.example.lifeassistant_project.activity_update.static_handler;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import com.example.lifeassistant_project.activity_update.ClientProgress;
+import com.example.lifeassistant_project.activity_update.packages.AccountPackage;
+import com.example.lifeassistant_project.activity_update.packages.SchedulePackage;
 
 import java.util.ArrayList;
 

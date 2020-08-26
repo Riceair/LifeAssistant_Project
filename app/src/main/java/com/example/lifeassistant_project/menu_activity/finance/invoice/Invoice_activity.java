@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
@@ -18,7 +17,7 @@ import android.widget.Toast;
 
 import com.example.lifeassistant_project.R;
 import com.example.lifeassistant_project.activity_update.ClientProgress;
-import com.example.lifeassistant_project.activity_update.ReceiptContainer;
+import com.example.lifeassistant_project.activity_update.packages.ReceiptContainer;
 
 public class Invoice_activity extends AppCompatActivity {
     private boolean isInvoiceUpdate;

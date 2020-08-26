@@ -35,6 +35,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lifeassistant_project.activity_update.*;
+import com.example.lifeassistant_project.activity_update.chatbot.ChatbotBehavior;
+import com.example.lifeassistant_project.activity_update.packages.LoginPackage;
+import com.example.lifeassistant_project.activity_update.packages.ReceiptContainer;
+import com.example.lifeassistant_project.activity_update.static_handler.DatabaseBehavior;
+import com.example.lifeassistant_project.activity_update.static_handler.LoginHandler;
 import com.example.lifeassistant_project.menu_activity.finance.Bookkeeping_activity;
 import com.example.lifeassistant_project.menu_activity.finance.invoice.Invoice_activity;
 import com.example.lifeassistant_project.menu_activity.login.Login_activity;
@@ -260,7 +265,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if(chatbotBehavior.getSentenceHandler().getOperation() == 4)
                 {
                     findViewById(R.id.popup_window).setVisibility(View.VISIBLE);
-
+                    findViewById(R.id.assure_button).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.cancelButton).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.weather_condition).setVisibility(View.INVISIBLE);
                 }
             }
         }

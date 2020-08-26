@@ -3,6 +3,9 @@ package com.example.lifeassistant_project.activity_update;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
+import com.example.lifeassistant_project.activity_update.chatbot.SentenceHandler;
+import com.example.lifeassistant_project.activity_update.packages.*;
+import com.example.lifeassistant_project.activity_update.static_handler.PackageHandler;
 
 import javax.net.SocketFactory;
 import java.io.IOException;
@@ -39,6 +42,9 @@ public class ClientProgress implements Runnable {
     public ArrayList<ReceiptContainer> getRcvReceiptContainer() { return rcvReceiptContainer; }
     public SentenceHandler getRcvSentence() { return this.rcvSentence; }
     public String getRcvUserKey() { return this.rcvUserKey; }
+
+    //DEBUG MEMBER
+    public DataPackage sndPackage;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -387,5 +393,29 @@ public class ClientProgress implements Runnable {
         this.loginPackage = loginPackage;
     }
     public void setReceiptQR() { this.packageType = "receiptQR"; }
+
+    //DEBUG
+//    public void setPackage(DataPackage dataPackage) { this.sndPackage = dataPackage; }
+//    public static ByteBuffer DEBUG_getInputByteBuffer(InputStream in, int allocateSize) throws IOException {
+//        StringBuffer buf = new StringBuffer();        // 建立讀取字串。
+//        ByteBuffer b_buf = ByteBuffer.allocate(allocateSize);
+//        try {
+//            while (true) {            // 不斷讀取。
+//                int x = in.read();    // 讀取一個 byte。(read 傳回 -1 代表串流結束)
+//                if (x==-1) break;     // x = -1 代表串流結束，讀取完畢，用 break 跳開。
+//                byte b = (byte) x;    // 將 x 轉為 byte，放入變數 b.
+//                b_buf.put(b);
+//                buf.append((char) b); // 假設傳送ASCII字元都是 ASCII。
+//            }
+//        } catch (Exception e) {
+//            in.close();               // 關閉輸入串流。
+//        }
+//
+//        return b_buf;
+//    }
+//    public void DEBUG_FUNCTION()
+//    {
+//
+//    }
 }
 

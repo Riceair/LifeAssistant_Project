@@ -1,4 +1,8 @@
-package com.example.lifeassistant_project.activity_update;
+package com.example.lifeassistant_project.activity_update.chatbot;
+
+import com.example.lifeassistant_project.activity_update.ClientProgress;
+import com.example.lifeassistant_project.activity_update.static_handler.DatabaseBehavior;
+import com.example.lifeassistant_project.activity_update.static_handler.LoginHandler;
 
 public class ChatbotBehavior {
     private int behaviorMode;

@@ -1,4 +1,7 @@
-package com.example.lifeassistant_project.activity_update;
+package com.example.lifeassistant_project.activity_update.static_handler;
+
+import com.example.lifeassistant_project.activity_update.ClientProgress;
+import com.example.lifeassistant_project.activity_update.packages.LoginPackage;
 
 public class LoginHandler {
     static private String userName = "Null";

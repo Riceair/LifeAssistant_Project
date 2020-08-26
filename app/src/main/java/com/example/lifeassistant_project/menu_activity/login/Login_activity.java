@@ -4,7 +4,6 @@ import android.content.SharedPreferences;
 import android.content.Intent;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -14,8 +13,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.lifeassistant_project.R;
-import com.example.lifeassistant_project.activity_update.LoginHandler;
-import com.example.lifeassistant_project.activity_update.LoginPackage;
+import com.example.lifeassistant_project.activity_update.static_handler.LoginHandler;
+import com.example.lifeassistant_project.activity_update.packages.LoginPackage;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class Login_activity extends AppCompatActivity {

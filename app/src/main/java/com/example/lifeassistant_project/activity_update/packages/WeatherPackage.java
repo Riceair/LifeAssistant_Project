@@ -1,4 +1,4 @@
-package com.example.lifeassistant_project.activity_update;
+package com.example.lifeassistant_project.activity_update.packages;
 
 public class WeatherPackage
 {
@@ -19,7 +19,7 @@ public class WeatherPackage
 
     private String situation;
 
-    WeatherPackage()
+    public WeatherPackage()
     {
         this.month = 0;
         this.day = 0;
