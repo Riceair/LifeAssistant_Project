@@ -10,7 +10,6 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -20,8 +19,6 @@ import android.widget.Toast;
 import com.example.lifeassistant_project.R;
 import com.example.lifeassistant_project.activity_update.ClientProgress;
 import com.example.lifeassistant_project.activity_update.ReceiptContainer;
-
-import java.util.ArrayList;
 
 public class Invoice_activity extends AppCompatActivity {
     private boolean isInvoiceUpdate;
@@ -72,8 +69,8 @@ public class Invoice_activity extends AppCompatActivity {
     }
 
     public void setCheckReward(){
-        final TextView receiptsewrial=findViewById(R.id.receiptsewrial);
-        receiptsewrial.addTextChangedListener(new TextWatcher() {
+        final TextView receiptserial=findViewById(R.id.receiptserial);
+        receiptserial.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
 
@@ -82,11 +79,11 @@ public class Invoice_activity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if(receiptsewrial.getText().toString().length()==3){
+                if(receiptserial.getText().toString().length()==3){
                     if(getSupportActionBar().getSubtitle().toString().equals("   "+getMonTitle(recepitContainerPre.getMonth()))){
-                        checkReward(receiptsewrial.getText().toString(),recepitContainerPre);
+                        checkReward(receiptserial.getText().toString(),recepitContainerPre);
                     }else{
-                        checkReward(receiptsewrial.getText().toString(),recepitContainerRec);
+                        checkReward(receiptserial.getText().toString(),recepitContainerRec);
                     }
                 }
             }
@@ -94,35 +91,35 @@ public class Invoice_activity extends AppCompatActivity {
     }
 
     private void checkReward(String myNumber,ReceiptContainer receiptContainer){
-        TextView invoice_reword=findViewById(R.id.invoice_reword);
-        LinearLayout invoice_reword_number=findViewById(R.id.invoice_reword_number);
+        TextView invoice_rewards=findViewById(R.id.invoice_rewards);
+        LinearLayout invoice_rewards_number=findViewById(R.id.invoice_rewards_number);
         TextView invoice_first5=findViewById(R.id.invoice_first5);
         TextView invoice_last3=findViewById(R.id.invoice_last3);
         boolean isReward=false;
 
         if(receiptContainer.getHitNumber().get(0).substring(5).equals(myNumber)){
-            invoice_reword.setText("注意特別獎");
-            invoice_reword.setBackgroundColor(Color.parseColor("#575D57"));
-            invoice_reword.setVisibility(View.VISIBLE);
+            invoice_rewards.setText("注意特別獎");
+            invoice_rewards.setBackgroundResource(R.drawable.rewards_bonus);
+            invoice_rewards.setVisibility(View.VISIBLE);
 
             //印出中獎碼全碼
             invoice_first5.setText(Html.fromHtml("<u>"+receiptContainer.getHitNumber().get(0).substring(0,5)+"</u>"));
             invoice_last3.setText(receiptContainer.getHitNumber().get(0).substring(5));
-            invoice_reword_number.setVisibility(View.VISIBLE);
+            invoice_rewards_number.setVisibility(View.VISIBLE);
 
             isReward=true;
         }
 
         if(!isReward){
             if(receiptContainer.getHitNumber().get(1).substring(5).equals(myNumber)){
-                invoice_reword.setText("注意特獎");
-                invoice_reword.setBackgroundColor(Color.parseColor("#575D57"));
-                invoice_reword.setVisibility(View.VISIBLE);
+                invoice_rewards.setText("注意特獎");
+                invoice_rewards.setBackgroundResource(R.drawable.rewards_bonus);
+                invoice_rewards.setVisibility(View.VISIBLE);
 
                 //印出中獎碼全碼
                 invoice_first5.setText(Html.fromHtml("<u>"+receiptContainer.getHitNumber().get(1).substring(0,5)+"</u>"));
                 invoice_last3.setText(receiptContainer.getHitNumber().get(1).substring(5));
-                invoice_reword_number.setVisibility(View.VISIBLE);
+                invoice_rewards_number.setVisibility(View.VISIBLE);
 
                 isReward=true;
             }
@@ -131,14 +128,14 @@ public class Invoice_activity extends AppCompatActivity {
         if(!isReward) {
             for (int i = 2; i < receiptContainer.getHitNumber().size() - 1; i++) {
                 if (receiptContainer.getHitNumber().get(i).substring(5).equals(myNumber)) {
-                    invoice_reword.setText("中獎!!");
-                    invoice_reword.setBackgroundColor(Color.parseColor("#1CE40E"));
-                    invoice_reword.setVisibility(View.VISIBLE);
+                    invoice_rewards.setText("中獎!!");
+                    invoice_rewards.setBackgroundResource(R.drawable.rewards_general);
+                    invoice_rewards.setVisibility(View.VISIBLE);
 
                     //印出中獎碼全碼
                     invoice_first5.setText(Html.fromHtml("<u>"+receiptContainer.getHitNumber().get(i).substring(0,5)+"</u>"));
                     invoice_last3.setText(receiptContainer.getHitNumber().get(i).substring(5));
-                    invoice_reword_number.setVisibility(View.VISIBLE);
+                    invoice_rewards_number.setVisibility(View.VISIBLE);
 
                     isReward = true;
                     break;
@@ -148,24 +145,24 @@ public class Invoice_activity extends AppCompatActivity {
 
         if(!isReward){ //增開六獎
             if(receiptContainer.getHitNumber().get(receiptContainer.getHitNumber().size()-1).substring(5).equals(myNumber)){
-                invoice_reword.setText("中獎!!");
-                invoice_reword.setBackgroundColor(Color.parseColor("#1CE40E"));
-                invoice_reword.setVisibility(View.VISIBLE);
+                invoice_rewards.setText("中獎!!");
+                invoice_rewards.setBackgroundResource(R.drawable.rewards_general);
+                invoice_rewards.setVisibility(View.VISIBLE);
 
                 //印出中獎碼全碼
                 invoice_first5.setText("六獎");
                 invoice_last3.setText(receiptContainer.getHitNumber().get(receiptContainer.getHitNumber().size()-1).substring(5));
-                invoice_reword_number.setVisibility(View.VISIBLE);
+                invoice_rewards_number.setVisibility(View.VISIBLE);
 
                 isReward = true;
             }
         }
 
         if(!isReward) {
-            invoice_reword.setText("未中獎");
-            invoice_reword.setBackgroundColor(Color.parseColor("#FF5722"));
-            invoice_reword.setVisibility(View.VISIBLE);
-            invoice_reword_number.setVisibility(View.INVISIBLE);
+            invoice_rewards.setText("未中獎");
+            invoice_rewards.setBackgroundResource(R.drawable.rewards_exile);
+            invoice_rewards.setVisibility(View.VISIBLE);
+            invoice_rewards_number.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -217,8 +214,8 @@ public class Invoice_activity extends AppCompatActivity {
             } else if (item.getItemId() == R.id.recInv) {
                 getSupportActionBar().setSubtitle("   " + getMonTitle(recepitContainerRec.getMonth()));
             }
-            TextView receiptsewrial=findViewById(R.id.receiptsewrial);
-            receiptsewrial.setText("");
+            TextView receiptserial=findViewById(R.id.receiptserial);
+            receiptserial.setText("");
         }
         if(item.getItemId()==android.R.id.home){
             Invoice_activity.this.finish();
