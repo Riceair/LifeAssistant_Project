@@ -30,7 +30,7 @@
     <RelativeLayout
         android:id="@+id/mainly"
         android:layout_width="350dp"
-        android:layout_height="450dp"
+        android:layout_height="430dp"
         android:layout_centerInParent="true"
         android:background="@drawable/new_stuff_background">
 
@@ -150,7 +150,7 @@
             android:layout_height="40dp"
             android:layout_alignParentBottom="true"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="80dp"
+            android:layout_marginBottom="30dp"
             android:layout_toLeftOf="@+id/cancelbutton"
             android:background="@drawable/assure_button"
             android:onClick="clickToUpdateSC"
@@ -216,7 +216,7 @@
             android:layout_height="40dp"
             android:layout_alignRight="@id/endstimeinput"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="80dp"
+            android:layout_marginBottom="30dp"
             android:background="@drawable/action_transparent"
             android:text="取消"
             android:textColor="@color/ic_launcher_background"
