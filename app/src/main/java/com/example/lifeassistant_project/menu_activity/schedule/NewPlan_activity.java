@@ -398,7 +398,7 @@ public class NewPlan_activity extends AppCompatActivity {
         final TextView eventbox = (TextView) findViewById(R.id.eventinput);
         final String eventname = eventbox.getText().toString();
         new AlertDialog.Builder(NewPlan_activity.this)
-                .setTitle("確定刪除" + eventname + "?").setNegativeButton("確定", new DialogInterface.OnClickListener() {
+                .setTitle("確定刪除" + eventname + "?").setPositiveButton("確定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 //                myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
@@ -414,7 +414,7 @@ public class NewPlan_activity extends AppCompatActivity {
                 startActivityForResult(intent, 3);
 
             }
-        }).setPositiveButton("取消", new DialogInterface.OnClickListener() {
+        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
             }

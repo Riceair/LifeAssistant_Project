@@ -145,19 +145,6 @@
             android:textColorHint="@color/colorAccent" />
 
         <Button
-            android:id="@+id/savebutton"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="30dp"
-            android:layout_toLeftOf="@+id/cancelbutton"
-            android:background="@drawable/assure_button"
-            android:onClick="clickToUpdateSC"
-            android:text="修改"
-            android:textSize="17dp" />
-
-        <Button
             android:id="@+id/datepicker"
             android:layout_width="55dp"
             android:layout_height="55dp"
@@ -211,10 +198,23 @@
             android:textSize="15dp" />
 
         <Button
+            android:id="@+id/savebutton"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="30dp"
+            android:layout_alignRight="@id/endstimepicker"
+            android:background="@drawable/assure_button"
+            android:onClick="clickToUpdateSC"
+            android:text="修改"
+            android:textSize="17dp" />
+
+        <Button
             android:id="@+id/cancelbutton"
             android:layout_width="70dp"
             android:layout_height="40dp"
-            android:layout_alignRight="@id/endstimeinput"
+            android:layout_toLeftOf="@+id/savebutton"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="30dp"
             android:background="@drawable/action_transparent"
