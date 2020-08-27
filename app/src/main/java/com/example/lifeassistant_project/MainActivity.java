@@ -38,8 +38,9 @@ import android.widget.Toast;
 
 import com.example.lifeassistant_project.activity_update.*;
 import com.example.lifeassistant_project.activity_update.chatbot.ChatbotBehavior;
+import com.example.lifeassistant_project.activity_update.packages.DataPackage;
 import com.example.lifeassistant_project.activity_update.packages.LoginPackage;
-import com.example.lifeassistant_project.activity_update.packages.ReceiptContainer;
+import com.example.lifeassistant_project.activity_update.packages.ReceiptPackage;
 import com.example.lifeassistant_project.activity_update.static_handler.DatabaseBehavior;
 import com.example.lifeassistant_project.activity_update.static_handler.LoginHandler;
 import com.example.lifeassistant_project.menu_activity.finance.Bookkeeping_activity;
@@ -50,8 +51,6 @@ import com.example.lifeassistant_project.menu_activity.schedule.Planner_activity
 import com.example.lifeassistant_project.menu_activity.finance.report.Report_activity;
 import com.example.lifeassistant_project.menu_activity.weather.Weather_activity;
 import com.google.android.material.navigation.NavigationView;
-
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -258,7 +257,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case 3:
                 ClientProgress client = new ClientProgress();
-                client.setReceiptQR();
+                client.setPackage(new ReceiptPackage());
                 Thread cThread = new Thread(client);
                 cThread.start();
                 synchronized (client)
@@ -271,13 +270,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                 }
 
-                ArrayList<ReceiptContainer> tempList = client.getRcvReceiptContainer();
+                ArrayList<DataPackage> tempList = client.getRcvPackageList();
 
-                for(ReceiptContainer r : tempList)
+                for(DataPackage r : tempList)
                 {
-                    System.out.println(r.getYear());
-                    System.out.println(r.getMonth());
-                    for(String str : r.getHitNumber())
+                    ReceiptPackage tempR = (ReceiptPackage) r;
+                    System.out.println(tempR.getYear());
+                    System.out.println(tempR.getMonth());
+                    for(String str : tempR.getHitNumber())
                     {
                         System.out.println(str);
                     }

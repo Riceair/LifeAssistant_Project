@@ -40,7 +40,6 @@ public class LoginHandler {
         LoginPackage checkPackage = new LoginPackage();
         checkPackage.setName("key");
         checkPackage.setPassword(LoginHandler.getUserKey());
-        client.setLogin(checkPackage);
         client.setPackage(checkPackage);
         Thread cThread = new Thread(client);
         cThread.start();
@@ -70,7 +69,6 @@ public class LoginHandler {
 
     static private String LoginCertification(LoginPackage loginPackage) {
         ClientProgress client = new ClientProgress();
-        client.setLogin(loginPackage);
         client.setPackage(loginPackage);
         Thread cThread = new Thread(client);
         cThread.start();

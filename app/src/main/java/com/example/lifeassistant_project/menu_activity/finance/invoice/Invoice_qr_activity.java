@@ -5,12 +5,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
@@ -22,7 +20,7 @@ import android.widget.Toast;
 
 import com.example.lifeassistant_project.R;
 
-import com.example.lifeassistant_project.activity_update.packages.ReceiptContainer;
+import com.example.lifeassistant_project.activity_update.packages.ReceiptPackage;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -43,7 +41,7 @@ public class Invoice_qr_activity extends AppCompatActivity {
     private TextView reword_amount;
 
     private boolean isInvoiceUpdate;
-    private ReceiptContainer recepitContainerPre,recepitContainerRec;
+    private ReceiptPackage recepitContainerPre,recepitContainerRec;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +57,8 @@ public class Invoice_qr_activity extends AppCompatActivity {
 
         Bundle bundle=getIntent().getExtras();
         isInvoiceUpdate=bundle.getBoolean("isInvoiceUpdate");
-        recepitContainerPre=new Gson().fromJson(bundle.getString("recepitContainerPre"),ReceiptContainer.class);
-        recepitContainerRec= new Gson().fromJson(bundle.getString("recepitContainerRec"),ReceiptContainer.class);
+        recepitContainerPre=new Gson().fromJson(bundle.getString("recepitContainerPre"), ReceiptPackage.class);
+        recepitContainerRec= new Gson().fromJson(bundle.getString("recepitContainerRec"), ReceiptPackage.class);
 
         if(!isInvoiceUpdate) Toast.makeText(this,"尚未取得兌獎資訊",Toast.LENGTH_SHORT).show();
         bind();
@@ -181,15 +179,15 @@ public class Invoice_qr_activity extends AppCompatActivity {
         }
     }
 
-    private void checkReword(String number,ReceiptContainer receiptContainer){
-        if(receiptContainer.getHitNumber().get(0).equals(number)){
+    private void checkReword(String number, ReceiptPackage receiptPackage){
+        if(receiptPackage.getHitNumber().get(0).equals(number)){
             invoice_reword.setText("特別獎!!");
             invoice_reword.setBackgroundResource(R.drawable.rewards_bonus);
             invoice_reword.setVisibility(View.VISIBLE);
 
             //印出中獎碼全碼
             invoice_first5.setText("");
-            invoice_last3.setText(receiptContainer.getHitNumber().get(0));
+            invoice_last3.setText(receiptPackage.getHitNumber().get(0));
             invoice_reword_number.setVisibility(View.VISIBLE);
 
             //印出中獎金額
@@ -198,14 +196,14 @@ public class Invoice_qr_activity extends AppCompatActivity {
             return;
         }
 
-        if(receiptContainer.getHitNumber().get(1).equals(number)){
+        if(receiptPackage.getHitNumber().get(1).equals(number)){
             invoice_reword.setText("特獎!!");
             invoice_reword.setBackgroundResource(R.drawable.rewards_bonus);
             invoice_reword.setVisibility(View.VISIBLE);
 
             //印出中獎碼全碼
             invoice_first5.setText("");
-            invoice_last3.setText(receiptContainer.getHitNumber().get(1));
+            invoice_last3.setText(receiptPackage.getHitNumber().get(1));
             invoice_reword_number.setVisibility(View.VISIBLE);
 
             //印出中獎金額
@@ -214,21 +212,21 @@ public class Invoice_qr_activity extends AppCompatActivity {
             return;
         }
 
-        for (int i = 2; i < receiptContainer.getHitNumber().size() - 1; i++) {
-            if (receiptContainer.getHitNumber().get(i).substring(5).equals(number.substring(5))) {
-                checkJackPot(number,receiptContainer.getHitNumber().get(i));
+        for (int i = 2; i < receiptPackage.getHitNumber().size() - 1; i++) {
+            if (receiptPackage.getHitNumber().get(i).substring(5).equals(number.substring(5))) {
+                checkJackPot(number, receiptPackage.getHitNumber().get(i));
                 return;
             }
         }
 
-        if(receiptContainer.getHitNumber().get(receiptContainer.getHitNumber().size()-1).substring(5).equals(number.substring(5))){
+        if(receiptPackage.getHitNumber().get(receiptPackage.getHitNumber().size()-1).substring(5).equals(number.substring(5))){
             invoice_reword.setText("六獎!!");
             invoice_reword.setBackgroundResource(R.drawable.rewards_general);
             invoice_reword.setVisibility(View.VISIBLE);
 
             //印出中獎碼全碼
             invoice_first5.setText("");
-            invoice_last3.setText(receiptContainer.getHitNumber().get(receiptContainer.getHitNumber().size()-1).substring(5));
+            invoice_last3.setText(receiptPackage.getHitNumber().get(receiptPackage.getHitNumber().size()-1).substring(5));
             invoice_reword_number.setVisibility(View.VISIBLE);
 
             //印出中獎金額

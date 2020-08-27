@@ -387,8 +387,6 @@ public class NewPlan_activity extends AppCompatActivity {
         writeToSCDB();
         ClientProgress client = new ClientProgress();
         this.sendPackage.setUser(LoginHandler.getUserName());
-        client.setPlan(this.sendPackage);
-        //DEBUG
         client.setPackage(this.sendPackage);
         Thread conn = new Thread(client);
         conn.start();

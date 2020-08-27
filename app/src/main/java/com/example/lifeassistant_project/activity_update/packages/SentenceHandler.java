@@ -50,6 +50,8 @@ public class SentenceHandler extends DataPackage{
         byte[] rcvArray = Arrays.copyOfRange(b_buf.array(), 3, b_buf.array().length);
 
         String rcvString = new String(rcvArray, StandardCharsets.UTF_8);
+        System.out.println("Sentence package:");
+        System.out.println(rcvString);
         SentenceHandler rcvSentence = PackageHandler.sentencePackageDecode(rcvArray);
 
         System.out.println("message send.");                    // 印出接收到的訊息。

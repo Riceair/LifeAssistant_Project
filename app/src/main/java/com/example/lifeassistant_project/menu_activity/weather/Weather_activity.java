@@ -72,7 +72,6 @@ public class Weather_activity extends AppCompatActivity {
         final int WEEK_SIZE = 14;
 
         ClientProgress client = new ClientProgress();
-        client.setWeather();
         client.setPackage(new WeatherPackage());
         Thread cThread = new Thread(client);
         cThread.start();

@@ -9,7 +9,6 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -19,15 +18,14 @@ import android.widget.Toast;
 import com.example.lifeassistant_project.R;
 import com.example.lifeassistant_project.activity_update.ClientProgress;
 import com.example.lifeassistant_project.activity_update.packages.DataPackage;
-import com.example.lifeassistant_project.activity_update.packages.ReceiptContainer;
-import com.example.lifeassistant_project.activity_update.packages.ReceiptContainer;
+import com.example.lifeassistant_project.activity_update.packages.ReceiptPackage;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
 public class Invoice_activity extends AppCompatActivity {
     private boolean isInvoiceUpdate;
-    private ReceiptContainer recepitContainerPre,recepitContainerRec;
+    private ReceiptPackage recepitContainerPre,recepitContainerRec;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -49,8 +47,7 @@ public class Invoice_activity extends AppCompatActivity {
 
     private void updateInvoice(){  //更新發票資訊
         ClientProgress client = new ClientProgress();
-        client.setReceiptQR();
-        client.setPackage(new ReceiptContainer());
+        client.setPackage(new ReceiptPackage());
         Thread cThread = new Thread(client);
         cThread.start();
         synchronized (client)
@@ -64,8 +61,8 @@ public class Invoice_activity extends AppCompatActivity {
 
             ArrayList<DataPackage> rcvReceiptContainer = client.getRcvPackageList();
             if(rcvReceiptContainer!=null) {
-                recepitContainerRec = (ReceiptContainer) rcvReceiptContainer.get(0); //較新的
-                recepitContainerPre = (ReceiptContainer) rcvReceiptContainer.get(1);
+                recepitContainerRec = (ReceiptPackage) rcvReceiptContainer.get(0); //較新的
+                recepitContainerPre = (ReceiptPackage) rcvReceiptContainer.get(1);
                 isInvoiceUpdate=true;
             }
             else{
@@ -99,35 +96,35 @@ public class Invoice_activity extends AppCompatActivity {
         });
     }
 
-    private void checkReward(String myNumber,ReceiptContainer receiptContainer){
+    private void checkReward(String myNumber, ReceiptPackage receiptPackage){
         TextView invoice_rewards=findViewById(R.id.invoice_rewards);
         LinearLayout invoice_rewards_number=findViewById(R.id.invoice_rewords_number);
         TextView invoice_first5=findViewById(R.id.invoice_first5);
         TextView invoice_last3=findViewById(R.id.invoice_last3);
         boolean isReward=false;
 
-        if(receiptContainer.getHitNumber().get(0).substring(5).equals(myNumber)){
+        if(receiptPackage.getHitNumber().get(0).substring(5).equals(myNumber)){
             invoice_rewards.setText("注意特別獎");
             invoice_rewards.setBackgroundResource(R.drawable.rewards_bonus);
             invoice_rewards.setVisibility(View.VISIBLE);
 
             //印出中獎碼全碼
-            invoice_first5.setText(Html.fromHtml("<u>"+receiptContainer.getHitNumber().get(0).substring(0,5)+"</u>"));
-            invoice_last3.setText(receiptContainer.getHitNumber().get(0).substring(5));
+            invoice_first5.setText(Html.fromHtml("<u>"+ receiptPackage.getHitNumber().get(0).substring(0,5)+"</u>"));
+            invoice_last3.setText(receiptPackage.getHitNumber().get(0).substring(5));
             invoice_rewards_number.setVisibility(View.VISIBLE);
 
             isReward=true;
         }
 
         if(!isReward){
-            if(receiptContainer.getHitNumber().get(1).substring(5).equals(myNumber)){
+            if(receiptPackage.getHitNumber().get(1).substring(5).equals(myNumber)){
                 invoice_rewards.setText("注意特獎");
                 invoice_rewards.setBackgroundResource(R.drawable.rewards_bonus);
                 invoice_rewards.setVisibility(View.VISIBLE);
 
                 //印出中獎碼全碼
-                invoice_first5.setText(Html.fromHtml("<u>"+receiptContainer.getHitNumber().get(1).substring(0,5)+"</u>"));
-                invoice_last3.setText(receiptContainer.getHitNumber().get(1).substring(5));
+                invoice_first5.setText(Html.fromHtml("<u>"+ receiptPackage.getHitNumber().get(1).substring(0,5)+"</u>"));
+                invoice_last3.setText(receiptPackage.getHitNumber().get(1).substring(5));
                 invoice_rewards_number.setVisibility(View.VISIBLE);
 
                 isReward=true;
@@ -135,15 +132,15 @@ public class Invoice_activity extends AppCompatActivity {
         }
 
         if(!isReward) {
-            for (int i = 2; i < receiptContainer.getHitNumber().size() - 1; i++) {
-                if (receiptContainer.getHitNumber().get(i).substring(5).equals(myNumber)) {
+            for (int i = 2; i < receiptPackage.getHitNumber().size() - 1; i++) {
+                if (receiptPackage.getHitNumber().get(i).substring(5).equals(myNumber)) {
                     invoice_rewards.setText("中獎!!");
                     invoice_rewards.setBackgroundResource(R.drawable.rewards_general);
                     invoice_rewards.setVisibility(View.VISIBLE);
 
                     //印出中獎碼全碼
-                    invoice_first5.setText(Html.fromHtml("<u>"+receiptContainer.getHitNumber().get(i).substring(0,5)+"</u>"));
-                    invoice_last3.setText(receiptContainer.getHitNumber().get(i).substring(5));
+                    invoice_first5.setText(Html.fromHtml("<u>"+ receiptPackage.getHitNumber().get(i).substring(0,5)+"</u>"));
+                    invoice_last3.setText(receiptPackage.getHitNumber().get(i).substring(5));
                     invoice_rewards_number.setVisibility(View.VISIBLE);
 
                     isReward = true;
@@ -153,14 +150,14 @@ public class Invoice_activity extends AppCompatActivity {
         }
 
         if(!isReward){ //增開六獎
-            if(receiptContainer.getHitNumber().get(receiptContainer.getHitNumber().size()-1).substring(5).equals(myNumber)){
+            if(receiptPackage.getHitNumber().get(receiptPackage.getHitNumber().size()-1).substring(5).equals(myNumber)){
                 invoice_rewards.setText("中獎!!");
                 invoice_rewards.setBackgroundResource(R.drawable.rewards_general);
                 invoice_rewards.setVisibility(View.VISIBLE);
 
                 //印出中獎碼全碼
                 invoice_first5.setText("六獎");
-                invoice_last3.setText(receiptContainer.getHitNumber().get(receiptContainer.getHitNumber().size()-1).substring(5));
+                invoice_last3.setText(receiptPackage.getHitNumber().get(receiptPackage.getHitNumber().size()-1).substring(5));
                 invoice_rewards_number.setVisibility(View.VISIBLE);
 
                 isReward = true;

@@ -1,6 +1,5 @@
 package com.example.lifeassistant_project.activity_update.packages;
 
-import com.example.lifeassistant_project.activity_update.ClientProgress;
 import com.example.lifeassistant_project.activity_update.static_handler.PackageHandler;
 
 import javax.net.SocketFactory;
@@ -106,10 +105,10 @@ public class AccountPackage extends DataPackage
         }
 
         System.out.println("message send.");                    // 印出接收到的訊息。
-        client.close();                                // 關閉 TcpSocket.
+        client.close();                                         // 關閉 TcpSocket.
         return resultPackageList;
     }
-    /////////
+
     public int getID() {
         return ID;
     }

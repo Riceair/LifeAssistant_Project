@@ -1,7 +1,6 @@
 package com.example.lifeassistant_project.activity_update.chatbot;
 
 import com.example.lifeassistant_project.activity_update.ClientProgress;
-import com.example.lifeassistant_project.activity_update.packages.DataPackage;
 import com.example.lifeassistant_project.activity_update.packages.SentenceHandler;
 import com.example.lifeassistant_project.activity_update.static_handler.DatabaseBehavior;
 import com.example.lifeassistant_project.activity_update.static_handler.LoginHandler;
@@ -42,7 +41,6 @@ public class ChatbotBehavior {
     }
     public void sendSentence()
     {
-        this.client.setChatBot(this.sendSentence);
         this.client.setPackage(this.sendSentence);
         Thread cThread = new Thread(this.client);
         cThread.start();

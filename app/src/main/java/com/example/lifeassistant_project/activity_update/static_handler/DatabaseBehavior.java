@@ -32,7 +32,6 @@ public class DatabaseBehavior {
         selectAccount.setRequestAction(3);
         selectAccount.setUser(LoginHandler.getUserName());
         if(!selectAccount.getUser().equals("Null")) selectAccount.setID(1);
-        client.setBookkeeping(selectAccount);
         client.setPackage(selectAccount);
         Thread cThread = new Thread(client);
         cThread.start();
@@ -87,7 +86,6 @@ public class DatabaseBehavior {
         selectSchedule.setRequestAction(3);
         selectSchedule.setUser(LoginHandler.getUserName());
         if(!selectSchedule.getUser().equals("Null")) selectSchedule.setID(1);
-        client.setPlan(selectSchedule);
         client.setPackage(selectSchedule);
         Thread cThread = new Thread(client);
         cThread.start();

@@ -626,11 +626,11 @@ public class PackageHandler
         return buf.array();
     }
 
-    static public ReceiptContainer ReceiptQRPackageDecode(byte[] message)
+    static public ReceiptPackage ReceiptQRPackageDecode(byte[] message)
     {
         final int DATE_SIZE = 8, HIT_NUMBER_SIZE = 56;
         int currentSize = 0;
-        ReceiptContainer result = new ReceiptContainer();
+        ReceiptPackage result = new ReceiptPackage();
         String tempString;
 
         tempString = TransByteArray2String(Arrays.copyOfRange(message, currentSize, currentSize + DATE_SIZE), DATE_SIZE);

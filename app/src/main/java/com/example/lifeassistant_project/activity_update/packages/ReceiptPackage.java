@@ -13,18 +13,18 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class ReceiptContainer extends DataPackage{
+public class ReceiptPackage extends DataPackage{
     private String year, month;
     private ArrayList<String> hitNumber;
 
-    public ReceiptContainer()
+    public ReceiptPackage()
     {
         this.year = "2000";
         this.month = "01";
         this.hitNumber = new ArrayList<String>();
     }
 
-    public ReceiptContainer(String year, String month, ArrayList<String> hitNumber)
+    public ReceiptPackage(String year, String month, ArrayList<String> hitNumber)
     {
         this.year = year;
         this.month = month;
@@ -63,7 +63,7 @@ public class ReceiptContainer extends DataPackage{
 
             ptr += 3;
             byte[] rcvArray = Arrays.copyOfRange(b_buf.array(), ptr, ptr + DATE_SIZE + HIT_NUMBER_SIZE);
-            ReceiptContainer rcvReceipt = PackageHandler.ReceiptQRPackageDecode(rcvArray);
+            ReceiptPackage rcvReceipt = PackageHandler.ReceiptQRPackageDecode(rcvArray);
             resultList.add(rcvReceipt);
         }
 
