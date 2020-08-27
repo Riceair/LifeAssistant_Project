@@ -18,6 +18,8 @@ import com.example.lifeassistant_project.activity_update.packages.LoginPackage;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class Login_activity extends AppCompatActivity {
+    private static final int REGISTER_CODE = 11;
+    private static final int LOGIN_CODE = 12;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,13 @@ public class Login_activity extends AppCompatActivity {
                     if(LoginHandler.Login(loginPackage))
                     {
                         saveInformation(loginPackage.getName(), loginPackage.getPassword());
-                        Login_activity.this.finish();
+                        Intent intent=new Intent();
+                        intent.putExtra("ACCOUNT",loginPackage.getName());
+                        setResult(RESULT_OK,intent);
+                        finish();
+                    }
+                    else{
+                        Toast.makeText(Login_activity.this,"帳號或密碼錯誤",Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -53,7 +61,7 @@ public class Login_activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Login_activity.this,Register_activity.class);
-                Login_activity.this.startActivityForResult(intent,11);
+                Login_activity.this.startActivityForResult(intent,REGISTER_CODE);
                 overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
             }
         });
@@ -62,8 +70,8 @@ public class Login_activity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==11){
-            if(resultCode==11){
+        if(requestCode==REGISTER_CODE){
+            if(resultCode==RESULT_OK){
                 Bundle bundle = data.getExtras();
                 String account=bundle.getString("ACCOUNT");
                 String password=bundle.getString("PASSWORD");

@@ -556,10 +556,7 @@ public class Bookkeeping_activity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         delToDB(categoryList[chose[0]]);
                     }
-                }).setPositiveButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {}
-                }).show();
+                }).setPositiveButton("取消", null).show();
             }
         });
         dialog_list.show();

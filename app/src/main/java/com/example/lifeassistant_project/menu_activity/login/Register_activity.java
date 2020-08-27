@@ -51,7 +51,7 @@ public class Register_activity extends AppCompatActivity {
             Intent intent=new Intent();
             intent.putExtra("ACCOUNT",account_input.getText().toString());
             intent.putExtra("PASSWORD",pw_input.getText().toString());
-            setResult(11,intent);
+            setResult(RESULT_OK,intent);
             finish();
         }
         else{

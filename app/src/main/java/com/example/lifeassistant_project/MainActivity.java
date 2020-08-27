@@ -1,8 +1,10 @@
 package com.example.lifeassistant_project;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -49,6 +51,8 @@ import com.example.lifeassistant_project.menu_activity.finance.report.Report_act
 import com.example.lifeassistant_project.menu_activity.weather.Weather_activity;
 import com.google.android.material.navigation.NavigationView;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -62,6 +66,8 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener {
     private static final String PATH = "/data/data/com.example.lifeassistant_project";
     private static final String DBNAME = "myDB.db";
+    private static final int REGISTER_CODE = 11;
+    private static final int LOGIN_CODE = 12;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private Toolbar toolbar;
@@ -70,6 +76,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ImageView userSayButton;
     private TextView userSay;
     private TextView chatBotSay;
+
+    //註冊 登入
+    private ImageView loginImg, regImg;
+    private TextView regText,account_id;
 
     private LocationManager locationManager;
     private Geocoder geocoder;
@@ -128,19 +138,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
         //popup window hidden
-        findViewById(R.id.popup_window).setVisibility(View.VISIBLE);
+        findViewById(R.id.popup_window).setVisibility(View.INVISIBLE);
 
-        //登入
-        View headerView=navigationView.getHeaderView(0);
-        ImageView LoginImg=headerView.findViewById(R.id.LoginImg);
-        LoginImg.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Intent intent=new Intent(MainActivity.this,Login_activity.class);
-                MainActivity.this.startActivity(intent);
-                overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
-            }
-        });
+        bind();
+        setBeforeLogin();
 
         //Remeber user's content
         SharedPreferences shared = getSharedPreferences("shared", MODE_PRIVATE);
@@ -153,24 +154,68 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             System.out.println("There is no user's content!");
         }
+    }
 
-        //註冊
+    private void bind(){
+        loginImg = navigationView.getHeaderView(0).findViewById(R.id.LoginImg);
+        account_id = navigationView.getHeaderView(0).findViewById(R.id.account_id);
+        regImg = navigationView.getHeaderView(0).findViewById(R.id.RegImg);
+        regText = navigationView.getHeaderView(0).findViewById(R.id.RegText);
+    }
 
-        ImageView RegImg=headerView.findViewById(R.id.RegImg);
-        RegImg.setOnClickListener(new View.OnClickListener(){
+    /////////////// Before Login ///////////////////////////////////
+    private void setBeforeLogin(){
+        //登入
+        loginImg.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Intent intent=new Intent(MainActivity.this, Register_activity.class);
-                MainActivity.this.startActivityForResult(intent,11);
+                Intent intent=new Intent(MainActivity.this,Login_activity.class);
+                MainActivity.this.startActivityForResult(intent,LOGIN_CODE);
                 overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
             }
         });
-        headerView.findViewById(R.id.RegText).setOnClickListener(new View.OnClickListener() {
+
+        //註冊
+        regImg.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent=new Intent(MainActivity.this, Register_activity.class);
+                MainActivity.this.startActivityForResult(intent,REGISTER_CODE);
+                overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
+            }
+        });
+        regText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(MainActivity.this, Register_activity.class);
-                MainActivity.this.startActivityForResult(intent,11);
+                MainActivity.this.startActivityForResult(intent,REGISTER_CODE);
                 overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
+            }
+        });
+        regImg.setVisibility(View.VISIBLE);
+        regText.setText("尚未加入嗎？按此註冊");
+        account_id.setText("按此登入");
+    }
+
+    private void setAfterLogin(String account){
+        loginImg.setOnClickListener(null);
+        account_id.setText(account);
+        regImg.setVisibility(View.INVISIBLE);
+        regImg.setOnClickListener(null);
+        regText.setText("登出");
+        regText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("確定登出").setNegativeButton("確定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //Login out here
+
+                        //After login out
+                        setBeforeLogin();
+                    }
+                }).setPositiveButton("取消",null).show();
             }
         });
     }
@@ -240,10 +285,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    ////////////////////////////語音///////////////////////////////////
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if(requestCode == 200){
             if(resultCode == RESULT_OK && data != null){
                 ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
@@ -271,8 +316,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         }
-        else if(requestCode==11){
-            if(resultCode==11){
+        else if(requestCode==REGISTER_CODE){
+            if(resultCode==RESULT_OK){
                 Bundle bundle = data.getExtras();
                 String account=bundle.getString("ACCOUNT");
                 String password=bundle.getString("PASSWORD");
@@ -280,7 +325,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if(LoginHandler.Login(regloginpackage))
                 {
                     saveInformation(regloginpackage.getName(), regloginpackage.getPassword());
+                    setAfterLogin(account);
                 }
+            }
+        }
+        else if(requestCode==LOGIN_CODE){
+            if(resultCode==RESULT_OK){
+                Bundle bundle=data.getExtras();
+                String account=bundle.getString("ACCOUNT");
+                Toast.makeText(this,"登入成功",Toast.LENGTH_SHORT).show();
+                setAfterLogin(account);
             }
         }
     }
