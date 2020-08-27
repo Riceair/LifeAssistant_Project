@@ -216,6 +216,8 @@ public class Bookkeeping_activity extends AppCompatActivity {
                 delAccount.setID(recordID);
                 delAccount.setRequestAction(1);
                 client.setBookkeeping(delAccount);
+                //DEBUG
+                client.setPackage(delAccount);
                 new Thread(client).start();
 
                 myDB.close();
@@ -233,7 +235,8 @@ public class Bookkeeping_activity extends AppCompatActivity {
         ClientProgress client = new ClientProgress();
         this.sendPackage.setUser(LoginHandler.getUserName());
         client.setBookkeeping(this.sendPackage);
-//        client.setWeather();
+        //DEBUG
+        client.setPackage(this.sendPackage);
         Thread conn = new Thread(client);
         conn.start();
         //
@@ -285,6 +288,8 @@ public class Bookkeeping_activity extends AppCompatActivity {
         updAccount.setRequestAction(2);
         updAccount.setUser(LoginHandler.getUserName());
         client.setBookkeeping(updAccount);
+        // DEBUG
+        client.setPackage(updAccount);
         new Thread(client).start();
 
         myDB.close();

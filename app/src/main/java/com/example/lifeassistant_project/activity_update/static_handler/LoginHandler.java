@@ -41,6 +41,7 @@ public class LoginHandler {
         checkPackage.setName("key");
         checkPackage.setPassword(LoginHandler.getUserKey());
         client.setLogin(checkPackage);
+        client.setPackage(checkPackage);
         Thread cThread = new Thread(client);
         cThread.start();
 
@@ -54,7 +55,9 @@ public class LoginHandler {
             }
         }
 
-        String rcvMessage = client.getRcvUserKey();
+//        String rcvMessage = client.getRcvUserKey();
+        LoginPackage resultPackage = (LoginPackage) client.getRcvPackageList().get(0);
+        String rcvMessage = resultPackage.getAuthorizationKey();
         if(!rcvMessage.equals("OK"))
         {
             return false;
@@ -68,6 +71,7 @@ public class LoginHandler {
     static private String LoginCertification(LoginPackage loginPackage) {
         ClientProgress client = new ClientProgress();
         client.setLogin(loginPackage);
+        client.setPackage(loginPackage);
         Thread cThread = new Thread(client);
         cThread.start();
 
@@ -78,7 +82,8 @@ public class LoginHandler {
                 System.out.println(e);
             }
         }
-        return client.getRcvUserKey();
+        LoginPackage resultPackage = (LoginPackage) client.getRcvPackageList().get(0);
+        return resultPackage.getAuthorizationKey();
     }
 
     static public void setUserName(String userName) { LoginHandler.userName = userName; }

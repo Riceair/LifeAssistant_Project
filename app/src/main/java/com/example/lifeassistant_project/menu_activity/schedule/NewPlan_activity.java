@@ -343,7 +343,6 @@ public class NewPlan_activity extends AppCompatActivity {
         values.put("開始時間", start_time);
         values.put("結束時間", end_time);
 
-
         myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
 
 
@@ -379,8 +378,6 @@ public class NewPlan_activity extends AppCompatActivity {
             Toast.makeText(this, "新增失敗", Toast.LENGTH_SHORT).show();
         }
 
-
-
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
         finish();
@@ -391,6 +388,8 @@ public class NewPlan_activity extends AppCompatActivity {
         ClientProgress client = new ClientProgress();
         this.sendPackage.setUser(LoginHandler.getUserName());
         client.setPlan(this.sendPackage);
+        //DEBUG
+        client.setPackage(this.sendPackage);
         Thread conn = new Thread(client);
         conn.start();
     }

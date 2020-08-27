@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.lifeassistant_project.R;
 import com.example.lifeassistant_project.activity_update.ClientProgress;
+import com.example.lifeassistant_project.activity_update.packages.DataPackage;
 import com.example.lifeassistant_project.activity_update.packages.WeatherPackage;
 
 import java.text.SimpleDateFormat;
@@ -72,6 +73,7 @@ public class Weather_activity extends AppCompatActivity {
 
         ClientProgress client = new ClientProgress();
         client.setWeather();
+        client.setPackage(new WeatherPackage());
         Thread cThread = new Thread(client);
         cThread.start();
         synchronized (client)
@@ -85,7 +87,7 @@ public class Weather_activity extends AppCompatActivity {
             }
         }
 
-        ArrayList<WeatherPackage> weatherData = client.getRcvWeatherData();
+        ArrayList<DataPackage> weatherData = client.getRcvPackageList();
         if(weatherData.size() == 0)
         {
             Toast.makeText(this,"無網路連線",Toast.LENGTH_SHORT).show();
@@ -95,7 +97,8 @@ public class Weather_activity extends AppCompatActivity {
         int pointer;
         for (pointer = 0;pointer < weatherData.size(); pointer++)
         {
-            if(weatherData.get(pointer).getCity().equals(currentCity)) break;
+            WeatherPackage weatherPackage = (WeatherPackage) weatherData.get(pointer);
+            if(weatherPackage.getCity().equals(currentCity)) break;
         }
 
         if(pointer == weatherData.size())
@@ -107,7 +110,7 @@ public class Weather_activity extends AppCompatActivity {
 
         for(int i = 0;i < WEEK_SIZE; i++)
         {
-            WeatherPackage currentWeather = weatherData.get(pointer + i);
+            WeatherPackage currentWeather = (WeatherPackage) weatherData.get(pointer + i);
             switch (i)
             {
                 case 0:

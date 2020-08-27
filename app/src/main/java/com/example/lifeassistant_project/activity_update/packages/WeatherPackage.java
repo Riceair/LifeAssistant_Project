@@ -1,6 +1,20 @@
 package com.example.lifeassistant_project.activity_update.packages;
 
-public class WeatherPackage
+import com.example.lifeassistant_project.activity_update.static_handler.PackageHandler;
+
+import javax.net.SocketFactory;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class WeatherPackage extends DataPackage
 {
     private int month;
     private int day;
@@ -27,6 +41,45 @@ public class WeatherPackage
         this.min_temperature = 0;
         this.city = "";
         this.period = "";
+    }
+
+    @Override
+    public ArrayList<DataPackage> sendOperation(String address, int port) throws IOException {
+        super.sendOperation(address, port);
+        System.out.println("wea");
+        final int PACKAGE_SIZE = 76, CITY_COUNT = 22, WEATHER_PER_CITY = 14;
+
+        SocketAddress temp = new InetSocketAddress(address, port);
+        Socket client = SocketFactory.getDefault().createSocket();
+        client.connect(temp, connectionTimeout);
+
+        OutputStream out = client.getOutputStream();
+
+        // send account package
+        out.write(PackageHandler.weatherPackageEncode());
+        out.flush();
+        InputStream in = client.getInputStream();      // 取得輸入訊息的串流
+
+        StringBuffer buf = new StringBuffer();        // 建立讀取字串。
+        ByteBuffer b_buf = super.getInputByteBuffer(in, PACKAGE_SIZE * CITY_COUNT * WEATHER_PER_CITY);
+        out.close();
+
+        byte[] rcvArray = Arrays.copyOfRange(b_buf.array(), 0, b_buf.array().length);
+        ArrayList<DataPackage> weatherData = new ArrayList<DataPackage>();
+        for (int i = 0, currentLength = 0; i < b_buf.array().length / PACKAGE_SIZE; i++)
+        {
+//            System.out.println(i);
+            byte[] resultArray = Arrays.copyOfRange(b_buf.array(), currentLength+3, currentLength+PACKAGE_SIZE);
+            weatherData.add(PackageHandler.weatherPackageDecode(resultArray));
+            currentLength += PACKAGE_SIZE;
+        }
+
+        String rcvString = new String(rcvArray, StandardCharsets.UTF_8);
+//        System.out.println(rcvString);
+
+        System.out.println("message send.");                    // 印出接收到的訊息。
+        client.close();                                // 關閉 TcpSocket.
+        return weatherData;
     }
 
     public int getMonth() {

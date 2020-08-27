@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.example.lifeassistant_project.activity_update.ClientProgress;
 import com.example.lifeassistant_project.activity_update.packages.AccountPackage;
+import com.example.lifeassistant_project.activity_update.packages.DataPackage;
 import com.example.lifeassistant_project.activity_update.packages.SchedulePackage;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class DatabaseBehavior {
 
     public static void synchronizeServer2Client_Account()
     {
-        System.out.println("Synchronize start.");
+        System.out.println("Synchronize account start.");
 
         myDB = SQLiteDatabase.openOrCreateDatabase(PATH + "/databases/" + DBNAME, null);
 //        ArrayList<AccountPackage> clientAccountList = getClientAccountList(myDB, cursor);
@@ -32,6 +33,7 @@ public class DatabaseBehavior {
         selectAccount.setUser(LoginHandler.getUserName());
         if(!selectAccount.getUser().equals("Null")) selectAccount.setID(1);
         client.setBookkeeping(selectAccount);
+        client.setPackage(selectAccount);
         Thread cThread = new Thread(client);
         cThread.start();
 
@@ -46,24 +48,25 @@ public class DatabaseBehavior {
             }
         }
 
-        ArrayList<AccountPackage> serverAccountList = client.getRcvAccountData();
+        ArrayList<DataPackage> serverAccountList = client.getRcvPackageList();
 
         //stupid method but it works!
         myDB.execSQL("DELETE FROM record");
 
-        for (AccountPackage ele : serverAccountList)
+        for (DataPackage ele : serverAccountList)
         {
+            AccountPackage accountEle = (AccountPackage) ele;
             ContentValues values = new ContentValues();
-            values.put("金額",ele.getMoney());
-            values.put("年",ele.getYear());
-            values.put("月",ele.getMonth());
-            values.put("日",ele.getDay());
-            values.put("分類",ele.getItem());
-            values.put("細項",ele.getDetail());
-            values.put("發票",ele.getReceipt());
-            values.put("備註",ele.getNote());
-            values.put("id", ele.getID());
-            values.put("收支屬性",ele.getType() ? 1 : 0);
+            values.put("金額",accountEle.getMoney());
+            values.put("年",accountEle.getYear());
+            values.put("月",accountEle.getMonth());
+            values.put("日",accountEle.getDay());
+            values.put("分類",accountEle.getItem());
+            values.put("細項",accountEle.getDetail());
+            values.put("發票",accountEle.getReceipt());
+            values.put("備註",accountEle.getNote());
+            values.put("id", accountEle.getID());
+            values.put("收支屬性",accountEle.getType() ? 1 : 0);
 
             myDB.insert("record", null, values);
         }
@@ -85,6 +88,7 @@ public class DatabaseBehavior {
         selectSchedule.setUser(LoginHandler.getUserName());
         if(!selectSchedule.getUser().equals("Null")) selectSchedule.setID(1);
         client.setPlan(selectSchedule);
+        client.setPackage(selectSchedule);
         Thread cThread = new Thread(client);
         cThread.start();
 
@@ -99,21 +103,22 @@ public class DatabaseBehavior {
             }
         }
 
-        ArrayList<SchedulePackage> serverScheduleList = client.getRcvScheduleData();
+        ArrayList<DataPackage> serverScheduleList = client.getRcvPackageList();
 
         //stupid method but it works!
         myDB.execSQL("DELETE FROM schedule_record");
 
-        for (SchedulePackage ele : serverScheduleList)
+        for (DataPackage ele : serverScheduleList)
         {
+            SchedulePackage schedulePackage = (SchedulePackage) ele;
             ContentValues values = new ContentValues();
-            values.put("事情",ele.getTodo());
-            values.put("年",ele.getYear());
-            values.put("月",ele.getMonth());
-            values.put("日",ele.getDay());
-            values.put("開始時間",ele.getStart_time());
-            values.put("結束時間",ele.getEnd_time());
-            values.put("id", ele.getID());
+            values.put("事情",schedulePackage.getTodo());
+            values.put("年",schedulePackage.getYear());
+            values.put("月",schedulePackage.getMonth());
+            values.put("日",schedulePackage.getDay());
+            values.put("開始時間",schedulePackage.getStart_time());
+            values.put("結束時間",schedulePackage.getEnd_time());
+            values.put("id", schedulePackage.getID());
 
             myDB.insert("schedule_record", null, values);
         }

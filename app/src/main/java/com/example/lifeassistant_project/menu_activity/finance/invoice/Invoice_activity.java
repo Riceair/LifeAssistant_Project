@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.lifeassistant_project.R;
 import com.example.lifeassistant_project.activity_update.ClientProgress;
+import com.example.lifeassistant_project.activity_update.packages.DataPackage;
 import com.example.lifeassistant_project.activity_update.packages.ReceiptContainer;
 import com.example.lifeassistant_project.activity_update.packages.ReceiptContainer;
 import com.google.gson.Gson;
@@ -49,6 +50,7 @@ public class Invoice_activity extends AppCompatActivity {
     private void updateInvoice(){  //更新發票資訊
         ClientProgress client = new ClientProgress();
         client.setReceiptQR();
+        client.setPackage(new ReceiptContainer());
         Thread cThread = new Thread(client);
         cThread.start();
         synchronized (client)
@@ -60,9 +62,10 @@ public class Invoice_activity extends AppCompatActivity {
                 System.out.println(e);
             }
 
-            if(client.getRcvReceiptContainer()!=null) {
-                recepitContainerRec = client.getRcvReceiptContainer().get(0); //較新的
-                recepitContainerPre = client.getRcvReceiptContainer().get(1);
+            ArrayList<DataPackage> rcvReceiptContainer = client.getRcvPackageList();
+            if(rcvReceiptContainer!=null) {
+                recepitContainerRec = (ReceiptContainer) rcvReceiptContainer.get(0); //較新的
+                recepitContainerPre = (ReceiptContainer) rcvReceiptContainer.get(1);
                 isInvoiceUpdate=true;
             }
             else{

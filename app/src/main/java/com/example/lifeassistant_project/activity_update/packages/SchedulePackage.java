@@ -1,5 +1,19 @@
 package com.example.lifeassistant_project.activity_update.packages;
 
+import com.example.lifeassistant_project.activity_update.static_handler.PackageHandler;
+
+import javax.net.SocketFactory;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class SchedulePackage extends DataPackage{
     private int id, year, month, day, start_time, end_time;
     private String todo, user;
@@ -42,6 +56,59 @@ public class SchedulePackage extends DataPackage{
         this.start_time = start_time;
         this.end_time = end_time;
         this.user = "Null";
+    }
+
+    @Override
+    public ArrayList<DataPackage> sendOperation(String address, int port) throws IOException {
+        super.sendOperation(address, port);
+        System.out.println("Plan");
+        final int PACKAGE_SIZE = 78;
+        ArrayList<DataPackage> resultPackageList = null;
+
+        SocketAddress tempSocketAddress = new InetSocketAddress(address, port);
+        Socket client = SocketFactory.getDefault().createSocket();
+        client.connect(tempSocketAddress, connectionTimeout);
+
+        OutputStream out = client.getOutputStream();
+
+        // send account package
+        out.write(PackageHandler.schedulePackageEncode(this));
+        out.flush();
+        InputStream in = client.getInputStream();      // 取得輸入訊息的串流
+
+        StringBuffer buf = new StringBuffer();        // 建立讀取字串。
+        ByteBuffer b_buf = super.getInputByteBuffer(in, 1024*16);
+        out.close();
+
+        byte[] rcvArray = Arrays.copyOfRange(b_buf.array(), 0, b_buf.array().length);
+
+        if(this.getRequestAction() == 3)
+        {
+            ArrayList<DataPackage> rcvScheduleData = new ArrayList<DataPackage>();
+            for (int i = 0, currentLength = 0; i < b_buf.array().length / PACKAGE_SIZE; i++)
+            {
+                byte[] resultArray = Arrays.copyOfRange(b_buf.array(), currentLength+3, currentLength+PACKAGE_SIZE);
+                SchedulePackage temp = PackageHandler.schedulePackageDecode(resultArray);
+                if(temp.getID() == 0) break;
+                rcvScheduleData.add(temp);
+                currentLength += PACKAGE_SIZE;
+            }
+            resultPackageList = rcvScheduleData;
+//
+//                        for(AccountPackage temp : this.rcvAccountData)
+//                        {
+//                            System.out.println(temp.getID());
+//                        }
+        }
+        else
+        {
+            String rcvString = new String(rcvArray, StandardCharsets.UTF_8);
+            System.out.println(rcvString);
+        }
+
+        System.out.println("message send.");                    // 印出接收到的訊息。
+        client.close();                                         // 關閉 TcpSocket.
+        return resultPackageList;
     }
 
     public void setStartDateInFormat(int year, int month, int day, int hour, int minute)

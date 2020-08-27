@@ -1,6 +1,6 @@
 package com.example.lifeassistant_project.activity_update.static_handler;
 
-import com.example.lifeassistant_project.activity_update.chatbot.SentenceHandler;
+import com.example.lifeassistant_project.activity_update.packages.SentenceHandler;
 import com.example.lifeassistant_project.activity_update.packages.*;
 
 import java.io.UnsupportedEncodingException;

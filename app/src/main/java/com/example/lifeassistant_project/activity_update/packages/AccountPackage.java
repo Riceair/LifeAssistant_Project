@@ -62,53 +62,53 @@ public class AccountPackage extends DataPackage
         this.user = "Null";
     }
 
-    //DEBUG
-//    @Override
-//    public ArrayList<DataPackage> sendOperation(String address, int port) throws IOException {
-//        super.sendOperation(address, port);
-//        final int PACKAGE_SIZE = 168;
-//        ArrayList<DataPackage> resultPackageList = null;
-//
-//        SocketAddress tempSocketAddress = new InetSocketAddress(address, port);
-//        Socket client = SocketFactory.getDefault().createSocket();
-//        client.connect(tempSocketAddress, connectionTimeout);
-//
-//        OutputStream out = client.getOutputStream();
-//
-//        // send account package
-//        out.write(PackageHandler.accountPackageEncode(this));
-//        out.flush();
-//        InputStream in = client.getInputStream();      // 取得輸入訊息的串流
-//
-//        StringBuffer buf = new StringBuffer();        // 建立讀取字串。
-//        ByteBuffer b_buf = ClientProgress.DEBUG_getInputByteBuffer(in, 1024*16);
-//        out.close();
-//
-//        byte[] rcvArray = Arrays.copyOfRange(b_buf.array(), 0, b_buf.array().length);
-//
-//        if(this.getRequestAction() == 3)
-//        {
-//            ArrayList<AccountPackage> rcvAccountData = new ArrayList<AccountPackage>();
-//            for (int i = 0, currentLength = 0; i < b_buf.array().length / PACKAGE_SIZE; i++)
-//            {
-//                byte[] resultArray = Arrays.copyOfRange(b_buf.array(), currentLength+3, currentLength+PACKAGE_SIZE);
-//                AccountPackage temp = PackageHandler.accountPackageDecode(resultArray);
-//                if(temp.getID() == 0) break;
-//                rcvAccountData.add(temp);
-//                currentLength += PACKAGE_SIZE;
-//            }
-//            resultPackageList = rcvAccountData;
-//        }
-//        else
-//        {
-//            String rcvString = new String(rcvArray, StandardCharsets.UTF_8);
-//            System.out.println(rcvString);
-//        }
-//
-//        System.out.println("message send.");                    // 印出接收到的訊息。
-//        client.close();                                // 關閉 TcpSocket.
-//        return resultPackageList;
-//    }
+    @Override
+    public ArrayList<DataPackage> sendOperation(String address, int port) throws IOException {
+        super.sendOperation(address, port);
+        final int PACKAGE_SIZE = 168;
+        ArrayList<DataPackage> resultPackageList = null;
+
+        SocketAddress tempSocketAddress = new InetSocketAddress(address, port);
+        Socket client = SocketFactory.getDefault().createSocket();
+        client.connect(tempSocketAddress, connectionTimeout);
+
+        OutputStream out = client.getOutputStream();
+
+        // send account package
+        out.write(PackageHandler.accountPackageEncode(this));
+        out.flush();
+        InputStream in = client.getInputStream();      // 取得輸入訊息的串流
+
+        StringBuffer buf = new StringBuffer();        // 建立讀取字串。
+        //need to be remade.
+        ByteBuffer b_buf = super.getInputByteBuffer(in, 1024*16);
+        out.close();
+
+        byte[] rcvArray = Arrays.copyOfRange(b_buf.array(), 0, b_buf.array().length);
+
+        if(this.getRequestAction() == 3)
+        {
+            ArrayList<DataPackage> rcvAccountData = new ArrayList<DataPackage>();
+            for (int i = 0, currentLength = 0; i < b_buf.array().length / PACKAGE_SIZE; i++)
+            {
+                byte[] resultArray = Arrays.copyOfRange(b_buf.array(), currentLength+3, currentLength+PACKAGE_SIZE);
+                AccountPackage temp = PackageHandler.accountPackageDecode(resultArray);
+                if(temp.getID() == 0) break;
+                rcvAccountData.add(temp);
+                currentLength += PACKAGE_SIZE;
+            }
+            resultPackageList = rcvAccountData;
+        }
+        else
+        {
+            String rcvString = new String(rcvArray, StandardCharsets.UTF_8);
+            System.out.println(rcvString);
+        }
+
+        System.out.println("message send.");                    // 印出接收到的訊息。
+        client.close();                                // 關閉 TcpSocket.
+        return resultPackageList;
+    }
     /////////
     public int getID() {
         return ID;
