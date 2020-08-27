@@ -33,6 +33,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //註冊 登入
     private ImageView loginImg, regImg;
     private TextView regText,account_id;
+    private RelativeLayout loginButton;
 
     private LocationManager locationManager;
     private Geocoder geocoder;
@@ -141,7 +143,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         findViewById(R.id.popup_window).setVisibility(View.INVISIBLE);
 
         bind();
-        setBeforeLogin();
 
         //Remeber user's content
         SharedPreferences shared = getSharedPreferences("shared", MODE_PRIVATE);
@@ -151,8 +152,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             System.out.println(shared.getString("password", "null"));
             LoginPackage loginPackage = new LoginPackage(shared.getString("username", "null"), shared.getString("password", "null"));
             LoginHandler.Login(loginPackage);
+            setAfterLogin(shared.getString("username","null"));
         } else {
             System.out.println("There is no user's content!");
+            setBeforeLogin();
         }
     }
 
@@ -161,12 +164,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         account_id = navigationView.getHeaderView(0).findViewById(R.id.account_id);
         regImg = navigationView.getHeaderView(0).findViewById(R.id.RegImg);
         regText = navigationView.getHeaderView(0).findViewById(R.id.RegText);
+        loginButton = navigationView.getHeaderView(0).findViewById(R.id.LoginButton);
     }
 
     /////////////// Before Login ///////////////////////////////////
     private void setBeforeLogin(){
         //登入
         loginImg.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent=new Intent(MainActivity.this,Login_activity.class);
+                MainActivity.this.startActivityForResult(intent,LOGIN_CODE);
+                overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
+            }
+        });
+
+        loginButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 Intent intent=new Intent(MainActivity.this,Login_activity.class);
@@ -199,6 +212,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void setAfterLogin(String account){
         loginImg.setOnClickListener(null);
+        loginButton.setOnClickListener(null);
         account_id.setText(account);
         regImg.setVisibility(View.INVISIBLE);
         regImg.setOnClickListener(null);
@@ -207,7 +221,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view) {
                 new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("確定登出").setNegativeButton("確定", new DialogInterface.OnClickListener() {
+                        .setTitle("確定登出").setPositiveButton("確定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //Login out here
@@ -215,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         //After login out
                         setBeforeLogin();
                     }
-                }).setPositiveButton("取消",null).show();
+                }).setNegativeButton("取消",null).show();
             }
         });
     }
@@ -359,6 +373,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
         help_list.addView(help_back);
+
 
         for(int i=0;i<helpTitle.length;i++){
             LinearLayout main_help_element= (LinearLayout) getLayoutInflater().inflate(R.layout.main_help_element,null);

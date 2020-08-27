@@ -88,22 +88,8 @@ public class Bookkeeping_activity extends AppCompatActivity {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         dateinput.setText(formatter.format(new java.util.Date()));
         Button datePicker = (Button) findViewById(R.id.datepicker);
-        datePicker.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                final Calendar c=Calendar.getInstance();
-                mYear = c.get(Calendar.YEAR);
-                mMonth = c.get(Calendar.MONTH);
-                mDay = c.get(Calendar.DAY_OF_MONTH);
-                new DatePickerDialog(Bookkeeping_activity.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int day) {
-                        String format = setDataFormat(year,month,day);
-                        dateinput.setText(format);
-                    }
-                },mYear,mMonth,mDay).show();
-            }
-        });
+        datePicker.setOnClickListener(new ChoseDate());
+        dateinput.setOnClickListener(new ChoseDate());
 
         //////////////////////////////切換收入支出//////////////////////////////
         RadioGroup attributeinput=findViewById(R.id.attributeinput);
@@ -122,11 +108,6 @@ public class Bookkeeping_activity extends AppCompatActivity {
         });
     }
 
-    //日期
-    private String setDataFormat(int year, int monthOfYear,int dayOfMonth){
-        return String.valueOf(year)+"-"+String.valueOf(monthOfYear+1)+"-"+String.valueOf(dayOfMonth);
-    }
-
     private void bind(){
         costinput=findViewById(R.id.costinput);
         dateinput=findViewById(R.id.dateinput);
@@ -136,6 +117,28 @@ public class Bookkeeping_activity extends AppCompatActivity {
         quotesinput=findViewById(R.id.quotesinput);
         outlay=findViewById(R.id.outlay);
         income=findViewById(R.id.income);
+    }
+
+    //日期
+    private String setDataFormat(int year, int monthOfYear,int dayOfMonth){
+        return String.valueOf(year)+"-"+String.valueOf(monthOfYear+1)+"-"+String.valueOf(dayOfMonth);
+    }
+
+    class ChoseDate implements View.OnClickListener{
+        @Override
+        public void onClick(View view) {
+            final Calendar c=Calendar.getInstance();
+            mYear = c.get(Calendar.YEAR);
+            mMonth = c.get(Calendar.MONTH);
+            mDay = c.get(Calendar.DAY_OF_MONTH);
+            new DatePickerDialog(Bookkeeping_activity.this, new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int month, int day) {
+                    String format = setDataFormat(year,month,day);
+                    dateinput.setText(format);
+                }
+            },mYear,mMonth,mDay).show();
+        }
     }
 
     ////////////////////////////////////////////檢視記帳 前置處理/////////////////////////////////
@@ -204,7 +207,7 @@ public class Bookkeeping_activity extends AppCompatActivity {
 
     public void clickToDelete(View view){
         new AlertDialog.Builder(Bookkeeping_activity.this)
-                .setTitle("確定刪除嗎？").setNegativeButton("確定", new DialogInterface.OnClickListener() {
+                .setTitle("確定刪除嗎？").setPositiveButton("確定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
@@ -223,7 +226,7 @@ public class Bookkeeping_activity extends AppCompatActivity {
                 myDB.close();
                 finish();
             }
-        }).setPositiveButton("取消", new DialogInterface.OnClickListener() {
+        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {}
         }).show();
@@ -495,12 +498,12 @@ public class Bookkeeping_activity extends AppCompatActivity {
         new AlertDialog.Builder(Bookkeeping_activity.this)
                 .setTitle("請輸入要新增的類別")
                 .setView(editText)
-                .setNegativeButton("確定", new DialogInterface.OnClickListener() {
+                .setPositiveButton("確定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         addToDB(editText.getText().toString());
                     }
-                }).setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {}
         }).show();
@@ -551,12 +554,12 @@ public class Bookkeeping_activity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which){
                 chose[0] =which;
                 new AlertDialog.Builder(Bookkeeping_activity.this)
-                        .setTitle("確定刪除").setNegativeButton("確定", new DialogInterface.OnClickListener() {
+                        .setTitle("確定刪除").setPositiveButton("確定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         delToDB(categoryList[chose[0]]);
                     }
-                }).setPositiveButton("取消", null).show();
+                }).setNegativeButton("取消", null).show();
             }
         });
         dialog_list.show();

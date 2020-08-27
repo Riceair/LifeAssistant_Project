@@ -6,23 +6,31 @@
     android:layout_height="200sp"
     android:background="@drawable/toggle_login">
 
-    <ImageButton
-        android:id="@+id/LoginImg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:id="@+id/LoginButton"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="#686363"
+        android:gravity="center"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="55dp"
-        android:background="@android:drawable/menuitem_background"
-        app:srcCompat="@drawable/login_button" />
+        android:layout_centerVertical="true">
+        <ImageButton
+            android:id="@+id/LoginImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@android:drawable/menuitem_background"
+            app:srcCompat="@drawable/login_button" />
 
-    <TextView
-        android:id="@+id/account_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/LoginImg"
-        android:layout_centerHorizontal="true"
-        android:text="按此登入"
-        android:textColor="@color/cardview_light_background" />
+        <TextView
+            android:id="@+id/account_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/LoginImg"
+            android:layout_centerHorizontal="true"
+            android:text="按此登入"
+            android:textColor="@color/cardview_light_background" />
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/RegImg"

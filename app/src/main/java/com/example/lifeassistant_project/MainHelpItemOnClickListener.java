@@ -13,19 +13,23 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class MainHelpItemOnClickListener implements View.OnClickListener {
     private Context MainActivity;
     private LinearLayout help_list;
     private ImageView shore_more;
     private LinearLayout LinearHelpDetail;
-    private String help_detail[];
+    private String help_details[];
     private boolean isClick;
 
-    public MainHelpItemOnClickListener(Context MainActivity, LinearLayout help_list, ImageView shore_more, String help_detail[]){
+    private ArrayList<LinearLayout> below_linear;
+
+    public MainHelpItemOnClickListener(Context MainActivity, LinearLayout help_list, ImageView shore_more, String... help_details){
         this.MainActivity=MainActivity;
         this.help_list=help_list;  //detail要加的位置
         this.shore_more=shore_more;  //箭號
-        this.help_detail=help_detail;  //要加的文字
+        this.help_details=help_details;  //要加的文字
         isClick=false;
         setDetail();
     }
@@ -36,9 +40,9 @@ public class MainHelpItemOnClickListener implements View.OnClickListener {
         LinearHelpDetail.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
 
         //文字加入
-        for(int i=0;i<help_detail.length;i++){
+        for(String help_detail:help_details){
             TextView detail=new TextView(MainActivity);
-            detail.setText(help_detail[i]);
+            detail.setText(help_detail);
             detail.setGravity(Gravity.CENTER);
             detail.setTextColor(Color.WHITE);
             detail.setTextSize(20f);
@@ -55,6 +59,10 @@ public class MainHelpItemOnClickListener implements View.OnClickListener {
 
         help_list.addView(LinearHelpDetail);
         LinearHelpDetail.setVisibility(View.GONE);
+    }
+
+    public void addBelowLinear(ArrayList<LinearLayout> below_linear){ //設定該物件底下其他的物件
+        this.below_linear=below_linear;
     }
 
     @Override
