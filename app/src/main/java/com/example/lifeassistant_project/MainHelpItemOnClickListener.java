@@ -65,6 +65,14 @@ public class MainHelpItemOnClickListener implements View.OnClickListener {
         this.below_linear=below_linear;
     }
 
+    public void reset(){
+        if(isClick){
+            isClick=false;
+            shore_more.setImageResource(R.drawable.ic_baseline_keyboard_arrow_right_24);
+            LinearHelpDetail.setVisibility(View.GONE);
+        }
+    }
+
     @Override
     public void onClick(View view) {
         if(!isClick){
@@ -76,10 +84,24 @@ public class MainHelpItemOnClickListener implements View.OnClickListener {
             mShowAction.setDuration(200);
             LinearHelpDetail.startAnimation(mShowAction);
             LinearHelpDetail.setVisibility(View.VISIBLE);
+
+            //設置該說明底下其他說明的動畫
+            TranslateAnimation belowDownAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                    0.0f, Animation.RELATIVE_TO_SELF, -0.3f, Animation.RELATIVE_TO_SELF, 0.0f);
+            belowDownAction.setDuration(210);
+            for(int i=1;i<below_linear.size();i++)
+                below_linear.get(i).startAnimation(belowDownAction);
         }else{
             isClick=false;
             shore_more.setImageResource(R.drawable.ic_baseline_keyboard_arrow_right_24);
             LinearHelpDetail.setVisibility(View.GONE);
+
+            //設置該說明底下其他說明的動畫
+            TranslateAnimation belowUpAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                    0.0f, Animation.RELATIVE_TO_SELF, 0.3f, Animation.RELATIVE_TO_SELF, 0.0f);
+            belowUpAction.setDuration(210);
+            for(int i=1;i<below_linear.size();i++)
+                below_linear.get(i).startAnimation(belowUpAction);
         }
     }
 }
