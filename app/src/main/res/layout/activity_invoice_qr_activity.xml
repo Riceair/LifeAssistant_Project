@@ -19,12 +19,14 @@
 
     <TextView
         android:id="@+id/invoice_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="280dp"
+        android:layout_height="60dp"
         android:layout_marginTop="36dp"
+        android:background="@drawable/rewards_abandoned"
+        android:gravity="center"
         android:text="請掃描發票左側QR code"
         android:textColor="#FFFFFF"
-        android:textSize="30dp"
+        android:textSize="23dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="parent"
@@ -77,22 +79,39 @@
             android:text="678"
             android:textColor="#0000C6"
             android:textSize="18dp" />
+
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/Amount_frame"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/invoice_rewords_number"
+        app:srcCompat="@drawable/dollarbill4receipts"
+        tools:visibility="invisible" />
 
     <TextView
         android:id="@+id/reword_amount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
         android:layout_marginTop="12dp"
+        android:gravity="center"
         android:text="200元"
-        android:textColor="#FFFFFF"
-        android:textSize="25dp"
+        android:textColor="#00116E"
+        android:textSize="22dp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.553"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/invoice_rewords_number"
-        app:layout_constraintVertical_bias="0.164" />
+        app:layout_constraintVertical_bias="0.202"
+        tools:visibility="invisible" />
 
     <include
         android:id="@+id/include2"
