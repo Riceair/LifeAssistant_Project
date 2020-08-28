@@ -345,8 +345,6 @@ public class NewPlan_activity extends AppCompatActivity {
         values.put("結束時間", end_time);
 
         myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
-
-
         myDB.execSQL("DELETE FROM " + SC_TABLE + " WHERE " + "id" + "='" + selid + "'");
         long result = -1L;
         int times = 0;

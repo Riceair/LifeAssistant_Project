@@ -38,4 +38,10 @@ dependencies {
 
     //Gson Activity傳遞物件用
     implementation 'com.google.code.gson:gson:2.3.1'
+
+    //Android通知寄送
+    //noinspection GradleCompatible
+    implementation "com.android.support:support-v4:24.1.1"
+
+
 }

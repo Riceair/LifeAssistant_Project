@@ -2,10 +2,16 @@ package com.example.lifeassistant_project.menu_activity.schedule;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
@@ -47,6 +53,7 @@ public class Planner_activity extends AppCompatActivity {
     public String datewasclicked;
     private String namewasfilledin;
     public Integer status=0,stuffcount=0;
+    private String datewaslastclicked="";
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,12 +83,18 @@ public class Planner_activity extends AppCompatActivity {
         // events has size 2 with the 2 events inserted previously
         //Log.d(TAG, "Events: " + events);
         // define a listener to receive callbacks when certain events happen.
+
         compactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
             public void onDayClick(Date dateClicked)
             {
                 List<Event> events = compactCalendarView.getEvents(dateClicked);
-                datewasclicked=formatter.format(dateClicked);
+                if (formatter.format(dateClicked)!=datewaslastclicked)
+                {datewaslastclicked=formatter.format(dateClicked);
+                    datewasclicked=formatter.format(dateClicked);}
+                else
+
+
 
                 namewasfilledin="";
                 Log.d(TAG, "Day was clicked: " + dateClicked + " with events " + events);
@@ -190,7 +203,7 @@ public class Planner_activity extends AppCompatActivity {
                     m=m+86400000;
                     Event ev1 = new Event(Color.RED, m, mystuffName);
                     compactCalendarView.addEvent(ev1);
-                    
+
 
                 }
             } catch (ParseException e) {
@@ -201,6 +214,7 @@ public class Planner_activity extends AppCompatActivity {
         }
 
     }
+
     public void clickNewPlan(View view){
         Intent intent = new Intent(view.getContext(),NewPlan_activity.class);
         status=1;
@@ -209,6 +223,9 @@ public class Planner_activity extends AppCompatActivity {
         intent.putExtra("clickedstatus",status);
         startActivityForResult(intent,0);
     }
+
+
+
     @Override
     protected void onActivityResult(int requestCode,int resultCode,Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -216,14 +233,12 @@ public class Planner_activity extends AppCompatActivity {
         initial(null);
 
     }
-    public void clickTodayPlan(View view){
-        Intent intent = new Intent(view.getContext(),ViewPlan_activity.class);
-        view.getContext().startActivity(intent);
-    }
 
     public void clickViewPlan(View view){
         Intent intent = new Intent(view.getContext(),ViewPlan_activity.class);
         view.getContext().startActivity(intent);
+        intent.putExtra("lastclickeddate",datewaslastclicked);
+        startActivityForResult(intent,0);
     }
 
     @Override
