@@ -152,10 +152,14 @@ public class Planner_activity extends AppCompatActivity {
         p1_button.setText(stuffcount.toString());
         if (stuffcount==0)
             p1_button.setBackgroundResource(R.drawable.stuff_indicator_greendot);
-        else if (stuffcount<=3)
+        else if (stuffcount>0 && stuffcount<=3)
+            p1_button.setBackgroundResource(R.drawable.stuff_indicator_heavygreendot);
+        else if (stuffcount>3 && stuffcount<=6)
             p1_button.setBackgroundResource(R.drawable.stuff_indicator_yellowdot);
+        else if (stuffcount>6 && stuffcount<=10)
+            p1_button.setBackgroundResource(R.drawable.stuff_indicator_orangedot);
         else
-            p1_button.setBackgroundResource(R.drawable.stuff_indicator_yellowdot);
+            p1_button.setBackgroundResource(R.drawable.stuff_indicator_reddot);
         final CompactCalendarView compactCalendarView = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
         compactCalendarView.setLocale(TimeZone.getTimeZone("GMT-8:00"),Locale.CHINESE);
         compactCalendarView.setUseThreeLetterAbbreviation(true);
@@ -186,7 +190,7 @@ public class Planner_activity extends AppCompatActivity {
                     m=m+86400000;
                     Event ev1 = new Event(Color.RED, m, mystuffName);
                     compactCalendarView.addEvent(ev1);
-
+                    
 
                 }
             } catch (ParseException e) {
