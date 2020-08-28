@@ -92,7 +92,7 @@
 
         <TextView
             android:id="@+id/invoice_rewards"
-            android:layout_width="80dp"
+            android:layout_width="100dp"
             android:layout_height="35dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
@@ -101,13 +101,13 @@
             android:gravity="center"
             android:text="未中獎"
             android:textColor="@color/zxing_status_text"
-            android:textSize="15dp"
+            android:textSize="14dp"
             android:visibility="invisible" />
 
         <LinearLayout
             android:id="@+id/invoice_rewords_number"
             android:layout_width="100dp"
-            android:layout_height="30dp"
+            android:layout_height="35dp"
             android:layout_above="@+id/invoice_rewards"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="-100dp"

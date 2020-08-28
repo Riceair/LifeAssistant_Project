@@ -41,7 +41,7 @@
         android:gravity="center"
         android:text="未中獎"
         android:textColor="#FFFFFF"
-        android:textSize="25dp"
+        android:textSize="24dp"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
