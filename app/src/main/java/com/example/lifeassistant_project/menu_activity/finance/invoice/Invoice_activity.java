@@ -93,7 +93,13 @@ public class Invoice_activity extends AppCompatActivity {
                         } else {
                             checkReward(receiptserial.getText().toString(), recepitContainerRec);
                         }
+                    }else{
+                        Toast.makeText(Invoice_activity.this,"未取得發票資訊",Toast.LENGTH_SHORT).show();
                     }
+                }
+                else{
+                    findViewById(R.id.invoice_rewards).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.invoice_rewords_number).setVisibility(View.INVISIBLE);
                 }
             }
         });

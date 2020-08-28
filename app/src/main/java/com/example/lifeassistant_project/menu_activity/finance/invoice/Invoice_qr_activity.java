@@ -331,4 +331,10 @@ public class Invoice_qr_activity extends AppCompatActivity {
         }
         return true;
     }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0,R.anim.translate_out);
+    }
 }
