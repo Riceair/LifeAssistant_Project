@@ -6,11 +6,13 @@ import com.example.lifeassistant_project.activity_update.packages.*;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class PackageHandler
 {
+    static private int PACKAGE_TYPE_SIZE = 3;
     PackageHandler()
     {
 
@@ -241,6 +243,42 @@ public class PackageHandler
         return result;
     }
 
+    static public AccountPackage accountPackageDecodeByString(String message)
+    {
+        final int PACKAGE_TYPE_SIZE = 3;
+        final int ID_size = 4, money_size = 4, year_size = 4, month_size = 1, day_size = 1, item_size = 18,
+                detail_size = 18, receipt_size = 3, note_size = 90, status_size = 1, action_size = 1, user_size = 20;
+        int ptr = 0;
+
+        AccountPackage result = new AccountPackage();
+        ptr += PACKAGE_TYPE_SIZE;
+
+        result.setID(Integer.parseInt(message.substring(ptr, ptr + ID_size)));
+        ptr += ID_size;
+        result.setMoney(Integer.parseInt(message.substring(ptr, ptr + money_size)));
+        ptr += money_size;
+        result.setYear(Integer.parseInt(message.substring(ptr, ptr + year_size)));
+        ptr += year_size;
+        result.setMonth(Integer.parseInt(message.substring(ptr, ptr + month_size)));
+        ptr += month_size;
+        result.setDay(Integer.parseInt(message.substring(ptr, ptr + day_size)));
+        ptr += day_size;
+        result.setItem(message.substring(ptr, ptr + item_size));
+        ptr += item_size;
+        result.setDetail(message.substring(ptr, ptr + detail_size));
+        ptr += detail_size;
+        result.setReceipt(message.substring(ptr, ptr + receipt_size));
+        ptr += receipt_size;
+        result.setNote(message.substring(ptr, ptr + note_size));
+        ptr += note_size;
+        result.setType(Integer.parseInt(message.substring(ptr, ptr + status_size)) == 1);
+        ptr += status_size;
+        result.setRequestAction(Integer.parseInt(message.substring(ptr, ptr + action_size)));
+        ptr += action_size;
+
+        return result;
+    }
+
     static public byte[] schedulePackageEncode(SchedulePackage scPkg) throws UnsupportedEncodingException {
         final int ID_SIZE = 4, TODO_SIZE = 36, YEAR_SIZE = 4, MONTH_SIZE = 1, DAY_SIZE = 1,
                 START_TIME_SIZE = 4, END_TIME_SIZE = 4, OPERATION_CODE_SIZE = 1, USER_SIZE = 20;
@@ -437,6 +475,36 @@ public class PackageHandler
         return result;
     }
 
+    static public SchedulePackage schedulePackageDecodeByString(String message)
+    {
+        final int PACKAGE_TYPE_SIZE = 3;
+        final int ID_SIZE = 4, TODO_SIZE = 36, YEAR_SIZE = 4, MONTH_SIZE = 1, DAY_SIZE = 1,
+                START_TIME_SIZE = 4, END_TIME_SIZE = 4, OPERATION_CODE_SIZE = 1, USER_SIZE = 20;
+        int ptr = 0;
+
+        SchedulePackage result = new SchedulePackage();
+        ptr += PACKAGE_TYPE_SIZE;
+
+        result.setID(Integer.parseInt(message.substring(ptr, ptr + ID_SIZE)));
+        ptr += ID_SIZE;
+        result.setTodo(message.substring(ptr, ptr + TODO_SIZE));
+        ptr += TODO_SIZE;
+        result.setYear(Integer.parseInt(message.substring(ptr, ptr + YEAR_SIZE)));
+        ptr += YEAR_SIZE;
+        result.setMonth(Integer.parseInt(message.substring(ptr, ptr + MONTH_SIZE)));
+        ptr += MONTH_SIZE;
+        result.setDay(Integer.parseInt(message.substring(ptr, ptr + DAY_SIZE)));
+        ptr += DAY_SIZE;
+        result.setStart_time(Integer.parseInt(message.substring(ptr, ptr + START_TIME_SIZE)));
+        ptr += START_TIME_SIZE;
+        result.setEnd_time(Integer.parseInt(message.substring(ptr, ptr + END_TIME_SIZE)));
+        ptr += END_TIME_SIZE;
+        result.setRequestAction(Integer.parseInt(message.substring(ptr, ptr + OPERATION_CODE_SIZE)));
+        ptr += OPERATION_CODE_SIZE;
+
+        return result;
+    }
+
     static public byte[] weatherPackageEncode() throws UnsupportedEncodingException {
         ByteBuffer buf = ByteBuffer.allocate(1024);
 
@@ -557,7 +625,7 @@ public class PackageHandler
 
     static public SentenceHandler sentencePackageDecode(byte[] message)
     {
-        final int INTENT_SIZE = 4, OPERATION_SIZE = 4, FULFILLMENT_SIZE = 90;
+        final int INTENT_SIZE = 4, OPERATION_SIZE = 4, FULFILLMENT_SIZE = 90, TYPE_SIZE = 3;
 
         SentenceHandler result = new SentenceHandler();
         int temp = 0, currentSize = 0;
@@ -570,9 +638,42 @@ public class PackageHandler
         result.setOperation(TransByteArray2Int(Arrays.copyOfRange(message, currentSize, currentSize + OPERATION_SIZE), OPERATION_SIZE));
         currentSize += OPERATION_SIZE;
 
-        result.setFulfillment(TransByteArray2String(Arrays.copyOfRange(message, currentSize, currentSize + FULFILLMENT_SIZE), FULFILLMENT_SIZE));
-        currentSize += FULFILLMENT_SIZE;
+        String typeCheck = TransByteArray2String(Arrays.copyOfRange(message, currentSize, currentSize + TYPE_SIZE), TYPE_SIZE);
+        if(typeCheck.equals("acc") || typeCheck.equals("sch"))
+        {
+//            result.setFulfillment(TransByteArray2String(
+//                    Arrays.copyOfRange(message, currentSize, message.length),
+//                    message.length - currentSize));
+            ArrayList<DataPackage> tempList = new ArrayList<>();
+            int packageSize = 0;
 
+            //shitty code
+            if(typeCheck.equals("acc"))
+            {
+                packageSize = 168;
+            }
+            else
+            {
+                packageSize = 78;
+            }
+
+            for(int i = currentSize;i < message.length; i += packageSize)
+            {
+                if(typeCheck.equals("acc"))
+                {
+                    tempList.add(PackageHandler.accountPackageDecode(Arrays.copyOfRange(message, i + TYPE_SIZE, i + packageSize)));
+                }
+                else
+                    tempList.add(PackageHandler.schedulePackageDecode(Arrays.copyOfRange(message, i + TYPE_SIZE, i + packageSize)));
+            }
+            result.setRcvSelectedList(tempList);
+//            currentSize += message.length - currentSize;
+        }
+        else
+        {
+            result.setFulfillment(TransByteArray2String(Arrays.copyOfRange(message, currentSize, currentSize + FULFILLMENT_SIZE), FULFILLMENT_SIZE));
+            currentSize += FULFILLMENT_SIZE;
+        }
 
         return result;
 }
@@ -651,7 +752,6 @@ public class PackageHandler
 
         return result;
     }
-
     static public byte[] TransInt2ByteArray(int num, int MES_SIZE)
     {
         ByteBuffer b_temp = ByteBuffer.allocate(MES_SIZE);

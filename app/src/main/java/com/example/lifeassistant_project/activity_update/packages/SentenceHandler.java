@@ -14,12 +14,14 @@ import java.util.Arrays;
 public class SentenceHandler extends DataPackage{
     private int intent, operation;
     private String fulfillment;
+    private ArrayList<DataPackage> rcvSelectedList;
 
     public SentenceHandler()
     {
         this.intent = 0;
         this.operation = 0;
         this.fulfillment = "null";
+        this.rcvSelectedList = new ArrayList<>();
     }
 
     public SentenceHandler(int intent, int operation, String fulfillment)
@@ -27,6 +29,7 @@ public class SentenceHandler extends DataPackage{
         this.intent = intent;
         this.operation = operation;
         this.fulfillment = fulfillment;
+        this.rcvSelectedList = new ArrayList<>();
     }
 
     @Override
@@ -81,4 +84,8 @@ public class SentenceHandler extends DataPackage{
     public void setFulfillment(String fulfillment) {
         this.fulfillment = fulfillment;
     }
+
+    public ArrayList<DataPackage> getRcvSelectedList() { return rcvSelectedList; }
+
+    public void setRcvSelectedList(ArrayList<DataPackage> rcvSelectedList) { this.rcvSelectedList = rcvSelectedList; }
 }

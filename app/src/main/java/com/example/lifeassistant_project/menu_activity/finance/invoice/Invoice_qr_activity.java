@@ -1,5 +1,6 @@
 package com.example.lifeassistant_project.menu_activity.finance.invoice;
 
+import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -330,5 +331,11 @@ public class Invoice_qr_activity extends AppCompatActivity {
             Invoice_qr_activity.this.finish();
         }
         return true;
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0,R.anim.translate_out);
     }
 }
