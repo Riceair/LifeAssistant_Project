@@ -17,6 +17,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -85,6 +86,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private LocationManager locationManager;
     private Geocoder geocoder;
     private String adminArea=""; //高雄市 台北市
+
+    ArrayList<LinearLayout> all_help_linear=new ArrayList<>();
+    ArrayList<MainHelpItemOnClickListener> helpItem_onclick_list=new ArrayList<>();
 
     private boolean isQuestion=false;
     private final String[] helpTitle={"如何使用","天氣指令","排程指令","記帳指令","報表指令","發票指令"};
@@ -376,27 +380,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         for(int i=0;i<helpTitle.length;i++){
-            LinearLayout main_help_element= (LinearLayout) getLayoutInflater().inflate(R.layout.main_help_element,null);
-            TextView help_title = main_help_element.findViewById(R.id.help_title);
-            final ImageView show_more = main_help_element.findViewById(R.id.show_more);
+            LinearLayout element= (LinearLayout) getLayoutInflater().inflate(R.layout.main_help_element,null); //說明標題物件
+            TextView help_title = element.findViewById(R.id.help_title);
+            ImageView show_more = element.findViewById(R.id.show_more);
 
-            //新增上底線
-            ImageView seg=new ImageView(this);
-            seg.setImageResource(R.drawable.segment);
-            seg.setScaleType(ImageView.ScaleType.FIT_XY);
-            help_list.addView(seg,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT));
-            //Help element加入
-            help_list.addView(main_help_element);
+            LinearLayout main_help_element = new LinearLayout(this); //實際加入物件
+            main_help_element.setOrientation(LinearLayout.VERTICAL);
+
+            //將上下底線、說明標題物件加入實際加入物件
+            if(i==0) {
+                //新增上底線
+                ImageView seg = new ImageView(this);
+                seg.setImageResource(R.drawable.segment);
+                seg.setScaleType(ImageView.ScaleType.FIT_XY);
+                main_help_element.addView(seg, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT));
+            }
+            //Help element設置
+            main_help_element.addView(element);
             //新增下底線
             ImageView segment=new ImageView(this);
             segment.setImageResource(R.drawable.segment_gray);
             segment.setScaleType(ImageView.ScaleType.FIT_XY);
-            help_list.addView(segment,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+            main_help_element.addView(segment,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT));
 
+            //將實際加入物件加入Help list中
+            help_list.addView(main_help_element);
+
             help_title.setText(helpTitle[i]);
-            main_help_element.setOnClickListener(new MainHelpItemOnClickListener(this,help_list,show_more,new String[]{"說出我要記帳\n聊天機器人可能會幫你記帳","123","你好"}));
+            MainHelpItemOnClickListener helpOnClick=new MainHelpItemOnClickListener(this,help_list,show_more,new String[]{"說出我要記帳\n聊天機器人可能會幫你記帳","123","你好"});
+            main_help_element.setOnClickListener(helpOnClick);
+            all_help_linear.add(main_help_element);
+            helpItem_onclick_list.add(helpOnClick);
+        }
+
+        //設定自訂義OnClickListener
+        for(int i=0;i<all_help_linear.size();i++){
+            helpItem_onclick_list.get(i).addBelowLinear(new ArrayList<LinearLayout>(all_help_linear.subList(i,all_help_linear.size())));
         }
     }
 
@@ -588,7 +609,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             findViewById(R.id.basic_item).setVisibility(View.VISIBLE);
             animation.startNow();
 
-            setHelp();
+            for(int i=0;i<helpItem_onclick_list.size();i++)
+                helpItem_onclick_list.get(i).reset();
         }else{
             super.onBackPressed();
         }
