@@ -26,12 +26,12 @@ public class Login_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_activity);
         Toolbar toolbar=findViewById(R.id.toolbar);
-        toolbar.setTitle("   登入");
+        toolbar.setTitle("  登入");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-
+        getSupportActionBar().setIcon(R.drawable.regsite_logo_small);
         final Button loginButton = findViewById(R.id.login_button);
         loginButton.setOnClickListener(new View.OnClickListener()
         {

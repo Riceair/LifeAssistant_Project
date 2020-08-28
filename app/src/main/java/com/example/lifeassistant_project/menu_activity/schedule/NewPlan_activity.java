@@ -56,7 +56,7 @@ public class NewPlan_activity extends AppCompatActivity {
     private ArrayList<String> stuffNameList = new ArrayList<>();
     private ArrayList<Integer> stuffIDList = new ArrayList<>();
     private int year,month,day,start_time,end_time;
-    private Integer status=0,selid=0;
+    private Integer status=0,selid=0,stuffcount=0;
 
 
     @Override
@@ -228,6 +228,7 @@ public class NewPlan_activity extends AppCompatActivity {
                     stuffEndingList.add(tempString);
                     stuffNameList.add(temp.getTodo());
                     stuffIDList.add(temp.getID());
+                    stuffcount=stuffIDList.size();
                     cursor.moveToNext();
                 }
                 // 5. 關閉 DB
@@ -346,7 +347,7 @@ public class NewPlan_activity extends AppCompatActivity {
         myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
 
 
-        myDB.execSQL("DELETE FROM " + SC_TABLE + " WHERE " + "事情" + "='" + event + "'");
+        myDB.execSQL("DELETE FROM " + SC_TABLE + " WHERE " + "id" + "='" + selid + "'");
         long result = -1L;
         int times = 0;
 
@@ -402,7 +403,7 @@ public class NewPlan_activity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 //                myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
-                myDB.execSQL("DELETE FROM " + SC_TABLE + " WHERE " + "事情" + "='" + eventname + "'");
+                myDB.execSQL("DELETE FROM " + SC_TABLE + " WHERE " + "id" + "='" + selid + "'");
                 myDB.close();
                 //Intent intent = new Intent();
                 //setResult(2, intent);

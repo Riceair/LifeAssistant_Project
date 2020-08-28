@@ -19,12 +19,14 @@
 
     <TextView
         android:id="@+id/invoice_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="280dp"
+        android:layout_height="60dp"
         android:layout_marginTop="36dp"
+        android:background="@drawable/rewards_abandoned"
+        android:gravity="center"
         android:text="請掃描發票左側QR code"
         android:textColor="#FFFFFF"
-        android:textSize="30dp"
+        android:textSize="23dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +34,6 @@
 
     <TextView
         android:id="@+id/invoice_rewards"
-        android:visibility="invisible"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
@@ -40,7 +41,8 @@
         android:gravity="center"
         android:text="未中獎"
         android:textColor="#FFFFFF"
-        android:textSize="25dp"
+        android:textSize="24dp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,10 +55,10 @@
         android:layout_above="@+id/invoice_rewards"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
-        android:background="#706A6A"
+        android:background="#90B1A6A6"
+        android:gravity="center"
         android:orientation="horizontal"
         android:visibility="invisible"
-        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/invoice_rewards">
@@ -68,15 +70,16 @@
             android:gravity="center"
             android:text="12345"
             android:textColor="#F1DFDF"
-            android:textSize="20dp" />
+            android:textSize="18dp" />
 
         <TextView
             android:id="@+id/invoice_last3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="678"
-            android:textColor="#05F805"
-            android:textSize="20dp" />
+            android:textColor="#0000C6"
+            android:textSize="18dp" />
+
     </LinearLayout>
 
     <TextView

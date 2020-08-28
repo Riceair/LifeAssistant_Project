@@ -26,11 +26,12 @@ public class Register_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_activity);
         Toolbar toolbar=findViewById(R.id.toolbar);
-        toolbar.setTitle("   註冊");
+        toolbar.setTitle("  註冊");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.regsite_logo_small);
 
         bind();
         setChangeListener();

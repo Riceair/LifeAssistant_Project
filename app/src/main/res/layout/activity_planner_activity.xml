@@ -10,7 +10,7 @@
 
     <RelativeLayout
         android:id="@+id/tabs"
-        android:layout_width="150dp"
+        android:layout_width="190dp"
         android:layout_height="45dp"
         android:layout_above="@id/mainly"
         android:layout_alignRight="@id/mainly"
@@ -38,6 +38,17 @@
             android:onClick="clickViewPlan"
             android:text="檢視"
             android:textSize="16dp" />
+
+        <Button
+            android:id="@+id/indicator"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/checkbutton"
+            android:background="@drawable/stuff_indicator_reddot"
+            android:text="0"
+            android:textColor="@color/design_default_color_on_secondary"
+            android:textSize="15sp" />
     </RelativeLayout>
 
     <RelativeLayout
