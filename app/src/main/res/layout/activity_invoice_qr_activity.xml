@@ -32,7 +32,6 @@
 
     <TextView
         android:id="@+id/invoice_rewards"
-        android:visibility="invisible"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
@@ -41,6 +40,7 @@
         android:text="未中獎"
         android:textColor="#FFFFFF"
         android:textSize="25dp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,10 +53,10 @@
         android:layout_above="@+id/invoice_rewards"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
-        android:background="#706A6A"
+        android:background="@drawable/tabs4receipt"
+        android:gravity="center"
         android:orientation="horizontal"
         android:visibility="invisible"
-        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/invoice_rewards">
@@ -68,26 +68,26 @@
             android:gravity="center"
             android:text="12345"
             android:textColor="#F1DFDF"
-            android:textSize="20dp" />
+            android:textSize="18dp" />
 
         <TextView
             android:id="@+id/invoice_last3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="678"
-            android:textColor="#05F805"
-            android:textSize="20dp" />
+            android:textColor="#0000C6"
+            android:textSize="18dp" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/reword_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
         android:layout_marginTop="12dp"
         android:text="200元"
-        android:textSize="35dp"
         android:textColor="#FFFFFF"
+        android:textSize="25dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

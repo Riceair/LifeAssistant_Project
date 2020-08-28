@@ -156,7 +156,7 @@ public class Invoice_qr_activity extends AppCompatActivity {
         if((year==Integer.valueOf(recepitContainerPre.getYear()) && month<Integer.valueOf(recepitContainerPre.getMonth())) ||
                 year<Integer.valueOf(recepitContainerPre.getYear())){
             invoice_reword.setText("已過期");
-            invoice_reword.setBackgroundColor(Color.BLACK);
+            invoice_reword.setBackgroundResource(R.drawable.rewards_abandoned);
             invoice_reword.setVisibility(View.VISIBLE);
             invoice_reword_number.setVisibility(View.INVISIBLE);
             reword_amount.setVisibility(View.INVISIBLE);
@@ -165,7 +165,7 @@ public class Invoice_qr_activity extends AppCompatActivity {
         if((year==Integer.valueOf(recepitContainerRec.getYear()) && month>Integer.valueOf(recepitContainerRec.getMonth())+1) ||
                 year>Integer.valueOf(recepitContainerRec.getYear())){
             invoice_reword.setText("尚未開獎");
-            invoice_reword.setBackgroundColor(Color.BLACK);
+            invoice_reword.setBackgroundResource(R.drawable.rewards_abandoned);
             invoice_reword.setVisibility(View.VISIBLE);
             invoice_reword_number.setVisibility(View.INVISIBLE);
             reword_amount.setVisibility(View.INVISIBLE);
@@ -239,7 +239,7 @@ public class Invoice_qr_activity extends AppCompatActivity {
 
         invoice_reword.setText("未中獎");
         invoice_reword.setVisibility(View.VISIBLE);
-        invoice_reword.setBackgroundColor(Color.BLACK);
+        invoice_reword.setBackgroundResource(R.drawable.rewards_abandoned);
         invoice_reword_number.setVisibility(View.INVISIBLE);
         reword_amount.setVisibility(View.INVISIBLE);
     }

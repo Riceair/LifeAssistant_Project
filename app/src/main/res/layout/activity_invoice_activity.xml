@@ -51,7 +51,7 @@
             android:background="#E1C7C7"
             android:onClick="clickToQRScan"
             android:text="使用掃描器"
-            android:textColor="#0027FF"
+            android:textColor="@android:color/black"
             android:textSize="16dp" />
 
         <TextView
@@ -73,13 +73,13 @@
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="240dp"
+            android:layout_marginBottom="220dp"
             android:background="@android:drawable/editbox_background_normal" />
 
         <EditText
             android:id="@+id/receiptserial"
             android:layout_width="180dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_alignTop="@+id/reciptbox"
             android:layout_centerHorizontal="true"
             android:gravity="center"
@@ -87,7 +87,8 @@
             android:inputType="number"
             android:maxLength="3"
             android:textColor="@color/design_default_color_on_secondary"
-            android:textColorHint="#979494" />
+            android:textColorHint="#979494"
+            android:textSize="15dp" />
 
         <TextView
             android:id="@+id/invoice_rewards"
@@ -95,7 +96,7 @@
             android:layout_height="35dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="200dp"
+            android:layout_marginBottom="180dp"
             android:background="@drawable/rewards_exile"
             android:gravity="center"
             android:text="未中獎"
@@ -109,7 +110,7 @@
             android:layout_height="30dp"
             android:layout_above="@+id/invoice_rewards"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="-80dp"
+            android:layout_marginBottom="-100dp"
             android:background="@drawable/tabs4receipt"
             android:orientation="horizontal"
             android:visibility="invisible">
@@ -128,7 +129,7 @@
                 android:layout_width="35dp"
                 android:layout_height="32dp"
                 android:text="678"
-                android:textColor="#05F805"
+                android:textColor="#0000C6"
                 android:textSize="18dp" />
         </LinearLayout>
     </RelativeLayout>
