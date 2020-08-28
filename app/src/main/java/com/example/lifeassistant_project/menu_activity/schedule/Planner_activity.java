@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,7 +46,7 @@ public class Planner_activity extends AppCompatActivity {
     private ArrayList<Integer> stuffIDList = new ArrayList<>();
     public String datewasclicked;
     private String namewasfilledin;
-    public Integer status=0;
+    public Integer status=0,stuffcount=0;
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,7 @@ public class Planner_activity extends AppCompatActivity {
         datewasclicked=formatter.format(datenow);
         ReadDBRecord();
         initial(null);
+
         //Query
         //List<Event> events = compactCalendarView.getEvents(1597320075000L); // can also take a Date object
         // events has size 2 with the 2 events inserted previously
@@ -102,7 +104,7 @@ public class Planner_activity extends AppCompatActivity {
         stuffIDList.clear();
         myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
         try {
-            cursor = myDB.rawQuery("select schedule_record.事情, schedule_record.年,schedule_record.月,schedule_record.日,schedule_record.開始時間,schedule_record.結束時間,schedule_record.結束時間,schedule_record.id from schedule_record", null);
+            cursor = myDB.rawQuery("select schedule_record.事情, schedule_record.年,schedule_record.月,schedule_record.日,schedule_record.開始時間,schedule_record.結束時間,schedule_record.id from schedule_record", null);
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             if (cursor != null) {
                 int iRow = cursor.getCount(); // 取得資料記錄的筆數
@@ -130,6 +132,7 @@ public class Planner_activity extends AppCompatActivity {
                     stuffEndingList.add(tempString);
                     stuffNameList.add(temp.getTodo());
                     stuffIDList.add(temp.getID());
+                    stuffcount=stuffIDList.size();
                     cursor.moveToNext();
                 }
                 // 5. 關閉 DB
@@ -145,6 +148,14 @@ public class Planner_activity extends AppCompatActivity {
     {
         ReadDBRecord();
         //初始化日曆頭標與語系
+        Button p1_button = (Button)findViewById(R.id.indicator);
+        p1_button.setText(stuffcount.toString());
+        if (stuffcount==0)
+            p1_button.setBackgroundResource(R.drawable.stuff_indicator_greendot);
+        else if (stuffcount<=3)
+            p1_button.setBackgroundResource(R.drawable.stuff_indicator_yellowdot);
+        else
+            p1_button.setBackgroundResource(R.drawable.stuff_indicator_yellowdot);
         final CompactCalendarView compactCalendarView = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
         compactCalendarView.setLocale(TimeZone.getTimeZone("GMT-8:00"),Locale.CHINESE);
         compactCalendarView.setUseThreeLetterAbbreviation(true);

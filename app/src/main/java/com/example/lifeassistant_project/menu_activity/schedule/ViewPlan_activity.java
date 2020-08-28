@@ -39,6 +39,7 @@ public class ViewPlan_activity extends AppCompatActivity {
     private ArrayList<Integer> stuffIDList = new ArrayList<>();
     private ListView list;
     public View view;
+    public Integer stuffcount=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,6 +122,7 @@ public class ViewPlan_activity extends AppCompatActivity {
                     stuffEndingList.add(tempString);
                     stuffNameList.add(temp.getTodo());
                     stuffIDList.add(temp.getID());
+                    stuffcount=stuffIDList.size();
                     cursor.moveToNext();
                 }
                 // 5. 關閉 DB
