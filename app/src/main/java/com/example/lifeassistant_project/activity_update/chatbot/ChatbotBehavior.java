@@ -1,9 +1,13 @@
 package com.example.lifeassistant_project.activity_update.chatbot;
 
 import com.example.lifeassistant_project.activity_update.ClientProgress;
+import com.example.lifeassistant_project.activity_update.packages.AccountPackage;
+import com.example.lifeassistant_project.activity_update.packages.DataPackage;
+import com.example.lifeassistant_project.activity_update.packages.SchedulePackage;
 import com.example.lifeassistant_project.activity_update.packages.SentenceHandler;
 import com.example.lifeassistant_project.activity_update.static_handler.DatabaseBehavior;
 import com.example.lifeassistant_project.activity_update.static_handler.LoginHandler;
+import com.example.lifeassistant_project.activity_update.static_handler.PackageHandler;
 
 import java.util.ArrayList;
 
@@ -75,7 +79,14 @@ public class ChatbotBehavior {
     {
         if(this.sentenceHandler.getIntent() == 0 && this.sentenceHandler.getOperation() == 0)
         {
-            return this.sentenceHandler.getFulfillment();
+            if(this.sentenceHandler.getRcvSelectedList().size() == 0)
+                return this.sentenceHandler.getFulfillment();
+
+            ArrayList<DataPackage> resultList = this.sentenceHandler.getRcvSelectedList();
+
+            AccountPackage temp = (AccountPackage) resultList.get(0);
+            System.out.println(temp.getMoney());
+            return "好的！以下是您欲查詢的記帳項目：";
         }
         else if(this.sentenceHandler.getIntent() == 1)
         {
@@ -92,7 +103,7 @@ public class ChatbotBehavior {
                 case 3:
                     return "修改記帳??";
                 case 4:
-                    return "好的！以下是您欲查詢的記帳項目：";
+                    return "好的！請告訴我您想要查詢哪些帳目。（您可以告訴我：記帳金額、時間）";
             }
         }
         else if(this.sentenceHandler.getIntent() == 2)
@@ -106,7 +117,7 @@ public class ChatbotBehavior {
                 case 3:
                     return "修改行程??";
                 case 4:
-                    return "好的，以下是您的行程：";
+                    return "好的！請告訴我您想要查詢哪些行程。（您可以告訴我：時間）";
             }
         }
         else if(this.sentenceHandler.getIntent() == 3)

@@ -80,26 +80,22 @@ public class AccountPackage extends DataPackage
 
         StringBuffer buf = new StringBuffer();        // 建立讀取字串。
         //need to be remade.
-        ByteBuffer b_buf = super.getInputByteBuffer(in, 1024*16);
+        ByteBuffer b_buf = super.getInputByteBuffer(in, 1024 * 16);
         out.close();
 
         byte[] rcvArray = Arrays.copyOfRange(b_buf.array(), 0, b_buf.array().length);
 
-        if(this.getRequestAction() == 3)
-        {
+        if (this.getRequestAction() == 3) {
             ArrayList<DataPackage> rcvAccountData = new ArrayList<DataPackage>();
-            for (int i = 0, currentLength = 0; i < b_buf.array().length / PACKAGE_SIZE; i++)
-            {
-                byte[] resultArray = Arrays.copyOfRange(b_buf.array(), currentLength+3, currentLength+PACKAGE_SIZE);
+            for (int i = 0, currentLength = 0; i < b_buf.array().length / PACKAGE_SIZE; i++) {
+                byte[] resultArray = Arrays.copyOfRange(b_buf.array(), currentLength + 3, currentLength + PACKAGE_SIZE);
                 AccountPackage temp = PackageHandler.accountPackageDecode(resultArray);
-                if(temp.getID() == 0) break;
+                if (temp.getID() == 0) break;
                 rcvAccountData.add(temp);
                 currentLength += PACKAGE_SIZE;
             }
             resultPackageList = rcvAccountData;
-        }
-        else
-        {
+        } else {
             String rcvString = new String(rcvArray, StandardCharsets.UTF_8);
             System.out.println(rcvString);
         }
@@ -108,6 +104,7 @@ public class AccountPackage extends DataPackage
         client.close();                                         // 關閉 TcpSocket.
         return resultPackageList;
     }
+
 
     public int getID() {
         return ID;
