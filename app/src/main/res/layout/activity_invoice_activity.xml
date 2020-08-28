@@ -47,11 +47,11 @@
             android:layout_height="35dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="330dp"
-            android:background="#E1C7C7"
+            android:layout_marginBottom="375dp"
+            android:background="@drawable/action_transparent"
             android:onClick="clickToQRScan"
             android:text="使用掃描器"
-            android:textColor="@android:color/black"
+            android:textColor="#FFFF37"
             android:textSize="16dp" />
 
         <TextView
@@ -62,7 +62,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="290dp"
             android:text="或是，你可以..."
-            android:textColor="@android:color/background_light"
+            android:textColor="@android:color/background_dark"
             android:textSize="20sp"
             android:textStyle="bold"
             tools:text="或是，你可以..." />
