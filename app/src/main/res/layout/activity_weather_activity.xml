@@ -38,7 +38,7 @@
             android:textColor="@android:color/background_light"
             android:textColorHint="@android:color/background_dark"
             android:textColorLink="@color/colorPrimaryDark"
-            android:textSize="36sp" />
+            android:textSize="40sp" />
 
         <ImageView
             android:id="@+id/Conditions"
@@ -248,7 +248,7 @@
             android:text="偶有陣雨"
             android:textColor="@android:color/background_light"
             android:textColorHint="@color/colorPrimaryDark"
-            android:textSize="30sp" />
+            android:textSize="25sp" />
 
         <TextView
             android:id="@+id/onedaytemperature"
