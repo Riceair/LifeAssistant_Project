@@ -42,7 +42,6 @@ public class Invoice_qr_activity extends AppCompatActivity {
     private TextView invoice_last3;
     private TextView invoice_text;
     private TextView reword_amount;
-    private ImageView amount_frame;
     private boolean isInvoiceUpdate;
     private ReceiptPackage recepitContainerPre,recepitContainerRec;
 
@@ -79,7 +78,6 @@ public class Invoice_qr_activity extends AppCompatActivity {
         invoice_first5=findViewById(R.id.invoice_first5);
         invoice_last3=findViewById(R.id.invoice_last3);
         reword_amount=findViewById(R.id.reword_amount);
-        amount_frame=findViewById(R.id.Amount_frame);
     }
 
     private void qrCodeSet(){
@@ -162,7 +160,6 @@ public class Invoice_qr_activity extends AppCompatActivity {
             invoice_reword.setVisibility(View.VISIBLE);
             invoice_reword_number.setVisibility(View.INVISIBLE);
             reword_amount.setVisibility(View.INVISIBLE);
-            amount_frame.setVisibility(View.INVISIBLE);
             return;
         }
         if((year==Integer.valueOf(recepitContainerRec.getYear()) && month>Integer.valueOf(recepitContainerRec.getMonth())+1) ||
@@ -172,7 +169,6 @@ public class Invoice_qr_activity extends AppCompatActivity {
             invoice_reword.setVisibility(View.VISIBLE);
             invoice_reword_number.setVisibility(View.INVISIBLE);
             reword_amount.setVisibility(View.INVISIBLE);
-            amount_frame.setVisibility(View.INVISIBLE);
             return;
         }
 
@@ -199,7 +195,6 @@ public class Invoice_qr_activity extends AppCompatActivity {
             //印出中獎金額
             reword_amount.setText("一千萬元");
             reword_amount.setVisibility(View.VISIBLE);
-            amount_frame.setVisibility(View.VISIBLE);
             return;
         }
 
@@ -215,7 +210,6 @@ public class Invoice_qr_activity extends AppCompatActivity {
 
             //印出中獎金額
             reword_amount.setText("二百萬元");
-            amount_frame.setVisibility(View.VISIBLE);
             reword_amount.setVisibility(View.VISIBLE);
             return;
         }
@@ -240,7 +234,6 @@ public class Invoice_qr_activity extends AppCompatActivity {
             //印出中獎金額
             reword_amount.setText("200元");
             reword_amount.setVisibility(View.VISIBLE);
-            amount_frame.setVisibility(View.VISIBLE);
             return;
         }
 
@@ -249,7 +242,6 @@ public class Invoice_qr_activity extends AppCompatActivity {
         invoice_reword.setBackgroundResource(R.drawable.rewards_abandoned);
         invoice_reword_number.setVisibility(View.INVISIBLE);
         reword_amount.setVisibility(View.INVISIBLE);
-        amount_frame.setVisibility(View.INVISIBLE);
     }
 
     //檢查頭獎~五獎

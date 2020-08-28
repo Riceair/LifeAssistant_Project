@@ -63,7 +63,7 @@ public class Invoice_activity extends AppCompatActivity {
             }
 
             ArrayList<DataPackage> rcvReceiptContainer = client.getRcvPackageList();
-            if(rcvReceiptContainer!=null) {
+            if(rcvReceiptContainer.size()!=0) {
                 recepitContainerRec = (ReceiptPackage) rcvReceiptContainer.get(0); //較新的
                 recepitContainerPre = (ReceiptPackage) rcvReceiptContainer.get(1);
                 isInvoiceUpdate=true;
