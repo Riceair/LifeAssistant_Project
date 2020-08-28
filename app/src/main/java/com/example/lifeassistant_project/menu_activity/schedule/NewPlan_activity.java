@@ -346,7 +346,7 @@ public class NewPlan_activity extends AppCompatActivity {
         myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
 
 
-        myDB.execSQL("DELETE FROM " + SC_TABLE + " WHERE " + "事情" + "='" + event + "'");
+        myDB.execSQL("DELETE FROM " + SC_TABLE + " WHERE " + "id" + "='" + selid + "'");
         long result = -1L;
         int times = 0;
 
@@ -402,7 +402,7 @@ public class NewPlan_activity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 //                myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
-                myDB.execSQL("DELETE FROM " + SC_TABLE + " WHERE " + "事情" + "='" + eventname + "'");
+                myDB.execSQL("DELETE FROM " + SC_TABLE + " WHERE " + "id" + "='" + selid + "'");
                 myDB.close();
                 //Intent intent = new Intent();
                 //setResult(2, intent);
