@@ -132,6 +132,7 @@ public class DatabaseBehavior {
 
     public static void resetDatabase()
     {
+        myDB = SQLiteDatabase.openOrCreateDatabase(PATH + "/databases/" + DBNAME, null);
         myDB.execSQL("DELETE FROM record");
         myDB.execSQL("DELETE FROM schedule_record");
     }
