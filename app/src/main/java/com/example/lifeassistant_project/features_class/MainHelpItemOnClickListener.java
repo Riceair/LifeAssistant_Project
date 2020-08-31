@@ -1,4 +1,4 @@
-package com.example.lifeassistant_project;
+package com.example.lifeassistant_project.features_class;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.lifeassistant_project.R;
 
 import java.util.ArrayList;
 
