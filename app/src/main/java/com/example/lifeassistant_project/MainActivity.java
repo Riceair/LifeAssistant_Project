@@ -17,7 +17,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -45,6 +44,8 @@ import com.example.lifeassistant_project.activity_update.packages.LoginPackage;
 import com.example.lifeassistant_project.activity_update.packages.ReceiptPackage;
 import com.example.lifeassistant_project.activity_update.static_handler.DatabaseBehavior;
 import com.example.lifeassistant_project.activity_update.static_handler.LoginHandler;
+import com.example.lifeassistant_project.features_class.MainHelpItemOnClickListener;
+import com.example.lifeassistant_project.features_class.PieChartUsedClass;
 import com.example.lifeassistant_project.menu_activity.finance.Bookkeeping_activity;
 import com.example.lifeassistant_project.menu_activity.finance.invoice.Invoice_activity;
 import com.example.lifeassistant_project.menu_activity.login.Login_activity;
@@ -52,6 +53,7 @@ import com.example.lifeassistant_project.menu_activity.login.Register_activity;
 import com.example.lifeassistant_project.menu_activity.schedule.Planner_activity;
 import com.example.lifeassistant_project.menu_activity.finance.report.Report_activity;
 import com.example.lifeassistant_project.menu_activity.weather.Weather_activity;
+import com.github.mikephil.charting.charts.PieChart;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.File;
@@ -77,6 +79,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ImageView userSayButton;
     private TextView userSay;
     private TextView chatBotSay;
+
+    private RelativeLayout popup_window,weather_response;
+    private PieChart mChart;
 
     //註冊 登入
     private ImageView loginImg, regImg;
@@ -120,6 +125,48 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(!FdbFile.exists() || !FdbFile.isFile())
             copyAssets(PATH); //初始資料庫複製到路徑
 
+        setTTS();
+        bind();
+
+        ////////////////報表debug
+        List<String> type=new ArrayList<>();
+        type.add("早餐");
+        type.add("Fox Burger King");
+        List<Integer> amount=new ArrayList<>();
+        amount.add(60);
+        amount.add(100);
+        popupShow(type,amount);
+
+        //Remeber user's content
+        SharedPreferences shared = getSharedPreferences("shared", MODE_PRIVATE);
+        if(shared.contains("username") && shared.contains("password")){
+            System.out.println("User content:");
+            System.out.println(shared.getString("username", "null"));
+            System.out.println(shared.getString("password", "null"));
+            LoginPackage loginPackage = new LoginPackage(shared.getString("username", "null"), shared.getString("password", "null"));
+            LoginHandler.Login(loginPackage);
+            setAfterLogin(shared.getString("username","null"));
+        } else {
+            System.out.println("There is no user's content!");
+            setBeforeLogin();
+        }
+
+        //get weather data from server.
+
+    }
+
+    private void bind(){
+        loginImg = navigationView.getHeaderView(0).findViewById(R.id.LoginImg);
+        account_id = navigationView.getHeaderView(0).findViewById(R.id.account_id);
+        regImg = navigationView.getHeaderView(0).findViewById(R.id.RegImg);
+        regText = navigationView.getHeaderView(0).findViewById(R.id.RegText);
+        loginButton = navigationView.getHeaderView(0).findViewById(R.id.LoginButton);
+        popup_window=findViewById(R.id.popup_window);
+        weather_response=findViewById(R.id.weather_response);
+        mChart=findViewById(R.id.pieChart);
+    }
+
+    private void setTTS(){
         //語音TTS
         chatbotBehavior = new ChatbotBehavior();
         userSay=findViewById(R.id.userSay);
@@ -141,33 +188,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         });
-
-        //popup window hidden
-        findViewById(R.id.popup_window).setVisibility(View.INVISIBLE);
-
-        bind();
-
-        //Remeber user's content
-        SharedPreferences shared = getSharedPreferences("shared", MODE_PRIVATE);
-        if(shared.contains("username") && shared.contains("password")){
-            System.out.println("User content:");
-            System.out.println(shared.getString("username", "null"));
-            System.out.println(shared.getString("password", "null"));
-            LoginPackage loginPackage = new LoginPackage(shared.getString("username", "null"), shared.getString("password", "null"));
-            LoginHandler.Login(loginPackage);
-            setAfterLogin(shared.getString("username","null"));
-        } else {
-            System.out.println("There is no user's content!");
-            setBeforeLogin();
-        }
     }
 
-    private void bind(){
-        loginImg = navigationView.getHeaderView(0).findViewById(R.id.LoginImg);
-        account_id = navigationView.getHeaderView(0).findViewById(R.id.account_id);
-        regImg = navigationView.getHeaderView(0).findViewById(R.id.RegImg);
-        regText = navigationView.getHeaderView(0).findViewById(R.id.RegText);
-        loginButton = navigationView.getHeaderView(0).findViewById(R.id.LoginButton);
+    private void popupShow(List<String> type_list,List<Integer> amount_list){
+        popup_window.setVisibility(View.VISIBLE);
+        Animation animation=AnimationUtils.loadAnimation(this,R.anim.alpha_scale_anim);
+        animation.setDuration(1000);
+        popup_window.startAnimation(animation);
+
+        mChart.setVisibility(View.VISIBLE);
+        PieChartUsedClass pieChartUsedClass=new PieChartUsedClass(mChart,type_list,amount_list);
+    }
+
+    private void popupShow(int weather){
+        popup_window.setVisibility(View.VISIBLE);
+        Animation animation=AnimationUtils.loadAnimation(this,R.anim.alpha_scale_anim);
+        animation.setDuration(1000);
+        popup_window.startAnimation(animation);
+
+        weather_response.setVisibility(View.VISIBLE);
+    }
+
+    private void popupGone(){
+        popup_window.setVisibility(View.INVISIBLE);
+        weather_response.setVisibility(View.INVISIBLE);
+        mChart.setVisibility(View.INVISIBLE);
     }
 
     /////////////// Before Login ///////////////////////////////////
@@ -228,13 +273,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //Login out here
-
+                        LoginHandler.Logout();
                         //After login out
                         setBeforeLogin();
                     }
                 }).setNegativeButton("取消",null).show();
             }
         });
+    }
+
+    /////////////// Weather Data ///////////////////////////////////
+    private void getWeatherData()
+    {
+
     }
 
     /////////////// DEBUG ///////////////////////////////////

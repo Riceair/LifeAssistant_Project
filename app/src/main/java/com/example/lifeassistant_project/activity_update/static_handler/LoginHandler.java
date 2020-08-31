@@ -1,6 +1,7 @@
 package com.example.lifeassistant_project.activity_update.static_handler;
 
 import com.example.lifeassistant_project.activity_update.ClientProgress;
+import com.example.lifeassistant_project.activity_update.packages.DataPackage;
 import com.example.lifeassistant_project.activity_update.packages.LoginPackage;
 
 public class LoginHandler {
@@ -29,6 +30,21 @@ public class LoginHandler {
             DatabaseBehavior.synchronizeData();
             return true;
         }
+    }
+
+    static public boolean Logout()
+    {
+        LoginHandler.isLogin = false;
+        LoginHandler.userName = "Null";
+        LoginHandler.userKey = null;
+        DatabaseBehavior.resetDatabase();
+        return true;
+    }
+
+    static public boolean Register(LoginPackage loginPackage)
+    {
+        loginPackage.setRegister(true);
+        return Login(loginPackage);
     }
 
     static public boolean checkAuthorization()

@@ -130,6 +130,13 @@ public class DatabaseBehavior {
         synchronizeServer2Client_Schedule();
     }
 
+    public static void resetDatabase()
+    {
+        myDB = SQLiteDatabase.openOrCreateDatabase(PATH + "/databases/" + DBNAME, null);
+        myDB.execSQL("DELETE FROM record");
+        myDB.execSQL("DELETE FROM schedule_record");
+    }
+
 //    still in considering.
 //    public static void synchronizeClient2Server()
 //    {

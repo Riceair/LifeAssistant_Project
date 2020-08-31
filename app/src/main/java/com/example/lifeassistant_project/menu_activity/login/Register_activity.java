@@ -1,5 +1,7 @@
 package com.example.lifeassistant_project.menu_activity.login;
 
+import android.content.SharedPreferences;
+import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -14,6 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lifeassistant_project.R;
+import com.example.lifeassistant_project.activity_update.packages.LoginPackage;
+import com.example.lifeassistant_project.activity_update.static_handler.LoginHandler;
+import com.google.android.material.textfield.TextInputEditText;
 
 public class Register_activity extends AppCompatActivity {
     private TextView account_input,pw_input,pw_check_input,account_hint,pw_hint,pw_check_hint;
@@ -43,12 +48,15 @@ public class Register_activity extends AppCompatActivity {
             Toast.makeText(this,"請填入正確的資料",Toast.LENGTH_SHORT).show();
             return;
         }
-
         boolean isRegistered=false;
         //若註冊成功把 isRegistered改成true
 
+        LoginPackage loginPackage = this.getClientLoginInfo();
+        isRegistered = LoginHandler.Register(loginPackage);
+
 
         if(isRegistered) {
+            saveInformation(loginPackage.getName(), loginPackage.getPassword());
             Intent intent=new Intent();
             intent.putExtra("ACCOUNT",account_input.getText().toString());
             intent.putExtra("PASSWORD",pw_input.getText().toString());
@@ -146,6 +154,24 @@ public class Register_activity extends AppCompatActivity {
         boolean hasEng=text.matches(regEng);
         boolean hasNum=text.matches(regNum);
         return hasEng&&hasNum;
+    }
+
+    private LoginPackage getClientLoginInfo()
+    {
+        LoginPackage loginPackage = new LoginPackage();
+        EditText targetText = (EditText) findViewById(R.id.account_input);
+        loginPackage.setName(targetText.getText().toString());
+        targetText = (EditText) findViewById(R.id.pw_input);
+        loginPackage.setPassword(targetText.getText().toString());
+        return loginPackage;
+    }
+
+    public void saveInformation(String username,String password) {
+        SharedPreferences shared = getSharedPreferences("shared", MODE_PRIVATE);
+        SharedPreferences.Editor editor = shared.edit();
+        editor.putString("username", username);
+        editor.putString("password", password);
+        editor.commit();
     }
 
     @Override
