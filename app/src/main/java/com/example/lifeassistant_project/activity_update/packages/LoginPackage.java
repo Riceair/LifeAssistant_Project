@@ -18,6 +18,7 @@ public class LoginPackage extends DataPackage{
     private String name;
     private String password;
     private String authorizationKey;
+    private boolean isRegister = false;
 
     public LoginPackage()
     {
@@ -86,4 +87,8 @@ public class LoginPackage extends DataPackage{
     public String getAuthorizationKey() { return authorizationKey; }
 
     public void setAuthorizationKey(String authorizationKey) { this.authorizationKey = authorizationKey; }
+
+    public boolean ifRegister() { return isRegister; }
+
+    public void setRegister(boolean register) { isRegister = register; }
 }

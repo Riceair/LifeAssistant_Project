@@ -160,6 +160,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             System.out.println("There is no user's content!");
             setBeforeLogin();
         }
+
+        //get weather data from server.
+
     }
 
     private void bind(){
@@ -228,13 +231,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //Login out here
-
+                        LoginHandler.Logout();
                         //After login out
                         setBeforeLogin();
                     }
                 }).setNegativeButton("取消",null).show();
             }
         });
+    }
+
+    /////////////// Weather Data ///////////////////////////////////
+    private void getWeatherData()
+    {
+
     }
 
     /////////////// DEBUG ///////////////////////////////////
