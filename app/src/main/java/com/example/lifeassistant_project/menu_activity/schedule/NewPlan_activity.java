@@ -56,7 +56,7 @@ public class NewPlan_activity extends AppCompatActivity {
     private ArrayList<String> stuffNameList = new ArrayList<>();
     private ArrayList<Integer> stuffIDList = new ArrayList<>();
     private int year,month,day,start_time,end_time;
-    private Integer status=0,selid=0,stuffcount=0;
+    private Integer status=0,selid=0,stuffcount=0,clicked_day=0,clicked_month=0,clicked_year=0,selectstatus=0;;
 
 
     @Override
@@ -77,6 +77,10 @@ public class NewPlan_activity extends AppCompatActivity {
         namewasfilledin = bundle.getString("clickedname");
         endingtimewasclicked = bundle.getString("clickedendingtime");
         endingdatewasclicked = bundle.getString("clickedendingdate");
+        clicked_day = bundle.getInt("clicked_day");
+        clicked_month = bundle.getInt("clicked_month");
+        clicked_year = bundle.getInt("clicked_year");
+        selectstatus = bundle.getInt("selstatus");
         status=bundle.getInt("clickedstatus");
         selid=bundle.getInt("clickedID");
         RelativeLayout tabs = findViewById(R.id.tabs);
@@ -87,8 +91,10 @@ public class NewPlan_activity extends AppCompatActivity {
             tabs.setVisibility(View.GONE);
             addbutton.setText("新增");
         }
-
+        if(status==0)
         ReadDBRecord();
+        else
+            ReadSpecifiedRecord();
         //這是承接事項
         final TextView nameText = (TextView) findViewById(R.id.eventinput);
         nameText.setText(namewasfilledin);
@@ -240,7 +246,54 @@ public class NewPlan_activity extends AppCompatActivity {
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
-
+    private void ReadSpecifiedRecord() {
+        stuffList.clear();
+        stuffEndingList.clear();
+        stuffNameList.clear();
+        stuffIDList.clear();
+        myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
+        try {
+            cursor = myDB.rawQuery("select schedule_record.事情, schedule_record.年,schedule_record.月,schedule_record.日,schedule_record.開始時間,schedule_record.結束時間,schedule_record.id from schedule_record where schedule_record.年=? and schedule_record.月=? and schedule_record.日=?",
+                    new String[]{clicked_year.toString(),clicked_month.toString(),clicked_day.toString()});
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            if (cursor != null) {
+                int iRow = cursor.getCount(); // 取得資料記錄的筆數
+                cursor.moveToFirst();
+                for (int i = 0; i < iRow; i++) {
+                    SchedulePackage temp = new SchedulePackage(
+                            cursor.getInt(6),
+                            cursor.getString(0),
+                            cursor.getInt(1),
+                            cursor.getInt(2),
+                            cursor.getInt(3),
+                            cursor.getInt(4),
+                            cursor.getInt(5));
+                    String tempString = new String(Integer.toString(temp.getStartDateInFormat().getYear()) + "-" +
+                            String.format("%02d", temp.getStartDateInFormat().getMonth()) + "-" +
+                            String.format("%02d", temp.getStartDateInFormat().getDay()) + " " +
+                            String.format("%02d", temp.getStartDateInFormat().getHour()) + ":" +
+                            String.format("%02d", temp.getStartDateInFormat().getMinute()) + ":00");
+                    stuffList.add(tempString);
+                    tempString = new String(Integer.toString(temp.getEndDateInFormat().getYear()) + "-" +
+                            String.format("%02d", temp.getEndDateInFormat().getMonth()) + "-" +
+                            String.format("%02d", temp.getEndDateInFormat().getDay()) + " " +
+                            String.format("%02d", temp.getEndDateInFormat().getHour()) + ":" +
+                            String.format("%02d", temp.getEndDateInFormat().getMinute()) + ":00");
+                    stuffEndingList.add(tempString);
+                    stuffNameList.add(temp.getTodo());
+                    stuffIDList.add(temp.getID());
+                    stuffcount=stuffIDList.size();
+                    cursor.moveToNext();
+                }
+                // 5. 關閉 DB
+                myDB.close();
+            } else {
+                Toast.makeText(this, "Hint 1: 請將db準備好!", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
     /////////////////////////////////////////////////////////排程資料庫/////////////////////////////////////////////////////////
     private void writeToSCDB() {
         //將表單內容讀入
@@ -379,6 +432,10 @@ public class NewPlan_activity extends AppCompatActivity {
 
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
+        intent.putExtra("selstatus", selectstatus);
+        intent.putExtra("clicked_year", clicked_year);
+        intent.putExtra("clicked_month", clicked_month);
+        intent.putExtra("clicked_day", clicked_day);
         finish();
     }
 
@@ -409,7 +466,12 @@ public class NewPlan_activity extends AppCompatActivity {
 
                 Intent intent = new Intent(getApplicationContext(), Planner_activity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra("EXIT", true); startActivity(intent);
+                intent.putExtra("EXIT", true);
+                intent.putExtra("selstatus", selectstatus);
+                intent.putExtra("clicked_year", clicked_year);
+                intent.putExtra("clicked_month", clicked_month);
+                intent.putExtra("clicked_day", clicked_day);
+                startActivity(intent);
                 startActivityForResult(intent, 3);
 
             }

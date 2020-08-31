@@ -10,10 +10,10 @@
 
     <RelativeLayout
         android:id="@+id/tabs"
-        android:layout_width="190dp"
+        android:layout_width="220dp"
         android:layout_height="45dp"
-        android:layout_above="@id/mainly"
         android:layout_alignRight="@id/mainly"
+        android:layout_marginTop="80dp"
         android:background="@drawable/tabs">
 
         <Button
@@ -30,13 +30,13 @@
 
         <Button
             android:id="@+id/checkbutton"
-            android:layout_width="50dp"
+            android:layout_width="70dp"
             android:layout_height="30dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/addbutton"
             android:background="@drawable/action_transparent"
             android:onClick="clickViewPlan"
-            android:text="檢視"
+            android:text="檢視全部"
             android:textSize="16dp" />
 
         <Button
@@ -54,9 +54,10 @@
     <RelativeLayout
         android:id="@+id/mainly"
         android:layout_width="350dp"
-        android:layout_height="360dp"
+        android:layout_height="330dp"
+        android:layout_below="@id/tabs"
         android:layout_alignParentBottom="false"
-        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
         android:background="@drawable/planner_inner_background"
         tools:context=".MainActivity">
 
@@ -65,7 +66,7 @@
             android:layout_width="100dp"
             android:layout_height="30dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="July 2020"
             android:textColor="@color/design_default_color_on_secondary"
@@ -75,9 +76,8 @@
             android:id="@+id/compactcalendar_view"
             android:layout_width="300dp"
             android:layout_height="250dp"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@id/Month_layout"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="20dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             app:compactCalendarBackgroundColor="@color/zxing_transparent"
@@ -88,6 +88,75 @@
             app:compactCalendarTextColor="#000"
             app:compactCalendarTextSize="12sp" />
 
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/sec_tabs"
+        android:layout_width="130dp"
+        android:layout_height="45dp"
+        android:layout_below="@id/mainly"
+        android:layout_alignRight="@id/secondary"
+        android:layout_centerHorizontal="false"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/action_transparent"
+        android:visibility="invisible">
+
+        <Button
+            android:id="@+id/editbutton"
+            android:layout_width="55dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+
+            android:background="@drawable/action_transparent"
+
+            android:onClick="clickEdit"
+            android:text="修改"
+            android:textColor="@color/ic_launcher_background"
+            android:textSize="18dp" />
+
+        <ImageButton
+            android:id="@+id/edit_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/editbutton"
+            android:background="@drawable/action_transparent"
+            android:onClick="clickEdit"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/arrowbutton" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/secondary"
+        android:layout_width="350dp"
+        android:layout_height="180dp"
+        android:layout_below="@id/mainly"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="55dp"
+        android:background="@drawable/main_inner_background"
+        android:visibility="invisible">
+
+        <LinearLayout
+            android:id="@+id/easylist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/planner_inner_background"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/list"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:listSelector="@drawable/action_transparent" />
+        </LinearLayout>
     </RelativeLayout>
 
     <include

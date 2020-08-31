@@ -19,7 +19,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +57,9 @@ public class Planner_activity extends AppCompatActivity {
     private String namewasfilledin;
     public Integer status=0,stuffcount=0;
     private String datewaslastclicked="";
+    private ArrayList<String> EventList = new ArrayList<>();
+    public Integer clicked_year=0,clicked_day=0,clicked_month=0,selectstatus=0;
+
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +80,9 @@ public class Planner_activity extends AppCompatActivity {
         monthlayout.setText(dateFormatForMonth.format(compactCalendarView.getFirstDayOfCurrentMonth()));
         compactCalendarView.setFirstDayOfWeek(Calendar.MONDAY);
         Date datenow =new Date();
+
         datewasclicked=formatter.format(datenow);
+
         ReadDBRecord();
         initial(null);
 
@@ -86,25 +94,54 @@ public class Planner_activity extends AppCompatActivity {
 
         compactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
-            public void onDayClick(Date dateClicked)
-            {
+            public void onDayClick(Date dateClicked) {
                 List<Event> events = compactCalendarView.getEvents(dateClicked);
-                if (formatter.format(dateClicked)!=datewaslastclicked)
-                {datewaslastclicked=formatter.format(dateClicked);
-                    datewasclicked=formatter.format(dateClicked);}
-                else
-
-
-
-                namewasfilledin="";
+                ListView list = findViewById(R.id.list);
+                list.setOnItemClickListener(null);
+                RelativeLayout sec_tabs = findViewById(R.id.sec_tabs);
+                RelativeLayout sec = findViewById(R.id.secondary);
+                EventList.clear();
+                datewasclicked = formatter.format(dateClicked);
+                String[] Eventtimeparts = datewasclicked.split("-");
+                clicked_year=Integer.parseInt(Eventtimeparts[0]);
+                clicked_month=Integer.parseInt(Eventtimeparts[1]);
+                clicked_day=Integer.parseInt(Eventtimeparts[2]);
+                namewasfilledin = "";
                 Log.d(TAG, "Day was clicked: " + dateClicked + " with events " + events);
+
+//
+
+                for (int i=0 ; i<events.size();i++)
+                {
+
+                    String[] Eventparts = events.get(i).toString().split("=");
+
+                    EventList.add(Eventparts[3]);
+
+
+                }
+
+
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Planner_activity.this, android.R.layout.simple_list_item_1,EventList);
+                list.setAdapter(arrayAdapter);
+                if(EventList.isEmpty()==false)
+                { sec_tabs.setVisibility(View.VISIBLE);
+                    sec.setVisibility(View.VISIBLE);
+                }
+                else
+                {sec_tabs.setVisibility(View.INVISIBLE);
+                sec.setVisibility(View.INVISIBLE);}
             }
+
 
             @Override
             public void onMonthScroll(Date firstDayOfNewMonth)
             {
+
                 Log.d(TAG, "Month was scrolled to: " + firstDayOfNewMonth);
                 monthlayout.setText(dateFormatForMonth.format(compactCalendarView.getFirstDayOfCurrentMonth()));
+
+                onDayClick(firstDayOfNewMonth);
             }
         });
 
@@ -221,6 +258,10 @@ public class Planner_activity extends AppCompatActivity {
         intent.putExtra("clickeddate",datewasclicked);
         intent.putExtra("clickedname",namewasfilledin);
         intent.putExtra("clickedstatus",status);
+        intent.putExtra("selstatus", selectstatus);
+        intent.putExtra("clicked_year", clicked_year);
+        intent.putExtra("clicked_month", clicked_month);
+        intent.putExtra("clicked_day", clicked_day);
         startActivityForResult(intent,0);
     }
 
@@ -235,10 +276,22 @@ public class Planner_activity extends AppCompatActivity {
     }
 
     public void clickViewPlan(View view){
+        selectstatus=0;
         Intent intent = new Intent(view.getContext(),ViewPlan_activity.class);
         view.getContext().startActivity(intent);
         intent.putExtra("lastclickeddate",datewaslastclicked);
         startActivityForResult(intent,0);
+    }
+    public void clickEdit(View view){
+        selectstatus=1;
+        Intent intent = new Intent(view.getContext(),ViewPlan_activity.class);
+        view.getContext().startActivity(intent);
+        intent.putExtra("clicked_year",clicked_year);
+        intent.putExtra("clicked_month",clicked_month);
+        intent.putExtra("clicked_day",clicked_day);
+        intent.putExtra("selstatus",selectstatus);
+        startActivityForResult(intent,0);
+
     }
 
     @Override
@@ -249,7 +302,7 @@ public class Planner_activity extends AppCompatActivity {
         return true;
     }
 
-//    @Override
+    //    @Override
     public void finish() {
         super.finish();
         overridePendingTransition(0,R.anim.translate_out);
