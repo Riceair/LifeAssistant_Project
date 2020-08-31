@@ -39,7 +39,7 @@ public class ViewPlan_activity extends AppCompatActivity {
     private ArrayList<Integer> stuffIDList = new ArrayList<>();
     private ListView list;
     public View view;
-    public Integer stuffcount=0;
+    public Integer stuffcount=0,clicked_day=0,clicked_month=0,clicked_year=0,selectstatus=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,9 +51,20 @@ public class ViewPlan_activity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setIcon(R.drawable.newstand);
+        Bundle bundle = getIntent().getExtras();
+        clicked_day = bundle.getInt("clicked_day");
+        clicked_month = bundle.getInt("clicked_month");
+        clicked_year = bundle.getInt("clicked_year");
+        selectstatus = bundle.getInt("selstatus");
 
         list = findViewById(R.id.list);
-        ReadDBRecord();
+        if(selectstatus==0)
+            ReadDBRecord();
+        else
+        {
+            ReadSpecifiedRecord();
+            Toast.makeText(this, "year="+clicked_year+"month="+clicked_month+"day="+clicked_day, Toast.LENGTH_SHORT).show();
+        }
         setList();
     }
 
@@ -79,6 +90,10 @@ public class ViewPlan_activity extends AppCompatActivity {
                 intent.putExtra("clickedendingdate",endingdatewasclicked);
                 intent.putExtra("clickedendingtime",endingtimewasclicked);
                 intent.putExtra("clickedID",idwasfilledin);
+                intent.putExtra("selstatus",selectstatus);
+                intent.putExtra("clicked_year", clicked_year);
+                intent.putExtra("clicked_month", clicked_month);
+                intent.putExtra("clicked_day", clicked_day);
 
 
                 ViewPlan_activity.this.startActivityForResult(intent,0);
@@ -134,12 +149,63 @@ public class ViewPlan_activity extends AppCompatActivity {
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void ReadSpecifiedRecord() {
+        stuffList.clear();
+        stuffEndingList.clear();
+        stuffNameList.clear();
+        stuffIDList.clear();
+        myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
+        try {
+            cursor = myDB.rawQuery("select schedule_record.事情, schedule_record.年,schedule_record.月,schedule_record.日,schedule_record.開始時間,schedule_record.結束時間,schedule_record.id from schedule_record where schedule_record.年=? and schedule_record.月=? and schedule_record.日=?",
+                    new String[]{clicked_year.toString(),clicked_month.toString(),clicked_day.toString()});
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            if (cursor != null) {
+                int iRow = cursor.getCount(); // 取得資料記錄的筆數
+                cursor.moveToFirst();
+                for (int i = 0; i < iRow; i++) {
+                    SchedulePackage temp = new SchedulePackage(
+                            cursor.getInt(6),
+                            cursor.getString(0),
+                            cursor.getInt(1),
+                            cursor.getInt(2),
+                            cursor.getInt(3),
+                            cursor.getInt(4),
+                            cursor.getInt(5));
+                    String tempString = new String(Integer.toString(temp.getStartDateInFormat().getYear()) + "-" +
+                            String.format("%02d", temp.getStartDateInFormat().getMonth()) + "-" +
+                            String.format("%02d", temp.getStartDateInFormat().getDay()) + " " +
+                            String.format("%02d", temp.getStartDateInFormat().getHour()) + ":" +
+                            String.format("%02d", temp.getStartDateInFormat().getMinute()) + ":00");
+                    stuffList.add(tempString);
+                    tempString = new String(Integer.toString(temp.getEndDateInFormat().getYear()) + "-" +
+                            String.format("%02d", temp.getEndDateInFormat().getMonth()) + "-" +
+                            String.format("%02d", temp.getEndDateInFormat().getDay()) + " " +
+                            String.format("%02d", temp.getEndDateInFormat().getHour()) + ":" +
+                            String.format("%02d", temp.getEndDateInFormat().getMinute()) + ":00");
+                    stuffEndingList.add(tempString);
+                    stuffNameList.add(temp.getTodo());
+                    stuffIDList.add(temp.getID());
+                    stuffcount=stuffIDList.size();
+                    cursor.moveToNext();
+                }
+                // 5. 關閉 DB
+                myDB.close();
+            } else {
+                Toast.makeText(this, "Hint 1: 請將db準備好!", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
     @Override
-        protected void onActivityResult(int requestCode,int resultCode,Intent data) {
+    protected void onActivityResult(int requestCode,int resultCode,Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0) {
-
+            if(selectstatus==0)
             ReadDBRecord();
+            else
+                ReadSpecifiedRecord();
             setList();
 
 
@@ -166,6 +232,12 @@ public class ViewPlan_activity extends AppCompatActivity {
     public void finish() {
         super.finish();
         overridePendingTransition(0,R.anim.translate_out);
+
+
+        Intent intent = new Intent(getApplicationContext(), Planner_activity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("EXIT", true); startActivity(intent);
+        startActivityForResult(intent, 3);
 
     }
 

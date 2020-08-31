@@ -49,8 +49,8 @@ public class Register_activity extends AppCompatActivity {
             return;
         }
         boolean isRegistered=false;
-        //若註冊成功把 isRegistered改成true
 
+        //若註冊成功把 isRegistered改成true
         LoginPackage loginPackage = this.getClientLoginInfo();
         isRegistered = LoginHandler.Register(loginPackage);
 

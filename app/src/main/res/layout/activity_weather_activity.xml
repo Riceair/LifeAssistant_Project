@@ -9,7 +9,7 @@
     tools:context=".menu_activity.weather.Weather_activity">
 
     <RelativeLayout
-        android:id="@+id/secondary"
+        android:id="@+id/easylist"
         android:layout_width="380dp"
         android:layout_height="680dp"
         android:layout_centerInParent="true"
