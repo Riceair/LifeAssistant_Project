@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view) {
                 // for DEBUG
-                DEBUG_FUNCTION(-1);
+                DEBUG_FUNCTION(1);
 
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -300,23 +300,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case 1:
 //          FOR CHATBOT DEBUG
-//                TextView tempText = findViewById(R.id.DEBUG_TEXT);
-//                System.out.println(tempText.getText());
-//
-//                userSay.setText(tempText.getText());
-//
-//                System.out.println("Behavior");
-//                System.out.println(chatbotBehavior.getBehaviorMode());
-//                if(!chatbotBehavior.generateSendSentence(tempText.getText().toString()))
-//                {
-//                    System.out.println(chatbotBehavior.getErrorMessage());
-//                }
-//                else
-//                {
-//                    chatbotBehavior.sendSentence();
-//                }
-//
-//                chatBotSay.setText(chatbotBehavior.getResponse());
+                //我要查詢全部記帳
+                TextView tempText = findViewById(R.id.DEBUG_TEXT);
+                System.out.println(tempText.getText());
+
+                userSay.setText(tempText.getText());
+
+                System.out.println("Behavior");
+                System.out.println(chatbotBehavior.getBehaviorMode());
+                if(!chatbotBehavior.generateSendSentence(tempText.getText().toString()))
+                {
+                    System.out.println(chatbotBehavior.getErrorMessage());
+                }
+                else
+                {
+                    chatbotBehavior.sendSentence();
+                }
+
+                chatBotSay.setText(chatbotBehavior.getResponse());
                 break;
             case 2:
                 System.out.println(LoginHandler.getUserKey());

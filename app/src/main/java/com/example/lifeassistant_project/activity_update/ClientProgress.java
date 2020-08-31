@@ -32,7 +32,6 @@ public class ClientProgress implements Runnable {
                 this.rcvPackageList = new ArrayList<DataPackage>();
                 if(this.sndPackage.getClass() == LoginPackage.class)
                 {
-                    this.rcvPackageList = new ArrayList<DataPackage>();
                     this.rcvPackageList.add(new LoginPackage());
                 }
             }finally{

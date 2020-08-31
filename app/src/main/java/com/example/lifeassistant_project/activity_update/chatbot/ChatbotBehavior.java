@@ -84,8 +84,10 @@ public class ChatbotBehavior {
 
             ArrayList<DataPackage> resultList = this.sentenceHandler.getRcvSelectedList();
 
-            AccountPackage temp = (AccountPackage) resultList.get(0);
-            System.out.println(temp.getMoney());
+            AccountPackage temp = (AccountPackage) resultList.get(1);
+//            System.out.println("DEBUG//////////////////////////");
+//            System.out.println(this.sentenceHandler.getCalculateType());
+//            System.out.println(temp.getMoney());
             return "好的！以下是您欲查詢的記帳項目：";
         }
         else if(this.sentenceHandler.getIntent() == 1)
@@ -135,7 +137,7 @@ public class ChatbotBehavior {
     {
         this.sendSentence = new SentenceHandler();
         String detMessage = checkForChineseNumber(message);
-        System.out.println(detMessage);
+//        System.out.println(detMessage);
         if(this.behaviorMode == 0)
         {
             this.sendSentence.setIntent(0);

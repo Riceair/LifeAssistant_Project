@@ -14,7 +14,9 @@ import java.util.Arrays;
 public class SentenceHandler extends DataPackage{
     private int intent, operation;
     private String fulfillment;
+
     private ArrayList<DataPackage> rcvSelectedList;
+    private String calculateType;
 
     public SentenceHandler()
     {
@@ -22,6 +24,7 @@ public class SentenceHandler extends DataPackage{
         this.operation = 0;
         this.fulfillment = "null";
         this.rcvSelectedList = new ArrayList<>();
+        this.calculateType = "def";
     }
 
     public SentenceHandler(int intent, int operation, String fulfillment)
@@ -30,6 +33,7 @@ public class SentenceHandler extends DataPackage{
         this.operation = operation;
         this.fulfillment = fulfillment;
         this.rcvSelectedList = new ArrayList<>();
+        this.calculateType = "def";
     }
 
     @Override
@@ -58,7 +62,7 @@ public class SentenceHandler extends DataPackage{
         SentenceHandler rcvSentence = PackageHandler.sentencePackageDecode(rcvArray);
 
         System.out.println("message send.");                    // 印出接收到的訊息。
-        client.close();                                // 關閉 TcpSocket.
+        client.close();                                         // 關閉 TcpSocket.
 
         ArrayList<DataPackage> resultList = new ArrayList<DataPackage>();
         resultList.add(rcvSentence);
@@ -88,4 +92,8 @@ public class SentenceHandler extends DataPackage{
     public ArrayList<DataPackage> getRcvSelectedList() { return rcvSelectedList; }
 
     public void setRcvSelectedList(ArrayList<DataPackage> rcvSelectedList) { this.rcvSelectedList = rcvSelectedList; }
+
+    public String getCalculateType() { return calculateType; }
+
+    public void setCalculateType(String calculateType) { this.calculateType = calculateType; }
 }

@@ -64,7 +64,7 @@ public class AccountPackage extends DataPackage
     @Override
     public ArrayList<DataPackage> sendOperation(String address, int port) throws IOException {
         super.sendOperation(address, port);
-        final int PACKAGE_SIZE = 168;
+        final int PACKAGE_SIZE = 168, SELECT_TYPE_SIZE = 3;
         ArrayList<DataPackage> resultPackageList = null;
 
         SocketAddress tempSocketAddress = new InetSocketAddress(address, port);
@@ -87,6 +87,8 @@ public class AccountPackage extends DataPackage
 
         if (this.getRequestAction() == 3) {
             ArrayList<DataPackage> rcvAccountData = new ArrayList<DataPackage>();
+//            String calType = new String(Arrays.copyOfRange(b_buf.array(), 0, SELECT_TYPE_SIZE), StandardCharsets.UTF_8);
+//            System.out.println("Select type: " + calType);
             for (int i = 0, currentLength = 0; i < b_buf.array().length / PACKAGE_SIZE; i++) {
                 byte[] resultArray = Arrays.copyOfRange(b_buf.array(), currentLength + 3, currentLength + PACKAGE_SIZE);
                 AccountPackage temp = PackageHandler.accountPackageDecode(resultArray);

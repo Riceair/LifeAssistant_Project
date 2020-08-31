@@ -625,7 +625,7 @@ public class PackageHandler
 
     static public SentenceHandler sentencePackageDecode(byte[] message)
     {
-        final int INTENT_SIZE = 4, OPERATION_SIZE = 4, FULFILLMENT_SIZE = 90, TYPE_SIZE = 3;
+        final int INTENT_SIZE = 4, OPERATION_SIZE = 4, FULFILLMENT_SIZE = 90, CAL_TYPE_SIZE = 3, TYPE_SIZE = 3;
 
         SentenceHandler result = new SentenceHandler();
         int temp = 0, currentSize = 0;
@@ -638,36 +638,57 @@ public class PackageHandler
         result.setOperation(TransByteArray2Int(Arrays.copyOfRange(message, currentSize, currentSize + OPERATION_SIZE), OPERATION_SIZE));
         currentSize += OPERATION_SIZE;
 
-        String typeCheck = TransByteArray2String(Arrays.copyOfRange(message, currentSize, currentSize + TYPE_SIZE), TYPE_SIZE);
-        if(typeCheck.equals("acc") || typeCheck.equals("sch"))
+        if(result.getIntent() == 0 && result.getOperation() == 0)
         {
-//            result.setFulfillment(TransByteArray2String(
-//                    Arrays.copyOfRange(message, currentSize, message.length),
-//                    message.length - currentSize));
-            ArrayList<DataPackage> tempList = new ArrayList<>();
-            int packageSize = 0;
-
-            //shitty code
-            if(typeCheck.equals("acc"))
+            final String[] KEY_WORD_LIST = {"def", "sum", "avg"};
+            boolean searchFlag = false;
+            String typeCheck = TransByteArray2String(Arrays.copyOfRange(message, currentSize, currentSize + CAL_TYPE_SIZE), CAL_TYPE_SIZE);
+            for(String keyWord : KEY_WORD_LIST)
             {
-                packageSize = 168;
+                if (typeCheck.equals(keyWord))
+                {
+                    searchFlag = true;
+                    break;
+                }
+            }
+
+            if(searchFlag)
+            {
+                result.setCalculateType(TransByteArray2String(Arrays.copyOfRange(message, currentSize, currentSize + CAL_TYPE_SIZE), CAL_TYPE_SIZE));
+                currentSize += CAL_TYPE_SIZE;
+
+                typeCheck = TransByteArray2String(Arrays.copyOfRange(message, currentSize, currentSize + TYPE_SIZE), TYPE_SIZE);
+                ArrayList<DataPackage> tempList = new ArrayList<>();
+                int packageSize = 0;
+
+                //shitty code
+                if(typeCheck.equals("acc"))
+                {
+                    packageSize = 168;
+                }
+                else
+                {
+                    packageSize = 78;
+                }
+
+                for(int i = currentSize;i < message.length; i += packageSize)
+                {
+                    typeCheck = TransByteArray2String(Arrays.copyOfRange(message, i, i + TYPE_SIZE), TYPE_SIZE);
+                    if(typeCheck.equals("acc"))
+                        tempList.add(PackageHandler.accountPackageDecode(Arrays.copyOfRange(message, i + TYPE_SIZE, i + packageSize)));
+                    else if(typeCheck.equals("sch"))
+                        tempList.add(PackageHandler.schedulePackageDecode(Arrays.copyOfRange(message, i + TYPE_SIZE, i + packageSize)));
+                    else
+                        break;
+                }
+                result.setRcvSelectedList(tempList);
+//            currentSize += message.length - currentSize;
             }
             else
             {
-                packageSize = 78;
+                result.setFulfillment(TransByteArray2String(Arrays.copyOfRange(message, currentSize, currentSize + FULFILLMENT_SIZE), FULFILLMENT_SIZE));
+                currentSize += FULFILLMENT_SIZE;
             }
-
-            for(int i = currentSize;i < message.length; i += packageSize)
-            {
-                if(typeCheck.equals("acc"))
-                {
-                    tempList.add(PackageHandler.accountPackageDecode(Arrays.copyOfRange(message, i + TYPE_SIZE, i + packageSize)));
-                }
-                else
-                    tempList.add(PackageHandler.schedulePackageDecode(Arrays.copyOfRange(message, i + TYPE_SIZE, i + packageSize)));
-            }
-            result.setRcvSelectedList(tempList);
-//            currentSize += message.length - currentSize;
         }
         else
         {

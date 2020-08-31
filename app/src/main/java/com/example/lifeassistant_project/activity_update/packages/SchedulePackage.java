@@ -62,7 +62,7 @@ public class SchedulePackage extends DataPackage{
     public ArrayList<DataPackage> sendOperation(String address, int port) throws IOException {
         super.sendOperation(address, port);
         System.out.println("Plan");
-        final int PACKAGE_SIZE = 78;
+        final int PACKAGE_SIZE = 78, SELECT_TYPE_SIZE = 3;
         ArrayList<DataPackage> resultPackageList = null;
 
         SocketAddress tempSocketAddress = new InetSocketAddress(address, port);
@@ -85,6 +85,8 @@ public class SchedulePackage extends DataPackage{
         if(this.getRequestAction() == 3)
         {
             ArrayList<DataPackage> rcvScheduleData = new ArrayList<DataPackage>();
+//            String calType = new String(Arrays.copyOfRange(b_buf.array(), 0, SELECT_TYPE_SIZE), StandardCharsets.UTF_8);
+//            System.out.println("Select type: " + calType);
             for (int i = 0, currentLength = 0; i < b_buf.array().length / PACKAGE_SIZE; i++)
             {
                 byte[] resultArray = Arrays.copyOfRange(b_buf.array(), currentLength+3, currentLength+PACKAGE_SIZE);

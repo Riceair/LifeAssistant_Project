@@ -1,5 +1,7 @@
 package com.example.lifeassistant_project.activity_update.packages;
 
+import android.widget.Toast;
+import com.example.lifeassistant_project.activity_update.ClientProgress;
 import com.example.lifeassistant_project.activity_update.static_handler.PackageHandler;
 
 import javax.net.SocketFactory;
@@ -16,6 +18,9 @@ import java.util.Arrays;
 
 public class WeatherPackage extends DataPackage
 {
+    private static ArrayList<WeatherPackage> rcvWeatherData;
+    private static String currentCity;
+
     private int month;
     private int day;
     private int max_temperature;
@@ -80,6 +85,47 @@ public class WeatherPackage extends DataPackage
         System.out.println("message send.");                    // 印出接收到的訊息。
         client.close();                                // 關閉 TcpSocket.
         return weatherData;
+    }
+
+    public static void getWeatherDataFromServer()
+    {
+        final int WEEK_SIZE = 14;
+
+        ClientProgress client = new ClientProgress();
+        client.setPackage(new WeatherPackage());
+        Thread cThread = new Thread(client);
+        cThread.start();
+        synchronized (client)
+        {
+            try {
+                client.wait();
+            }
+            catch (InterruptedException e)
+            {
+                System.out.println(e);
+            }
+        }
+
+        ArrayList<DataPackage> weatherData = client.getRcvPackageList();
+        if(weatherData.size() == 0)
+        {
+            System.out.println("connection failed. can't get weather's information from server");
+            return;
+        }
+
+        int pointer;
+        for (pointer = 0;pointer < weatherData.size(); pointer += WEEK_SIZE)
+        {
+            WeatherPackage weatherPackage = (WeatherPackage) weatherData.get(pointer);
+            if(weatherPackage.getCity().equals(currentCity)) break;
+        }
+
+        if(pointer == weatherData.size())
+        {
+            System.out.println("Location error! set current city to default.");
+            currentCity = "基隆市";
+            pointer = 0;
+        }
     }
 
     public int getMonth() {

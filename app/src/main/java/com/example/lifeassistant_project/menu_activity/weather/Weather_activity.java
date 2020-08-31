@@ -94,7 +94,7 @@ public class Weather_activity extends AppCompatActivity {
         }
 
         int pointer;
-        for (pointer = 0;pointer < weatherData.size(); pointer++)
+        for (pointer = 0;pointer < weatherData.size(); pointer += WEEK_SIZE)
         {
             WeatherPackage weatherPackage = (WeatherPackage) weatherData.get(pointer);
             if(weatherPackage.getCity().equals(currentCity)) break;
