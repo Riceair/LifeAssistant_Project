@@ -19,7 +19,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class Login_activity extends AppCompatActivity {
     private static final int REGISTER_CODE = 11;
-    private static final int LOGIN_CODE = 12;
+    private static final int REGISTER_OK = 111;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,12 +75,11 @@ public class Login_activity extends AppCompatActivity {
                 Bundle bundle = data.getExtras();
                 String account=bundle.getString("ACCOUNT");
                 String password=bundle.getString("PASSWORD");
-                LoginPackage regloginpackage=new LoginPackage(account,password);
-                if(LoginHandler.Login(regloginpackage))
-                {
-                    saveInformation(regloginpackage.getName(), regloginpackage.getPassword());
-                    Login_activity.this.finish();
-                }
+                Intent intent=new Intent();
+                intent.putExtra("ACCOUNT",account);
+                intent.putExtra("PASSWORD",password);
+                setResult(REGISTER_OK,intent);
+                Login_activity.this.finish();
             }
         }
     }
