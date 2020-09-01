@@ -85,14 +85,7 @@ public class Planner_activity extends AppCompatActivity {
 
         ReadDBRecord();
         initial(null);
-
-        //Query
-        //List<Event> events = compactCalendarView.getEvents(1597320075000L); // can also take a Date object
-        // events has size 2 with the 2 events inserted previously
-        //Log.d(TAG, "Events: " + events);
-        // define a listener to receive callbacks when certain events happen.
-
-        compactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
+        CompactCalendarView.CompactCalendarViewListener func = new CompactCalendarView.CompactCalendarViewListener() {
             @Override
             public void onDayClick(Date dateClicked) {
                 List<Event> events = compactCalendarView.getEvents(dateClicked);
@@ -130,7 +123,7 @@ public class Planner_activity extends AppCompatActivity {
                 }
                 else
                 {sec_tabs.setVisibility(View.INVISIBLE);
-                sec.setVisibility(View.INVISIBLE);}
+                    sec.setVisibility(View.INVISIBLE);}
             }
 
 
@@ -143,7 +136,15 @@ public class Planner_activity extends AppCompatActivity {
 
                 onDayClick(firstDayOfNewMonth);
             }
-        });
+        };
+        //Query
+        //List<Event> events = compactCalendarView.getEvents(1597320075000L); // can also take a Date object
+        // events has size 2 with the 2 events inserted previously
+        //Log.d(TAG, "Events: " + events);
+        // define a listener to receive callbacks when certain events happen.
+
+        compactCalendarView.setListener(func);
+        func.onDayClick(datenow);
 
     }
 
