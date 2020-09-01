@@ -41,18 +41,30 @@
             android:textStyle="bold"
             tools:text="發票兌獎" />
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/welcometext2"
+            android:layout_centerHorizontal="true">
+
         <Button
             android:id="@+id/button"
-            android:layout_width="100dp"
-            android:layout_height="35dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="375dp"
-            android:background="@drawable/action_transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:onClick="clickToQRScan"
-            android:text="使用掃描器"
-            android:textColor="#FFFF37"
+            android:layout_marginRight="5dp"
+            android:text="QR掃描器"
             android:textSize="16dp" />
+
+        <Button
+            android:id="@+id/auto_check_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="自動兌獎"
+            android:textSize="16dp"/>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/more"
