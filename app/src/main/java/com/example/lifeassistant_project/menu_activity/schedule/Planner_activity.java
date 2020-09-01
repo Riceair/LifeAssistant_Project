@@ -15,10 +15,14 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -26,6 +30,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.lifeassistant_project.MainActivity;
 import com.example.lifeassistant_project.R;
 import com.example.lifeassistant_project.activity_update.packages.SchedulePackage;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
@@ -72,6 +77,19 @@ public class Planner_activity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setIcon(R.drawable.newstand);
+        final View decorView = getWindow().getDecorView();
+        decorView.setOnSystemUiVisibilityChangeListener (new View.OnSystemUiVisibilityChangeListener() {
+            @Override
+            public void onSystemUiVisibilityChange(int visibility) {
+                if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
+                    decorView.setSystemUiVisibility(
+                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+                }
+            }
+        });
         //初始化日曆頭標與語系
         final CompactCalendarView compactCalendarView = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
         compactCalendarView.setLocale(TimeZone.getTimeZone("GMT-8:00"),Locale.CHINESE);
@@ -85,6 +103,10 @@ public class Planner_activity extends AppCompatActivity {
 
         ReadDBRecord();
         initial(null);
+        RelativeLayout main = findViewById(R.id.mainly);
+        Animation anim_trans = AnimationUtils.loadAnimation(Planner_activity.this,R.anim.alpha_scale_anim);
+        anim_trans.setDuration(500);
+        main.startAnimation(anim_trans);
         CompactCalendarView.CompactCalendarViewListener func = new CompactCalendarView.CompactCalendarViewListener() {
             @Override
             public void onDayClick(Date dateClicked) {
@@ -108,8 +130,10 @@ public class Planner_activity extends AppCompatActivity {
                 {
 
                     String[] Eventparts = events.get(i).toString().split("=");
+                    String tempString=Eventparts[3];
+                    Integer tempIndic=tempString.length();
+                    EventList.add(tempString.substring(0,tempIndic-1));
 
-                    EventList.add(Eventparts[3]);
 
 
                 }
@@ -118,12 +142,18 @@ public class Planner_activity extends AppCompatActivity {
                 ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Planner_activity.this, android.R.layout.simple_list_item_1,EventList);
                 list.setAdapter(arrayAdapter);
                 if(EventList.isEmpty()==false)
-                { sec_tabs.setVisibility(View.VISIBLE);
-                    sec.setVisibility(View.VISIBLE);
+                {   sec_tabs.setVisibility(View.VISIBLE);
+                    sec.setBackgroundResource(R.drawable.planner_stuff_background);
+                    Animation anim_transUp = AnimationUtils.loadAnimation(Planner_activity.this,R.anim.translate_up);
+                    anim_transUp.setDuration(500);
+                    sec.startAnimation(anim_transUp);
                 }
                 else
-                {sec_tabs.setVisibility(View.INVISIBLE);
-                    sec.setVisibility(View.INVISIBLE);}
+                {   sec_tabs.setVisibility(View.INVISIBLE);
+                    sec.setBackgroundResource(R.drawable.planner_stuff_empty);
+                    Animation anim_transDown = AnimationUtils.loadAnimation(Planner_activity.this,R.anim.translate_down);
+                    anim_transDown.setDuration(500);
+                    sec.startAnimation(anim_transDown);}
             }
 
 
@@ -275,7 +305,13 @@ public class Planner_activity extends AppCompatActivity {
         initial(null);
 
     }
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        final int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        final View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(uiOptions);
+    }
     public void clickViewPlan(View view){
         selectstatus=0;
         Intent intent = new Intent(view.getContext(),ViewPlan_activity.class);
