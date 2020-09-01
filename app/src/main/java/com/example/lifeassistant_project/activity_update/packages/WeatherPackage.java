@@ -18,7 +18,7 @@ import java.util.Arrays;
 
 public class WeatherPackage extends DataPackage
 {
-    private static ArrayList<WeatherPackage> rcvWeatherData;
+    private static ArrayList<DataPackage> rcvWeatherData = new ArrayList<>();
     private static String currentCity;
 
     private int month;
@@ -46,6 +46,7 @@ public class WeatherPackage extends DataPackage
         this.min_temperature = 0;
         this.city = "";
         this.period = "";
+        this.connectionTimeout = 3000;
     }
 
     @Override
@@ -87,7 +88,7 @@ public class WeatherPackage extends DataPackage
         return weatherData;
     }
 
-    public static void getWeatherDataFromServer()
+    private static ArrayList<DataPackage> getWeatherDataFromServer()
     {
         final int WEEK_SIZE = 14;
 
@@ -110,7 +111,7 @@ public class WeatherPackage extends DataPackage
         if(weatherData.size() == 0)
         {
             System.out.println("connection failed. can't get weather's information from server");
-            return;
+            return null;
         }
 
         int pointer;
@@ -126,7 +127,29 @@ public class WeatherPackage extends DataPackage
             currentCity = "基隆市";
             pointer = 0;
         }
+
+        ArrayList<DataPackage> resultData = new ArrayList<>();
+        for(int i = 0;i < WEEK_SIZE;i++)
+            resultData.add(weatherData.get(pointer++));
+
+        rcvWeatherData = resultData;
+        return resultData;
     }
+
+    public static ArrayList<DataPackage> getRcvWeatherData()
+    {
+        if((rcvWeatherData.size() == 0) && currentCity != null)
+            return getWeatherDataFromServer();
+        else if(rcvWeatherData.size() != 0)
+            return rcvWeatherData;
+        else if(currentCity == null)
+            System.out.println("Get weather data error! current city has not been settled.");
+        return null;
+    }
+
+    public static void setCurrentCity(String t) {currentCity = t;}
+
+    public static String getCurrentCity() {return  currentCity;}
 
     public int getMonth() {
         return month;
