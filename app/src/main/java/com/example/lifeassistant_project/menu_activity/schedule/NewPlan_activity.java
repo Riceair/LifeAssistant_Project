@@ -309,33 +309,34 @@ public class NewPlan_activity extends AppCompatActivity {
                 myDB.close();
 
 
-                String tempString = new String(clicked_year.toString()+"-"+String.format("%02d", clicked_month.toString())+"-"+String.format("%02d", clicked_day.toString())+" 12:00:00");
+                String tempString = new String(Integer.toString(clicked_year) + "-" +
+                        String.format("%02d", clicked_month) + "-" +
+                        String.format("%02d", clicked_day) + " 12:00:00");
                 Date tempdate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(tempString);
                 long tempmilis = tempdate.getTime();
-                for(int i=0;i<stuffList.size();i++)
+
+                for(int i=stuffList.size()-1;i>=0;i--)
                 {
-                    if (tempmilis>=stuffListinDateFormat.get(i))
+                    if (tempmilis>stuffListinDateFormat.get(i))
                     {
-                        if (tempmilis<=stuffEndingListinDateFormat.get(i))
-                        {}
-                            else
+                        if (tempmilis<stuffEndingListinDateFormat.get(i))
+                        {
+
+                        }
+                        else
                         {
                             stuffList.remove(i);
                             stuffEndingList.remove(i);
                             stuffIDList.remove(i);
-                            stuffListinDateFormat.set(i,Long.valueOf(0));
-                            stuffEndingListinDateFormat.set(i,Long.valueOf(0));
                             stuffNameList.remove(i);
-
                         }
                     }
                     else
-                    {stuffList.remove(i);
-                    stuffEndingList.remove(i);
-                    stuffIDList.remove(i);
-                    stuffListinDateFormat.set(i,Long.valueOf(0));
-                    stuffEndingListinDateFormat.set(i,Long.valueOf(0));
-                    stuffNameList.remove(i);}
+                    { stuffList.remove(i);
+                        stuffEndingList.remove(i);
+                        stuffIDList.remove(i);
+                        stuffNameList.remove(i);
+                    }
 
                 }
 
