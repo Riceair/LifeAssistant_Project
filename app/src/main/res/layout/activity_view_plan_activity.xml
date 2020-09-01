@@ -7,6 +7,18 @@
     android:background="@drawable/planner_background"
     tools:context=".menu_activity.schedule.ViewPlan_activity">
 
+    <TextView
+        android:id="@+id/sub_title"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_above="@id/mainly"
+        android:layout_alignStart="@id/mainly"
+        android:gravity="start|center_vertical"
+        android:onClick="clickBackPlanner"
+        android:text=""
+        android:textColor="#027CDD"
+        android:textSize="25dp" />
+
     <LinearLayout
         android:id="@+id/mainly"
         android:layout_width="350dp"

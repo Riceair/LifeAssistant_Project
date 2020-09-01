@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lifeassistant_project.R;
@@ -62,12 +63,17 @@ public class ViewPlan_activity extends AppCompatActivity {
         selectstatus = bundle.getInt("selstatus");
 
         list = findViewById(R.id.list);
+        TextView monthlayout = (TextView) findViewById(R.id.sub_title);
         if(selectstatus==0)
-            ReadDBRecord();
+        { ReadDBRecord();
+
+
+            monthlayout.setText("<全部");
+        }
         else
         {
             ReadSpecifiedRecord();
-
+            monthlayout.setText("<"+clicked_year+"-"+clicked_month+"-"+clicked_day);
         }
         setList();
 
