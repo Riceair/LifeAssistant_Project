@@ -61,7 +61,7 @@ public class Planner_activity extends AppCompatActivity {
     public String datewasclicked;
     private String namewasfilledin;
     public Integer status=0,stuffcount=0;
-    private String datewaslastclicked="";
+    public String datewaslastclicked="";
     private ArrayList<String> EventList = new ArrayList<>();
     public Integer clicked_year=0,clicked_day=0,clicked_month=0,selectstatus=0;
 
