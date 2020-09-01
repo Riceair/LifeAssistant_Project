@@ -27,7 +27,6 @@
                     android:layout_marginRight="30dp"
                     android:paddingTop="3dp"
                     android:text="使用說明"
-                    android:onClick="clickToGetHelp"
                     android:textColor="@color/design_default_color_background"
                     android:textSize="20sp"/>
             <ImageView
@@ -37,7 +36,6 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="73dp"
                 android:layout_marginRight="6dp"
-                android:onClick="clickToGetHelp"
                 android:scaleType="fitXY"
                 app:srcCompat="@drawable/moreinfo_button"/>
 

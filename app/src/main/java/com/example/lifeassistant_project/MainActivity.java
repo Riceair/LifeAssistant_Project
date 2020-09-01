@@ -23,7 +23,6 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,7 +43,6 @@ import com.example.lifeassistant_project.activity_update.packages.ReceiptPackage
 import com.example.lifeassistant_project.activity_update.packages.WeatherPackage;
 import com.example.lifeassistant_project.activity_update.static_handler.DatabaseBehavior;
 import com.example.lifeassistant_project.activity_update.static_handler.LoginHandler;
-import com.example.lifeassistant_project.features_class.AnimPlayingListener;
 import com.example.lifeassistant_project.features_class.MainHelpItemOnClickListener;
 import com.example.lifeassistant_project.features_class.PieChartUsedClass;
 import com.example.lifeassistant_project.menu_activity.finance.Bookkeeping_activity;
@@ -65,8 +63,6 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener {
@@ -101,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ArrayList<MainHelpItemOnClickListener> helpItem_onclick_list=new ArrayList<>();
 
     private boolean isQuestion=false;
-    private ArrayList<AnimPlayingListener> animPlayingListeners=new ArrayList<>();
     private final String[] helpTitle={"如何使用","天氣指令","排程指令","記帳指令","報表指令","發票指令"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -504,14 +499,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //////////////////////////////說明提示////////////////////////////
     //help設置
     private void setHelp(){
-        for(int i=0;i<4;i++){
-            AnimPlayingListener animPlayingListener=new AnimPlayingListener();
-            animPlayingListeners.add(animPlayingListener);
-        }
-
         //重設
         LinearLayout help_list = findViewById(R.id.help_list);
         help_list.removeAllViews();
+
+        ClickToGetHelp clickToGetHelp=new ClickToGetHelp();
+        findViewById(R.id.chatBotHelp).setOnClickListener(clickToGetHelp);
+        findViewById(R.id.chatBotHelpImg).setOnClickListener(clickToGetHelp);
 
         //返回鍵設置
         TextView help_back=new TextView(this);
@@ -519,14 +513,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         help_back.setGravity(Gravity.RIGHT);
         help_back.setText("返回");
         help_back.setTextSize(30f);
-        help_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(animPlayingListeners.get(0).getPlaying() || animPlayingListeners.get(1).getPlaying())
-                    return;
-                onBackPressed();
-            }
-        });
+        help_back.setOnClickListener(new ClickToBackFromHelp());
         help_list.addView(help_back);
 
 
@@ -573,25 +560,47 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     //說明按鍵觸發
-    public void clickToGetHelp(View view){
-        if(isQuestion || animPlayingListeners.get(2).getPlaying() || animPlayingListeners.get(3).getPlaying())
-            return;
-        isQuestion=true;
-        //基本物件與天氣設為INVISIBLE 使用說明顯示VISIBLE
-        findViewById(R.id.popup_window).setVisibility(View.INVISIBLE);
-        findViewById(R.id.basic_item).setVisibility(View.GONE);
-        findViewById(R.id.question_item).setVisibility(View.VISIBLE);
+    private class ClickToGetHelp implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            if(isQuestion) return;
+            isQuestion=true;
+            //基本物件與天氣設為INVISIBLE 使用說明顯示VISIBLE
+            findViewById(R.id.popup_window).setVisibility(View.INVISIBLE);
+            findViewById(R.id.basic_item).setVisibility(View.GONE);
+            findViewById(R.id.question_item).setVisibility(View.VISIBLE);
 
-        //顯示動畫
-        Animation anim_alpha = new AlphaAnimation(1.0f,0.0f);
-        anim_alpha.setDuration(500);
-        findViewById(R.id.basic_item).startAnimation(anim_alpha);
-        anim_alpha.setAnimationListener(animPlayingListeners.get(0));
+            //顯示動畫
+            Animation anim_alpha = new AlphaAnimation(1.0f,0.0f);
+            anim_alpha.setDuration(500);
+            findViewById(R.id.basic_item).startAnimation(anim_alpha);
 
-        Animation anim_transUp = AnimationUtils.loadAnimation(this,R.anim.translate_up);
-        anim_transUp.setDuration(500);
-        findViewById(R.id.question_item).startAnimation(anim_transUp);
-        anim_transUp.setAnimationListener(animPlayingListeners.get(1));
+            Animation anim_transUp = AnimationUtils.loadAnimation(MainActivity.this,R.anim.translate_up);
+            anim_transUp.setDuration(500);
+            findViewById(R.id.question_item).startAnimation(anim_transUp);
+        }
+    }
+
+    private class ClickToBackFromHelp implements View.OnClickListener{
+        @Override
+        public void onClick(View view) {
+            if(isQuestion){
+                isQuestion=false;
+                findViewById(R.id.basic_item).setVisibility(View.VISIBLE);
+                findViewById(R.id.question_item).setVisibility(View.INVISIBLE);
+
+                Animation anim_alpha = new AlphaAnimation(0.0f,1.0f);
+                anim_alpha.setDuration(500);
+                findViewById(R.id.basic_item).startAnimation(anim_alpha);
+
+                Animation anim_transDown = AnimationUtils.loadAnimation(MainActivity.this,R.anim.translate_down);
+                anim_transDown.setDuration(500);
+                findViewById(R.id.question_item).startAnimation(anim_transDown);
+
+                for(int i=0;i<helpItem_onclick_list.size();i++)
+                    helpItem_onclick_list.get(i).reset();
+            }
+        }
     }
 
     ///////////////////////////Navigation Drawer/////////////////////////////
@@ -750,23 +759,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onBackPressed(){
         if(drawerLayout.isDrawerOpen(GravityCompat.START)){
             drawerLayout.closeDrawer(GravityCompat.START);
-        }else if(isQuestion){
-            isQuestion=false;
-            findViewById(R.id.basic_item).setVisibility(View.VISIBLE);
-            findViewById(R.id.question_item).setVisibility(View.INVISIBLE);
-
-            Animation anim_alpha = new AlphaAnimation(0.0f,1.0f);
-            anim_alpha.setDuration(500);
-            findViewById(R.id.basic_item).startAnimation(anim_alpha);
-            anim_alpha.setAnimationListener(animPlayingListeners.get(2));
-
-            Animation anim_transDown = AnimationUtils.loadAnimation(MainActivity.this,R.anim.translate_down);
-            anim_transDown.setDuration(500);
-            findViewById(R.id.question_item).startAnimation(anim_transDown);
-            anim_transDown.setAnimationListener(animPlayingListeners.get(3));
-
-            for(int i=0;i<helpItem_onclick_list.size();i++)
-                helpItem_onclick_list.get(i).reset();
         }else{
             super.onBackPressed();
         }

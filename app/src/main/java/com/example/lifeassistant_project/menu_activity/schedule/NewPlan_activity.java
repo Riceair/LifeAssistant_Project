@@ -32,6 +32,7 @@ import com.example.lifeassistant_project.activity_update.packages.SchedulePackag
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -55,6 +56,8 @@ public class NewPlan_activity extends AppCompatActivity {
     private ArrayList<String> stuffEndingList = new ArrayList<>();
     private ArrayList<String> stuffNameList = new ArrayList<>();
     private ArrayList<Integer> stuffIDList = new ArrayList<>();
+    private ArrayList<Long> stuffListinDateFormat = new ArrayList<>();
+    private ArrayList<Long> stuffEndingListinDateFormat = new ArrayList<>();
     private int year,month,day,start_time,end_time;
     private Integer status=0,selid=0,stuffcount=0,clicked_day=0,clicked_month=0,clicked_year=0,selectstatus=0;;
 
@@ -251,10 +254,12 @@ public class NewPlan_activity extends AppCompatActivity {
         stuffEndingList.clear();
         stuffNameList.clear();
         stuffIDList.clear();
+        stuffEndingListinDateFormat.clear();
+        stuffListinDateFormat.clear();
         myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
         try {
-            cursor = myDB.rawQuery("select schedule_record.事情, schedule_record.年,schedule_record.月,schedule_record.日,schedule_record.開始時間,schedule_record.結束時間,schedule_record.id from schedule_record where schedule_record.年=? and schedule_record.月=? and schedule_record.日=?",
-                    new String[]{clicked_year.toString(),clicked_month.toString(),clicked_day.toString()});
+            cursor = myDB.rawQuery("select schedule_record.事情, schedule_record.年,schedule_record.月,schedule_record.日,schedule_record.開始時間,schedule_record.結束時間,schedule_record.id from schedule_record", null);
+
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             if (cursor != null) {
                 int iRow = cursor.getCount(); // 取得資料記錄的筆數
@@ -274,12 +279,27 @@ public class NewPlan_activity extends AppCompatActivity {
                             String.format("%02d", temp.getStartDateInFormat().getHour()) + ":" +
                             String.format("%02d", temp.getStartDateInFormat().getMinute()) + ":00");
                     stuffList.add(tempString);
+                    tempString = new String(Integer.toString(temp.getStartDateInFormat().getYear()) + "-" +
+                            String.format("%02d", temp.getStartDateInFormat().getMonth()) + "-" +
+                            String.format("%02d", temp.getStartDateInFormat().getDay()) + " 00:00:00");
+                    Date tempdate = null;
+                    tempdate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(tempString);
+                    long tempmilis = tempdate.getTime();
+                    stuffListinDateFormat.add(tempmilis);
                     tempString = new String(Integer.toString(temp.getEndDateInFormat().getYear()) + "-" +
                             String.format("%02d", temp.getEndDateInFormat().getMonth()) + "-" +
                             String.format("%02d", temp.getEndDateInFormat().getDay()) + " " +
                             String.format("%02d", temp.getEndDateInFormat().getHour()) + ":" +
                             String.format("%02d", temp.getEndDateInFormat().getMinute()) + ":00");
                     stuffEndingList.add(tempString);
+
+                    tempString = new String(Integer.toString(temp.getEndDateInFormat().getYear()) + "-" +
+                            String.format("%02d", temp.getEndDateInFormat().getMonth()) + "-" +
+                            String.format("%02d", temp.getEndDateInFormat().getDay()) + " 23:59:59");
+                    tempdate = null;
+                    tempdate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(tempString);
+                    tempmilis = tempdate.getTime();
+                    stuffEndingListinDateFormat.add(tempmilis);
                     stuffNameList.add(temp.getTodo());
                     stuffIDList.add(temp.getID());
                     stuffcount=stuffIDList.size();
@@ -287,6 +307,40 @@ public class NewPlan_activity extends AppCompatActivity {
                 }
                 // 5. 關閉 DB
                 myDB.close();
+
+
+                String tempString = new String(Integer.toString(clicked_year) + "-" +
+                        String.format("%02d", clicked_month) + "-" +
+                        String.format("%02d", clicked_day) + " 12:00:00");
+                Date tempdate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(tempString);
+                long tempmilis = tempdate.getTime();
+
+                for(int i=stuffList.size()-1;i>=0;i--)
+                {
+                    if (tempmilis>stuffListinDateFormat.get(i))
+                    {
+                        if (tempmilis<stuffEndingListinDateFormat.get(i))
+                        {
+
+                        }
+                        else
+                        {
+                            stuffList.remove(i);
+                            stuffEndingList.remove(i);
+                            stuffIDList.remove(i);
+                            stuffNameList.remove(i);
+                        }
+                    }
+                    else
+                    { stuffList.remove(i);
+                        stuffEndingList.remove(i);
+                        stuffIDList.remove(i);
+                        stuffNameList.remove(i);
+                    }
+
+                }
+
+
             } else {
                 Toast.makeText(this, "Hint 1: 請將db準備好!", Toast.LENGTH_SHORT).show();
             }

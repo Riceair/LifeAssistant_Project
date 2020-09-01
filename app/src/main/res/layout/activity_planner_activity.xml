@@ -14,7 +14,8 @@
         android:layout_height="45dp"
         android:layout_alignRight="@id/mainly"
         android:layout_marginTop="80dp"
-        android:background="@drawable/tabs">
+        android:background="@drawable/tabs"
+        tools:visibility="visible">
 
         <Button
             android:id="@+id/addbutton"
@@ -54,7 +55,7 @@
     <RelativeLayout
         android:id="@+id/mainly"
         android:layout_width="350dp"
-        android:layout_height="330dp"
+        android:layout_height="350dp"
         android:layout_below="@id/tabs"
         android:layout_alignParentBottom="false"
         android:layout_centerHorizontal="true"
@@ -65,8 +66,9 @@
             android:id="@+id/Month_layout"
             android:layout_width="100dp"
             android:layout_height="30dp"
+            android:layout_above="@id/compactcalendar_view"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="30dp"
             android:gravity="center"
             android:text="July 2020"
             android:textColor="@color/design_default_color_on_secondary"
@@ -76,7 +78,7 @@
             android:id="@+id/compactcalendar_view"
             android:layout_width="300dp"
             android:layout_height="250dp"
-            android:layout_below="@id/Month_layout"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
@@ -95,38 +97,36 @@
         android:id="@+id/sec_tabs"
         android:layout_width="130dp"
         android:layout_height="45dp"
-        android:layout_below="@id/mainly"
-        android:layout_alignRight="@id/secondary"
-        android:layout_centerHorizontal="false"
-        android:layout_marginTop="10dp"
+        android:layout_alignTop="@id/secondary"
+        android:layout_centerHorizontal="true"
         android:background="@drawable/action_transparent"
         android:visibility="invisible">
 
         <Button
             android:id="@+id/editbutton"
-            android:layout_width="55dp"
-            android:layout_height="30dp"
+            android:layout_width="65dp"
+            android:layout_height="45dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
 
             android:background="@drawable/action_transparent"
 
             android:onClick="clickEdit"
             android:text="修改"
             android:textColor="@color/ic_launcher_background"
-            android:textSize="18dp" />
+            android:textSize="22dp" />
 
         <ImageButton
             android:id="@+id/edit_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:layout_toRightOf="@id/editbutton"
             android:background="@drawable/action_transparent"
             android:onClick="clickEdit"
             android:scaleType="fitXY"
-            app:srcCompat="@drawable/arrowbutton" />
+            app:srcCompat="@drawable/arrowbutton_white" />
 
 
     </RelativeLayout>
@@ -134,26 +134,26 @@
     <RelativeLayout
         android:id="@+id/secondary"
         android:layout_width="350dp"
-        android:layout_height="180dp"
+        android:layout_height="300dp"
         android:layout_below="@id/mainly"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="55dp"
-        android:background="@drawable/main_inner_background"
-        android:visibility="invisible">
+        android:background="@drawable/planner_stuff_empty"
+        android:visibility="visible">
 
         <LinearLayout
             android:id="@+id/easylist"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/planner_inner_background"
+            android:layout_height="200dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
             android:orientation="vertical">
 
             <ListView
                 android:id="@+id/list"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
                 android:listSelector="@drawable/action_transparent" />
         </LinearLayout>
