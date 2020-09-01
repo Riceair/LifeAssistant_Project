@@ -1,7 +1,8 @@
 package com.example.lifeassistant_project;
 
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
+import android.content.*;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
@@ -12,9 +13,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
-import android.content.ActivityNotFoundException;
-import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
@@ -43,6 +41,7 @@ import com.example.lifeassistant_project.activity_update.chatbot.ChatbotBehavior
 import com.example.lifeassistant_project.activity_update.packages.DataPackage;
 import com.example.lifeassistant_project.activity_update.packages.LoginPackage;
 import com.example.lifeassistant_project.activity_update.packages.ReceiptPackage;
+import com.example.lifeassistant_project.activity_update.packages.WeatherPackage;
 import com.example.lifeassistant_project.activity_update.static_handler.DatabaseBehavior;
 import com.example.lifeassistant_project.activity_update.static_handler.LoginHandler;
 import com.example.lifeassistant_project.features_class.AnimPlayingListener;
@@ -136,13 +135,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bind();
 
         ////////////////報表debug
-        List<String> type=new ArrayList<>();
-        type.add("早餐");
-        type.add("Fox Burger King");
-        List<Integer> amount=new ArrayList<>();
-        amount.add(60);
-        amount.add(100);
-        popupShow(type,amount);
+//        List<String> type=new ArrayList<>();
+//        type.add("早餐");
+//        type.add("Fox Burger King");
+//        List<Integer> amount=new ArrayList<>();
+//        amount.add(60);
+//        amount.add(100);
+//        popupShow(type,amount);
+        popupGone();
 
         //Remeber user's content
         SharedPreferences shared = getSharedPreferences("shared", MODE_PRIVATE);
@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         //get weather data from server.
-
+//        getWeatherData();
     }
 
     private void bind(){
@@ -214,6 +214,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         popup_window.startAnimation(animation);
 
         weather_response.setVisibility(View.VISIBLE);
+    }
+
+    //猜測意圖
+    private void popupShow()
+    {
+        popup_window.setVisibility(View.VISIBLE);
+        Animation animation=AnimationUtils.loadAnimation(this,R.anim.alpha_scale_anim);
+        animation.setDuration(1000);
+        popup_window.startAnimation(animation);
+
+        mChart.setVisibility(View.INVISIBLE);
+        findViewById(R.id.assure_button).setVisibility(View.VISIBLE);
+        findViewById(R.id.cancelButton).setVisibility(View.VISIBLE);
+        findViewById(R.id.weather_condition).setVisibility(View.INVISIBLE);
     }
 
     private void popupGone(){
@@ -290,9 +304,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     /////////////// Weather Data ///////////////////////////////////
-    private void getWeatherData()
+    private ArrayList<DataPackage> getWeatherData()
     {
+        if(WeatherPackage.getCurrentCity() == null)
+        {
+            SQLiteDatabase myDB;
+            Cursor cursor;
+            String currentCity = adminArea;
 
+            if(currentCity.equals("")){ //定位失敗
+                Toast.makeText(this,"請開啟定位以取得定位資訊",Toast.LENGTH_SHORT).show();
+                myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null); //取得資料庫過去取得的位置資料
+                try{
+                    cursor = myDB.rawQuery("select Location from history_weather",null);
+                    if(cursor!=null){
+                        cursor.moveToFirst();
+                        currentCity =cursor.getString(0);
+                    }
+                    myDB.close();
+                }catch (Exception e){}
+            }else if(currentCity.startsWith("台")){
+                currentCity ="臺"+ currentCity.substring(1);
+            }
+            //將現在的位置設為過去的位置資料
+            myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
+            ContentValues values=new ContentValues();
+            values.put("Location", currentCity);
+            myDB.update("history_weather",values,"id=1",null);
+            myDB.close();
+
+            WeatherPackage.setCurrentCity(currentCity);
+        }
+
+        return WeatherPackage.getRcvWeatherData();
     }
 
     /////////////// DEBUG ///////////////////////////////////
@@ -307,24 +351,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case 1:
 //          FOR CHATBOT DEBUG
-//                //我要查詢全部記帳
-//                TextView tempText = findViewById(R.id.DEBUG_TEXT);
-//                System.out.println(tempText.getText());
-//
-//                userSay.setText(tempText.getText());
-//
-//                System.out.println("Behavior");
-//                System.out.println(chatbotBehavior.getBehaviorMode());
-//                if(!chatbotBehavior.generateSendSentence(tempText.getText().toString()))
-//                {
-//                    System.out.println(chatbotBehavior.getErrorMessage());
-//                }
-//                else
-//                {
-//                    chatbotBehavior.sendSentence();
-//                }
-//
-//                chatBotSay.setText(chatbotBehavior.getResponse());
+                //我要新增
+                TextView tempText = findViewById(R.id.DEBUG_TEXT);
+                System.out.println(tempText.getText());
+
+                userSay.setText(tempText.getText());
+
+                System.out.println("Behavior");
+                System.out.println(chatbotBehavior.getBehaviorMode());
+                if(!chatbotBehavior.generateSendSentence(tempText.getText().toString()))
+                {
+                    System.out.println(chatbotBehavior.getErrorMessage());
+                }
+                else
+                {
+                    chatbotBehavior.sendSentence();
+                }
+
+                chatBotSay.setText(chatbotBehavior.getResponse());
+
+                if(chatbotBehavior.getSentenceHandler().getIntent() == 3)
+                {
+                    //猜測意圖
+                     popupShow();
+                }
                 break;
             case 2:
                 System.out.println(LoginHandler.getUserKey());
@@ -367,30 +417,55 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == 200){
-            if(resultCode == RESULT_OK && data != null){
-                ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                userSay.setText(result.get(0));
+            if(!(resultCode == RESULT_OK && data != null))
+                return;
+
+            ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            userSay.setText(result.get(0));
 
 //                System.out.println("Behavior");
 //                System.out.println(chatbotBehavior.getBehaviorMode());
-                if(!chatbotBehavior.generateSendSentence(result.get(0)))
-                {
-                    System.out.println(chatbotBehavior.getErrorMessage());
-                }
-                else
-                {
-                    chatbotBehavior.sendSentence();
-                }
+            if(!chatbotBehavior.generateSendSentence(result.get(0)))
+                System.out.println(chatbotBehavior.getErrorMessage());
+            else
+                chatbotBehavior.sendSentence();
 
-                chatBotSay.setText(chatbotBehavior.getResponse());
-                //if operation is searching.
-                if(chatbotBehavior.getSentenceHandler().getOperation() == 4)
+            chatBotSay.setText(chatbotBehavior.getResponse());
+
+            if(chatbotBehavior.ifNeedSubWindow())
+            {
+                findViewById(R.id.popup_window).setVisibility(View.VISIBLE);
+                if(chatbotBehavior.getSentenceHandler().getIntent() == 1 && chatbotBehavior.getSentenceHandler().getOperation() == 4)
                 {
-                    findViewById(R.id.popup_window).setVisibility(View.VISIBLE);
+                    //記帳查詢
                     findViewById(R.id.assure_button).setVisibility(View.INVISIBLE);
                     findViewById(R.id.cancelButton).setVisibility(View.INVISIBLE);
                     findViewById(R.id.weather_condition).setVisibility(View.INVISIBLE);
                 }
+                else if(chatbotBehavior.getSentenceHandler().getIntent() == 2 && chatbotBehavior.getSentenceHandler().getOperation() == 4)
+                {
+                    //行程查詢
+                    findViewById(R.id.assure_button).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.cancelButton).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.weather_condition).setVisibility(View.INVISIBLE);
+                }
+                else if(chatbotBehavior.getSentenceHandler().getIntent() == 3)
+                {
+                    //猜測意圖
+                    popupShow();
+                }
+                else if(chatbotBehavior.getSentenceHandler().getIntent() == 4)
+                {
+                    //天氣
+                    ArrayList<DataPackage> weatherData = getWeatherData();
+                }
+            }
+            else
+            {
+                findViewById(R.id.popup_window).setVisibility(View.INVISIBLE);
+                findViewById(R.id.assure_button).setVisibility(View.INVISIBLE);
+                findViewById(R.id.cancelButton).setVisibility(View.INVISIBLE);
+                findViewById(R.id.weather_condition).setVisibility(View.INVISIBLE);
             }
         }
         else if(requestCode==REGISTER_CODE){

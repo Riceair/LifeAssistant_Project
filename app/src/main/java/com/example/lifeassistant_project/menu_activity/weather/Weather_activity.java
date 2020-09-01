@@ -48,68 +48,17 @@ public class Weather_activity extends AppCompatActivity {
 
     private void showWeatherData()
     {
-        if(currentCity.equals("")){ //定位失敗
-            Toast.makeText(this,"請開啟定位以取得定位資訊",Toast.LENGTH_SHORT).show();
-            myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null); //取得資料庫過去取得的位置資料
-            try{
-                cursor = myDB.rawQuery("select Location from history_weather",null);
-                if(cursor!=null){
-                    cursor.moveToFirst();
-                    currentCity =cursor.getString(0);
-                }
-                myDB.close();
-            }catch (Exception e){}
-        }else if(currentCity.startsWith("台")){
-            currentCity ="臺"+ currentCity.substring(1);
-        }
-        //將現在的位置設為過去的位置資料
-        myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
-        ContentValues values=new ContentValues();
-        values.put("Location", currentCity);
-        myDB.update("history_weather",values,"id=1",null);
-        myDB.close();
+        this.checkAndFixCurrentCity();
+        if(WeatherPackage.getCurrentCity() == null)
+            WeatherPackage.setCurrentCity(currentCity);
+
+        ArrayList<DataPackage> weatherData = WeatherPackage.getRcvWeatherData();
 
         final int WEEK_SIZE = 14;
 
-        ClientProgress client = new ClientProgress();
-        client.setPackage(new WeatherPackage());
-        Thread cThread = new Thread(client);
-        cThread.start();
-        synchronized (client)
-        {
-            try {
-                client.wait();
-            }
-            catch (InterruptedException e)
-            {
-                System.out.println(e);
-            }
-        }
-
-        ArrayList<DataPackage> weatherData = client.getRcvPackageList();
-        if(weatherData.size() == 0)
-        {
-            Toast.makeText(this,"無網路連線",Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        int pointer;
-        for (pointer = 0;pointer < weatherData.size(); pointer += WEEK_SIZE)
-        {
-            WeatherPackage weatherPackage = (WeatherPackage) weatherData.get(pointer);
-            if(weatherPackage.getCity().equals(currentCity)) break;
-        }
-
-        if(pointer == weatherData.size())
-        {
-            System.out.println("Location error! set current city to default.");
-            currentCity = "基隆市";
-            pointer = 0;
-        }
-
         for(int i = 0;i < WEEK_SIZE; i++)
         {
-            WeatherPackage currentWeather = (WeatherPackage) weatherData.get(pointer + i);
+            WeatherPackage currentWeather = (WeatherPackage) weatherData.get(i);
             switch (i)
             {
                 case 0:
@@ -166,6 +115,30 @@ public class Weather_activity extends AppCompatActivity {
             }
         }
         this.assignWeek2Text();
+    }
+
+    private void checkAndFixCurrentCity()
+    {
+        if(currentCity.equals("")){ //定位失敗
+            Toast.makeText(this,"請開啟定位以取得定位資訊",Toast.LENGTH_SHORT).show();
+            myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null); //取得資料庫過去取得的位置資料
+            try{
+                cursor = myDB.rawQuery("select Location from history_weather",null);
+                if(cursor!=null){
+                    cursor.moveToFirst();
+                    currentCity =cursor.getString(0);
+                }
+                myDB.close();
+            }catch (Exception e){}
+        }else if(currentCity.startsWith("台")){
+            currentCity ="臺"+ currentCity.substring(1);
+        }
+        //將現在的位置設為過去的位置資料
+        myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
+        ContentValues values=new ContentValues();
+        values.put("Location", currentCity);
+        myDB.update("history_weather",values,"id=1",null);
+        myDB.close();
     }
 
     private void assignWeek2Text()

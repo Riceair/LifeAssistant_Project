@@ -77,12 +77,12 @@
 
             <!--  DEBUG          -->
 
-<!--            <com.google.android.material.textfield.TextInputEditText-->
-<!--                    android:id="@+id/DEBUG_TEXT"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:inputType="textPersonName" android:text="hello" android:layout_above="@+id/userSayButton"-->
-<!--                    android:layout_marginBottom="10dp"/>-->
+            <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/DEBUG_TEXT"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName" android:text="hello" android:layout_above="@+id/userSayButton"
+                    android:layout_marginBottom="10dp"/>
 
         </RelativeLayout>
         <!--    基本物件    -->
@@ -144,10 +144,10 @@
             <!--    天氣顯示    -->
 
             <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/pieChart"
-                android:visibility="invisible"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                    android:id="@+id/pieChart"
+                    android:visibility="invisible"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
         </RelativeLayout>
         <!--    機器人回應視窗    -->
 

@@ -16,7 +16,7 @@ public class ChatbotBehavior {
     /*
     0 -> Default mode. To detect what user want to do with chatBot with nature language.
     1 -> Ready mode. The chatBot detect user's intent, and ready to listen to user's detail operation.
-    2 -> Undefined.
+    2 -> Still undefined.
     */
 
     public int getBehaviorMode() {
@@ -31,8 +31,6 @@ public class ChatbotBehavior {
     public SentenceHandler getSentenceHandler() {
         return sentenceHandler;
     }
-
-    public void setSentenceHandler(SentenceHandler sentenceHandler) { this.sentenceHandler = sentenceHandler; }
 
     public String getErrorMessage() { return errorMessage; }
 
@@ -96,9 +94,6 @@ public class ChatbotBehavior {
             switch (this.sentenceHandler.getOperation())
             {
                 case 1:
-//                    if(this.sentenceHandler.getFulfillment().equals("請重新輸入"))
-//                        return "不好意思，我沒有聽懂您的意思，請再說一次。";
-//                    else
                     return "好的！請說出您想要記下的帳目。（您可以告訴我：記帳金額、時間、以及類型）";
                 case 2:
                     return "好的！請告訴我您想刪除哪一時間的帳目。";
@@ -124,7 +119,12 @@ public class ChatbotBehavior {
         }
         else if(this.sentenceHandler.getIntent() == 3)
         {
-            
+            //猜測意圖
+            return this.sentenceHandler.getFulfillment();
+        }
+        else if(this.sentenceHandler.getIntent() == 4)
+        {
+            return "好的！以下是最近一週的天氣預報：";
         }
         else
         {
@@ -155,9 +155,17 @@ public class ChatbotBehavior {
 
         return true;
     }
+
+    public boolean ifNeedSubWindow()
+    {
+        return ((this.sentenceHandler.getIntent() == 1 || this.sentenceHandler.getIntent() == 2) && (this.sentenceHandler.getOperation() == 4))
+                || this.sentenceHandler.getIntent() == 4
+                || this.sentenceHandler.getIntent() == 3;
+    }
+
     private String checkForChineseNumber(String message)
     {
-        String resultString = new String(message);
+        String resultString;
         resultString = message.replace('一', '1');
         resultString = resultString.replace('二', '2');
         resultString = resultString.replace('三', '3');
