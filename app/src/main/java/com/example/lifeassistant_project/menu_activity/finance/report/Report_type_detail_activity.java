@@ -10,7 +10,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +27,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import static com.example.lifeassistant_project.features_class.AndroidCommonFunction.*;
 
 public class Report_type_detail_activity extends AppCompatActivity {
     private static final String DBNAME = "myDB.db";
@@ -169,23 +170,8 @@ public class Report_type_detail_activity extends AppCompatActivity {
             });
             recordLinear.addView(recordlist_element_detail);
             //新增底線
-            ImageView segment=new ImageView(this);
-            segment.setImageResource(R.drawable.segment);
-            segment.setScaleType(ImageView.ScaleType.FIT_XY);
-            recordLinear.addView(segment,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT));
+            addBaseline(this,recordLinear,R.drawable.segment);
         }
-    }
-
-    //取得星期幾
-    public static String getWeekOfDate(Date dt) {
-        String[] weekDays = { "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(dt);
-        int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
-        if (w < 0)
-            w = 0;
-        return weekDays[w];
     }
 
     @Override

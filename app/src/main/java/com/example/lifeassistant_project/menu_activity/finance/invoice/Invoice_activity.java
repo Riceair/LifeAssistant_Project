@@ -41,8 +41,6 @@ public class Invoice_activity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setIcon(R.drawable.receipt_checksum);
-        Button button = (Button) findViewById(R.id.button);
-        button.setPaintFlags(button.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         updateInvoice(); //更新發票資訊
         invalidateOptionsMenu(); //依照資料獲取情況修改menu
         setCheckReward();
@@ -187,6 +185,12 @@ public class Invoice_activity extends AppCompatActivity {
         intent.putExtra("isInvoiceUpdate",isInvoiceUpdate);
         intent.putExtra("recepitContainerPre", new Gson().toJson(recepitContainerPre));
         intent.putExtra("recepitContainerRec", new Gson().toJson(recepitContainerRec));
+        startActivity(intent);
+        overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
+    }
+
+    public void clickToAutoCheck(View view){
+        Intent intent=new Intent(this,Invoice_auto_check_activity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
     }

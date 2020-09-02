@@ -16,6 +16,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -59,6 +60,8 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import static com.example.lifeassistant_project.features_class.AndroidCommonFunction.addBaseline;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener {
@@ -550,20 +553,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //將上下底線、說明標題物件加入實際加入物件
             if(i==0) {
                 //新增上底線
-                ImageView seg = new ImageView(this);
-                seg.setImageResource(R.drawable.segment);
-                seg.setScaleType(ImageView.ScaleType.FIT_XY);
-                main_help_element.addView(seg, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT));
+                addBaseline(this,main_help_element,R.drawable.segment);
             }
             //Help element設置
             main_help_element.addView(element);
             //新增下底線
-            ImageView segment=new ImageView(this);
-            segment.setImageResource(R.drawable.segment_gray);
-            segment.setScaleType(ImageView.ScaleType.FIT_XY);
-            main_help_element.addView(segment,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT));
+            addBaseline(this,main_help_element,R.drawable.segment_gray);
 
             //將實際加入物件加入Help list中
             help_list.addView(main_help_element);

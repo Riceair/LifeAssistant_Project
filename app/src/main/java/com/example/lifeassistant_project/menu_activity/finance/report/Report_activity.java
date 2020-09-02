@@ -20,12 +20,15 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
+
 import com.example.lifeassistant_project.features_class.PieChartUsedClass;
 import com.example.lifeassistant_project.R;
 import com.github.mikephil.charting.charts.PieChart;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import static com.example.lifeassistant_project.features_class.AndroidCommonFunction.addBaseline;
 
 public class Report_activity extends AppCompatActivity {
     private static final String DBNAME = "myDB.db";
@@ -320,11 +323,7 @@ public class Report_activity extends AppCompatActivity {
             });
             recordLinear.addView(recordlist_element);
             //新增底線
-            ImageView segment=new ImageView(this);
-            segment.setImageResource(R.drawable.segment);
-            segment.setScaleType(ImageView.ScaleType.FIT_XY);
-            recordLinear.addView(segment,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT));
+            addBaseline(this,recordLinear,R.drawable.segment);
         }
     }
 
