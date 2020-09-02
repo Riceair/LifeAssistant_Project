@@ -10,14 +10,50 @@
     <TextView
         android:id="@+id/sub_title"
         android:layout_width="200dp"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:layout_above="@id/mainly"
-        android:layout_alignStart="@id/mainly"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="3dp"
+        android:layout_toRightOf="@id/icon"
         android:gravity="start|center_vertical"
         android:onClick="clickBackPlanner"
         android:text=""
-        android:textColor="#027CDD"
-        android:textSize="25dp" />
+        android:textColor="@color/ic_launcher_background"
+        android:textSize="22dp" />
+
+    <RelativeLayout
+        android:id="@+id/icon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_above="@id/mainly"
+        android:layout_alignStart="@id/mainly"
+        android:background="@drawable/calendar_frame">
+
+        <TextView
+            android:id="@+id/month_text"
+            android:layout_width="35dp"
+            android:layout_height="10dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="JAN"
+            android:textColor="@color/ic_launcher_background"
+            android:textSize="8dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/day_text"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_below="@id/month_text"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal|top"
+            android:text="27"
+            android:textColor="@color/design_default_color_on_secondary"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/mainly"
@@ -35,6 +71,15 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp" />
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/empty_sign"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_centerInParent="true"
+        android:scaleType="fitXY"
+        android:visibility="gone"
+        app:srcCompat="@drawable/view_empty_sign" />
 
     <include
         layout="@layout/drawer_toolbar"

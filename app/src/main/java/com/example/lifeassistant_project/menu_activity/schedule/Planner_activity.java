@@ -38,6 +38,7 @@ import com.github.sundeepk.compactcalendarview.domain.Event;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -58,6 +59,17 @@ public class Planner_activity extends AppCompatActivity {
     private ArrayList<String> stuffEndingList = new ArrayList<>();
     private ArrayList<String> stuffNameList = new ArrayList<>();
     private ArrayList<Integer> stuffIDList = new ArrayList<>();
+
+    private ArrayList<String> stuffListBackup = new ArrayList<>();
+    private ArrayList<String> stuffEndingListBackup = new ArrayList<>();
+    private ArrayList<String> stuffNameListBackup = new ArrayList<>();
+    private ArrayList<Integer> stuffIDListBackup = new ArrayList<>();
+    private ArrayList<Long> stuffListinDateFormatBackup = new ArrayList<>();
+    private ArrayList<Long> stuffEndingListinDateFormatBackup = new ArrayList<>();
+    private ArrayList<Long> stuffListinDateFormat = new ArrayList<>();
+    private ArrayList<Long> stuffEndingListinDateFormat = new ArrayList<>();
+
+    private ArrayList<String> stuffTitleList = new ArrayList<>();
     public String datewasclicked;
     private String namewasfilledin;
     public Integer status=0,stuffcount=0;
@@ -131,8 +143,48 @@ public class Planner_activity extends AppCompatActivity {
 
                     String[] Eventparts = events.get(i).toString().split("=");
                     String tempString=Eventparts[3];
+
                     Integer tempIndic=tempString.length();
-                    EventList.add(tempString.substring(0,tempIndic-1));
+                    tempString=tempString.substring(0,tempIndic-1);
+                    String outStr = "";
+
+                    char[] chars = tempString.toCharArray();
+
+                    int tranTemp = 0;
+
+                    for(int j = 0; j < chars.length; j++){
+                        Character.UnicodeBlock ub = Character.UnicodeBlock.of(chars[j]);
+                        if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS
+                                || ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS)
+
+                        {
+
+                            outStr += chars[j];
+                        }
+                        else{
+
+                            tranTemp = (int)chars[j];
+
+                            if(tranTemp != 45) //ASCII碼:45 是減號 -
+
+                                tranTemp += 65248; //此數字是 Unicode編碼轉為十進位 和 ASCII碼的 差
+                            outStr += (char)tranTemp;
+                        }
+
+                    }
+                    if(outStr.length()>14)
+                    {
+                        outStr=outStr.substring(0, 14)+"⋯";
+                    }
+                    else
+                    {
+                        while(outStr.length()<=14)
+                        {
+                            outStr=outStr+"　";
+                        }
+
+                    }
+                    EventList.add(outStr);
 
 
 
@@ -151,7 +203,7 @@ public class Planner_activity extends AppCompatActivity {
                 else
                 {   sec_tabs.setVisibility(View.INVISIBLE);
                     sec.setBackgroundResource(R.drawable.planner_stuff_empty);
-                    Animation anim_transDown = AnimationUtils.loadAnimation(Planner_activity.this,R.anim.translate_down);
+                    Animation anim_transDown = AnimationUtils.loadAnimation(Planner_activity.this,R.anim.translate_up);
                     anim_transDown.setDuration(500);
                     sec.startAnimation(anim_transDown);}
             }
@@ -183,6 +235,15 @@ public class Planner_activity extends AppCompatActivity {
         stuffEndingList.clear();
         stuffNameList.clear();
         stuffIDList.clear();
+        stuffListinDateFormat.clear();
+        stuffEndingListinDateFormat.clear();
+        stuffListBackup.clear();
+        stuffEndingListBackup.clear();
+        stuffNameListBackup.clear();
+        stuffIDListBackup.clear();
+        stuffEndingListinDateFormatBackup.clear();
+        stuffListinDateFormatBackup.clear();
+        stuffTitleList.clear();
         myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
         try {
             cursor = myDB.rawQuery("select schedule_record.事情, schedule_record.年,schedule_record.月,schedule_record.日,schedule_record.開始時間,schedule_record.結束時間,schedule_record.id from schedule_record", null);
@@ -205,12 +266,151 @@ public class Planner_activity extends AppCompatActivity {
                             String.format("%02d", temp.getStartDateInFormat().getHour()) + ":" +
                             String.format("%02d", temp.getStartDateInFormat().getMinute()) + ":00");
                     stuffList.add(tempString);
+                    tempString = new String(Integer.toString(temp.getStartDateInFormat().getYear()) + "-" +
+                            String.format("%02d", temp.getStartDateInFormat().getMonth()) + "-" +
+                            String.format("%02d", temp.getStartDateInFormat().getDay()) + " 00:00:00");
+                    Date tempdate = null;
+                    tempdate = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(tempString);
+                    long tempmilis = tempdate.getTime();
+                    stuffListinDateFormat.add(tempmilis);
                     tempString = new String(Integer.toString(temp.getEndDateInFormat().getYear()) + "-" +
                             String.format("%02d", temp.getEndDateInFormat().getMonth()) + "-" +
                             String.format("%02d", temp.getEndDateInFormat().getDay()) + " " +
                             String.format("%02d", temp.getEndDateInFormat().getHour()) + ":" +
                             String.format("%02d", temp.getEndDateInFormat().getMinute()) + ":00");
                     stuffEndingList.add(tempString);
+                    tempString = new String(Integer.toString(temp.getEndDateInFormat().getYear()) + "-" +
+                            String.format("%02d", temp.getEndDateInFormat().getMonth()) + "-" +
+                            String.format("%02d", temp.getEndDateInFormat().getDay()) + " 23:59:59");
+                    tempdate = null;
+                    tempdate = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(tempString);
+                    tempmilis = tempdate.getTime();
+                    stuffEndingListinDateFormat.add(tempmilis);
+                    stuffNameList.add(temp.getTodo());
+                    stuffIDList.add(temp.getID());
+                    stuffcount=stuffIDList.size();
+                    cursor.moveToNext();
+                }
+
+
+
+
+                for(int i=stuffList.size()-1;i>=0;i--)
+                {
+                    int minIndex = stuffListinDateFormat.indexOf(Collections.min(stuffListinDateFormat));
+                    stuffListinDateFormatBackup.add(stuffListinDateFormat.get(minIndex));
+                    stuffEndingListinDateFormatBackup.add(stuffEndingListinDateFormat.get(minIndex));
+                    stuffListBackup.add(stuffList.get(minIndex));
+                    stuffEndingListBackup.add(stuffEndingList.get(minIndex));
+                    stuffIDListBackup.add(stuffIDList.get(minIndex));
+                    stuffNameListBackup.add(stuffNameList.get(minIndex));
+
+                    stuffList.set(minIndex,"");
+                    stuffNameList.set(minIndex,"");
+                    stuffEndingList.set(minIndex,"");
+                    stuffListinDateFormat.set(minIndex,Long.MAX_VALUE);
+                    stuffEndingListinDateFormat.set(minIndex,Long.MAX_VALUE);
+                    stuffIDList.set(minIndex,Integer.MAX_VALUE);
+
+
+                }
+
+                stuffList.clear();
+                stuffNameList.clear();
+                stuffEndingList.clear();
+                stuffListinDateFormat.clear();
+                stuffEndingListinDateFormat.clear();
+                stuffIDList.clear();
+
+                for(int i=0;i<stuffListBackup.size();i++)
+                {
+                    stuffListinDateFormat.add(stuffListinDateFormatBackup.get(i));
+                    stuffEndingListinDateFormat.add(stuffEndingListinDateFormatBackup.get(i));
+                    stuffList.add(stuffListBackup.get(i));
+                    stuffEndingList.add(stuffEndingListBackup.get(i));
+                    stuffIDList.add(stuffIDListBackup.get(i));
+                    stuffNameList.add(stuffNameListBackup.get(i));
+
+                }
+
+
+                for(int i=0;i<stuffList.size();i++)
+                {
+                    stuffTitleList.add(stuffNameList.get(i)+" ("+stuffList.get(i).split(" ")[0]+" 至 "+stuffEndingList.get(i).split(" ")[0]);
+
+                }
+
+                // 5. 關閉 DB
+                myDB.close();
+
+
+
+            } else {
+                Toast.makeText(this, "Hint 1: 請將db準備好!", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void ReadSpecifiedRecord() {
+        stuffList.clear();
+        stuffEndingList.clear();
+        stuffNameList.clear();
+        stuffIDList.clear();
+        stuffEndingListinDateFormat.clear();
+        stuffListinDateFormat.clear();
+        stuffListBackup.clear();
+        stuffEndingListBackup.clear();
+        stuffNameListBackup.clear();
+        stuffIDListBackup.clear();
+        stuffEndingListinDateFormatBackup.clear();
+        stuffListinDateFormatBackup.clear();
+        stuffTitleList.clear();
+        myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
+        try {
+            cursor = myDB.rawQuery("select schedule_record.事情, schedule_record.年,schedule_record.月,schedule_record.日,schedule_record.開始時間,schedule_record.結束時間,schedule_record.id from schedule_record", null);
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            if (cursor != null) {
+                int iRow = cursor.getCount(); // 取得資料記錄的筆數
+                cursor.moveToFirst();
+                for (int i = 0; i < iRow; i++) {
+                    SchedulePackage temp = new SchedulePackage(
+                            cursor.getInt(6),
+                            cursor.getString(0),
+                            cursor.getInt(1),
+                            cursor.getInt(2),
+                            cursor.getInt(3),
+                            cursor.getInt(4),
+                            cursor.getInt(5));
+                    String tempString = new String(Integer.toString(temp.getStartDateInFormat().getYear()) + "-" +
+                            String.format("%02d", temp.getStartDateInFormat().getMonth()) + "-" +
+                            String.format("%02d", temp.getStartDateInFormat().getDay()) + " " +
+                            String.format("%02d", temp.getStartDateInFormat().getHour()) + ":" +
+                            String.format("%02d", temp.getStartDateInFormat().getMinute()) + ":00");
+                    stuffList.add(tempString);
+                    tempString = new String(Integer.toString(temp.getStartDateInFormat().getYear()) + "-" +
+                            String.format("%02d", temp.getStartDateInFormat().getMonth()) + "-" +
+                            String.format("%02d", temp.getStartDateInFormat().getDay()) + " 00:00:00");
+                    Date tempdate = null;
+                    tempdate = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(tempString);
+                    long tempmilis = tempdate.getTime();
+                    stuffListinDateFormat.add(tempmilis);
+                    tempString = new String(Integer.toString(temp.getEndDateInFormat().getYear()) + "-" +
+                            String.format("%02d", temp.getEndDateInFormat().getMonth()) + "-" +
+                            String.format("%02d", temp.getEndDateInFormat().getDay()) + " " +
+                            String.format("%02d", temp.getEndDateInFormat().getHour()) + ":" +
+                            String.format("%02d", temp.getEndDateInFormat().getMinute()) + ":00");
+                    stuffEndingList.add(tempString);
+
+                    tempString = new String(Integer.toString(temp.getEndDateInFormat().getYear()) + "-" +
+                            String.format("%02d", temp.getEndDateInFormat().getMonth()) + "-" +
+                            String.format("%02d", temp.getEndDateInFormat().getDay()) + " 23:59:59");
+                    tempdate = null;
+                    tempdate = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(tempString);
+                    tempmilis = tempdate.getTime();
+                    stuffEndingListinDateFormat.add(tempmilis);
                     stuffNameList.add(temp.getTodo());
                     stuffIDList.add(temp.getID());
                     stuffcount=stuffIDList.size();
@@ -218,6 +418,94 @@ public class Planner_activity extends AppCompatActivity {
                 }
                 // 5. 關閉 DB
                 myDB.close();
+
+
+                String tempString = new String(Integer.toString(clicked_year) + "-" +
+                        String.format("%02d", clicked_month) + "-" +
+                        String.format("%02d", clicked_day) + " 12:00:00");
+                Date tempdate = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(tempString);
+                long tempmilis = tempdate.getTime();
+
+                for(int i=stuffList.size()-1;i>=0;i--)
+                {
+                    if (tempmilis>stuffListinDateFormat.get(i))
+                    {
+                        if (tempmilis<stuffEndingListinDateFormat.get(i))
+                        {
+
+                        }
+                        else
+                        {
+                            stuffList.remove(i);
+                            stuffEndingList.remove(i);
+                            stuffIDList.remove(i);
+                            stuffNameList.remove(i);
+                            stuffListinDateFormat.remove(i);
+                            stuffEndingListinDateFormat.remove(i);
+                        }
+                    }
+                    else
+                    { stuffList.remove(i);
+                        stuffEndingList.remove(i);
+                        stuffIDList.remove(i);
+                        stuffNameList.remove(i);
+                        stuffListinDateFormat.remove(i);
+                        stuffEndingListinDateFormat.remove(i);
+                    }
+
+                }
+
+                for(int i=stuffList.size()-1;i>=0;i--)
+                {
+                    int minIndex = stuffListinDateFormat.indexOf(Collections.min(stuffListinDateFormat));
+                    stuffListinDateFormatBackup.add(stuffListinDateFormat.get(minIndex));
+                    stuffEndingListinDateFormatBackup.add(stuffEndingListinDateFormat.get(minIndex));
+                    stuffListBackup.add(stuffList.get(minIndex));
+                    stuffEndingListBackup.add(stuffEndingList.get(minIndex));
+                    stuffIDListBackup.add(stuffIDList.get(minIndex));
+                    stuffNameListBackup.add(stuffNameList.get(minIndex));
+
+                    stuffList.set(minIndex,"");
+                    stuffNameList.set(minIndex,"");
+                    stuffEndingList.set(minIndex,"");
+                    stuffListinDateFormat.set(minIndex,Long.MAX_VALUE);
+                    stuffEndingListinDateFormat.set(minIndex,Long.MAX_VALUE);
+                    stuffIDList.set(minIndex,Integer.MAX_VALUE);
+
+
+                }
+
+                stuffList.clear();
+                stuffNameList.clear();
+                stuffEndingList.clear();
+                stuffListinDateFormat.clear();
+                stuffEndingListinDateFormat.clear();
+                stuffIDList.clear();
+
+                for(int i=0;i<stuffListBackup.size();i++)
+                {
+                    stuffListinDateFormat.add(stuffListinDateFormatBackup.get(i));
+                    stuffEndingListinDateFormat.add(stuffEndingListinDateFormatBackup.get(i));
+                    stuffList.add(stuffListBackup.get(i));
+                    stuffEndingList.add(stuffEndingListBackup.get(i));
+                    stuffIDList.add(stuffIDListBackup.get(i));
+                    stuffNameList.add(stuffNameListBackup.get(i));
+
+                }
+
+
+
+                for(int i=0;i<stuffList.size();i++)
+                {
+                    stuffTitleList.add(stuffNameList.get(i)+" ("+stuffList.get(i).split(" ")[0]+" 至 "+stuffEndingList.get(i).split(" ")[0]);
+
+                }
+
+
+
+
+
+
             } else {
                 Toast.makeText(this, "Hint 1: 請將db準備好!", Toast.LENGTH_SHORT).show();
             }
