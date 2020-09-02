@@ -14,11 +14,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.lifeassistant_project.features_class.PieChartUsedClass;
 import com.example.lifeassistant_project.R;
 import com.github.mikephil.charting.charts.PieChart;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.lifeassistant_project.features_class.AndroidCommonFunction.addBaseline;
 
 public class Report_type_activity extends AppCompatActivity {
     private static final String DBNAME = "myDB.db";
@@ -36,7 +39,7 @@ public class Report_type_activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_report_type_activity);
+        setContentView(R.layout.activity_report_activity);
         Toolbar toolbar=findViewById(R.id.toolbar);
         toolbar.setTitle("  報表");
         setSupportActionBar(toolbar);
@@ -44,6 +47,7 @@ public class Report_type_activity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setIcon(R.drawable.icon_report);
+        findViewById(R.id.inoutSwitch).setVisibility(View.GONE);
 
         //取得傳遞過來要Query的訊息
         Bundle bundle = getIntent().getExtras();
@@ -146,11 +150,7 @@ public class Report_type_activity extends AppCompatActivity {
             });
             recordLinear.addView(recordlist_element);
             //新增底線
-            ImageView segment=new ImageView(this);
-            segment.setImageResource(R.drawable.segment);
-            segment.setScaleType(ImageView.ScaleType.FIT_XY);
-            recordLinear.addView(segment,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT));
+            addBaseline(this,recordLinear,R.drawable.segment);
         }
     }
 
