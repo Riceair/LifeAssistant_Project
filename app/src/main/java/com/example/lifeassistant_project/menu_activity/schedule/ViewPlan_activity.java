@@ -65,7 +65,8 @@ public class ViewPlan_activity extends AppCompatActivity {
         list = findViewById(R.id.list);
         TextView monthlayout = (TextView) findViewById(R.id.sub_title);
         if(selectstatus==0)
-        { ReadDBRecord();
+        {
+            ReadDBRecord();
 
 
             monthlayout.setText("<全部");
@@ -244,7 +245,8 @@ public class ViewPlan_activity extends AppCompatActivity {
                         }
                     }
                     else
-                    { stuffList.remove(i);
+                    {
+                        stuffList.remove(i);
                         stuffEndingList.remove(i);
                         stuffIDList.remove(i);
                         stuffNameList.remove(i);

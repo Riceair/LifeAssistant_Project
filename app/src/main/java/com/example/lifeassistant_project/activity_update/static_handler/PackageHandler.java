@@ -13,10 +13,7 @@ import java.util.Arrays;
 public class PackageHandler
 {
     static private int PACKAGE_TYPE_SIZE = 3;
-    PackageHandler()
-    {
-
-    }
+    PackageHandler() {}
 
     static public byte[] accountPackageEncode(AccountPackage acPkg) throws UnsupportedEncodingException {
         final int ID_size = 4, money_size = 4, year_size = 4, month_size = 1, day_size = 1, item_size = 18, detail_size = 18, receipt_size = 3, note_size = 90, status_size = 1, action_size = 1, user_size = 20;
@@ -243,41 +240,41 @@ public class PackageHandler
         return result;
     }
 
-    static public AccountPackage accountPackageDecodeByString(String message)
-    {
-        final int PACKAGE_TYPE_SIZE = 3;
-        final int ID_size = 4, money_size = 4, year_size = 4, month_size = 1, day_size = 1, item_size = 18,
-                detail_size = 18, receipt_size = 3, note_size = 90, status_size = 1, action_size = 1, user_size = 20;
-        int ptr = 0;
-
-        AccountPackage result = new AccountPackage();
-        ptr += PACKAGE_TYPE_SIZE;
-
-        result.setID(Integer.parseInt(message.substring(ptr, ptr + ID_size)));
-        ptr += ID_size;
-        result.setMoney(Integer.parseInt(message.substring(ptr, ptr + money_size)));
-        ptr += money_size;
-        result.setYear(Integer.parseInt(message.substring(ptr, ptr + year_size)));
-        ptr += year_size;
-        result.setMonth(Integer.parseInt(message.substring(ptr, ptr + month_size)));
-        ptr += month_size;
-        result.setDay(Integer.parseInt(message.substring(ptr, ptr + day_size)));
-        ptr += day_size;
-        result.setItem(message.substring(ptr, ptr + item_size));
-        ptr += item_size;
-        result.setDetail(message.substring(ptr, ptr + detail_size));
-        ptr += detail_size;
-        result.setReceipt(message.substring(ptr, ptr + receipt_size));
-        ptr += receipt_size;
-        result.setNote(message.substring(ptr, ptr + note_size));
-        ptr += note_size;
-        result.setType(Integer.parseInt(message.substring(ptr, ptr + status_size)) == 1);
-        ptr += status_size;
-        result.setRequestAction(Integer.parseInt(message.substring(ptr, ptr + action_size)));
-        ptr += action_size;
-
-        return result;
-    }
+//    static public AccountPackage accountPackageDecodeByString(String message)
+//    {
+//        final int PACKAGE_TYPE_SIZE = 3;
+//        final int ID_size = 4, money_size = 4, year_size = 4, month_size = 1, day_size = 1, item_size = 18,
+//                detail_size = 18, receipt_size = 3, note_size = 90, status_size = 1, action_size = 1, user_size = 20;
+//        int ptr = 0;
+//
+//        AccountPackage result = new AccountPackage();
+//        ptr += PACKAGE_TYPE_SIZE;
+//
+//        result.setID(Integer.parseInt(message.substring(ptr, ptr + ID_size)));
+//        ptr += ID_size;
+//        result.setMoney(Integer.parseInt(message.substring(ptr, ptr + money_size)));
+//        ptr += money_size;
+//        result.setYear(Integer.parseInt(message.substring(ptr, ptr + year_size)));
+//        ptr += year_size;
+//        result.setMonth(Integer.parseInt(message.substring(ptr, ptr + month_size)));
+//        ptr += month_size;
+//        result.setDay(Integer.parseInt(message.substring(ptr, ptr + day_size)));
+//        ptr += day_size;
+//        result.setItem(message.substring(ptr, ptr + item_size));
+//        ptr += item_size;
+//        result.setDetail(message.substring(ptr, ptr + detail_size));
+//        ptr += detail_size;
+//        result.setReceipt(message.substring(ptr, ptr + receipt_size));
+//        ptr += receipt_size;
+//        result.setNote(message.substring(ptr, ptr + note_size));
+//        ptr += note_size;
+//        result.setType(Integer.parseInt(message.substring(ptr, ptr + status_size)) == 1);
+//        ptr += status_size;
+//        result.setRequestAction(Integer.parseInt(message.substring(ptr, ptr + action_size)));
+//        ptr += action_size;
+//
+//        return result;
+//    }
 
     static public byte[] schedulePackageEncode(SchedulePackage scPkg) throws UnsupportedEncodingException {
         final int ID_SIZE = 4, TODO_SIZE = 36, YEAR_SIZE = 4, MONTH_SIZE = 1, DAY_SIZE = 1,
@@ -475,35 +472,35 @@ public class PackageHandler
         return result;
     }
 
-    static public SchedulePackage schedulePackageDecodeByString(String message)
-    {
-        final int PACKAGE_TYPE_SIZE = 3;
-        final int ID_SIZE = 4, TODO_SIZE = 36, YEAR_SIZE = 4, MONTH_SIZE = 1, DAY_SIZE = 1,
-                START_TIME_SIZE = 4, END_TIME_SIZE = 4, OPERATION_CODE_SIZE = 1, USER_SIZE = 20;
-        int ptr = 0;
-
-        SchedulePackage result = new SchedulePackage();
-        ptr += PACKAGE_TYPE_SIZE;
-
-        result.setID(Integer.parseInt(message.substring(ptr, ptr + ID_SIZE)));
-        ptr += ID_SIZE;
-        result.setTodo(message.substring(ptr, ptr + TODO_SIZE));
-        ptr += TODO_SIZE;
-        result.setYear(Integer.parseInt(message.substring(ptr, ptr + YEAR_SIZE)));
-        ptr += YEAR_SIZE;
-        result.setMonth(Integer.parseInt(message.substring(ptr, ptr + MONTH_SIZE)));
-        ptr += MONTH_SIZE;
-        result.setDay(Integer.parseInt(message.substring(ptr, ptr + DAY_SIZE)));
-        ptr += DAY_SIZE;
-        result.setStart_time(Integer.parseInt(message.substring(ptr, ptr + START_TIME_SIZE)));
-        ptr += START_TIME_SIZE;
-        result.setEnd_time(Integer.parseInt(message.substring(ptr, ptr + END_TIME_SIZE)));
-        ptr += END_TIME_SIZE;
-        result.setRequestAction(Integer.parseInt(message.substring(ptr, ptr + OPERATION_CODE_SIZE)));
-        ptr += OPERATION_CODE_SIZE;
-
-        return result;
-    }
+//    static public SchedulePackage schedulePackageDecodeByString(String message)
+//    {
+//        final int PACKAGE_TYPE_SIZE = 3;
+//        final int ID_SIZE = 4, TODO_SIZE = 36, YEAR_SIZE = 4, MONTH_SIZE = 1, DAY_SIZE = 1,
+//                START_TIME_SIZE = 4, END_TIME_SIZE = 4, OPERATION_CODE_SIZE = 1, USER_SIZE = 20;
+//        int ptr = 0;
+//
+//        SchedulePackage result = new SchedulePackage();
+//        ptr += PACKAGE_TYPE_SIZE;
+//
+//        result.setID(Integer.parseInt(message.substring(ptr, ptr + ID_SIZE)));
+//        ptr += ID_SIZE;
+//        result.setTodo(message.substring(ptr, ptr + TODO_SIZE));
+//        ptr += TODO_SIZE;
+//        result.setYear(Integer.parseInt(message.substring(ptr, ptr + YEAR_SIZE)));
+//        ptr += YEAR_SIZE;
+//        result.setMonth(Integer.parseInt(message.substring(ptr, ptr + MONTH_SIZE)));
+//        ptr += MONTH_SIZE;
+//        result.setDay(Integer.parseInt(message.substring(ptr, ptr + DAY_SIZE)));
+//        ptr += DAY_SIZE;
+//        result.setStart_time(Integer.parseInt(message.substring(ptr, ptr + START_TIME_SIZE)));
+//        ptr += START_TIME_SIZE;
+//        result.setEnd_time(Integer.parseInt(message.substring(ptr, ptr + END_TIME_SIZE)));
+//        ptr += END_TIME_SIZE;
+//        result.setRequestAction(Integer.parseInt(message.substring(ptr, ptr + OPERATION_CODE_SIZE)));
+//        ptr += OPERATION_CODE_SIZE;
+//
+//        return result;
+//    }
 
     static public byte[] weatherPackageEncode() throws UnsupportedEncodingException {
         ByteBuffer buf = ByteBuffer.allocate(1024);
@@ -733,21 +730,56 @@ public class PackageHandler
         return tempString;
     }
 
-    static public byte[] ReceiptQRPackageEncode() throws UnsupportedEncodingException
+    static public byte[] ReceiptPackageEncode(ReceiptPackage rcPkg) throws UnsupportedEncodingException
     {
-        ByteBuffer buf = ByteBuffer.allocate(1024);
+        final int USER_SIZE = 20;
+        ByteBuffer buf = ByteBuffer.allocate(32);
 
-        ByteBuffer b_temp;
-        buf.put("rqr".getBytes("UTF-8"));
+        buf.put("rec".getBytes("UTF-8"));
+        buf.put(TransString2ByteArray(rcPkg.getUser(), USER_SIZE));
 
         return buf.array();
     }
 
-    static public ReceiptPackage ReceiptQRPackageDecode(byte[] message)
+    static public AccountPackage ReceiptPackageDecode(byte[] message)
+    {
+        final int ID_SIZE = 4, MONEY_SIZE = 4, YEAR_SIZE = 4, MONTH_SIZE = 1, DAY_SIZE = 1, DETAIL_SIZE = 18, RECEIPT_SIZE = 3, STATUS_SIZE = 1;
+        int currentSize = 0;
+        AccountPackage result = new AccountPackage();
+
+        result.setID(TransByteArray2Int(Arrays.copyOfRange(message, currentSize, currentSize + ID_SIZE), ID_SIZE));
+        currentSize += ID_SIZE;
+        result.setMoney(TransByteArray2Int(Arrays.copyOfRange(message, currentSize, currentSize + MONEY_SIZE), MONEY_SIZE));
+        currentSize += MONEY_SIZE;
+        result.setYear(TransByteArray2Int(Arrays.copyOfRange(message, currentSize, currentSize + YEAR_SIZE), YEAR_SIZE));
+        currentSize += YEAR_SIZE;
+        result.setMonth(TransByteArray2Int(Arrays.copyOfRange(message, currentSize, currentSize + MONTH_SIZE), MONTH_SIZE));
+        currentSize += MONTH_SIZE;
+        result.setDetail(TransByteArray2String(Arrays.copyOfRange(message, currentSize, currentSize + DAY_SIZE), DAY_SIZE));
+        currentSize += DAY_SIZE;
+        result.setDetail(TransByteArray2String(Arrays.copyOfRange(message, currentSize, currentSize + DETAIL_SIZE), DETAIL_SIZE));
+        currentSize += DETAIL_SIZE;
+        result.setReceipt(TransByteArray2String(Arrays.copyOfRange(message, currentSize, currentSize + RECEIPT_SIZE), RECEIPT_SIZE));
+        currentSize += RECEIPT_SIZE;
+        result.setType(TransByteArray2Int(Arrays.copyOfRange(message, currentSize, currentSize + STATUS_SIZE), STATUS_SIZE) == 1);
+        currentSize += STATUS_SIZE;
+
+        return result;
+    }
+
+    static public byte[] ReceiptQRPackageEncode() throws UnsupportedEncodingException
+    {
+        ByteBuffer buf = ByteBuffer.allocate(16);
+
+        buf.put("rqr".getBytes("UTF-8"));
+        return buf.array();
+    }
+
+    static public ReceiptQRPackage ReceiptQRPackageDecode(byte[] message)
     {
         final int DATE_SIZE = 8, HIT_NUMBER_SIZE = 56;
         int currentSize = 0;
-        ReceiptPackage result = new ReceiptPackage();
+        ReceiptQRPackage result = new ReceiptQRPackage();
         String tempString;
 
         tempString = TransByteArray2String(Arrays.copyOfRange(message, currentSize, currentSize + DATE_SIZE), DATE_SIZE);

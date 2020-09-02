@@ -90,12 +90,11 @@ public class NewPlan_activity extends AppCompatActivity {
         Button addbutton = (Button) findViewById(R.id.savebutton);
         if (status==1)
         {
-
             tabs.setVisibility(View.GONE);
             addbutton.setText("新增");
         }
         if(status==0)
-        ReadDBRecord();
+            ReadDBRecord();
         else
             ReadSpecifiedRecord();
         //這是承接事項
@@ -332,7 +331,8 @@ public class NewPlan_activity extends AppCompatActivity {
                         }
                     }
                     else
-                    { stuffList.remove(i);
+                    {
+                        stuffList.remove(i);
                         stuffEndingList.remove(i);
                         stuffIDList.remove(i);
                         stuffNameList.remove(i);
@@ -464,12 +464,17 @@ public class NewPlan_activity extends AppCompatActivity {
                 break;
             }
             try {
-                int id = (int) (Math.random() * 99999) + 1;
+                int requestActionCode = 0, id = (int) (Math.random() * 99999) + 1;
+                if(selid != 0)
+                {
+                    requestActionCode = 2;
+                    id = selid;
+                }
+
                 values.put("id", id);
                 // get Account Class
-                this.sendPackage = new SchedulePackage(id, event, 0, Starting_year, Starting_month, Starting_day,
+                this.sendPackage = new SchedulePackage(id, event, requestActionCode, Starting_year, Starting_month, Starting_day,
                         Starting_hour, Starting_minute, Ending_year, Ending_month, Ending_day, Ending_hour, Ending_minute);
-                this.sendPackage.setRequestAction(0);
 
                 result = myDB.insert(SC_TABLE, null, values);
                 break;
@@ -495,11 +500,7 @@ public class NewPlan_activity extends AppCompatActivity {
 
     public void clickToUpdateSC(View view) {
         writeToSCDB();
-        ClientProgress client = new ClientProgress();
-        this.sendPackage.setUser(LoginHandler.getUserName());
-        client.setPackage(this.sendPackage);
-        Thread conn = new Thread(client);
-        conn.start();
+        this.sendSchedulePackage();
     }
 
     public void clickToDel(final View view) {
@@ -516,6 +517,12 @@ public class NewPlan_activity extends AppCompatActivity {
                 myDB.close();
                 //Intent intent = new Intent();
                 //setResult(2, intent);
+
+                sendPackage = new SchedulePackage();
+                sendPackage.setID(selid);
+                sendPackage.setRequestAction(1);
+                sendSchedulePackage();
+
                 finish();
 
                 Intent intent = new Intent(getApplicationContext(), Planner_activity.class);
@@ -535,6 +542,16 @@ public class NewPlan_activity extends AppCompatActivity {
             }
         }).show();
     }
+
+    public void sendSchedulePackage()
+    {
+        ClientProgress client = new ClientProgress();
+        this.sendPackage.setUser(LoginHandler.getUserName());
+        client.setPackage(this.sendPackage);
+        Thread conn = new Thread(client);
+        conn.start();
+    }
+
     public void setStartDateInFormat(int year, int month, int day, int hour, int minute)
     {
         this.year = year;

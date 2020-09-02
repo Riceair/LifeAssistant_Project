@@ -22,11 +22,18 @@ public class ChatbotBehavior {
     public int getBehaviorMode() {
         return behaviorMode;
     }
+    public void setDefaultMode() {this.behaviorMode = 0;}
+    public void setReadyMode() {
+        this.behaviorMode = 1;
+        if(this.supposeIntent != 0)
+            this.currentIntent = this.supposeIntent;
+    }
 
     private SentenceHandler sentenceHandler;
     private SentenceHandler sendSentence;
     private ClientProgress client;
     private String errorMessage;
+    private int currentIntent, currentOperation, supposeIntent;
 
     public SentenceHandler getSentenceHandler() {
         return sentenceHandler;
@@ -40,6 +47,7 @@ public class ChatbotBehavior {
         this.client = new ClientProgress();
         this.sentenceHandler = new SentenceHandler();
         this.errorMessage = "default error message.";
+        this.supposeIntent = 0;
     }
     public void sendSentence()
     {
@@ -57,8 +65,10 @@ public class ChatbotBehavior {
             }
         }
 
-        SentenceHandler rcvSentence = (SentenceHandler) client.getRcvPackageList().get(0);
-        this.sentenceHandler = rcvSentence;
+        this.sentenceHandler = (SentenceHandler) client.getRcvPackageList().get(0);
+        this.currentIntent = this.sentenceHandler.getIntent();
+        this.currentOperation = this.sentenceHandler.getOperation();
+
         if(this.sentenceHandler.getIntent() == 0)
         {
             this.behaviorMode = 0;
@@ -120,6 +130,7 @@ public class ChatbotBehavior {
         else if(this.sentenceHandler.getIntent() == 3)
         {
             //猜測意圖
+            this.checkSupposedIntent(this.sentenceHandler.getFulfillment());
             return this.sentenceHandler.getFulfillment();
         }
         else if(this.sentenceHandler.getIntent() == 4)
@@ -148,9 +159,14 @@ public class ChatbotBehavior {
         {
             int id = (int) (Math.random() * 99999)+1;
 
-            this.sendSentence.setIntent(sentenceHandler.getIntent());
-            this.sendSentence.setOperation(sentenceHandler.getOperation());
+            this.sendSentence.setIntent(this.currentIntent);
+            this.sendSentence.setOperation(this.currentOperation);
             this.sendSentence.setFulfillment(detMessage + "@" + LoginHandler.getUserName() + "#" + id);
+        }
+        else
+        {
+            System.out.println("chatbot mode error!");
+            return false;
         }
 
         return true;
@@ -177,5 +193,18 @@ public class ChatbotBehavior {
         resultString = resultString.replace('九', '9');
 
         return resultString;
+    }
+
+    private void checkSupposedIntent(String message)
+    {
+        if(message.contains("記帳"))
+            this.supposeIntent = 1;
+        else if(message.contains("行程"))
+            this.supposeIntent = 2;
+        else
+        {
+            System.out.println("Supposing intent error! please check the fulfillment of sentenceHandler.");
+            this.supposeIntent = 0;
+        }
     }
 }
