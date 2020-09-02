@@ -8,11 +8,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.lifeassistant_project.R;
 import com.example.lifeassistant_project.activity_update.packages.AccountPackage;
+import com.example.lifeassistant_project.menu_activity.finance.Bookkeeping_activity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -46,7 +48,7 @@ public class Invoice_auto_check_activity extends AppCompatActivity {
     }
 
     private void getAutoCheckResult(){ //Modify Here
-        AccountPackage accountPackage=new AccountPackage(1,1,1,1,1,"123","123",true,"123","123");
+        AccountPackage accountPackage=new AccountPackage(25319,1,1,1,1,"123","123",true,"123","123");
         specialReward.add(accountPackage);
         hitReward.add(accountPackage);
         hitReward.add(accountPackage);
@@ -110,16 +112,16 @@ public class Invoice_auto_check_activity extends AppCompatActivity {
                     detailDate.setText(strDate+week);
                     addBaseline(this,record_list,R.drawable.segment);
 
-//                    recordlist_element_detail.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            Intent intent=new Intent();
-//                            intent.putExtra("CALL","modBookkeeping");
-//                            intent.putExtra("RECORDID",accountPackage.getID());
-//                            Invoice_auto_check_activity.this.startActivityForResult(intent,0);
-//                            overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
-//                        }
-//                    });
+                    recordlist_element_detail.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent=new Intent(Invoice_auto_check_activity.this, Bookkeeping_activity.class);
+                            intent.putExtra("CALL","modBookkeeping");
+                            intent.putExtra("RECORDID",accountPackage.getID());
+                            Invoice_auto_check_activity.this.startActivityForResult(intent,0);
+                            overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
+                        }
+                    });
                     record_list.addView(recordlist_element_detail);
                 }
             }
