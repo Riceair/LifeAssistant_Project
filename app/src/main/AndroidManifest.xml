@@ -17,7 +17,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".menu_activity.finance.invoice.Invoice_auto_check_activity"></activity>
+        <activity android:name=".menu_activity.finance.invoice.Invoice_auto_check_activity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".menu_activity.finance.report.Report_type_detail_activity"
             android:screenOrientation="portrait"

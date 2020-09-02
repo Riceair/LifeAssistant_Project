@@ -60,6 +60,7 @@
             android:id="@+id/auto_check_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="clickToAutoCheck"
             android:layout_marginLeft="5dp"
             android:text="自動兌獎"
             android:textSize="16dp"/>
