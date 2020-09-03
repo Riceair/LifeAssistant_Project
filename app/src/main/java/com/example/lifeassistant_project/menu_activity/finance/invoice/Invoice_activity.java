@@ -62,8 +62,8 @@ public class Invoice_activity extends AppCompatActivity {
 
             ArrayList<DataPackage> rcvReceiptContainer = client.getRcvPackageList();
             if(rcvReceiptContainer.size()!=0) {
-                recepitContainerRec = (ReceiptQRPackage) rcvReceiptContainer.get(0); //較新的
-                recepitContainerPre = (ReceiptQRPackage) rcvReceiptContainer.get(1);
+                recepitContainerRec = (ReceiptQRPackage) rcvReceiptContainer.get(0); //較近期的發票
+                recepitContainerPre = (ReceiptQRPackage) rcvReceiptContainer.get(1); //上一期的發票
                 isInvoiceUpdate=true;
             }
             else{
@@ -191,6 +191,9 @@ public class Invoice_activity extends AppCompatActivity {
 
     public void clickToAutoCheck(View view){
         Intent intent=new Intent(this,Invoice_auto_check_activity.class);
+        intent.putExtra("isInvoiceUpdate",isInvoiceUpdate);
+        intent.putExtra("recepitContainerPre", new Gson().toJson(recepitContainerPre));
+        intent.putExtra("recepitContainerRec", new Gson().toJson(recepitContainerRec));
         startActivity(intent);
         overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
     }

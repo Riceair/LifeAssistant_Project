@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -311,6 +312,8 @@ public class Bookkeeping_activity extends AppCompatActivity {
         String type = textView.getText().toString();
         textView = (TextView) findViewById(R.id.itemsinput); //細項
         String item = textView.getText().toString();
+        textView = (TextView) findViewById(R.id.receiptinput); //發票
+        String receipt =textView.getText().toString();
 
         if(type.equals("")) {
             Toast.makeText(this,"請選擇分類",Toast.LENGTH_SHORT).show();
@@ -318,10 +321,11 @@ public class Bookkeeping_activity extends AppCompatActivity {
         }else if(item.equals("")){
             Toast.makeText(this,"請輸入細項",Toast.LENGTH_SHORT).show();
             return;
+        }else if(receipt.length()!=3 && receipt.length()!=0){
+            Toast.makeText(this,"請輸入正確的發票碼",Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        textView = (TextView) findViewById(R.id.receiptinput); //發票
-        String receipt =textView.getText().toString();
         textView = (TextView) findViewById(R.id.quotesinput); //備註
         String quote = textView.getText().toString();
         textView = (TextView) findViewById(R.id.dateinput); //日期
