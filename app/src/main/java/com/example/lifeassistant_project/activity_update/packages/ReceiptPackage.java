@@ -14,6 +14,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+//dropped,
 public class ReceiptPackage extends DataPackage {
     private String user;
 

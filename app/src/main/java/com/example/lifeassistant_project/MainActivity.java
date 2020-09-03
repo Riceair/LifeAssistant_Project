@@ -201,6 +201,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         PieChartUsedClass pieChartUsedClass=new PieChartUsedClass(mChart,type_list,amount_list);
     }
 
+    //天氣
     private void popupShow(ArrayList<DataPackage> weatherData){
         popup_window.setVisibility(View.VISIBLE);
         Animation animation=AnimationUtils.loadAnimation(this,R.anim.alpha_scale_anim);
@@ -214,6 +215,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         findViewById(R.id.weather_condition).setVisibility(View.VISIBLE);
 
         // TIME ??
+        // set default time to today.
+        ImageButton conditionImg = findViewById(R.id.weather_condition);
+        conditionImg.setImageResource(R.drawable.weather_condition_clear);
+
     }
 
     //猜測意圖
@@ -237,8 +242,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
                 chatbotBehavior.setReadyMode();
-
-
+                chatBotSay.setText(chatbotBehavior.getResponse());
+                popupGone();
             }
         });
 
@@ -246,6 +251,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
                 chatbotBehavior.setDefaultMode();
+                chatBotSay.setText("好的，請您重新再說出您的需求。");
+                popupGone();
             }
         });
     }
@@ -373,7 +380,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case 1:
 //          FOR CHATBOT DEBUG
-                //我要新增
                 TextView tempText = findViewById(R.id.DEBUG_TEXT);
                 System.out.println(tempText.getText());
 
@@ -479,8 +485,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 else if(chatbotBehavior.getSentenceHandler().getIntent() == 4)
                 {
                     //天氣
-                    ArrayList<DataPackage> weatherData = getWeatherData();
-                    popupShow(weatherData);
+                    popupShow(getWeatherData());
                 }
             }
             else

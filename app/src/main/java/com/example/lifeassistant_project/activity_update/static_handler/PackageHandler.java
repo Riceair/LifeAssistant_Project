@@ -730,6 +730,7 @@ public class PackageHandler
         return tempString;
     }
 
+    //dropped.
     static public byte[] ReceiptPackageEncode(ReceiptPackage rcPkg) throws UnsupportedEncodingException
     {
         final int USER_SIZE = 20;
@@ -740,7 +741,7 @@ public class PackageHandler
 
         return buf.array();
     }
-
+    //dropped.
     static public AccountPackage ReceiptPackageDecode(byte[] message)
     {
         final int ID_SIZE = 4, MONEY_SIZE = 4, YEAR_SIZE = 4, MONTH_SIZE = 1, DAY_SIZE = 1, DETAIL_SIZE = 18, RECEIPT_SIZE = 3, STATUS_SIZE = 1;

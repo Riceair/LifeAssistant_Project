@@ -3,11 +3,9 @@ package com.example.lifeassistant_project.activity_update.chatbot;
 import com.example.lifeassistant_project.activity_update.ClientProgress;
 import com.example.lifeassistant_project.activity_update.packages.AccountPackage;
 import com.example.lifeassistant_project.activity_update.packages.DataPackage;
-import com.example.lifeassistant_project.activity_update.packages.SchedulePackage;
 import com.example.lifeassistant_project.activity_update.packages.SentenceHandler;
 import com.example.lifeassistant_project.activity_update.static_handler.DatabaseBehavior;
 import com.example.lifeassistant_project.activity_update.static_handler.LoginHandler;
-import com.example.lifeassistant_project.activity_update.static_handler.PackageHandler;
 
 import java.util.ArrayList;
 
@@ -26,14 +24,22 @@ public class ChatbotBehavior {
     public void setReadyMode() {
         this.behaviorMode = 1;
         if(this.supposeIntent != 0)
+        {
             this.currentIntent = this.supposeIntent;
+            this.supposeIntent = 0;
+        }
+        if(this.supposeOperation != 0)
+        {
+            this.currentOperation = this.supposeOperation;
+            this.supposeOperation = 0;
+        }
     }
 
     private SentenceHandler sentenceHandler;
     private SentenceHandler sendSentence;
     private ClientProgress client;
     private String errorMessage;
-    private int currentIntent, currentOperation, supposeIntent;
+    private int currentIntent, currentOperation, supposeIntent, supposeOperation;
 
     public SentenceHandler getSentenceHandler() {
         return sentenceHandler;
@@ -85,7 +91,7 @@ public class ChatbotBehavior {
     }
     public String getResponse()
     {
-        if(this.sentenceHandler.getIntent() == 0 && this.sentenceHandler.getOperation() == 0)
+        if(this.currentIntent == 0 && this.currentOperation == 0)
         {
             if(this.sentenceHandler.getRcvSelectedList().size() == 0)
                 return this.sentenceHandler.getFulfillment();
@@ -98,10 +104,10 @@ public class ChatbotBehavior {
 //            System.out.println(temp.getMoney());
             return "好的！以下是您欲查詢的記帳項目：";
         }
-        else if(this.sentenceHandler.getIntent() == 1)
+        else if(this.currentIntent == 1)
         {
             System.out.println("記帳");
-            switch (this.sentenceHandler.getOperation())
+            switch (this.currentOperation)
             {
                 case 1:
                     return "好的！請說出您想要記下的帳目。（您可以告訴我：記帳金額、時間、以及類型）";
@@ -113,9 +119,9 @@ public class ChatbotBehavior {
                     return "好的！請告訴我您想要查詢哪些帳目。（您可以告訴我：記帳金額、時間）";
             }
         }
-        else if(this.sentenceHandler.getIntent() == 2)
+        else if(this.currentIntent == 2)
         {
-            switch (this.sentenceHandler.getOperation())
+            switch (this.currentOperation)
             {
                 case 1:
                     return "好的！請說出您想要我記住的事情。";
@@ -127,19 +133,19 @@ public class ChatbotBehavior {
                     return "好的！請告訴我您想要查詢哪些行程。（您可以告訴我：時間）";
             }
         }
-        else if(this.sentenceHandler.getIntent() == 3)
+        else if(this.currentIntent == 3)
         {
             //猜測意圖
-            this.checkSupposedIntent(this.sentenceHandler.getFulfillment());
+            this.checkSupposedIntentAndOperation(this.sentenceHandler.getFulfillment());
             return this.sentenceHandler.getFulfillment();
         }
-        else if(this.sentenceHandler.getIntent() == 4)
+        else if(this.currentIntent == 4)
         {
             return "好的！以下是最近一週的天氣預報：";
         }
         else
         {
-            System.out.println(this.sentenceHandler.getIntent());
+            System.out.println(this.currentIntent);
             return "Error! intent or operation code has exception.";
         }
         return null;
@@ -195,7 +201,7 @@ public class ChatbotBehavior {
         return resultString;
     }
 
-    private void checkSupposedIntent(String message)
+    private void checkSupposedIntentAndOperation(String message)
     {
         if(message.contains("記帳"))
             this.supposeIntent = 1;
@@ -205,6 +211,20 @@ public class ChatbotBehavior {
         {
             System.out.println("Supposing intent error! please check the fulfillment of sentenceHandler.");
             this.supposeIntent = 0;
+        }
+
+        if(message.contains("新增"))
+            this.supposeOperation = 1;
+        else if(message.contains("刪除"))
+            this.supposeOperation = 2;
+        else if(message.contains("修改"))
+            this.supposeOperation = 3;
+        else if(message.contains("查詢"))
+            this.supposeOperation = 4;
+        else
+        {
+            System.out.println("Supposing operation error! please check the fulfillment of sentenceHandler.");
+            this.supposeOperation = 0;
         }
     }
 }
