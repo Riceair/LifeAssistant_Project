@@ -19,8 +19,6 @@
         <item name="colorPrimaryDark">#AFAEAB</item>
 <!--        <item name="colorPrimaryDark">#0083ACF3</item>-->
         <item name="colorAccent">#D3D0CC</item>
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
