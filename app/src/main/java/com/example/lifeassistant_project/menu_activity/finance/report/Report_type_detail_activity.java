@@ -122,7 +122,7 @@ public class Report_type_detail_activity extends AppCompatActivity {
                 myDB.close();
             }
             else {
-                Toast.makeText(this,"Hint 1: 請將db準備好!",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this,"Hint 1: 請將db準備好!",Toast.LENGTH_SHORT).show();
             }
         }
         catch (Exception e) {
