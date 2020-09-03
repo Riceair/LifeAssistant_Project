@@ -70,10 +70,8 @@ public class Invoice_auto_check_activity extends AppCompatActivity {
         recepitContainerRec= new Gson().fromJson(bundle.getString("recepitContainerRec"), ReceiptQRPackage.class);
 
         if(!isInvoiceUpdate) Toast.makeText(this,"尚未取得兌獎資訊",Toast.LENGTH_SHORT).show();
-        else{
-            readData();
-            AutoCheck();
-        }
+        else readData();
+        AutoCheck();
         setLayout();
     }
 
@@ -208,8 +206,11 @@ public class Invoice_auto_check_activity extends AppCompatActivity {
             addBaseline(this,record_list,R.drawable.segment);
 
             if(allReward.get(i).size() == 0){
+                String nullText;
+                if(isInvoiceUpdate) nullText="無";
+                else nullText="尚未取得發票資訊";
                 TextView no_hit_text=new TextView(this);
-                no_hit_text.setText("無");
+                no_hit_text.setText(nullText);
                 no_hit_text.setTextColor(Color.WHITE);
                 no_hit_text.setGravity(Gravity.CENTER);
                 no_hit_text.setTextSize(getDP(getResources(),10));
