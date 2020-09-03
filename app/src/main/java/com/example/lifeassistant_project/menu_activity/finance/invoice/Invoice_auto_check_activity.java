@@ -189,8 +189,8 @@ public class Invoice_auto_check_activity extends AppCompatActivity {
         LinearLayout record_list=findViewById(R.id.record_list);
         ArrayList<int[]> color_lists=new ArrayList<>();
         color_lists.add(new int[]{Color.parseColor("#FA7411"), Color.parseColor("#F38A1A"), Color.parseColor("#F0B857")});
-        color_lists.add(new int[]{Color.parseColor("#39F70D"), Color.parseColor("#4AE630"), Color.parseColor("#83F484")});
-        color_lists.add(new int[]{Color.parseColor("#002BC0"), Color.parseColor("#254EDF"), Color.parseColor("#6A89F5")});
+        color_lists.add(new int[]{Color.parseColor("#DA8D08"), Color.parseColor("#F1BD1C"), Color.parseColor("#F7D22B")});
+        color_lists.add(new int[]{Color.parseColor("#0966D8"), Color.parseColor("#254EDF"), Color.parseColor("#6A89F5")});
         color_lists.add(new int[]{Color.parseColor("#7B0AD2"), Color.parseColor("#A53FE7"), Color.parseColor("#CB8EF2")});
 
         for(int i=0;i<reward_names.length;i++){
