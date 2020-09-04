@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -198,8 +199,8 @@ public class Invoice_auto_check_activity extends AppCompatActivity {
             reward.setText(reward_names[i]);
             reward.setTextColor(Color.WHITE);
             reward.setBackground(getGradientBackground(color_lists.get(i)));
-            reward.setTextSize(getDP(getResources(),15));
-            reward.setHeight((int) getDP(getResources(),75));
+            reward.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics()));
+            reward.setHeight((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 80, getResources().getDisplayMetrics()));
             reward.setGravity(Gravity.CENTER);
             record_list.addView(reward);
 
@@ -213,7 +214,7 @@ public class Invoice_auto_check_activity extends AppCompatActivity {
                 no_hit_text.setText(nullText);
                 no_hit_text.setTextColor(Color.WHITE);
                 no_hit_text.setGravity(Gravity.CENTER);
-                no_hit_text.setTextSize(getDP(getResources(),10));
+                no_hit_text.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics()));
                 record_list.addView(no_hit_text);
             }else{  //新增中獎項目
                 for(int j=0;j<allReward.get(i).size();j++){

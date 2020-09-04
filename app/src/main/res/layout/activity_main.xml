@@ -92,60 +92,136 @@
                 android:layout_height="300dp"
                 android:layout_centerInParent="true"
                 android:background="@drawable/main_inner_background"
-                android:visibility="visible" tools:visibility="visible">
+                android:visibility="visible">
 
             <!--    天氣顯示    -->
             <RelativeLayout
                     android:id="@+id/weather_response"
                     android:layout_centerInParent="true"
-                    android:visibility="invisible"
+                    android:visibility="visible"
                     android:layout_width="300dp"
-                    android:layout_height="250dp" tools:visibility="visible">
+                    android:layout_height="250dp">
                 <TextView
-                        android:id="@+id/chatBotSay_more"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="確定要新增記帳500元嗎？"
-                        android:textColor="@color/cardview_dark_background"
-                        android:textSize="25dp" android:layout_centerInParent="true"/>
+                    android:id="@+id/weather_city_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="30dp"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text="OO市"
+                    android:layout_alignParentTop="true"/>
+
+                <TextView
+                    android:id="@+id/weather_condition_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/weather_city_text"
+                    android:text="晴時多雲偶陣雨"
+                    android:textSize="20dp"/>
+
                 <ImageButton
                         android:id="@+id/weather_condition"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_centerInParent="true"
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
+                        android:layout_below="@+id/weather_condition_text"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_toLeftOf="@+id/weather_highest_title"
                         android:background="@drawable/weather_frame"
                         android:scaleType="fitXY"
                         android:src="@drawable/weather_condition_thunderstorms"/>
 
-                <Button
-                        android:id="@+id/cancelButton"
-                        android:layout_width="150dp"
-                        android:layout_height="50dp"
-                        android:text="否"
-                        android:textColor="#FFFFFF"
-                        android:textSize="20dp"
-                        android:layout_alignLeft="@+id/chatBotSay_more"
-                        android:layout_alignBottom="@+id/chatBotSay_more"
-                        android:background="@drawable/cancel_button"/>
+                <TextView
+                    android:id="@+id/weather_highest_title"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@+id/weather_condition"
+                    android:text="最高溫:"
+                    android:textSize="25dp"/>
 
-                <Button
-                        android:id="@+id/assure_button"
-                        android:layout_width="150dp"
-                        android:layout_height="50dp"
-                        android:text="是"
-                        android:textColor="#FFFFFF"
-                        android:textSize="20dp"
-                        android:layout_alignRight="@id/chatBotSay_more"
-                        android:layout_alignBottom="@+id/chatBotSay_more"
-                        android:background="@drawable/assure_button"/>
+                <TextView
+                    android:id="@+id/weather_highest_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/weather_highest_title"
+                    android:layout_below="@+id/weather_highest_title"
+                    android:text="30"
+                    android:textSize="20dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/weather_highest_text"
+                    android:layout_below="@+id/weather_highest_title"
+                    android:text="°C"
+                    android:textSize="20dp"/>
+
+                <TextView
+                    android:id="@+id/weather_lowest_title"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/weather_highest_text"
+                    android:text="最低溫:"
+                    android:textSize="25dp"/>
+
+                <TextView
+                    android:id="@+id/weather_lowest_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/weather_lowest_title"
+                    android:layout_below="@+id/weather_lowest_title"
+                    android:text="30"
+                    android:textSize="20dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/weather_lowest_text"
+                    android:layout_below="@+id/weather_lowest_title"
+                    android:text="°C"
+                    android:textSize="20dp"/>
             </RelativeLayout>
             <!--    天氣顯示    -->
 
+            <!--      Yes No      -->
+            <LinearLayout
+                android:id="@+id/yes_no_response"
+                android:visibility="invisible"
+                android:layout_centerInParent="true"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/cancelButton"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:text="否"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20dp"
+                    android:background="@drawable/cancel_button"/>
+
+                <Button
+                    android:id="@+id/assure_button"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:text="是"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20dp"
+                    android:background="@drawable/assure_button"/>
+            </LinearLayout>
+            <!--      Yes No      -->
+
+            <!--      報表      -->
             <com.github.mikephil.charting.charts.PieChart
                     android:id="@+id/pieChart"
                     android:visibility="invisible"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_centerInParent="true"
+                    android:layout_width="300dp"
+                    android:layout_height="250dp"/>
+            <!--      報表      -->
         </RelativeLayout>
         <!--    機器人回應視窗    -->
 
