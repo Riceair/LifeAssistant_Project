@@ -8,6 +8,7 @@ import com.example.lifeassistant_project.activity_update.static_handler.Database
 import com.example.lifeassistant_project.activity_update.static_handler.LoginHandler;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ChatbotBehavior {
     private int behaviorMode;
@@ -37,8 +38,10 @@ public class ChatbotBehavior {
 
     private SentenceHandler sentenceHandler;
     private SentenceHandler sendSentence;
+    private ArrayList<DataPackage> selectedPackage;
     private ClientProgress client;
     private String errorMessage;
+    private boolean searchFlag;
     private int currentIntent, currentOperation, supposeIntent, supposeOperation;
 
     public SentenceHandler getSentenceHandler() {
@@ -47,6 +50,14 @@ public class ChatbotBehavior {
 
     public String getErrorMessage() { return errorMessage; }
 
+    public ArrayList<DataPackage> getSelectedPackage() { return selectedPackage; }
+
+    public int getCurrentIntent() { return currentIntent; }
+
+    public int getCurrentOperation() { return currentOperation; }
+
+    public boolean isSearchFlag() { return searchFlag; }
+
     public ChatbotBehavior()
     {
         this.behaviorMode = 0;
@@ -54,6 +65,7 @@ public class ChatbotBehavior {
         this.sentenceHandler = new SentenceHandler();
         this.errorMessage = "default error message.";
         this.supposeIntent = 0;
+        this.searchFlag = false;
     }
     public void sendSentence()
     {
@@ -94,11 +106,15 @@ public class ChatbotBehavior {
         if(this.currentIntent == 0 && this.currentOperation == 0)
         {
             if(this.sentenceHandler.getRcvSelectedList().size() == 0)
+            {
+                this.searchFlag = false;
                 return this.sentenceHandler.getFulfillment();
+            }
 
-            ArrayList<DataPackage> resultList = this.sentenceHandler.getRcvSelectedList();
+            this.searchFlag = true;
+            this.selectedPackage = this.sentenceHandler.getRcvSelectedList();
 
-            AccountPackage temp = (AccountPackage) resultList.get(1);
+            AccountPackage temp = (AccountPackage) this.selectedPackage.get(1);
 //            System.out.println("DEBUG//////////////////////////");
 //            System.out.println(this.sentenceHandler.getCalculateType());
 //            System.out.println(temp.getMoney());
@@ -141,7 +157,7 @@ public class ChatbotBehavior {
         }
         else if(this.currentIntent == 4)
         {
-            return "好的！以下是最近一週的天氣預報：";
+            return "好的！以下是" + this.TransWeatherTime(this.sentenceHandler.getFulfillment()) + "的天氣預報：";
         }
         else
         {
@@ -180,9 +196,9 @@ public class ChatbotBehavior {
 
     public boolean ifNeedSubWindow()
     {
-        return ((this.sentenceHandler.getIntent() == 1 || this.sentenceHandler.getIntent() == 2) && (this.sentenceHandler.getOperation() == 4))
-                || this.sentenceHandler.getIntent() == 4
-                || this.sentenceHandler.getIntent() == 3;
+        return (this.searchFlag
+                || this.currentIntent == 4
+                || this.currentIntent == 3);
     }
 
     private String checkForChineseNumber(String message)
@@ -227,4 +243,57 @@ public class ChatbotBehavior {
             this.supposeOperation = 0;
         }
     }
+
+    private String TransInt2WeekWord(int w)
+    {
+        switch (w)
+        {
+            case 1:
+                return "一";
+            case 2:
+                return "二";
+            case 3:
+                return "三";
+            case 4:
+                return "四";
+            case 5:
+                return "五";
+            case 6:
+                return "六";
+            case 7:
+                return "日";
+            default:
+                return "Null";
+        }
+    }
+
+    public String TransWeatherTime(String message)
+    {
+        int number = (int) message.charAt(0);
+        Calendar calendar = Calendar.getInstance();
+        boolean isFirstSunday = (calendar.getFirstDayOfWeek() == Calendar.SUNDAY);
+        int weekDay = calendar.get(Calendar.DAY_OF_WEEK);
+
+        if(isFirstSunday)
+        {
+            weekDay--;
+            if(weekDay == 0)
+                weekDay = 7;
+        }
+
+        switch (number)
+        {
+            case 0:
+                return "今天";
+            case 1:
+                return "明天";
+            case 2:
+                return "後天";
+            default:
+                return "星期" + this.TransInt2WeekWord(weekDay);
+        }
+    }
+
+    public int TransWeatherTime()
+    { return (int) this.sentenceHandler.getFulfillment().charAt(0); }
 }

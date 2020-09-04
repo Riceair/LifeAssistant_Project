@@ -36,10 +36,7 @@ import android.view.animation.AnimationUtils;
 
 import com.example.lifeassistant_project.activity_update.*;
 import com.example.lifeassistant_project.activity_update.chatbot.ChatbotBehavior;
-import com.example.lifeassistant_project.activity_update.packages.DataPackage;
-import com.example.lifeassistant_project.activity_update.packages.LoginPackage;
-import com.example.lifeassistant_project.activity_update.packages.ReceiptQRPackage;
-import com.example.lifeassistant_project.activity_update.packages.WeatherPackage;
+import com.example.lifeassistant_project.activity_update.packages.*;
 import com.example.lifeassistant_project.activity_update.static_handler.DatabaseBehavior;
 import com.example.lifeassistant_project.activity_update.static_handler.LoginHandler;
 import com.example.lifeassistant_project.features_class.MainHelpItemOnClickListener;
@@ -130,14 +127,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setTTS();
         bind();
 
-        ////////////////報表debug
-//        List<String> type=new ArrayList<>();
-//        type.add("早餐");
-//        type.add("Fox Burger King");
-//        List<Integer> amount=new ArrayList<>();
-//        amount.add(60);
-//        amount.add(100);
-//        popupShow(type,amount);
         popupGone();
 
         //Remeber user's content
@@ -193,6 +182,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
+    //記帳查詢
     private void popupShow(List<String> type_list,List<Integer> amount_list){
         popup_window.setVisibility(View.VISIBLE);
         Animation animation=AnimationUtils.loadAnimation(this,R.anim.alpha_scale_anim);
@@ -218,6 +208,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // TIME ??
         // set default time to today.
+//        int day = chatbotBehavior.TransWeatherTime();
         ImageButton conditionImg = findViewById(R.id.weather_condition);
         conditionImg.setImageResource(R.drawable.weather_condition_clear);
 
@@ -401,20 +392,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 if(chatbotBehavior.ifNeedSubWindow()) {
                     findViewById(R.id.popup_window).setVisibility(View.VISIBLE);
-                    if (chatbotBehavior.getSentenceHandler().getIntent() == 1 && chatbotBehavior.getSentenceHandler().getOperation() == 4) {
+                    if(chatbotBehavior.isSearchFlag())
+                    {
                         //記帳查詢
-                        findViewById(R.id.assure_button).setVisibility(View.INVISIBLE);
-                        findViewById(R.id.cancelButton).setVisibility(View.INVISIBLE);
-                        findViewById(R.id.weather_condition).setVisibility(View.INVISIBLE);
-                    } else if (chatbotBehavior.getSentenceHandler().getIntent() == 2 && chatbotBehavior.getSentenceHandler().getOperation() == 4) {
+                        List<String> itemList = new ArrayList<>();
+                        List<Integer> moneyList = new ArrayList<>();
+                        for(DataPackage ele : chatbotBehavior.getSelectedPackage())
+                        {
+                            AccountPackage rcvEle = (AccountPackage) ele;
+                            itemList.add(rcvEle.getItem());
+                            moneyList.add(rcvEle.getMoney());
+                        }
+
+                        popupShow(itemList, moneyList);
+                    }
+                    else if (chatbotBehavior.getCurrentIntent() == 2 && chatbotBehavior.getCurrentOperation() == 4) {
                         //行程查詢
                         findViewById(R.id.assure_button).setVisibility(View.INVISIBLE);
                         findViewById(R.id.cancelButton).setVisibility(View.INVISIBLE);
                         findViewById(R.id.weather_condition).setVisibility(View.INVISIBLE);
-                    } else if (chatbotBehavior.getSentenceHandler().getIntent() == 3) {
+                    }
+                    else if (chatbotBehavior.getCurrentIntent() == 3) {
                         //猜測意圖
                         popupShow();
-                    } else if (chatbotBehavior.getSentenceHandler().getIntent() == 4) {
+                    }
+                    else if (chatbotBehavior.getCurrentIntent() == 4) {
                         //天氣
                         popupShow(getWeatherData());
                     }
@@ -479,26 +481,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if(chatbotBehavior.ifNeedSubWindow())
             {
                 findViewById(R.id.popup_window).setVisibility(View.VISIBLE);
-                if(chatbotBehavior.getSentenceHandler().getIntent() == 1 && chatbotBehavior.getSentenceHandler().getOperation() == 4)
+                if (chatbotBehavior.getCurrentIntent() == 1 && chatbotBehavior.getCurrentOperation() == 4)
                 {
                     //記帳查詢
-                    findViewById(R.id.assure_button).setVisibility(View.INVISIBLE);
-                    findViewById(R.id.cancelButton).setVisibility(View.INVISIBLE);
-                    findViewById(R.id.weather_condition).setVisibility(View.INVISIBLE);
+                    List<String> itemList = new ArrayList<>();
+                    List<Integer> moneyList = new ArrayList<>();
+                    for (DataPackage ele : chatbotBehavior.getSelectedPackage())
+                    {
+                        AccountPackage rcvEle = (AccountPackage) ele;
+                        itemList.add(rcvEle.getItem());
+                        moneyList.add(rcvEle.getMoney());
+                    }
+
+                    popupShow(itemList, moneyList);
                 }
-                else if(chatbotBehavior.getSentenceHandler().getIntent() == 2 && chatbotBehavior.getSentenceHandler().getOperation() == 4)
+                else if (chatbotBehavior.getCurrentIntent() == 2 && chatbotBehavior.getCurrentOperation() == 4)
                 {
                     //行程查詢
                     findViewById(R.id.assure_button).setVisibility(View.INVISIBLE);
                     findViewById(R.id.cancelButton).setVisibility(View.INVISIBLE);
                     findViewById(R.id.weather_condition).setVisibility(View.INVISIBLE);
                 }
-                else if(chatbotBehavior.getSentenceHandler().getIntent() == 3)
+                else if (chatbotBehavior.getCurrentIntent() == 3)
                 {
                     //猜測意圖
                     popupShow();
                 }
-                else if(chatbotBehavior.getSentenceHandler().getIntent() == 4)
+                else if (chatbotBehavior.getCurrentIntent() == 4)
                 {
                     //天氣
                     popupShow(getWeatherData());
