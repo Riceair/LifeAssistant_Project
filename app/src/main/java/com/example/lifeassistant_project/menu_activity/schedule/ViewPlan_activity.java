@@ -20,6 +20,8 @@ import com.example.lifeassistant_project.R;
 import com.example.lifeassistant_project.activity_update.packages.SchedulePackage;
 
 import android.widget.Toast;
+
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -69,6 +71,9 @@ public class ViewPlan_activity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setIcon(R.drawable.newstand);
+        getSupportActionBar().hide();
+
+
         Bundle bundle = getIntent().getExtras();
         clicked_day = bundle.getInt("clicked_day");
         clicked_month = bundle.getInt("clicked_month");
@@ -98,7 +103,7 @@ public class ViewPlan_activity extends AppCompatActivity {
                 e.printStackTrace();
             }
             SimpleDateFormat tempsdf = new SimpleDateFormat("MMM");
-            monthlayout.setText(clicked_year+"年 "+clicked_month+" 月 "+clicked_day+" 日");
+            monthlayout.setText(clicked_year+"年 "+clicked_month+"月"+clicked_day+"日");
             month_text.setText(tempsdf.format(tempdate).toUpperCase());
 
             day_text.setText(clicked_day.toString().toUpperCase());
@@ -184,7 +189,7 @@ public class ViewPlan_activity extends AppCompatActivity {
                             String.format("%02d", temp.getStartDateInFormat().getMonth()) + "-" +
                             String.format("%02d", temp.getStartDateInFormat().getDay()) + " 00:00:00");
                     Date tempdate = null;
-                    tempdate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(tempString);
+                    tempdate = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(tempString);
                     long tempmilis = tempdate.getTime();
                     stuffListinDateFormat.add(tempmilis);
                     tempString = new String(Integer.toString(temp.getEndDateInFormat().getYear()) + "-" +
@@ -197,7 +202,7 @@ public class ViewPlan_activity extends AppCompatActivity {
                             String.format("%02d", temp.getEndDateInFormat().getMonth()) + "-" +
                             String.format("%02d", temp.getEndDateInFormat().getDay()) + " 23:59:59");
                     tempdate = null;
-                    tempdate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(tempString);
+                    tempdate = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(tempString);
                     tempmilis = tempdate.getTime();
                     stuffEndingListinDateFormat.add(tempmilis);
                     stuffNameList.add(temp.getTodo());
@@ -246,8 +251,6 @@ public class ViewPlan_activity extends AppCompatActivity {
                     stuffNameList.add(stuffNameListBackup.get(i));
 
                 }
-
-
                 for(int i=0;i<stuffList.size();i++)
                 {
                     stuffTitleList.add(stuffNameList.get(i));
@@ -257,64 +260,33 @@ public class ViewPlan_activity extends AppCompatActivity {
                 for(int i=0;i<stuffList.size();i++)
                 {
 
-                    String outStr = "";
-
-                    char[] chars = stuffTitleList.get(i).toCharArray();
-
-                    int tranTemp = 0;
-
-                    for(int j = 0; j < chars.length; j++){
-                        Character.UnicodeBlock ub = Character.UnicodeBlock.of(chars[j]);
-                        if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS
-                                || ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS)
-
-                        {
-
-                            outStr += chars[j];
-                        }
-                        else{
-
-                         tranTemp = (int)chars[j];
-
-                        if(tranTemp != 45) //ASCII碼:45 是減號 -
-
-                        tranTemp += 65248; //此數字是 Unicode編碼轉為十進位 和 ASCII碼的 差
-                            outStr += (char)tranTemp;
-                        }
-
-                    }
-
-
-
-
-                    if(outStr.length()>8)
+                    if(stuffNameList.get(i).length()>15)
                     {
-                        stuffTitleList.set(i,outStr.substring(0, 8)+"⋯");
-                   }
+                        stuffTitleList.set(i,stuffTitleList.get(i).substring(0, 15)+"⋯");
+                    }
                     else
                     {
-                        while(outStr.length()<=8)
+                        while(stuffTitleList.get(i).length()<15)
                         {
-                            outStr=outStr+"　";
+                            stuffTitleList.set(i,stuffTitleList.get(i)+"　");
                         }
-                        stuffTitleList.set(i,outStr);
+
                     }
-                    stuffTitleList.set(i,stuffTitleList.get(i)+" ("+stuffList.get(i).split(" ")[0]+")");
+                   // stuffTitleList.set(i,stuffTitleList.get(i)+" ("+stuffList.get(i).split(" ")[0]+")");
                 }
 
-
-                // 5. 關閉 DB
-                myDB.close();
-
+            // 5. 關閉 DB
+            myDB.close();
 
 
-            } else {
-                Toast.makeText(this, "Hint 1: 請將db準備好!", Toast.LENGTH_SHORT).show();
-            }
-        } catch (Exception e) {
-            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+
+        } else {
+            Toast.makeText(this, "Hint 1: 請將db準備好!", Toast.LENGTH_SHORT).show();
         }
+    } catch (Exception e) {
+        Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
     }
+}
 
     private void ReadSpecifiedRecord() {
         stuffList.clear();
@@ -357,7 +329,7 @@ public class ViewPlan_activity extends AppCompatActivity {
                             String.format("%02d", temp.getStartDateInFormat().getMonth()) + "-" +
                             String.format("%02d", temp.getStartDateInFormat().getDay()) + " 00:00:00");
                     Date tempdate = null;
-                    tempdate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(tempString);
+                    tempdate = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(tempString);
                     long tempmilis = tempdate.getTime();
                     stuffListinDateFormat.add(tempmilis);
                     tempString = new String(Integer.toString(temp.getEndDateInFormat().getYear()) + "-" +
@@ -371,7 +343,7 @@ public class ViewPlan_activity extends AppCompatActivity {
                             String.format("%02d", temp.getEndDateInFormat().getMonth()) + "-" +
                             String.format("%02d", temp.getEndDateInFormat().getDay()) + " 23:59:59");
                     tempdate = null;
-                    tempdate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(tempString);
+                    tempdate = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(tempString);
                     tempmilis = tempdate.getTime();
                     stuffEndingListinDateFormat.add(tempmilis);
                     stuffNameList.add(temp.getTodo());
@@ -386,7 +358,7 @@ public class ViewPlan_activity extends AppCompatActivity {
                 String tempString = new String(Integer.toString(clicked_year) + "-" +
                         String.format("%02d", clicked_month) + "-" +
                         String.format("%02d", clicked_day) + " 12:00:00");
-                Date tempdate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(tempString);
+                Date tempdate = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(tempString);
                 long tempmilis = tempdate.getTime();
 
                 for(int i=stuffList.size()-1;i>=0;i--)
@@ -461,57 +433,30 @@ public class ViewPlan_activity extends AppCompatActivity {
 
                 for(int i=0;i<stuffList.size();i++)
                 {
-                    stuffTitleList.add(stuffNameList.get(i)+" ("+stuffList.get(i).split(" ")[0]+" 至 "+stuffEndingList.get(i).split(" ")[0]+")");
+                    stuffTitleList.add(stuffNameList.get(i));
 
                 }
 
                 for(int i=0;i<stuffList.size();i++)
                 {
 
-                    String outStr = "";
-
-                    char[] chars = stuffTitleList.get(i).toCharArray();
-
-                    int tranTemp = 0;
-
-                    for(int j = 0; j < chars.length; j++){
-                        Character.UnicodeBlock ub = Character.UnicodeBlock.of(chars[j]);
-                        if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS
-                                || ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS)
-
-                        {
-
-                            outStr += chars[j];
-                        }
-                        else{
-
-                            tranTemp = (int)chars[j];
-
-                            if(tranTemp != 45) //ASCII碼:45 是減號 -
-
-                                tranTemp += 65248; //此數字是 Unicode編碼轉為十進位 和 ASCII碼的 差
-                            outStr += (char)tranTemp;
-                        }
-
-                    }
-
-
-
-
-                    if(outStr.length()>8)
+                    if(stuffNameList.get(i).length()>15)
                     {
-                        stuffTitleList.set(i,outStr.substring(0, 8)+"⋯");
+                        stuffTitleList.set(i,stuffTitleList.get(i).substring(0, 15)+"⋯");
                     }
                     else
                     {
-                        while(outStr.length()<=8)
+                        while(stuffTitleList.get(i).length()<15)
                         {
-                            outStr=outStr+"　";
+                            stuffTitleList.set(i,stuffTitleList.get(i)+"　");
                         }
-                        stuffTitleList.set(i,outStr);
+
                     }
-                    stuffTitleList.set(i,stuffTitleList.get(i)+" ("+stuffList.get(i).split(" ")[0]+")");
+                    // stuffTitleList.set(i,stuffTitleList.get(i)+" ("+stuffList.get(i).split(" ")[0]+")");
                 }
+
+                // 5. 關閉 DB
+                myDB.close();
 
 
 

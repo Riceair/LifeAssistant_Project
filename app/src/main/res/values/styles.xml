@@ -4,6 +4,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
 <!--        <item name="colorPrimary">#00FF9800</item>-->
+        <item name="windowActionBar">false</item>
         <item name="colorPrimary">#83ACF3</item>
         <item name="colorPrimaryDark">#83ACF3</item>
         <item name="colorAccent">#D3D0CC</item>
@@ -20,6 +21,7 @@
 <!--        <item name="colorPrimaryDark">#0083ACF3</item>-->
         <item name="colorAccent">#D3D0CC</item>
     </style>
+
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

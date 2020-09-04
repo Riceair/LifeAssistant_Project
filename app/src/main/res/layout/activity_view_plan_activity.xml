@@ -16,18 +16,32 @@
         android:layout_marginLeft="3dp"
         android:layout_toRightOf="@id/icon"
         android:gravity="start|center_vertical"
-        android:onClick="clickBackPlanner"
         android:text=""
-        android:textColor="@color/ic_launcher_background"
-        android:textSize="22dp" />
+        android:textColor="@color/zxing_custom_viewfinder_laser"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/back_ind"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_above="@id/mainly"
+        android:layout_alignLeft="@id/mainly"
+        android:gravity="center"
+        android:onClick="clickBackPlanner"
+        android:text="﹤"
+        android:textColor="@color/zxing_custom_viewfinder_laser"
+        android:textSize="30dp"
+        android:textStyle="bold" />
 
     <RelativeLayout
         android:id="@+id/icon"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_above="@id/mainly"
-        android:layout_alignStart="@id/mainly"
-        android:background="@drawable/calendar_frame">
+        android:layout_toRightOf="@id/back_ind"
+        android:background="@drawable/calendar_frame"
+        android:onClick="clickBackPlanner">
 
         <TextView
             android:id="@+id/month_text"
