@@ -89,6 +89,7 @@ public class Planner_activity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setIcon(R.drawable.newstand);
+
         final View decorView = getWindow().getDecorView();
         decorView.setOnSystemUiVisibilityChangeListener (new View.OnSystemUiVisibilityChangeListener() {
             @Override
@@ -146,49 +147,28 @@ public class Planner_activity extends AppCompatActivity {
 
                     Integer tempIndic=tempString.length();
                     tempString=tempString.substring(0,tempIndic-1);
-                    String outStr = "";
 
-                    char[] chars = tempString.toCharArray();
+                    EventList.add(tempString);
 
-                    int tranTemp = 0;
+                }
+                for(int i=0;i<EventList.size();i++)
+                {
 
-                    for(int j = 0; j < chars.length; j++){
-                        Character.UnicodeBlock ub = Character.UnicodeBlock.of(chars[j]);
-                        if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS
-                                || ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS)
-
-                        {
-
-                            outStr += chars[j];
-                        }
-                        else{
-
-                            tranTemp = (int)chars[j];
-
-                            if(tranTemp != 45) //ASCII碼:45 是減號 -
-
-                                tranTemp += 65248; //此數字是 Unicode編碼轉為十進位 和 ASCII碼的 差
-                            outStr += (char)tranTemp;
-                        }
-
-                    }
-                    if(outStr.length()>14)
+                    if(EventList.get(i).length()>15)
                     {
-                        outStr=outStr.substring(0, 14)+"⋯";
+                        EventList.set(i,EventList.get(i).substring(0, 15)+"⋯");
                     }
                     else
                     {
-                        while(outStr.length()<=14)
+                        while(EventList.get(i).length()<15)
                         {
-                            outStr=outStr+"　";
+                            EventList.set(i,EventList.get(i)+"　");
                         }
 
                     }
-                    EventList.add(outStr);
-
-
-
+                    // stuffTitleList.set(i,stuffTitleList.get(i)+" ("+stuffList.get(i).split(" ")[0]+")");
                 }
+
 
 
                 ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Planner_activity.this, android.R.layout.simple_list_item_1,EventList);
@@ -464,7 +444,6 @@ public class Planner_activity extends AppCompatActivity {
                     stuffEndingListBackup.add(stuffEndingList.get(minIndex));
                     stuffIDListBackup.add(stuffIDList.get(minIndex));
                     stuffNameListBackup.add(stuffNameList.get(minIndex));
-
                     stuffList.set(minIndex,"");
                     stuffNameList.set(minIndex,"");
                     stuffEndingList.set(minIndex,"");
@@ -626,7 +605,13 @@ public class Planner_activity extends AppCompatActivity {
         }
         return true;
     }
+    public void clickBack(View view){
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("EXIT", true); startActivity(intent);
+        startActivityForResult(intent, 3);
 
+    }
     //    @Override
     public void finish() {
         super.finish();
