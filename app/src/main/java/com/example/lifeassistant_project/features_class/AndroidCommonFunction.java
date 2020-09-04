@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.GradientDrawable;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -11,8 +12,21 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class AndroidCommonFunction {
-    public static float getDP(Resources resources,int value){
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, resources.getDisplayMetrics());
+    //取得dp的pixel
+    //(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300, getResources().getDisplayMetrics());
+
+    public static int getViewWidth(View view){
+        int width =View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED);
+        int height =View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED);
+        view.measure(width,height);
+        return view.getMeasuredWidth();
+    }
+
+    public static int getViewHeight(View view){
+        int width =View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED);
+        int height =View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED);
+        view.measure(width,height);
+        return view.getMeasuredHeight();
     }
 
     public static GradientDrawable getGradientBackground(int[] colors){

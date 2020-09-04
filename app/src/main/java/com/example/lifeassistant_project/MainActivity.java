@@ -4,7 +4,8 @@ import android.app.ActionBar;
 import android.content.*;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.view.ViewGroup;
+import android.util.Log;
+import android.util.TypedValue;
 import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -60,7 +61,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import static com.example.lifeassistant_project.features_class.AndroidCommonFunction.addBaseline;
+import static com.example.lifeassistant_project.features_class.AndroidCommonFunction.*;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener {
@@ -80,6 +81,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //機器人回應視窗
     private RelativeLayout popup_window,weather_response;
+    private LinearLayout yes_no_response;
+    private int popup_window_height,popup_window_width;
     private PieChart mChart;
 
     //註冊 登入
@@ -155,7 +158,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         loginButton = navigationView.getHeaderView(0).findViewById(R.id.LoginButton);
         popup_window=findViewById(R.id.popup_window);
         weather_response=findViewById(R.id.weather_response);
+        yes_no_response=findViewById(R.id.yes_no_response);
         mChart=findViewById(R.id.pieChart);
+        popup_window_height= (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300, getResources().getDisplayMetrics());
+        popup_window_width=(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 350, getResources().getDisplayMetrics());
     }
 
     private void setTTS(){
@@ -184,6 +190,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //記帳查詢
     private void popupShow(List<String> type_list,List<Integer> amount_list){
+        setPopupDefaultSize();
         popup_window.setVisibility(View.VISIBLE);
         Animation animation=AnimationUtils.loadAnimation(this,R.anim.alpha_scale_anim);
         animation.setDuration(1000);
@@ -193,22 +200,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         PieChartUsedClass pieChartUsedClass=new PieChartUsedClass(mChart,type_list,amount_list);
     }
 
-    //天氣
+    //今天天氣
     private void popupShow(ArrayList<DataPackage> weatherData){
+        setPopupDefaultSize();
         popup_window.setVisibility(View.VISIBLE);
         Animation animation=AnimationUtils.loadAnimation(this,R.anim.alpha_scale_anim);
         animation.setDuration(1000);
         popup_window.startAnimation(animation);
 
         weather_response.setVisibility(View.VISIBLE);
-        findViewById(R.id.assure_button).setVisibility(View.INVISIBLE);
-        findViewById(R.id.cancelButton).setVisibility(View.INVISIBLE);
-        findViewById(R.id.chatBotSay_more).setVisibility(View.VISIBLE);
-        findViewById(R.id.weather_condition).setVisibility(View.VISIBLE);
+        yes_no_response.setVisibility(View.INVISIBLE);
 
         // TIME ??
         // set default time to today.
-//        int day = chatbotBehavior.TransWeatherTime();
         ImageButton conditionImg = findViewById(R.id.weather_condition);
         conditionImg.setImageResource(R.drawable.weather_condition_clear);
 
@@ -218,17 +222,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void popupShow()
     {
         final Button assureButton = findViewById(R.id.assure_button), cancelButton = findViewById(R.id.cancelButton);
+        yes_no_response.setVisibility(View.VISIBLE);
         popup_window.setVisibility(View.VISIBLE);
-        Animation animation=AnimationUtils.loadAnimation(this,R.anim.alpha_scale_anim);
-        animation.setDuration(1000);
-        popup_window.startAnimation(animation);
 
         mChart.setVisibility(View.INVISIBLE);
-        weather_response.setVisibility(View.VISIBLE);
-        assureButton.setVisibility(View.VISIBLE);
-        cancelButton.setVisibility(View.VISIBLE);
-        findViewById(R.id.chatBotSay_more).setVisibility(View.INVISIBLE);
-        findViewById(R.id.weather_condition).setVisibility(View.INVISIBLE);
+        weather_response.setVisibility(View.INVISIBLE);
+        //我要新增
+        //設定popup_window位置與大小
+        RelativeLayout.LayoutParams params=(RelativeLayout.LayoutParams) popup_window.getLayoutParams();
+        params.height=getViewHeight(yes_no_response)+50;
+        popup_window.setLayoutParams(params);
+        popup_window.setTranslationY(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics()));
 
         assureButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -252,9 +256,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void popupGone(){
         popup_window.setVisibility(View.INVISIBLE);
         weather_response.setVisibility(View.INVISIBLE);
-        findViewById(R.id.assure_button).setVisibility(View.INVISIBLE);
-        findViewById(R.id.cancelButton).setVisibility(View.INVISIBLE);
+        yes_no_response.setVisibility(View.INVISIBLE);
         mChart.setVisibility(View.INVISIBLE);
+    }
+
+    private void setPopupDefaultSize(){
+        //將popup_window大小調回預設
+        RelativeLayout.LayoutParams params=(RelativeLayout.LayoutParams) popup_window.getLayoutParams();
+        params.height=popup_window_height;
+        params.width=popup_window_width;
+        popup_window.setLayoutParams(params);
+        popup_window.setTranslationY(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 0, getResources().getDisplayMetrics()));
     }
 
     /////////////// Before Login ///////////////////////////////////
@@ -408,8 +420,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                     else if (chatbotBehavior.getCurrentIntent() == 2 && chatbotBehavior.getCurrentOperation() == 4) {
                         //行程查詢
-                        findViewById(R.id.assure_button).setVisibility(View.INVISIBLE);
-                        findViewById(R.id.cancelButton).setVisibility(View.INVISIBLE);
+                        yes_no_response.setVisibility(View.INVISIBLE);
                         findViewById(R.id.weather_condition).setVisibility(View.INVISIBLE);
                     }
                     else if (chatbotBehavior.getCurrentIntent() == 3) {
@@ -498,8 +509,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 else if (chatbotBehavior.getCurrentIntent() == 2 && chatbotBehavior.getCurrentOperation() == 4)
                 {
                     //行程查詢
-                    findViewById(R.id.assure_button).setVisibility(View.INVISIBLE);
-                    findViewById(R.id.cancelButton).setVisibility(View.INVISIBLE);
+                    yes_no_response.setVisibility(View.INVISIBLE);
                     findViewById(R.id.weather_condition).setVisibility(View.INVISIBLE);
                 }
                 else if (chatbotBehavior.getCurrentIntent() == 3)
