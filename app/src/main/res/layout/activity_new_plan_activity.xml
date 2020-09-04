@@ -4,7 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/planner_background">
+    android:background="@drawable/planner_background"
+    android:onClick="clickBackPlanner">
+
+    <TextView
+        android:id="@+id/backind"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_above="@id/mainly"
+        android:layout_alignLeft="@id/mainly"
+        android:gravity="center"
+        android:text="﹤回日曆"
+        android:textColor="@color/zxing_custom_viewfinder_laser"
+        android:textSize="22dp"
+        android:textStyle="bold" />
 
     <RelativeLayout
         android:id="@+id/tabs"
@@ -201,10 +214,10 @@
             android:id="@+id/savebutton"
             android:layout_width="80dp"
             android:layout_height="40dp"
+            android:layout_alignRight="@id/endstimepicker"
             android:layout_alignParentBottom="true"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="30dp"
-            android:layout_alignRight="@id/endstimepicker"
             android:background="@drawable/assure_button"
             android:onClick="clickToUpdateSC"
             android:text="修改"
@@ -214,9 +227,9 @@
             android:id="@+id/cancelbutton"
             android:layout_width="70dp"
             android:layout_height="40dp"
-            android:layout_toLeftOf="@+id/savebutton"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="30dp"
+            android:layout_toLeftOf="@+id/savebutton"
             android:background="@drawable/action_transparent"
             android:text="取消"
             android:textColor="@color/ic_launcher_background"
@@ -224,6 +237,7 @@
 
 
     </RelativeLayout>
+
     <include
         layout="@layout/drawer_toolbar"
         android:layout_width="match_parent"

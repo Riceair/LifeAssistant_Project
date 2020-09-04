@@ -83,6 +83,7 @@ public class NewPlan_activity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setIcon(R.drawable.newstand);
+        getSupportActionBar().hide();
         GregorianCalendar calendar = new GregorianCalendar();
         Bundle bundle = getIntent().getExtras();
         datewasclicked = bundle.getString("clickeddate");
@@ -644,7 +645,13 @@ public class NewPlan_activity extends AppCompatActivity {
         intent.putExtra("clicked_day", clicked_day);
         finish();
     }
+    public void clickBackPlanner(View view){
+        Intent intent = new Intent(getApplicationContext(), Planner_activity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("EXIT", true); startActivity(intent);
+        startActivityForResult(intent, 3);
 
+    }
     public void clickToUpdateSC(View view) {
         writeToSCDB();
         this.sendSchedulePackage();
