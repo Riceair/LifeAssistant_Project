@@ -1,8 +1,10 @@
 package com.example.lifeassistant_project;
 
+import android.app.ActionBar;
 import android.content.*;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.view.ViewGroup;
 import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -129,14 +131,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bind();
 
         ////////////////報表debug
-        List<String> type=new ArrayList<>();
-        type.add("早餐");
-        type.add("Fox Burger King");
-        List<Integer> amount=new ArrayList<>();
-        amount.add(60);
-        amount.add(100);
-        popupShow(type,amount);
-//        popupGone();
+//        List<String> type=new ArrayList<>();
+//        type.add("早餐");
+//        type.add("Fox Burger King");
+//        List<Integer> amount=new ArrayList<>();
+//        amount.add(60);
+//        amount.add(100);
+//        popupShow(type,amount);
+        popupGone();
 
         //Remeber user's content
         SharedPreferences shared = getSharedPreferences("shared", MODE_PRIVATE);
@@ -201,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         PieChartUsedClass pieChartUsedClass=new PieChartUsedClass(mChart,type_list,amount_list);
     }
 
-    //天氣123
+    //天氣
     private void popupShow(ArrayList<DataPackage> weatherData){
         popup_window.setVisibility(View.VISIBLE);
         Animation animation=AnimationUtils.loadAnimation(this,R.anim.alpha_scale_anim);
@@ -225,7 +227,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void popupShow()
     {
         final Button assureButton = findViewById(R.id.assure_button), cancelButton = findViewById(R.id.cancelButton);
-
         popup_window.setVisibility(View.VISIBLE);
         Animation animation=AnimationUtils.loadAnimation(this,R.anim.alpha_scale_anim);
         animation.setDuration(1000);
@@ -398,10 +399,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 chatBotSay.setText(chatbotBehavior.getResponse());
 
-                if(chatbotBehavior.getSentenceHandler().getIntent() == 3)
-                {
-                    //猜測意圖
-                     popupShow();
+                if(chatbotBehavior.ifNeedSubWindow()) {
+                    findViewById(R.id.popup_window).setVisibility(View.VISIBLE);
+                    if (chatbotBehavior.getSentenceHandler().getIntent() == 1 && chatbotBehavior.getSentenceHandler().getOperation() == 4) {
+                        //記帳查詢
+                        findViewById(R.id.assure_button).setVisibility(View.INVISIBLE);
+                        findViewById(R.id.cancelButton).setVisibility(View.INVISIBLE);
+                        findViewById(R.id.weather_condition).setVisibility(View.INVISIBLE);
+                    } else if (chatbotBehavior.getSentenceHandler().getIntent() == 2 && chatbotBehavior.getSentenceHandler().getOperation() == 4) {
+                        //行程查詢
+                        findViewById(R.id.assure_button).setVisibility(View.INVISIBLE);
+                        findViewById(R.id.cancelButton).setVisibility(View.INVISIBLE);
+                        findViewById(R.id.weather_condition).setVisibility(View.INVISIBLE);
+                    } else if (chatbotBehavior.getSentenceHandler().getIntent() == 3) {
+                        //猜測意圖
+                        popupShow();
+                    } else if (chatbotBehavior.getSentenceHandler().getIntent() == 4) {
+                        //天氣
+                        popupShow(getWeatherData());
+                    }
                 }
                 break;
             case 2:
