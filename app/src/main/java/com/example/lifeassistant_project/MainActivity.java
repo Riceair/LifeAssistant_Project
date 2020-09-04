@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         PieChartUsedClass pieChartUsedClass=new PieChartUsedClass(mChart,type_list,amount_list);
     }
 
-    //今天天氣
+    //天氣
     private void popupShow(ArrayList<DataPackage> weatherData){
         setPopupDefaultSize();
         popup_window.setVisibility(View.VISIBLE);
@@ -403,6 +403,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 chatBotSay.setText(chatbotBehavior.getResponse());
 
                 if(chatbotBehavior.ifNeedSubWindow()) {
+                    popupGone();
                     findViewById(R.id.popup_window).setVisibility(View.VISIBLE);
                     if(chatbotBehavior.isSearchFlag())
                     {
@@ -491,6 +492,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             if(chatbotBehavior.ifNeedSubWindow())
             {
+                popupGone();
                 findViewById(R.id.popup_window).setVisibility(View.VISIBLE);
                 if (chatbotBehavior.getCurrentIntent() == 1 && chatbotBehavior.getCurrentOperation() == 4)
                 {

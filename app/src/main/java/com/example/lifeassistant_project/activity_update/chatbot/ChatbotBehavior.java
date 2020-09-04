@@ -103,13 +103,11 @@ public class ChatbotBehavior {
     }
     public String getResponse()
     {
+        this.searchFlag = false;
         if(this.currentIntent == 0 && this.currentOperation == 0)
         {
             if(this.sentenceHandler.getRcvSelectedList().size() == 0)
-            {
-                this.searchFlag = false;
                 return this.sentenceHandler.getFulfillment();
-            }
 
             this.searchFlag = true;
             this.selectedPackage = this.sentenceHandler.getRcvSelectedList();
