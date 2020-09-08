@@ -21,7 +21,7 @@ public class PieChartUsedClass {
         this.mChart=mChart;
         setDefulatColor(); //設置顏色
         setMChartDefault();
-        setMChartLegend(); //設置圖例
+        setMChartLegend(20,15); //設置圖例
         setMChartData(type_list,amount_list);
     }
 
@@ -79,7 +79,7 @@ public class PieChartUsedClass {
         mChart.invalidate();                    //將圖表重繪以顯示設定的屬性和資料
     }
 
-    private void setMChartLegend(){
+    public void setMChartLegend(int formSize,int textSize){
         // 獲取pieChart圖例
         Legend l = mChart.getLegend();
         l.setEnabled(true);                    //是否啟用圖列（true：下面屬性才有意義）
@@ -87,14 +87,14 @@ public class PieChartUsedClass {
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
         l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         l.setForm(Legend.LegendForm.SQUARE); //設置圖例的形狀
-        l.setFormSize(20);               //設置圖例的大小
+        l.setFormSize(formSize);               //設置圖例的大小
         l.setFormToTextSpace(10f);         //設置每個圖例實體中標籤和形狀之間的間距
         l.setDrawInside(false);
         l.setWordWrapEnabled(true);            //設置圖列換行(注意使用影響性能,僅適用legend位於圖表下面)
         l.setXEntrySpace(10f);            //設置圖例實體之間延X軸的間距（setOrientation = HORIZONTAL有效）
         l.setYEntrySpace(8f);             //設置圖例實體之間延Y軸的間距（setOrientation = VERTICAL 有效）
         l.setYOffset(0f);                //設置比例塊Y軸偏移量
-        l.setTextSize(15f);                  //設置圖例標籤文本的大小
+        l.setTextSize(textSize);                  //設置圖例標籤文本的大小
         l.setTextColor(Color.BLACK);//設置圖例標籤文本的顏色
     }
 
