@@ -11,34 +11,26 @@
         android:id="@+id/sub_title"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_above="@id/mainly"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="3dp"
         android:layout_toRightOf="@id/icon"
         android:gravity="start|center_vertical"
         android:text=""
-        android:textColor="@color/zxing_custom_viewfinder_laser"
-        android:textSize="20dp"
-        android:textStyle="bold" />
+        android:textColor="@color/zxing_result_view"
+        android:textSize="20dp" />
 
-    <TextView
+    <ImageView
         android:id="@+id/back_ind"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_above="@id/mainly"
-        android:layout_alignLeft="@id/mainly"
-        android:gravity="center"
         android:onClick="clickBackPlanner"
-        android:text="﹤"
-        android:textColor="@color/zxing_custom_viewfinder_laser"
-        android:textSize="30dp"
-        android:textStyle="bold" />
+        android:scaleType="centerInside"
+        app:srcCompat="?attr/homeAsUpIndicator" />
 
     <RelativeLayout
         android:id="@+id/icon"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_above="@id/mainly"
         android:layout_toRightOf="@id/back_ind"
         android:background="@drawable/calendar_frame"
         android:onClick="clickBackPlanner">
@@ -99,4 +91,5 @@
         layout="@layout/drawer_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
 </RelativeLayout>
