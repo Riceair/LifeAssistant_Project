@@ -10,15 +10,18 @@ import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +44,9 @@ public class Bookkeeping_activity extends AppCompatActivity {
     private SQLiteDatabase myDB;
     private Cursor cursor;
     private int recordID;
+    private TextView[] editTextArray;
+    private TextView[] titleTextArray;
+    private Button[] pickerButtonArray,saveCancelButton;
     private TextView costinput,dateinput,filterinput,itemsinput,receiptinput,quotesinput;
     private RadioButton outlay,income;
     private List<String> list = new ArrayList<>();
@@ -69,6 +75,7 @@ public class Bookkeeping_activity extends AppCompatActivity {
         getSupportActionBar().setIcon(R.drawable.icon_bookkeeping);
 
         bind();
+        setLayoutSize();
 
         //確認是屬於新增還是修改記帳
         Bundle bundle=getIntent().getExtras();
@@ -77,8 +84,8 @@ public class Bookkeeping_activity extends AppCompatActivity {
         else {
             recordID = bundle.getInt("RECORDID");
 
-            RelativeLayout tabs = findViewById(R.id.tabs);
-            tabs.setVisibility(View.VISIBLE);
+            Button deleteButton = findViewById(R.id.deletebutton);
+            deleteButton.setVisibility(View.VISIBLE);
             getSupportActionBar().setTitle("  編輯記帳");
             ReadDBRecord(); //讀取該筆資料的內容
             isBookkeeping=false;
@@ -118,6 +125,96 @@ public class Bookkeeping_activity extends AppCompatActivity {
         quotesinput=findViewById(R.id.quotesinput);
         outlay=findViewById(R.id.outlay);
         income=findViewById(R.id.income);
+        //輸入框
+        editTextArray= new TextView[]{costinput, dateinput, filterinput, itemsinput, receiptinput};
+        //小標題
+        titleTextArray=new TextView[]{(TextView) findViewById(R.id.cost),(TextView) findViewById(R.id.attribute),(TextView) findViewById(R.id.date),
+                        (TextView) findViewById(R.id.filter),(TextView) findViewById(R.id.items),(TextView) findViewById(R.id.receipt),(TextView) findViewById(R.id.quotes)};
+        //picker button
+        pickerButtonArray=new Button[]{findViewById(R.id.datepicker),findViewById(R.id.filterpicker)};
+        //save cancel button
+        saveCancelButton=new Button[]{findViewById(R.id.savebutton),findViewById(R.id.cancelbutton)};
+    }
+
+    private void setLayoutSize(){
+        DisplayMetrics dm=new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int screenWidth=dm.widthPixels;
+        int screenHeight=dm.heightPixels;
+
+        //中間卡片大小
+        RelativeLayout mainly=(RelativeLayout) findViewById(R.id.mainly);
+        RelativeLayout.LayoutParams mainlyLayoutParams=(RelativeLayout.LayoutParams) mainly.getLayoutParams();
+        mainlyLayoutParams.height= (int) (screenHeight*0.65);
+        mainlyLayoutParams.width= (int) (screenWidth*0.8);
+        mainly.setLayoutParams(mainlyLayoutParams);
+
+        RelativeLayout inner_container=(RelativeLayout) findViewById(R.id.inner_container);
+        RelativeLayout.LayoutParams innerLayoutParams=(RelativeLayout.LayoutParams) inner_container.getLayoutParams();
+        innerLayoutParams.height= (int) (mainlyLayoutParams.height*0.85);
+        innerLayoutParams.width= (int) (mainlyLayoutParams.width*0.85);
+        inner_container.setLayoutParams(innerLayoutParams);
+
+        //輸入框大小
+        for(int i=0;i<editTextArray.length;i++){
+            TextView editText=editTextArray[i];
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)editText.getLayoutParams();
+            params.height= (int) (mainlyLayoutParams.height*0.08);
+            params.width= (int) (mainlyLayoutParams.width*0.57);
+            editText.setLayoutParams(params);
+            editText.setTextSize((float) (mainlyLayoutParams.width*0.018));
+        }
+        RelativeLayout.LayoutParams quotesParams = (RelativeLayout.LayoutParams) quotesinput.getLayoutParams();
+        quotesParams.height= (int) (mainlyLayoutParams.height*0.2);
+        quotesParams.width= (int) (mainlyLayoutParams.width*0.57);
+        quotesinput.setLayoutParams(quotesParams);
+        quotesinput.setTextSize((float) (mainlyLayoutParams.width*0.018));
+
+        //小標題大小
+        for(int i=0;i<titleTextArray.length;i++) {
+            TextView titleText=titleTextArray[i];
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)titleText.getLayoutParams();
+            params.height= (int) (mainlyLayoutParams.height*0.08);
+            params.width= (int) (mainlyLayoutParams.width*0.1);
+            titleText.setLayoutParams(params);
+            titleText.setTextSize((float) (mainlyLayoutParams.width * 0.02));
+        }
+
+        //屬性Group大小
+        RelativeLayout.LayoutParams radioGroupParams= (RelativeLayout.LayoutParams) findViewById(R.id.attributeinput).getLayoutParams();
+        radioGroupParams.height=(int) (mainlyLayoutParams.height*0.08);
+        radioGroupParams.width=(int) (mainlyLayoutParams.width*0.57);
+        findViewById(R.id.attributeinput).setLayoutParams(radioGroupParams);
+        outlay.setTextSize((float) (mainlyLayoutParams.width*0.018));
+        income.setTextSize((float) (mainlyLayoutParams.width*0.018));
+
+        //picker button大小
+        for(int i=0;i<pickerButtonArray.length;i++){
+            Button pickerButton=pickerButtonArray[i];
+            RelativeLayout.LayoutParams params= (RelativeLayout.LayoutParams) pickerButton.getLayoutParams();
+            params.width= (int) (mainlyLayoutParams.height*0.085);
+            params.height= (int) (mainlyLayoutParams.height*0.085);
+            pickerButton.setLayoutParams(params);
+            pickerButton.setTextSize((float) (mainlyLayoutParams.width*0.014));
+        }
+
+        //save cancel button大小
+        for(int i=0;i<saveCancelButton.length;i++){
+            Button button=saveCancelButton[i];
+            RelativeLayout.LayoutParams params= (RelativeLayout.LayoutParams) button.getLayoutParams();
+            params.width= (int) (mainlyLayoutParams.width*0.16);
+            params.height= (int) (mainlyLayoutParams.height*0.08);
+            button.setLayoutParams(params);
+            button.setTextSize((float) (mainlyLayoutParams.width*0.016));
+        }
+
+        //刪除按鈕大小
+        Button deleteButton=findViewById(R.id.deletebutton);
+        RelativeLayout.LayoutParams deleteParams= (RelativeLayout.LayoutParams) deleteButton.getLayoutParams();
+        deleteParams.width= (int) (mainlyLayoutParams.width*0.2);
+        deleteParams.height= (int) (mainlyLayoutParams.height*0.06);
+        deleteButton.setLayoutParams(deleteParams);
+        deleteButton.setTextSize((float) (mainlyLayoutParams.width*0.014));
     }
 
     //日期
