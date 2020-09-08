@@ -2,19 +2,52 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:background="@drawable/planner_background"
     tools:context="com.example.lifeassistant_project.menu_activity.schedule.Planner_activity">
 
+
+    <ImageView
+        android:id="@+id/back_ind"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="25dp"
+        android:onClick="clickBack"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/arrowbutton_left" />
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignTop="@id/back_ind"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/back_ind"
+        app:srcCompat="@drawable/newstand" />
+
+    <TextView
+        android:id="@+id/subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignTop="@id/back_ind"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/icon"
+        android:gravity="center"
+        android:onClick="clickBack"
+        android:text="排程"
+        android:textColor="@color/ic_launcher_background"
+        android:textSize="20dp" />
 
     <RelativeLayout
         android:id="@+id/tabs"
         android:layout_width="220dp"
         android:layout_height="45dp"
+        android:layout_below="@id/icon"
         android:layout_alignRight="@id/mainly"
-        android:layout_marginTop="80dp"
-        android:background="@drawable/tabs"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/tabsonplanner"
         tools:visibility="visible">
 
         <Button
@@ -33,6 +66,7 @@
             android:id="@+id/checkbutton"
             android:layout_width="70dp"
             android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/addbutton"
             android:background="@drawable/action_transparent"
@@ -44,6 +78,7 @@
             android:id="@+id/indicator"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/checkbutton"
             android:background="@drawable/stuff_indicator_reddot"
