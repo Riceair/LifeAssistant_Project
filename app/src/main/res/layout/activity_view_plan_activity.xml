@@ -12,11 +12,11 @@
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="3dp"
+        android:layout_marginLeft="5dp"
         android:layout_toRightOf="@id/icon"
         android:gravity="start|center_vertical"
         android:text=""
-        android:textColor="@color/zxing_result_view"
+        android:textColor="@color/zxing_status_text"
         android:textSize="20dp" />
 
     <ImageView
@@ -25,7 +25,7 @@
         android:layout_height="50dp"
         android:onClick="clickBackPlanner"
         android:scaleType="centerInside"
-        app:srcCompat="?attr/homeAsUpIndicator" />
+        app:srcCompat="@drawable/arrowbutton_left" />
 
     <RelativeLayout
         android:id="@+id/icon"
