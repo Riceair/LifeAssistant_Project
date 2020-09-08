@@ -155,6 +155,9 @@ public class ChatbotBehavior {
         }
         else if(this.currentIntent == 4)
         {
+            //9月12號天氣
+            System.out.println("DDBUG");
+            System.out.println(this.sentenceHandler.getFulfillment());
             return "好的！以下是" + this.TransWeatherTime(this.sentenceHandler.getFulfillment()) + "的天氣預報：";
         }
         else

@@ -7,6 +7,8 @@ import com.example.lifeassistant_project.activity_update.packages.LoginPackage;
 public class LoginHandler {
     static private String userName = "Null";
     static private String userKey = null;
+    static private String errorMessage = "default error message.";
+    static private String resKey = "FA";
 
     static private boolean isLogin = false;
 
@@ -16,14 +18,23 @@ public class LoginHandler {
         if(resultKey.equals("NO"))
         {
             System.out.println("Certification Fail."); //need to be conduct functionality.
+            resKey = resultKey;
+            if(loginPackage.ifRegister())
+                errorMessage = "帳號已存在。請重新輸入一個新的帳號名稱。";
+            else
+                errorMessage = "請輸入正確的帳號密碼";
+
             return false;
         }
         else if(resultKey.equals("FA"))
         {
             System.out.println("Connection Fail.");
+            resKey = resultKey;
+            errorMessage = "連線失敗，請確認網路連線狀態";
             return false;
         }
         else {
+            resKey = "OK";
             LoginHandler.userKey = resultKey;
             LoginHandler.userName = loginPackage.getName();
             LoginHandler.isLogin = true;
@@ -99,6 +110,10 @@ public class LoginHandler {
         LoginPackage resultPackage = (LoginPackage) client.getRcvPackageList().get(0);
         return resultPackage.getAuthorizationKey();
     }
+
+    public static String getErrorMessage() { return errorMessage; }
+
+    public static String getResKey() { return resKey; }
 
     static public void setUserName(String userName) { LoginHandler.userName = userName; }
 

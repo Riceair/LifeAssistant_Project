@@ -34,6 +34,12 @@ public class ClientProgress implements Runnable {
                 {
                     this.rcvPackageList.add(new LoginPackage());
                 }
+                else if(this.sndPackage.getClass() == SentenceHandler.class)
+                {
+                    SentenceHandler errSen = new SentenceHandler();
+                    errSen.setFulfillment("連線失敗，我必須要透過網路才能幫得到您！");
+                    this.rcvPackageList.add(errSen);
+                }
             }finally{
                 notify();
             }

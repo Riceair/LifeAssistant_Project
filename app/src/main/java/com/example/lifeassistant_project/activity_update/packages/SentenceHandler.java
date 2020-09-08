@@ -2,10 +2,13 @@ package com.example.lifeassistant_project.activity_update.packages;
 
 import com.example.lifeassistant_project.activity_update.static_handler.PackageHandler;
 
+import javax.net.SocketFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -25,6 +28,7 @@ public class SentenceHandler extends DataPackage{
         this.fulfillment = "null";
         this.rcvSelectedList = new ArrayList<>();
         this.calculateType = "def";
+        this.connectionTimeout = 2000;
     }
 
     public SentenceHandler(int intent, int operation, String fulfillment)
@@ -42,7 +46,9 @@ public class SentenceHandler extends DataPackage{
 
         final int PACKAGE_SIZE = 71;
 
-        Socket client = new Socket(address, port);
+        SocketAddress temp = new InetSocketAddress(address, port);
+        Socket client = SocketFactory.getDefault().createSocket();
+        client.connect(temp, connectionTimeout);
 
         OutputStream out = client.getOutputStream();
 

@@ -51,6 +51,7 @@ import com.example.lifeassistant_project.menu_activity.finance.report.Report_act
 import com.example.lifeassistant_project.menu_activity.weather.Weather_activity;
 import com.github.mikephil.charting.charts.PieChart;
 import com.google.android.material.navigation.NavigationView;
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -132,16 +133,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         popupGone();
 
-        //Remeber user's content
+        //Remember user's content
         SharedPreferences shared = getSharedPreferences("shared", MODE_PRIVATE);
         if(shared.contains("username") && shared.contains("password")){
             System.out.println("User content:");
             System.out.println(shared.getString("username", "null"));
             System.out.println(shared.getString("password", "null"));
             LoginPackage loginPackage = new LoginPackage(shared.getString("username", "null"), shared.getString("password", "null"));
-            LoginHandler.Login(loginPackage);
-            setAfterLogin(shared.getString("username","null"));
-        } else {
+            if(LoginHandler.Login(loginPackage))
+            {
+                setAfterLogin(shared.getString("username","null"));
+            }
+            else
+            {
+                if(LoginHandler.getResKey().equals("NO"))
+                    Toast.makeText(this,"登入失敗！",Toast.LENGTH_SHORT).show();
+                else if(LoginHandler.getResKey().equals("FA"))
+                    Toast.makeText(this, LoginHandler.getErrorMessage(), Toast.LENGTH_SHORT).show();
+                setBeforeLogin();
+            }
+        }
+        else {
             System.out.println("There is no user's content!");
             setBeforeLogin();
         }
@@ -211,11 +223,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         weather_response.setVisibility(View.VISIBLE);
         yes_no_response.setVisibility(View.INVISIBLE);
 
-        // TIME ??
         // set default time to today.
-        ImageButton conditionImg = findViewById(R.id.weather_condition);
-        conditionImg.setImageResource(R.drawable.weather_condition_clear);
+        int ptr = (Integer.valueOf(chatbotBehavior.getSentenceHandler().getFulfillment().charAt(0))) * 2;
+        WeatherPackage selectedWeather = (WeatherPackage) weatherData.get(ptr);
+        TextView tempText;
 
+        tempText = findViewById(R.id.weather_city_text);
+        tempText.setText(selectedWeather.getCity());
+        tempText = findViewById(R.id.weather_condition_text);
+        tempText.setText(selectedWeather.getSituation());
+        tempText = findViewById(R.id.weather_highest_text);
+        tempText.setText(selectedWeather.getMax_temperature());
+        tempText = findViewById(R.id.weather_lowest_text);
+        tempText.setText(selectedWeather.getMin_temperature());
+
+        ImageView conditionImg = findViewById(R.id.weather_condition);
+        WeatherPackage.assignCondition2Image(selectedWeather.getSituation(), conditionImg);
     }
 
     //猜測意圖
@@ -429,7 +452,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         popupShow();
                     }
                     else if (chatbotBehavior.getCurrentIntent() == 4) {
-                        //天氣
+                        //今天天氣
                         popupShow(getWeatherData());
                     }
                 }

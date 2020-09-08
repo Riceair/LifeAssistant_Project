@@ -51,7 +51,7 @@ public class Login_activity extends AppCompatActivity {
                         finish();
                     }
                     else{
-                        Toast.makeText(Login_activity.this,"帳號或密碼錯誤",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Login_activity.this, LoginHandler.getErrorMessage(),Toast.LENGTH_SHORT).show();
                     }
                 }
             }

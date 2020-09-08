@@ -17,10 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lifeassistant_project.R;
-import com.example.lifeassistant_project.activity_update.ClientProgress;
 import com.example.lifeassistant_project.activity_update.packages.DataPackage;
 import com.example.lifeassistant_project.activity_update.packages.WeatherPackage;
-import com.example.lifeassistant_project.menu_activity.schedule.Planner_activity;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -29,6 +27,7 @@ public class Weather_activity extends AppCompatActivity {
     private static final String DBNAME = "myDB.db";
     private SQLiteDatabase myDB;
     private Cursor cursor;
+    private boolean isTurnOn = true;
     String currentCity ="";
 
     @Override
@@ -77,9 +76,20 @@ public class Weather_activity extends AppCompatActivity {
 
         final int WEEK_SIZE = 14;
 
+        this.assignWeek2Text();
+        if(weatherData == null || weatherData.size() < WEEK_SIZE)
+        {
+            //無法連線時的狀況，需要對此部分進行處理
+            this.setDataVisibility(View.INVISIBLE);
+            return;
+        }
+        else
+            this.setDataVisibility(View.VISIBLE);
+
         for(int i = 0;i < WEEK_SIZE; i++)
         {
             WeatherPackage currentWeather = (WeatherPackage) weatherData.get(i);
+            ImageView tempImage;
             switch (i)
             {
                 case 0:
@@ -91,7 +101,8 @@ public class Weather_activity extends AppCompatActivity {
                     displayText.setText(currentWeather.getSituation());
                     displayText = (TextView) findViewById(R.id.Location);
                     displayText.setText(currentWeather.getCity());
-                    assignCondition2Image(currentWeather.getSituation(),R.id.Conditions);
+                    tempImage = findViewById(R.id.Conditions);
+                    WeatherPackage.assignCondition2Image(currentWeather.getSituation(), tempImage);
                     assignbackground2Image(currentWeather.getSituation(),R.id.easylist);
 
                     break;
@@ -104,38 +115,44 @@ public class Weather_activity extends AppCompatActivity {
                     displayText.setText(currentWeather.getPeriod());
                     displayText = (TextView) findViewById(R.id.seccoditions);
                     displayText.setText(currentWeather.getSituation());
-                    assignCondition2Image(currentWeather.getSituation(),R.id.secconditions);
+                    tempImage = findViewById(R.id.seccoditions);
+                    WeatherPackage.assignCondition2Image(currentWeather.getSituation(),tempImage);
 
                     break;
                 case 2:
                     assignTemperature2Text(currentWeather, R.id.onedaytemperature);
-                    assignCondition2Image(currentWeather.getSituation(),R.id.onedaycondition);
+                    tempImage = findViewById(R.id.onedaycondition);
+                    WeatherPackage.assignCondition2Image(currentWeather.getSituation(), tempImage);
                     break;
                 case 4:
                     assignTemperature2Text(currentWeather, R.id.twodaytemperature);
-                    assignCondition2Image(currentWeather.getSituation(),R.id.twodayscondition);
+                    tempImage = findViewById(R.id.twodayscondition);
+                    WeatherPackage.assignCondition2Image(currentWeather.getSituation(), tempImage);
                     break;
                 case 6:
                     assignTemperature2Text(currentWeather, R.id.threedaytemperature);
-                    assignCondition2Image(currentWeather.getSituation(),R.id.threedayscondition);
+                    tempImage = findViewById(R.id.threedayscondition);
+                    WeatherPackage.assignCondition2Image(currentWeather.getSituation(), tempImage);
                     break;
                 case 8:
                     assignTemperature2Text(currentWeather, R.id.fourdaytemperature);
-                    assignCondition2Image(currentWeather.getSituation(),R.id.fourdayscondition);
+                    tempImage = findViewById(R.id.fourdayscondition);
+                    WeatherPackage.assignCondition2Image(currentWeather.getSituation(),tempImage);
                     break;
                 case 10:
                     assignTemperature2Text(currentWeather, R.id.fivedaytemperature);
-                    assignCondition2Image(currentWeather.getSituation(),R.id.fivedayscondition);
+                    tempImage = findViewById(R.id.fivedayscondition);
+                    WeatherPackage.assignCondition2Image(currentWeather.getSituation(), tempImage);
                     break;
                 case 12:
                     assignTemperature2Text(currentWeather, R.id.sixdaytemperature);
-                    assignCondition2Image(currentWeather.getSituation(),R.id.sixodayscondition);
+                    tempImage = findViewById(R.id.sixodayscondition);
+                    WeatherPackage.assignCondition2Image(currentWeather.getSituation(), tempImage);
                     break;
                 default:
                     break;
             }
         }
-        this.assignWeek2Text();
     }
 
     private void checkAndFixCurrentCity()
@@ -201,41 +218,6 @@ public class Weather_activity extends AppCompatActivity {
         }
     }
 
-    private void assignCondition2Image(String current_weather,int RID)
-    {
-        ImageView image = (ImageView)findViewById(RID);
-        switch(current_weather)
-        {
-            case "多雲短暫陣雨":
-                image.setImageResource(R.drawable.weather_condition_rain);
-                break;
-            case "多雲時陰短暫陣雨":
-                image.setImageResource(R.drawable.weather_condition_shower);
-                break;
-            case "多雲時陰短暫陣雨或雷雨":
-                image.setImageResource(R.drawable.weather_condition_rainandsnowmixed);
-                break;
-            case "多雲午後短暫雷陣雨":
-                image.setImageResource(R.drawable.weather_condition_thunderstorms);
-                break;
-            case "多雲":
-                image.setImageResource(R.drawable.weather_condition_mostlycloudy);
-                break;
-            case "多雲時晴":
-                image.setImageResource(R.drawable.weather_condition_partlysunny);
-                break;
-            case "晴時多雲":
-                image.setImageResource(R.drawable.weather_condition_sunny);
-                break;
-            case "晴午後短暫雷陣雨":
-                image.setImageResource(R.drawable.weather_condition_mostlyclear);
-                break;
-            default:
-                image.setImageResource(R.drawable.weather_condition_windy);
-                break;
-        }
-    }
-
     private void assignbackground2Image(String current_weather,int RID)
     {
         RelativeLayout relativeLayout = findViewById(RID);
@@ -270,8 +252,6 @@ public class Weather_activity extends AppCompatActivity {
                 break;
         }
     }
-
-
 
     private void assignNumber2Image(int number, int RID)
     {
@@ -313,11 +293,160 @@ public class Weather_activity extends AppCompatActivity {
                 break;
         }
     }
+
     private void assignTemperature2Text(WeatherPackage weatherPackage, int RID)
     {
         TextView textView = (TextView) findViewById(RID);
         String temp = new String(Integer.toString(weatherPackage.getMax_temperature()) + "-" + Integer.toString(weatherPackage.getMin_temperature()));
         textView.setText(temp);
+    }
+
+    private void setDataVisibility(int VIS_ID)
+    {
+        if((VIS_ID == View.INVISIBLE && !this.isTurnOn) || (VIS_ID == View.VISIBLE && this.isTurnOn))
+            return;
+
+        TextView tempText;
+        ImageView tempImage;
+        int Rid = 0;
+
+        for(int i = 0;i < 15; i++)
+        {
+            switch (i)
+            {
+                case 0:
+                    Rid = R.id.secondview;
+                    break;
+                case 1:
+                    Rid = R.id.seccoditions;
+                    break;
+                case 2:
+                    Rid = R.id.onedayafter;
+                    break;
+                case 3:
+                    Rid = R.id.twodaysafter;
+                    break;
+                case 4:
+                    Rid = R.id.threedaysafter;
+                    break;
+                case 5:
+                    Rid = R.id.threedaysafter;
+                    break;
+                case 6:
+                    Rid = R.id.fourdaysafter;
+                    break;
+                case 7:
+                    Rid = R.id.fivedaysafter;
+                    break;
+                case 8:
+                    Rid = R.id.sixdaysafter;
+                    break;
+                case 9:
+                    Rid = R.id.onedaytemperature;
+                    break;
+                case 10:
+                    Rid = R.id.twodaytemperature;
+                    break;
+                case 11:
+                    Rid = R.id.threedaytemperature;
+                    break;
+                case 12:
+                    Rid = R.id.fourdaytemperature;
+                    break;
+                case 13:
+                    Rid = R.id.fivedaytemperature;
+                    break;
+                case 14:
+                    Rid = R.id.sixdaytemperature;
+                    break;
+                default:
+                    Rid = R.id.onedayafter;
+                    break;
+            }
+            tempText = findViewById(Rid);
+            tempText.setVisibility(VIS_ID);
+        }
+
+        for(int i = 0;i < 18; i++)
+        {
+            Rid = 0;
+            switch (i)
+            {
+                case 0:
+                    Rid = R.id.secconditions;
+                    break;
+                case 1:
+                    Rid = R.id.sec_higher_decimaldegree;
+                    break;
+                case 2:
+                    Rid = R.id.sec_higher_digitsdegree;
+                    break;
+                case 3:
+                    Rid = R.id.sec_lower_decimaldegree;
+                    break;
+                case 4:
+                    Rid = R.id.sec_lower_digitsdegree;
+                    break;
+                case 5:
+                    Rid = R.id.secidicators;
+                    break;
+                case 6:
+                    Rid = R.id.oneidicators;
+                    break;
+                case 7:
+                    Rid = R.id.twoidicators;
+                    break;
+                case 8:
+                    Rid = R.id.threeidicators;
+                    break;
+                case 9:
+                    Rid = R.id.fouridicators;
+                    break;
+                case 10:
+                    Rid = R.id.fiveidicators;
+                    break;
+                case 11:
+                    Rid = R.id.sixidicators;
+                    break;
+                case 12:
+                    Rid = R.id.onedaycondition;
+                    break;
+                case 13:
+                    Rid = R.id.twodayscondition;
+                    break;
+                case 14:
+                    Rid = R.id.threedayscondition;
+                    break;
+                case 15:
+                    Rid = R.id.fourdayscondition;
+                    break;
+                case 16:
+                    Rid = R.id.fivedayscondition;
+                    break;
+                case 17:
+                    Rid = R.id.sixodayscondition;
+                    break;
+                default:
+                    Rid = R.id.secconditions;
+                    break;
+            }
+            tempImage = findViewById(Rid);
+            tempImage.setVisibility(VIS_ID);
+        }
+
+        if(VIS_ID == View.INVISIBLE)
+        {
+            tempText = findViewById(R.id.Location);
+            tempText.setText("---");
+            tempText = findViewById(R.id.conditions);
+            tempText.setText("無法與伺服器連線");
+            this.assignNumber2Image(0, R.id.higher_digitsdegree);
+            this.assignNumber2Image(0, R.id.higher_decimaldegree);
+            this.assignNumber2Image(0, R.id.lower_decimaldegree);
+            this.assignNumber2Image(0, R.id.lower_digitsdegree);
+        }
+
+        this.isTurnOn = !this.isTurnOn;
     }
 
     @Override

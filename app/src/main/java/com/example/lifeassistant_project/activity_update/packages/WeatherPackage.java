@@ -1,6 +1,8 @@
 package com.example.lifeassistant_project.activity_update.packages;
 
+import android.widget.ImageView;
 import android.widget.Toast;
+import com.example.lifeassistant_project.R;
 import com.example.lifeassistant_project.activity_update.ClientProgress;
 import com.example.lifeassistant_project.activity_update.static_handler.PackageHandler;
 
@@ -145,6 +147,40 @@ public class WeatherPackage extends DataPackage
         else if(currentCity == null)
             System.out.println("Get weather data error! current city has not been settled.");
         return null;
+    }
+
+    public static void assignCondition2Image(String current_weather, ImageView image)
+    {
+        switch(current_weather)
+        {
+            case "多雲短暫陣雨":
+                image.setImageResource(R.drawable.weather_condition_rain);
+                break;
+            case "多雲時陰短暫陣雨":
+                image.setImageResource(R.drawable.weather_condition_shower);
+                break;
+            case "多雲時陰短暫陣雨或雷雨":
+                image.setImageResource(R.drawable.weather_condition_rainandsnowmixed);
+                break;
+            case "多雲午後短暫雷陣雨":
+                image.setImageResource(R.drawable.weather_condition_thunderstorms);
+                break;
+            case "多雲":
+                image.setImageResource(R.drawable.weather_condition_mostlycloudy);
+                break;
+            case "多雲時晴":
+                image.setImageResource(R.drawable.weather_condition_partlysunny);
+                break;
+            case "晴時多雲":
+                image.setImageResource(R.drawable.weather_condition_sunny);
+                break;
+            case "晴午後短暫雷陣雨":
+                image.setImageResource(R.drawable.weather_condition_mostlyclear);
+                break;
+            default:
+                image.setImageResource(R.drawable.weather_condition_windy);
+                break;
+        }
     }
 
     public static void setCurrentCity(String t) {currentCity = t;}

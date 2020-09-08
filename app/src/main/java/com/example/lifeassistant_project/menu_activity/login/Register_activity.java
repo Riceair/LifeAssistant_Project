@@ -64,9 +64,12 @@ public class Register_activity extends AppCompatActivity {
             finish();
         }
         else{
-            account_hint.setText("帳號已存在");
-            account_hint.setTextColor(Color.RED);
-            Toast.makeText(this,"帳號已存在",Toast.LENGTH_SHORT).show();
+            if(LoginHandler.getResKey().equals("NO"))
+            {
+                account_hint.setText("帳號已存在");
+                account_hint.setTextColor(Color.RED);
+            }
+            Toast.makeText(this,LoginHandler.getErrorMessage(),Toast.LENGTH_SHORT).show();
         }
     }
 
