@@ -275,9 +275,6 @@ public class NewPlan_activity extends AppCompatActivity {
                     cursor.moveToNext();
                 }
 
-
-
-
                 for(int i=stuffList.size()-1;i>=0;i--)
                 {
                     int minIndex = stuffListinDateFormat.indexOf(Collections.min(stuffListinDateFormat));
@@ -287,24 +284,19 @@ public class NewPlan_activity extends AppCompatActivity {
                     stuffEndingListBackup.add(stuffEndingList.get(minIndex));
                     stuffIDListBackup.add(stuffIDList.get(minIndex));
                     stuffNameListBackup.add(stuffNameList.get(minIndex));
-
                     stuffList.set(minIndex,"");
                     stuffNameList.set(minIndex,"");
                     stuffEndingList.set(minIndex,"");
                     stuffListinDateFormat.set(minIndex,Long.MAX_VALUE);
                     stuffEndingListinDateFormat.set(minIndex,Long.MAX_VALUE);
                     stuffIDList.set(minIndex,Integer.MAX_VALUE);
-
-
                 }
-
                 stuffList.clear();
                 stuffNameList.clear();
                 stuffEndingList.clear();
                 stuffListinDateFormat.clear();
                 stuffEndingListinDateFormat.clear();
                 stuffIDList.clear();
-
                 for(int i=0;i<stuffListBackup.size();i++)
                 {
                     stuffListinDateFormat.add(stuffListinDateFormatBackup.get(i));
@@ -313,20 +305,13 @@ public class NewPlan_activity extends AppCompatActivity {
                     stuffEndingList.add(stuffEndingListBackup.get(i));
                     stuffIDList.add(stuffIDListBackup.get(i));
                     stuffNameList.add(stuffNameListBackup.get(i));
-
                 }
-
-
                 for(int i=0;i<stuffList.size();i++)
                 {
                     stuffTitleList.add(stuffNameList.get(i)+" ("+stuffList.get(i).split(" ")[0]+" 至 "+stuffEndingList.get(i).split(" ")[0]);
-
                 }
                 // 5. 關閉 DB
                 myDB.close();
-
-
-
             } else {
                 Toast.makeText(this, "Hint 1: 請將db準備好!", Toast.LENGTH_SHORT).show();
             }
@@ -334,7 +319,6 @@ public class NewPlan_activity extends AppCompatActivity {
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
-
     private void ReadSpecifiedRecord() {
         stuffList.clear();
         stuffEndingList.clear();
@@ -400,14 +384,11 @@ public class NewPlan_activity extends AppCompatActivity {
                 }
                 // 5. 關閉 DB
                 myDB.close();
-
-
                 String tempString = new String(Integer.toString(clicked_year) + "-" +
                         String.format("%02d", clicked_month) + "-" +
                         String.format("%02d", clicked_day) + " 12:00:00");
                 Date tempdate = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(tempString);
                 long tempmilis = tempdate.getTime();
-
                 for(int i=stuffList.size()-1;i>=0;i--)
                 {
                     if (tempmilis>stuffListinDateFormat.get(i))
@@ -435,9 +416,7 @@ public class NewPlan_activity extends AppCompatActivity {
                         stuffListinDateFormat.remove(i);
                         stuffEndingListinDateFormat.remove(i);
                     }
-
                 }
-
                 for(int i=stuffList.size()-1;i>=0;i--)
                 {
                     int minIndex = stuffListinDateFormat.indexOf(Collections.min(stuffListinDateFormat));
@@ -447,24 +426,19 @@ public class NewPlan_activity extends AppCompatActivity {
                     stuffEndingListBackup.add(stuffEndingList.get(minIndex));
                     stuffIDListBackup.add(stuffIDList.get(minIndex));
                     stuffNameListBackup.add(stuffNameList.get(minIndex));
-
                     stuffList.set(minIndex,"");
                     stuffNameList.set(minIndex,"");
                     stuffEndingList.set(minIndex,"");
                     stuffListinDateFormat.set(minIndex,Long.MAX_VALUE);
                     stuffEndingListinDateFormat.set(minIndex,Long.MAX_VALUE);
                     stuffIDList.set(minIndex,Integer.MAX_VALUE);
-
-
                 }
-
                 stuffList.clear();
                 stuffNameList.clear();
                 stuffEndingList.clear();
                 stuffListinDateFormat.clear();
                 stuffEndingListinDateFormat.clear();
                 stuffIDList.clear();
-
                 for(int i=0;i<stuffListBackup.size();i++)
                 {
                     stuffListinDateFormat.add(stuffListinDateFormatBackup.get(i));
@@ -473,22 +447,11 @@ public class NewPlan_activity extends AppCompatActivity {
                     stuffEndingList.add(stuffEndingListBackup.get(i));
                     stuffIDList.add(stuffIDListBackup.get(i));
                     stuffNameList.add(stuffNameListBackup.get(i));
-
                 }
-
-
-
                 for(int i=0;i<stuffList.size();i++)
                 {
                     stuffTitleList.add(stuffNameList.get(i)+" ("+stuffList.get(i).split(" ")[0]+" 至 "+stuffEndingList.get(i).split(" ")[0]);
-
                 }
-
-
-
-
-
-
             } else {
                 Toast.makeText(this, "Hint 1: 請將db準備好!", Toast.LENGTH_SHORT).show();
             }
@@ -511,26 +474,21 @@ public class NewPlan_activity extends AppCompatActivity {
         int Ending_day = 0;
         String event = "0";
         TextView textView = (TextView) findViewById(R.id.eventinput); //事項
-        //        if (!textView.getText().toString().equals(""))
         event = textView.getText().toString();
         if (textView.getText().toString().equals("")) {
             Toast.makeText(this,"請輸入事項",Toast.LENGTH_LONG).show();
             return;
         }
-
         textView = (TextView) findViewById(R.id.dateinput); //開始日期
         if (textView.getText().toString().equals("")) {
             Toast.makeText(this,"請輸入日期",Toast.LENGTH_LONG).show();
             return;
         }
         String startingDate = textView.getText().toString();
-        //        if (!startingDate.equals("")) {
         String[] startingparts = startingDate.split("-");
         Starting_year = Integer.parseInt(startingparts[0]);
         Starting_month = Integer.parseInt(startingparts[1]);
         Starting_day = Integer.parseInt(startingparts[2]);
-        //        }
-
 
         textView = (TextView) findViewById(R.id.timeinput); //開始時間
         if (textView.getText().toString().equals("")) {
@@ -538,58 +496,30 @@ public class NewPlan_activity extends AppCompatActivity {
             return;
         }
         String startingTime = textView.getText().toString();
-        //        if (!startingTime.equals("")) {
         String[] startingTimeparts = startingTime.split(":");
         Starting_hour = Integer.parseInt(startingTimeparts[0]);
         Starting_minute = Integer.parseInt(startingTimeparts[1]);
         setStartDateInFormat(Starting_year,Starting_month,Starting_day,Starting_hour,Starting_minute);
-
-        //
-        //        }
-        //        if(startingDate.equals("")) {
-        //            Toast.makeText(this,"請選擇開始日期",Toast.LENGTH_SHORT).show();
-        //            return;
-        //        }else if(startingTime.equals("")){
-        //            Toast.makeText(this,"請輸入開始時間",Toast.LENGTH_SHORT).show();
-        //            return;
-        //        }
-
         textView = (TextView) findViewById(R.id.endsdateinput); //結束日期
         if (textView.getText().toString().equals("")) {
             Toast.makeText(this,"請輸入結束日期",Toast.LENGTH_LONG).show();
             return;
         }
         String endingDate = textView.getText().toString();
-        //        if (!startingDate.equals("")) {
         String[] endingparts = endingDate.split("-");
         Ending_year = Integer.parseInt(endingparts[0]);
         Ending_month = Integer.parseInt(endingparts[1]);
         Ending_day = Integer.parseInt(endingparts[2]);
-        //
-        //        }
-
         textView = (TextView) findViewById(R.id.endstimeinput); //結束時間
         if (textView.getText().toString().equals("")) {
             Toast.makeText(this,"請輸入結束時間",Toast.LENGTH_LONG).show();
             return;
         }
         String endingTime = textView.getText().toString();
-        //        if (!startingDate.equals("")) {
         String[] endingTimeparts = endingTime.split(":");
         Ending_hour = Integer.parseInt(endingTimeparts[0]);
         Ending_minute = Integer.parseInt(endingTimeparts[1]);
         setEndDateInFormat(Ending_year,Ending_month,Ending_day,Ending_hour,Ending_minute);
-        //
-        //        }
-
-        //        if(endingDate.equals("")) {
-        //            Toast.makeText(this,"請選擇結束日期",Toast.LENGTH_SHORT).show();
-        //            return;
-        //        }else if(endingTime.equals("")){
-        //            Toast.makeText(this,"請輸入結束時間",Toast.LENGTH_SHORT).show();
-        //            return;
-        //        }
-
         list.clear();
         ContentValues values = new ContentValues();
         values.put("事情", event);
@@ -598,14 +528,11 @@ public class NewPlan_activity extends AppCompatActivity {
         values.put("日", Starting_day);
         values.put("開始時間", start_time);
         values.put("結束時間", end_time);
-
         myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
         myDB.execSQL("DELETE FROM " + SC_TABLE + " WHERE " + "id" + "='" + selid + "'");
         long result = -1L;
         int times = 0;
-
         while (true) {
-
             times++;
             if (times > 100000) {
                 Toast.makeText(this, "資料儲存過多，請刪除無用的資料", Toast.LENGTH_SHORT).show();
@@ -618,12 +545,9 @@ public class NewPlan_activity extends AppCompatActivity {
                     requestActionCode = 2;
                     id = selid;
                 }
-
                 values.put("id", id);
-                // get Account Class
                 this.sendPackage = new SchedulePackage(id, event, requestActionCode, Starting_year, Starting_month, Starting_day,
                         Starting_hour, Starting_minute, Ending_year, Ending_month, Ending_day, Ending_hour, Ending_minute);
-
                 result = myDB.insert(SC_TABLE, null, values);
                 break;
             } catch (Exception e) {
@@ -632,11 +556,9 @@ public class NewPlan_activity extends AppCompatActivity {
         }
         if (result != -1L) {
             myDB.close();
-            //Toast.makeText(this,"新增成功",Toast.LENGTH_SHORT).show();
-        } else {
+            } else {
             Toast.makeText(this, "新增失敗", Toast.LENGTH_SHORT).show();
         }
-
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
         intent.putExtra("selstatus", selectstatus);
@@ -757,6 +679,7 @@ public class NewPlan_activity extends AppCompatActivity {
                     else
                         detTime += 365 * 24;
                 }
+
                 else
                     detTime += 365 * 24;
             }

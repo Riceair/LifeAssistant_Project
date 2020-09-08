@@ -59,7 +59,6 @@ public class Planner_activity extends AppCompatActivity {
     private ArrayList<String> stuffEndingList = new ArrayList<>();
     private ArrayList<String> stuffNameList = new ArrayList<>();
     private ArrayList<Integer> stuffIDList = new ArrayList<>();
-
     private ArrayList<String> stuffListBackup = new ArrayList<>();
     private ArrayList<String> stuffEndingListBackup = new ArrayList<>();
     private ArrayList<String> stuffNameListBackup = new ArrayList<>();
@@ -68,7 +67,6 @@ public class Planner_activity extends AppCompatActivity {
     private ArrayList<Long> stuffEndingListinDateFormatBackup = new ArrayList<>();
     private ArrayList<Long> stuffListinDateFormat = new ArrayList<>();
     private ArrayList<Long> stuffEndingListinDateFormat = new ArrayList<>();
-
     private ArrayList<String> stuffTitleList = new ArrayList<>();
     public String datewasclicked;
     private String namewasfilledin;
@@ -76,9 +74,7 @@ public class Planner_activity extends AppCompatActivity {
     public String datewaslastclicked="";
     private ArrayList<String> EventList = new ArrayList<>();
     public Integer clicked_year=0,clicked_day=0,clicked_month=0,selectstatus=0;
-
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_planner_activity);
@@ -89,6 +85,7 @@ public class Planner_activity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setIcon(R.drawable.newstand);
+        getSupportActionBar().hide();
 
         final View decorView = getWindow().getDecorView();
         decorView.setOnSystemUiVisibilityChangeListener (new View.OnSystemUiVisibilityChangeListener() {
@@ -136,9 +133,6 @@ public class Planner_activity extends AppCompatActivity {
                 clicked_day=Integer.parseInt(Eventtimeparts[2]);
                 namewasfilledin = "";
                 Log.d(TAG, "Day was clicked: " + dateClicked + " with events " + events);
-
-//
-
                 for (int i=0 ; i<events.size();i++)
                 {
 
@@ -166,7 +160,7 @@ public class Planner_activity extends AppCompatActivity {
                         }
 
                     }
-                    // stuffTitleList.set(i,stuffTitleList.get(i)+" ("+stuffList.get(i).split(" ")[0]+")");
+
                 }
 
 
@@ -199,15 +193,8 @@ public class Planner_activity extends AppCompatActivity {
                 onDayClick(firstDayOfNewMonth);
             }
         };
-        //Query
-        //List<Event> events = compactCalendarView.getEvents(1597320075000L); // can also take a Date object
-        // events has size 2 with the 2 events inserted previously
-        //Log.d(TAG, "Events: " + events);
-        // define a listener to receive callbacks when certain events happen.
-
         compactCalendarView.setListener(func);
         func.onDayClick(datenow);
-
     }
 
     private void ReadDBRecord() {
@@ -227,7 +214,6 @@ public class Planner_activity extends AppCompatActivity {
         myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
         try {
             cursor = myDB.rawQuery("select schedule_record.事情, schedule_record.年,schedule_record.月,schedule_record.日,schedule_record.開始時間,schedule_record.結束時間,schedule_record.id from schedule_record", null);
-            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             if (cursor != null) {
                 int iRow = cursor.getCount(); // 取得資料記錄的筆數
                 cursor.moveToFirst();
@@ -351,7 +337,7 @@ public class Planner_activity extends AppCompatActivity {
         try {
             cursor = myDB.rawQuery("select schedule_record.事情, schedule_record.年,schedule_record.月,schedule_record.日,schedule_record.開始時間,schedule_record.結束時間,schedule_record.id from schedule_record", null);
 
-            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
             if (cursor != null) {
                 int iRow = cursor.getCount(); // 取得資料記錄的筆數
                 cursor.moveToFirst();
