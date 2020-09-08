@@ -21,8 +21,8 @@ public class PieChartUsedClass {
         this.mChart=mChart;
         setDefulatColor(); //設置顏色
         setMChartDefault();
-        setMChartData(type_list,amount_list);
         setMChartLegend(); //設置圖例
+        setMChartData(type_list,amount_list);
     }
 
     private void setMChartDefault(){
