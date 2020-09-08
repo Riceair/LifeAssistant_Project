@@ -212,7 +212,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         PieChartUsedClass pieChartUsedClass=new PieChartUsedClass(mChart,type_list,amount_list);
     }
 
-    //天氣
+    //天氣123
     private void popupShow(ArrayList<DataPackage> weatherData){
         setPopupDefaultSize();
         popup_window.setVisibility(View.VISIBLE);
