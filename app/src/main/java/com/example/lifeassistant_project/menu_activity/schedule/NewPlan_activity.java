@@ -757,6 +757,7 @@ public class NewPlan_activity extends AppCompatActivity {
                     else
                         detTime += 365 * 24;
                 }
+
                 else
                     detTime += 365 * 24;
             }
