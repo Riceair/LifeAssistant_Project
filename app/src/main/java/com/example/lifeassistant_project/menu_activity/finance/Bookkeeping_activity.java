@@ -147,78 +147,25 @@ public class Bookkeeping_activity extends AppCompatActivity {
         //中間卡片大小
         RelativeLayout mainly=(RelativeLayout) findViewById(R.id.mainly);
         RelativeLayout.LayoutParams mainlyLayoutParams=(RelativeLayout.LayoutParams) mainly.getLayoutParams();
-        mainlyLayoutParams.height= (int) (screenHeight*0.65);
         mainlyLayoutParams.width= (int) (screenWidth*0.8);
+        mainlyLayoutParams.height= (int) (screenHeight*0.8);
         mainly.setLayoutParams(mainlyLayoutParams);
 
-        RelativeLayout inner_container=(RelativeLayout) findViewById(R.id.inner_container);
-        RelativeLayout.LayoutParams innerLayoutParams=(RelativeLayout.LayoutParams) inner_container.getLayoutParams();
-        innerLayoutParams.height= (int) (mainlyLayoutParams.height*0.85);
-        innerLayoutParams.width= (int) (mainlyLayoutParams.width*0.85);
-        inner_container.setLayoutParams(innerLayoutParams);
-
-        //小標題大小
-        float inputTextSize=0;
-        for(int i=0;i<titleTextArray.length;i++) {
-            TextView titleText=titleTextArray[i];
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)titleText.getLayoutParams();
-            params.height= (int) (mainlyLayoutParams.height*0.08);
-            params.width= (int) (mainlyLayoutParams.width*0.1);
-            titleText.setLayoutParams(params);
-            titleText.setTextSize(TypedValue.COMPLEX_UNIT_PX, (float) (params.width*0.45));
-            inputTextSize= (float) (titleText.getTextSize()*0.8);
-        }
-
-        //輸入框大小
-        for(int i=0;i<editTextArray.length;i++){
-            TextView editText=editTextArray[i];
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)editText.getLayoutParams();
-            params.height= (int) (mainlyLayoutParams.height*0.08);
-            params.width= (int) (mainlyLayoutParams.width*0.57);
-            editText.setLayoutParams(params);
-            editText.setTextSize(TypedValue.COMPLEX_UNIT_PX,inputTextSize);
-        }
-        RelativeLayout.LayoutParams quotesParams = (RelativeLayout.LayoutParams) quotesinput.getLayoutParams();
-        quotesParams.height= (int) (mainlyLayoutParams.height*0.2);
-        quotesParams.width= (int) (mainlyLayoutParams.width*0.57);
-        quotesinput.setLayoutParams(quotesParams);
-        quotesinput.setTextSize(TypedValue.COMPLEX_UNIT_PX,inputTextSize);
-
-        //屬性Group大小
-        RelativeLayout.LayoutParams radioGroupParams= (RelativeLayout.LayoutParams) findViewById(R.id.attributeinput).getLayoutParams();
-        radioGroupParams.height=(int) (mainlyLayoutParams.height*0.08);
-        radioGroupParams.width=(int) (mainlyLayoutParams.width*0.57);
-        findViewById(R.id.attributeinput).setLayoutParams(radioGroupParams);
-        outlay.setTextSize(TypedValue.COMPLEX_UNIT_PX,inputTextSize);
-        income.setTextSize(TypedValue.COMPLEX_UNIT_PX,inputTextSize);
-
-        //picker button大小
-        for(int i=0;i<pickerButtonArray.length;i++){
-            TextView pickerButton=pickerButtonArray[i];
-            RelativeLayout.LayoutParams params= (RelativeLayout.LayoutParams) pickerButton.getLayoutParams();
-            params.width= (int) (mainlyLayoutParams.height*0.08);
-            params.height= (int) (mainlyLayoutParams.height*0.075);
-            pickerButton.setLayoutParams(params);
-            pickerButton.setTextSize(TypedValue.COMPLEX_UNIT_PX, (float) (params.width*0.3));
-        }
-
-        //save cancel button大小
-        for(int i=0;i<saveCancelButton.length;i++){
-            Button button=saveCancelButton[i];
-            RelativeLayout.LayoutParams params= (RelativeLayout.LayoutParams) button.getLayoutParams();
-            params.width= (int) (mainlyLayoutParams.width*0.16);
-            params.height= (int) (mainlyLayoutParams.height*0.08);
-            button.setLayoutParams(params);
-            button.setTextSize(TypedValue.COMPLEX_UNIT_PX,inputTextSize);
-        }
-
         //刪除按鈕大小
+        int remainHeight=screenHeight-mainlyLayoutParams.height-getActionBarHeight();
         Button deleteButton=findViewById(R.id.deletebutton);
         RelativeLayout.LayoutParams deleteParams= (RelativeLayout.LayoutParams) deleteButton.getLayoutParams();
-        deleteParams.width= (int) (mainlyLayoutParams.width*0.2);
-        deleteParams.height= (int) (mainlyLayoutParams.height*0.06);
+        deleteParams.height= remainHeight/4;
         deleteButton.setLayoutParams(deleteParams);
-        deleteButton.setTextSize(TypedValue.COMPLEX_UNIT_PX, (float) (inputTextSize*0.8));
+    }
+
+    private int getActionBarHeight(){
+        int actionBarHeight = 0;
+        TypedValue tv = new TypedValue();
+        if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
+            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
+        }
+        return actionBarHeight;
     }
 
     //日期

@@ -7,22 +7,22 @@
 
     <Button
         android:id="@+id/deletebutton"
-        android:layout_width="120dp"
-        android:layout_height="40dp"
-        android:visibility="invisible"
+        android:layout_width="@dimen/_70sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:visibility="visible"
         android:layout_above="@id/mainly"
         android:layout_alignRight="@id/mainly"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="@dimen/_10sdp"
         android:background="@drawable/tabsonplanner"
         android:onClick="clickToDelete"
-        android:textSize="15dp"
+        android:textSize="@dimen/_10sdp"
         android:text="刪除此筆紀錄"
         android:textColor="@android:color/holo_red_dark" />
 
     <RelativeLayout
         android:id="@+id/mainly"
-        android:layout_width="350dp"
-        android:layout_height="520dp"
+        android:layout_width="@dimen/_300sdp"
+        android:layout_height="@dimen/_400sdp"
         android:layout_centerInParent="true"
         android:background="@drawable/bookkeeping_inner_background">
 
@@ -33,39 +33,40 @@
             android:layout_centerInParent="true">
             <TextView
                 android:id="@+id/cost"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_40sdp"
                 android:gravity="center"
                 android:text="金額"
                 android:textColor="@color/ic_launcher_background"
                 android:textColorHint="@color/ic_launcher_background"
-                android:textSize="20sp" />
+                android:textSize="@dimen/_18sdp" />
 
             <EditText
                 android:id="@+id/costinput"
-                android:layout_width="200dp"
-                android:layout_height="55dp"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_40sdp"
                 android:layout_toRightOf="@+id/cost"
                 android:hint="請輸入金額"
+                android:textSize="@dimen/_13sdp"
                 android:inputType="number"
                 android:textColor="@color/ic_launcher_background"
                 android:textColorHint="@color/ic_launcher_background"/>
 
             <TextView
                 android:id="@+id/attribute"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_40sdp"
                 android:layout_below="@+id/cost"
                 android:gravity="center"
                 android:text="屬性"
                 android:textColor="@color/ic_launcher_background"
                 android:textColorHint="@color/ic_launcher_background"
-                android:textSize="20sp" />
+                android:textSize="@dimen/_18sdp" />
 
             <RadioGroup
                 android:id="@+id/attributeinput"
-                android:layout_width="200dp"
-                android:layout_height="55dp"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_40sdp"
                 android:layout_below="@+id/costinput"
                 android:layout_toRightOf="@+id/attribute"
                 android:gravity="center_vertical"
@@ -77,6 +78,7 @@
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/ic_launcher_background"
                     android:checked="true"
+                    android:textSize="@dimen/_13sdp"
                     android:text="支出"
                     android:textColor="@color/ic_launcher_background"
                     android:textColorHint="@color/ic_launcher_background" />
@@ -86,29 +88,30 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/ic_launcher_background"
+                    android:textSize="@dimen/_13sdp"
                     android:text="收入"
-                    android:textColor="@color/ic_launcher_background"
-                    android:textSize="15dp" />
+                    android:textColor="@color/ic_launcher_background" />
 
             </RadioGroup>
 
             <TextView
                 android:id="@+id/date"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:textSize="@dimen/_18sdp"
                 android:layout_below="@+id/attribute"
                 android:gravity="center"
                 android:text="日期"
                 android:textColor="@color/ic_launcher_background"
-                android:textColorHint="@color/ic_launcher_background"
-                android:textSize="20sp" />
+                android:textColorHint="@color/ic_launcher_background" />
 
             <EditText
                 android:id="@+id/dateinput"
-                android:layout_width="200dp"
-                android:layout_height="55dp"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_40sdp"
                 android:layout_below="@+id/attributeinput"
                 android:layout_toRightOf="@+id/date"
+                android:textSize="@dimen/_13sdp"
                 android:focusable="false"
                 android:hint="請選擇日期"
                 android:textColor="@color/ic_launcher_background"
@@ -117,33 +120,34 @@
 
             <TextView
                 android:id="@+id/datepicker"
-                android:layout_width="55dp"
-                android:layout_height="58dp"
                 android:background="#C3C0C0"
                 android:textColor="#F0000000"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:textSize="@dimen/_12sdp"
                 android:gravity="center"
-                android:layout_alignBottom="@+id/dateinput"
+                android:layout_alignTop="@+id/dateinput"
                 android:layout_toRightOf="@+id/dateinput"
-                android:text="選擇\n日期"
-                android:textSize="15dp" />
+                android:text="選擇\n日期" />
 
             <TextView
                 android:id="@+id/filter"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:textSize="@dimen/_18sdp"
                 android:layout_below="@+id/date"
                 android:gravity="center"
                 android:text="分類"
                 android:textColor="@color/ic_launcher_background"
-                android:textColorHint="@color/ic_launcher_background"
-                android:textSize="20sp" />
+                android:textColorHint="@color/ic_launcher_background" />
 
             <EditText
                 android:id="@+id/filterinput"
-                android:layout_width="200dp"
-                android:layout_height="55dp"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_40sdp"
                 android:layout_below="@+id/dateinput"
                 android:layout_toRightOf="@+id/filter"
+                android:textSize="@dimen/_13sdp"
                 android:focusable="false"
                 android:hint="請選擇類別"
                 android:onClick="clickToShowTypeList"
@@ -153,34 +157,35 @@
 
             <TextView
                 android:id="@+id/filterpicker"
-                android:layout_width="55dp"
-                android:layout_height="58dp"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:textSize="@dimen/_12sdp"
                 android:gravity="center"
                 android:background="#C3C0C0"
                 android:textColor="#F0000000"
-                android:layout_alignBottom="@+id/filterinput"
+                android:layout_alignTop="@+id/filterinput"
                 android:layout_toRightOf="@+id/filterinput"
                 android:onClick="clickToShowTypeList"
-                android:text="選擇\n分類"
-                android:textSize="15dp" />
+                android:text="選擇\n分類"/>
 
             <TextView
                 android:id="@+id/items"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:textSize="@dimen/_18sdp"
                 android:layout_below="@+id/filter"
                 android:gravity="center"
                 android:text="細項"
                 android:textColor="@color/ic_launcher_background"
-                android:textColorHint="@color/ic_launcher_background"
-                android:textSize="20dp" />
+                android:textColorHint="@color/ic_launcher_background"/>
 
             <EditText
                 android:id="@+id/itemsinput"
-                android:layout_width="200dp"
-                android:layout_height="55dp"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_40sdp"
                 android:layout_below="@+id/filterpicker"
                 android:layout_toRightOf="@+id/items"
+                android:textSize="@dimen/_13sdp"
                 android:hint="請輸入項目"
                 android:inputType="textPersonName"
                 android:textColor="@color/ic_launcher_background"
@@ -189,22 +194,23 @@
 
             <TextView
                 android:id="@+id/receipt"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:textSize="@dimen/_18sdp"
                 android:layout_below="@+id/items"
                 android:gravity="center"
                 android:text="發票"
                 android:textColor="@color/ic_launcher_background"
-                android:textColorHint="@color/ic_launcher_background"
-                android:textSize="20dp" />
+                android:textColorHint="@color/ic_launcher_background" />
 
             <EditText
                 android:id="@+id/receiptinput"
-                android:layout_width="200dp"
-                android:layout_height="55dp"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_40sdp"
                 android:layout_below="@+id/itemsinput"
                 android:layout_toRightOf="@+id/receipt"
                 android:hint="請輸入發票後三碼"
+                android:textSize="@dimen/_13sdp"
                 android:inputType="number"
                 android:maxLength="3"
                 android:textColor="@color/ic_launcher_background"
@@ -213,46 +219,48 @@
 
             <TextView
                 android:id="@+id/quotes"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:textSize="@dimen/_18sdp"
                 android:layout_below="@+id/receipt"
                 android:gravity="center"
                 android:text="備註"
                 android:textColor="@color/ic_launcher_background"
-                android:textColorHint="@color/ic_launcher_background"
-                android:textSize="20dp" />
+                android:textColorHint="@color/ic_launcher_background" />
 
             <EditText
                 android:id="@+id/quotesinput"
-                android:layout_width="200dp"
-                android:layout_height="100dp"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_100sdp"
                 android:layout_below="@+id/receiptinput"
                 android:layout_toRightOf="@+id/quotes"
+                android:textSize="@dimen/_13sdp"
                 android:hint="請輸入詳細資訊"
                 android:textColor="@color/ic_launcher_background"
                 android:textColorHint="@color/ic_launcher_background" />
 
             <Button
                 android:id="@+id/savebutton"
-                android:layout_width="80dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_30sdp"
                 android:layout_below="@+id/quotesinput"
                 android:layout_alignRight="@+id/quotesinput"
                 android:background="@drawable/assure_button"
                 android:onClick="clickToUpdate"
+                android:textSize="@dimen/_13sdp"
                 android:text="儲存" />
 
             <Button
                 android:id="@+id/cancelbutton"
-                android:layout_width="70dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_30sdp"
                 android:layout_below="@+id/quotesinput"
                 android:layout_toLeftOf="@+id/savebutton"
                 android:background="@drawable/action_transparent"
                 android:onClick="ToCancel"
                 android:text="取消"
                 android:textColor="@color/ic_launcher_background"
-                android:textSize="15dp" />
+                android:textSize="@dimen/_13sdp" />
         </RelativeLayout>
     </RelativeLayout>
 

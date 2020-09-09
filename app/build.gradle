@@ -44,6 +44,7 @@ dependencies {
     implementation "com.android.support:support-v4:24.1.1"
     //koko
 
+    //@dimen(響應式介面)
     implementation 'com.intuit.sdp:sdp-android:1.0.5'
 
 
