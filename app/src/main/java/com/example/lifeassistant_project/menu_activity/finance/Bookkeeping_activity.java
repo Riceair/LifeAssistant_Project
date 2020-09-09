@@ -12,8 +12,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -45,8 +47,8 @@ public class Bookkeeping_activity extends AppCompatActivity {
     private Cursor cursor;
     private int recordID;
     private TextView[] editTextArray;
-    private TextView[] titleTextArray;
-    private Button[] pickerButtonArray,saveCancelButton;
+    private TextView[] titleTextArray,pickerButtonArray;
+    private Button[] saveCancelButton;
     private TextView costinput,dateinput,filterinput,itemsinput,receiptinput,quotesinput;
     private RadioButton outlay,income;
     private List<String> list = new ArrayList<>();
@@ -95,7 +97,7 @@ public class Bookkeeping_activity extends AppCompatActivity {
         ////////////////////////////////日期/////////////////////////////////
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         dateinput.setText(formatter.format(new java.util.Date()));
-        Button datePicker = (Button) findViewById(R.id.datepicker);
+        TextView datePicker = findViewById(R.id.datepicker);
         datePicker.setOnClickListener(new ChoseDate());
         dateinput.setOnClickListener(new ChoseDate());
 
@@ -131,7 +133,7 @@ public class Bookkeeping_activity extends AppCompatActivity {
         titleTextArray=new TextView[]{(TextView) findViewById(R.id.cost),(TextView) findViewById(R.id.attribute),(TextView) findViewById(R.id.date),
                         (TextView) findViewById(R.id.filter),(TextView) findViewById(R.id.items),(TextView) findViewById(R.id.receipt),(TextView) findViewById(R.id.quotes)};
         //picker button
-        pickerButtonArray=new Button[]{findViewById(R.id.datepicker),findViewById(R.id.filterpicker)};
+        pickerButtonArray=new TextView[]{findViewById(R.id.datepicker),findViewById(R.id.filterpicker)};
         //save cancel button
         saveCancelButton=new Button[]{findViewById(R.id.savebutton),findViewById(R.id.cancelbutton)};
     }
@@ -155,6 +157,18 @@ public class Bookkeeping_activity extends AppCompatActivity {
         innerLayoutParams.width= (int) (mainlyLayoutParams.width*0.85);
         inner_container.setLayoutParams(innerLayoutParams);
 
+        //小標題大小
+        float inputTextSize=0;
+        for(int i=0;i<titleTextArray.length;i++) {
+            TextView titleText=titleTextArray[i];
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)titleText.getLayoutParams();
+            params.height= (int) (mainlyLayoutParams.height*0.08);
+            params.width= (int) (mainlyLayoutParams.width*0.1);
+            titleText.setLayoutParams(params);
+            titleText.setTextSize(TypedValue.COMPLEX_UNIT_PX, (float) (params.width*0.45));
+            inputTextSize= (float) (titleText.getTextSize()*0.8);
+        }
+
         //輸入框大小
         for(int i=0;i<editTextArray.length;i++){
             TextView editText=editTextArray[i];
@@ -162,40 +176,30 @@ public class Bookkeeping_activity extends AppCompatActivity {
             params.height= (int) (mainlyLayoutParams.height*0.08);
             params.width= (int) (mainlyLayoutParams.width*0.57);
             editText.setLayoutParams(params);
-            editText.setTextSize((float) (mainlyLayoutParams.width*0.018));
+            editText.setTextSize(TypedValue.COMPLEX_UNIT_PX,inputTextSize);
         }
         RelativeLayout.LayoutParams quotesParams = (RelativeLayout.LayoutParams) quotesinput.getLayoutParams();
         quotesParams.height= (int) (mainlyLayoutParams.height*0.2);
         quotesParams.width= (int) (mainlyLayoutParams.width*0.57);
         quotesinput.setLayoutParams(quotesParams);
-        quotesinput.setTextSize((float) (mainlyLayoutParams.width*0.018));
-
-        //小標題大小
-        for(int i=0;i<titleTextArray.length;i++) {
-            TextView titleText=titleTextArray[i];
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)titleText.getLayoutParams();
-            params.height= (int) (mainlyLayoutParams.height*0.08);
-            params.width= (int) (mainlyLayoutParams.width*0.1);
-            titleText.setLayoutParams(params);
-            titleText.setTextSize((float) (mainlyLayoutParams.width * 0.02));
-        }
+        quotesinput.setTextSize(TypedValue.COMPLEX_UNIT_PX,inputTextSize);
 
         //屬性Group大小
         RelativeLayout.LayoutParams radioGroupParams= (RelativeLayout.LayoutParams) findViewById(R.id.attributeinput).getLayoutParams();
         radioGroupParams.height=(int) (mainlyLayoutParams.height*0.08);
         radioGroupParams.width=(int) (mainlyLayoutParams.width*0.57);
         findViewById(R.id.attributeinput).setLayoutParams(radioGroupParams);
-        outlay.setTextSize((float) (mainlyLayoutParams.width*0.018));
-        income.setTextSize((float) (mainlyLayoutParams.width*0.018));
+        outlay.setTextSize(TypedValue.COMPLEX_UNIT_PX,inputTextSize);
+        income.setTextSize(TypedValue.COMPLEX_UNIT_PX,inputTextSize);
 
         //picker button大小
         for(int i=0;i<pickerButtonArray.length;i++){
-            Button pickerButton=pickerButtonArray[i];
+            TextView pickerButton=pickerButtonArray[i];
             RelativeLayout.LayoutParams params= (RelativeLayout.LayoutParams) pickerButton.getLayoutParams();
-            params.width= (int) (mainlyLayoutParams.height*0.085);
-            params.height= (int) (mainlyLayoutParams.height*0.085);
+            params.width= (int) (mainlyLayoutParams.height*0.08);
+            params.height= (int) (mainlyLayoutParams.height*0.075);
             pickerButton.setLayoutParams(params);
-            pickerButton.setTextSize((float) (mainlyLayoutParams.width*0.014));
+            pickerButton.setTextSize(TypedValue.COMPLEX_UNIT_PX, (float) (params.width*0.3));
         }
 
         //save cancel button大小
@@ -205,7 +209,7 @@ public class Bookkeeping_activity extends AppCompatActivity {
             params.width= (int) (mainlyLayoutParams.width*0.16);
             params.height= (int) (mainlyLayoutParams.height*0.08);
             button.setLayoutParams(params);
-            button.setTextSize((float) (mainlyLayoutParams.width*0.016));
+            button.setTextSize(TypedValue.COMPLEX_UNIT_PX,inputTextSize);
         }
 
         //刪除按鈕大小
@@ -214,7 +218,7 @@ public class Bookkeeping_activity extends AppCompatActivity {
         deleteParams.width= (int) (mainlyLayoutParams.width*0.2);
         deleteParams.height= (int) (mainlyLayoutParams.height*0.06);
         deleteButton.setLayoutParams(deleteParams);
-        deleteButton.setTextSize((float) (mainlyLayoutParams.width*0.014));
+        deleteButton.setTextSize(TypedValue.COMPLEX_UNIT_PX, (float) (inputTextSize*0.8));
     }
 
     //日期
@@ -304,8 +308,7 @@ public class Bookkeeping_activity extends AppCompatActivity {
     }
 
     public void clickToDelete(View view){
-        new AlertDialog.Builder(Bookkeeping_activity.this)
-                .setTitle("確定刪除嗎？").setPositiveButton("確定", new DialogInterface.OnClickListener() {
+        new AlertDialog.Builder(this).setTitle("確定刪除嗎？").setPositiveButton("確定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
@@ -322,10 +325,7 @@ public class Bookkeeping_activity extends AppCompatActivity {
                 myDB.close();
                 finish();
             }
-        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {}
-        }).show();
+        }).setNegativeButton("取消", null).show();
     }
 
     private void addBookkeepingUpdate(){
