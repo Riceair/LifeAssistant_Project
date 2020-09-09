@@ -114,7 +114,7 @@ public class ChatbotBehavior {
             this.searchFlag = true;
             this.selectedPackage = this.sentenceHandler.getRcvSelectedList();
 
-            AccountPackage temp = (AccountPackage) this.selectedPackage.get(1);
+//            AccountPackage temp = (AccountPackage) this.selectedPackage.get(1);
 //            System.out.println("DEBUG//////////////////////////");
 //            System.out.println(this.sentenceHandler.getCalculateType());
 //            System.out.println(temp.getMoney());
@@ -157,8 +157,6 @@ public class ChatbotBehavior {
         }
         else if(this.currentIntent == 4)
         {
-//            System.out.println("DDBUG");
-//            System.out.println(this.sentenceHandler.getFulfillment());
             return "好的！以下是" + this.TransWeatherTime(this.sentenceHandler.getFulfillment()) + "的天氣預報：";
         }
         else

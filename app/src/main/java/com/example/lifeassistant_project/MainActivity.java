@@ -523,7 +523,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         {
             popupGone();
             findViewById(R.id.popup_window).setVisibility(View.VISIBLE);
-            if (chatbotBehavior.getCurrentIntent() == 1 && chatbotBehavior.getCurrentOperation() == 4)
+            if (chatbotBehavior.isSearchFlag())
             {
                 //記帳查詢
                 List<String> itemList = new ArrayList<>();
