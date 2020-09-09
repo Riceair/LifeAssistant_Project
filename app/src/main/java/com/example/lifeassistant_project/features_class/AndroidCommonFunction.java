@@ -1,12 +1,13 @@
 package com.example.lifeassistant_project.features_class;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.drawable.GradientDrawable;
-import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -15,6 +16,11 @@ public class AndroidCommonFunction {
     //取得dp的pixel
     //(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300, getResources().getDisplayMetrics());
 
+    //取得螢幕長寬
+    //    DisplayMetrics dm=new DisplayMetrics();
+    //    getWindowManager().getDefaultDisplay().getMetrics(dm);
+    //    int screenWidth=dm.widthPixels;
+    //    int screenHeight=dm.heightPixels;
 
     public static int getViewWidth(View view){
         int width =View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED);
