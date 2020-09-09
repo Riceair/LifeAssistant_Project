@@ -387,9 +387,6 @@ public class Weather_activity extends AppCompatActivity {
                 case 4:
                     Rid = R.id.sec_lower_digitsdegree;
                     break;
-                case 5:
-                    Rid = R.id.secidicators;
-                    break;
                 case 6:
                     Rid = R.id.oneidicators;
                     break;

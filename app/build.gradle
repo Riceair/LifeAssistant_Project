@@ -42,6 +42,7 @@ dependencies {
     //Android通知寄送
     //noinspection GradleCompatible
     implementation "com.android.support:support-v4:24.1.1"
+    //koko
 
     implementation 'com.intuit.sdp:sdp-android:1.0.5'
 
