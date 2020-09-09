@@ -10,11 +10,11 @@
 
     <TextView
         android:id="@+id/sub_title"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_45sdp"
         android:layout_alignTop="@id/back_ind"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="@dimen/_5sdp"
         android:layout_toRightOf="@id/icon"
         android:gravity="start|center_vertical"
         android:text=""
@@ -23,18 +23,18 @@
 
     <ImageView
         android:id="@+id/back_ind"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="@dimen/_45sdp"
+        android:layout_height="@dimen/_45sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:onClick="clickBackPlanner"
         android:scaleType="centerInside"
         app:srcCompat="@drawable/arrowbutton_left" />
 
     <RelativeLayout
         android:id="@+id/icon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/_45sdp"
+        android:layout_height="@dimen/_45sdp"
         android:layout_alignTop="@id/back_ind"
         android:layout_toRightOf="@id/back_ind"
         android:background="@drawable/calendar_frame"
@@ -42,34 +42,34 @@
 
         <TextView
             android:id="@+id/month_text"
-            android:layout_width="35dp"
-            android:layout_height="10dp"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_10sdp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/_5sdp"
             android:gravity="center"
             android:text="JAN"
             android:textColor="@color/ic_launcher_background"
-            android:textSize="8dp"
+            android:textSize="@dimen/_7sdp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/day_text"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
             android:layout_below="@id/month_text"
             android:layout_centerHorizontal="true"
             android:gravity="center_horizontal|top"
             android:text="27"
             android:textColor="@color/design_default_color_on_secondary"
-            android:textSize="25dp"
+            android:textSize="@dimen/_20sdp"
             android:textStyle="bold" />
 
     </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/mainly"
-        android:layout_width="350dp"
-        android:layout_height="580dp"
+        android:layout_width="@dimen/_290sdp"
+        android:layout_height="@dimen/_420sdp"
 
         android:layout_alignParentBottom="false"
         android:layout_centerInParent="true"
@@ -78,16 +78,16 @@
 
         <ListView
             android:id="@+id/list"
-            android:layout_width="300dp"
+            android:layout_width="@dimen/_300sdp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp" />
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp" />
     </LinearLayout>
 
     <ImageView
         android:id="@+id/empty_sign"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="@dimen/_250sdp"
+        android:layout_height="@dimen/_250sdp"
         android:layout_centerInParent="true"
         android:scaleType="fitXY"
         android:visibility="gone"

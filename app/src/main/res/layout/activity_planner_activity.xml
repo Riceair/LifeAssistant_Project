@@ -24,7 +24,7 @@
             android:background="@drawable/action_transparent"
             android:onClick="clickNewPlan"
             android:text="新增\n排程"
-            android:textSize="@dimen/_10sdp" />
+            android:textSize="@dimen/_12sdp" />
 
         <Button
             android:id="@+id/checkbutton"
