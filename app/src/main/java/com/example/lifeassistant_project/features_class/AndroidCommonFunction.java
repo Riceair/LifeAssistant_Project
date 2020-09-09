@@ -15,6 +15,7 @@ public class AndroidCommonFunction {
     //取得dp的pixel
     //(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300, getResources().getDisplayMetrics());
 
+
     public static int getViewWidth(View view){
         int width =View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED);
         int height =View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED);
