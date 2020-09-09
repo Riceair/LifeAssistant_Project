@@ -87,16 +87,18 @@ public class ChatbotBehavior {
         this.currentIntent = this.sentenceHandler.getIntent();
         this.currentOperation = this.sentenceHandler.getOperation();
 
-        if(this.sentenceHandler.getIntent() == 0)
+        if(this.currentIntent == 0)
         {
             this.behaviorMode = 0;
         }
-        else if(this.sentenceHandler.getIntent() == 1 || this.sentenceHandler.getIntent() == 2)
+        else if(this.currentIntent == 1 || this.currentIntent == 2)
         {
             this.behaviorMode = 1;
         }
 
-        if(this.sendSentence.getIntent() == 1 || this.sendSentence.getIntent() == 2)
+        //not a reliable logic validation. need to be remade.
+        if((this.sendSentence.getIntent() == 1 || this.sendSentence.getIntent() == 2) ||
+                (this.currentIntent == 0 && this.sentenceHandler.getFulfillment().substring(0, 1).equals("已")))
         {
             DatabaseBehavior.synchronizeServer2Client_Account();
         }
@@ -155,9 +157,8 @@ public class ChatbotBehavior {
         }
         else if(this.currentIntent == 4)
         {
-            //9月12號天氣
-            System.out.println("DDBUG");
-            System.out.println(this.sentenceHandler.getFulfillment());
+//            System.out.println("DDBUG");
+//            System.out.println(this.sentenceHandler.getFulfillment());
             return "好的！以下是" + this.TransWeatherTime(this.sentenceHandler.getFulfillment()) + "的天氣預報：";
         }
         else
@@ -270,17 +271,7 @@ public class ChatbotBehavior {
 
     public String TransWeatherTime(String message)
     {
-        int number = (int) message.charAt(0);
-        Calendar calendar = Calendar.getInstance();
-        boolean isFirstSunday = (calendar.getFirstDayOfWeek() == Calendar.SUNDAY);
-        int weekDay = calendar.get(Calendar.DAY_OF_WEEK);
-
-        if(isFirstSunday)
-        {
-            weekDay--;
-            if(weekDay == 0)
-                weekDay = 7;
-        }
+        int number = Integer.parseInt(message.substring(0, 1));
 
         switch (number)
         {
@@ -291,7 +282,21 @@ public class ChatbotBehavior {
             case 2:
                 return "後天";
             default:
-                return "星期" + this.TransInt2WeekWord(weekDay);
+                Calendar calendar = Calendar.getInstance();
+                boolean isFirstSunday = (calendar.getFirstDayOfWeek() == Calendar.SUNDAY);
+                int weekDay = calendar.get(Calendar.DAY_OF_WEEK);
+
+                if(isFirstSunday)
+                {
+                    weekDay--;
+                    if(weekDay == 0)
+                        weekDay = 7;
+                }
+
+                number += weekDay;
+                while(number > 7)
+                    number -= 7;
+                return "星期" + this.TransInt2WeekWord(number);
         }
     }
 

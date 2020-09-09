@@ -115,7 +115,7 @@ public class Weather_activity extends AppCompatActivity {
                     displayText.setText(currentWeather.getPeriod());
                     displayText = (TextView) findViewById(R.id.seccoditions);
                     displayText.setText(currentWeather.getSituation());
-                    tempImage = findViewById(R.id.seccoditions);
+                    tempImage = findViewById(R.id.secconditions);
                     WeatherPackage.assignCondition2Image(currentWeather.getSituation(),tempImage);
 
                     break;

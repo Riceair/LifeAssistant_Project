@@ -212,7 +212,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         PieChartUsedClass pieChartUsedClass=new PieChartUsedClass(mChart,type_list,amount_list);
     }
 
-    //天氣123
+    //天氣
     private void popupShow(ArrayList<DataPackage> weatherData){
         setPopupDefaultSize();
         popup_window.setVisibility(View.VISIBLE);
@@ -224,7 +224,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         yes_no_response.setVisibility(View.INVISIBLE);
 
         // set default time to today.
-        int ptr = (Integer.valueOf(chatbotBehavior.getSentenceHandler().getFulfillment().charAt(0))) * 2;
+        int ptr = (Integer.parseInt(chatbotBehavior.getSentenceHandler().getFulfillment().substring(0, 1))) * 2;
         WeatherPackage selectedWeather = (WeatherPackage) weatherData.get(ptr);
         TextView tempText;
 
@@ -233,9 +233,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tempText = findViewById(R.id.weather_condition_text);
         tempText.setText(selectedWeather.getSituation());
         tempText = findViewById(R.id.weather_highest_text);
-        tempText.setText(selectedWeather.getMax_temperature());
+        tempText.setText(Integer.toString(selectedWeather.getMax_temperature()));
         tempText = findViewById(R.id.weather_lowest_text);
-        tempText.setText(selectedWeather.getMin_temperature());
+        tempText.setText(Integer.toString(selectedWeather.getMin_temperature()));
 
         ImageView conditionImg = findViewById(R.id.weather_condition);
         WeatherPackage.assignCondition2Image(selectedWeather.getSituation(), conditionImg);
@@ -244,20 +244,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //猜測意圖
     private void popupShow()
     {
-        final Button assureButton = findViewById(R.id.assure_button), cancelButton = findViewById(R.id.cancelButton);
+        final Button ASSURE_BUTTON = findViewById(R.id.assure_button), CANCEL_BUTTON = findViewById(R.id.cancelButton);
         yes_no_response.setVisibility(View.VISIBLE);
         popup_window.setVisibility(View.VISIBLE);
 
         mChart.setVisibility(View.INVISIBLE);
         weather_response.setVisibility(View.INVISIBLE);
-        //我要新增
         //設定popup_window位置與大小
         RelativeLayout.LayoutParams params=(RelativeLayout.LayoutParams) popup_window.getLayoutParams();
         params.height=getViewHeight(yes_no_response)+50;
         popup_window.setLayoutParams(params);
         popup_window.setTranslationY(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics()));
 
-        assureButton.setOnClickListener(new View.OnClickListener() {
+        ASSURE_BUTTON.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 chatbotBehavior.setReadyMode();
@@ -266,7 +265,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        cancelButton.setOnClickListener(new View.OnClickListener(){
+        CANCEL_BUTTON.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 chatbotBehavior.setDefaultMode();
@@ -412,8 +411,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 userSay.setText(tempText.getText());
 
-                System.out.println("Behavior");
-                System.out.println(chatbotBehavior.getBehaviorMode());
+//                System.out.println("Behavior");
+//                System.out.println(chatbotBehavior.getBehaviorMode());
                 if(!chatbotBehavior.generateSendSentence(tempText.getText().toString()))
                 {
                     System.out.println(chatbotBehavior.getErrorMessage());
@@ -425,37 +424,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 chatBotSay.setText(chatbotBehavior.getResponse());
 
-                if(chatbotBehavior.ifNeedSubWindow()) {
-                    popupGone();
-                    findViewById(R.id.popup_window).setVisibility(View.VISIBLE);
-                    if(chatbotBehavior.isSearchFlag())
-                    {
-                        //記帳查詢
-                        List<String> itemList = new ArrayList<>();
-                        List<Integer> moneyList = new ArrayList<>();
-                        for(DataPackage ele : chatbotBehavior.getSelectedPackage())
-                        {
-                            AccountPackage rcvEle = (AccountPackage) ele;
-                            itemList.add(rcvEle.getItem());
-                            moneyList.add(rcvEle.getMoney());
-                        }
-
-                        popupShow(itemList, moneyList);
-                    }
-                    else if (chatbotBehavior.getCurrentIntent() == 2 && chatbotBehavior.getCurrentOperation() == 4) {
-                        //行程查詢
-                        yes_no_response.setVisibility(View.INVISIBLE);
-                        findViewById(R.id.weather_condition).setVisibility(View.INVISIBLE);
-                    }
-                    else if (chatbotBehavior.getCurrentIntent() == 3) {
-                        //猜測意圖
-                        popupShow();
-                    }
-                    else if (chatbotBehavior.getCurrentIntent() == 4) {
-                        //今天天氣
-                        popupShow(getWeatherData());
-                    }
-                }
+                subwindowHandle();
                 break;
             case 2:
                 System.out.println(LoginHandler.getUserKey());
@@ -513,45 +482,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             chatBotSay.setText(chatbotBehavior.getResponse());
 
-            if(chatbotBehavior.ifNeedSubWindow())
-            {
-                popupGone();
-                findViewById(R.id.popup_window).setVisibility(View.VISIBLE);
-                if (chatbotBehavior.getCurrentIntent() == 1 && chatbotBehavior.getCurrentOperation() == 4)
-                {
-                    //記帳查詢
-                    List<String> itemList = new ArrayList<>();
-                    List<Integer> moneyList = new ArrayList<>();
-                    for (DataPackage ele : chatbotBehavior.getSelectedPackage())
-                    {
-                        AccountPackage rcvEle = (AccountPackage) ele;
-                        itemList.add(rcvEle.getItem());
-                        moneyList.add(rcvEle.getMoney());
-                    }
-
-                    popupShow(itemList, moneyList);
-                }
-                else if (chatbotBehavior.getCurrentIntent() == 2 && chatbotBehavior.getCurrentOperation() == 4)
-                {
-                    //行程查詢
-                    yes_no_response.setVisibility(View.INVISIBLE);
-                    findViewById(R.id.weather_condition).setVisibility(View.INVISIBLE);
-                }
-                else if (chatbotBehavior.getCurrentIntent() == 3)
-                {
-                    //猜測意圖
-                    popupShow();
-                }
-                else if (chatbotBehavior.getCurrentIntent() == 4)
-                {
-                    //天氣
-                    popupShow(getWeatherData());
-                }
-            }
-            else
-            {
-                popupGone();
-            }
+            this.subwindowHandle();
         }
         else if(requestCode==REGISTER_CODE){
             if(resultCode==RESULT_OK){
@@ -583,6 +514,49 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     setAfterLogin(account);
                 }
             }
+        }
+    }
+
+    private void subwindowHandle()
+    {
+        if(chatbotBehavior.ifNeedSubWindow())
+        {
+            popupGone();
+            findViewById(R.id.popup_window).setVisibility(View.VISIBLE);
+            if (chatbotBehavior.getCurrentIntent() == 1 && chatbotBehavior.getCurrentOperation() == 4)
+            {
+                //記帳查詢
+                List<String> itemList = new ArrayList<>();
+                List<Integer> moneyList = new ArrayList<>();
+                for (DataPackage ele : chatbotBehavior.getSelectedPackage())
+                {
+                    AccountPackage rcvEle = (AccountPackage) ele;
+                    itemList.add(rcvEle.getItem());
+                    moneyList.add(rcvEle.getMoney());
+                }
+
+                popupShow(itemList, moneyList);
+            }
+            else if (chatbotBehavior.getCurrentIntent() == 2 && chatbotBehavior.getCurrentOperation() == 4)
+            {
+                //行程查詢
+                yes_no_response.setVisibility(View.INVISIBLE);
+                findViewById(R.id.weather_condition).setVisibility(View.INVISIBLE);
+            }
+            else if (chatbotBehavior.getCurrentIntent() == 3)
+            {
+                //猜測意圖
+                popupShow();
+            }
+            else if (chatbotBehavior.getCurrentIntent() == 4)
+            {
+                //天氣
+                popupShow(getWeatherData());
+            }
+        }
+        else
+        {
+            popupGone();
         }
     }
 
