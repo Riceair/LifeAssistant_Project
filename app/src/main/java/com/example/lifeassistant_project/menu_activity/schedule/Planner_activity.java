@@ -85,7 +85,7 @@ public class Planner_activity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setIcon(R.drawable.newstand);
-
+   getSupportActionBar().hide();
 
         final View decorView = getWindow().getDecorView();
         decorView.setOnSystemUiVisibilityChangeListener (new View.OnSystemUiVisibilityChangeListener() {

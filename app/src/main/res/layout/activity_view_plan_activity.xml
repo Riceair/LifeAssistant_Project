@@ -68,8 +68,8 @@
 
     <LinearLayout
         android:id="@+id/mainly"
-        android:layout_width="@dimen/_290sdp"
-        android:layout_height="@dimen/_420sdp"
+        android:layout_width="@dimen/_250sdp"
+        android:layout_height="@dimen/_330sdp"
 
         android:layout_alignParentBottom="false"
         android:layout_centerInParent="true"
