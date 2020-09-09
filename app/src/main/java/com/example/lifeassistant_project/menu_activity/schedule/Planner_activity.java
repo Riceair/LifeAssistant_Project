@@ -592,10 +592,7 @@ public class Planner_activity extends AppCompatActivity {
         return true;
     }
     public void clickBack(View view){
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("EXIT", true); startActivity(intent);
-        startActivityForResult(intent, 3);
+        finish();
 
     }
     //    @Override
