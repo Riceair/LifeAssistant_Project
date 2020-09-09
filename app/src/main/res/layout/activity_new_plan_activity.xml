@@ -10,59 +10,60 @@
     <TextView
         android:id="@+id/back_ind"
         android:layout_width="wrap_content"
-        android:layout_height="35dp"
+        android:layout_height="@dimen/_35sdp"
         android:layout_above="@id/mainly"
         android:layout_alignLeft="@id/mainly"
         android:gravity="center"
         android:text="﹤回日曆"
         android:textColor="@color/zxing_custom_viewfinder_laser"
-        android:textSize="22dp"
+        android:textSize="@dimen/_22sdp"
         android:textStyle="bold" />
 
     <RelativeLayout
         android:id="@+id/tabs"
-        android:layout_width="130dp"
-        android:layout_height="35dp"
+        android:layout_width="@dimen/_110sdp"
+        android:layout_height="@dimen/_35sdp"
         android:layout_above="@id/mainly"
         android:layout_alignRight="@id/mainly"
         android:background="@drawable/tabs">
 
         <Button
             android:id="@+id/deletebutton"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_35sdp"
             android:layout_centerHorizontal="false"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/_10sdp"
             android:background="@drawable/action_transparent"
             android:onClick="clickToDel"
             android:text="刪除此筆紀錄"
-            android:textColor="@android:color/holo_red_dark" />
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="@dimen/_12sdp" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/mainly"
-        android:layout_width="350dp"
-        android:layout_height="430dp"
+        android:layout_width="@dimen/_280sdp"
+        android:layout_height="@dimen/_400sdp"
         android:layout_centerInParent="true"
         android:background="@drawable/new_stuff_background">
 
         <TextView
             android:id="@+id/event"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_width="@dimen/_55sdp"
+            android:layout_height="@dimen/_55sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:gravity="center"
             android:text="事件\n標題"
             android:textColor="@color/design_default_color_background"
-            android:textSize="15sp" />
+            android:textSize="@dimen/_15sdp" />
 
         <EditText
             android:id="@+id/eventinput"
-            android:layout_width="200dp"
-            android:layout_height="55dp"
-            android:layout_marginTop="20dp"
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="@dimen/_55sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:layout_toRightOf="@+id/event"
             android:hint="請輸入標題"
             android:inputType="textUri"
@@ -71,19 +72,19 @@
 
         <TextView
             android:id="@+id/date"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="@dimen/_55sdp"
+            android:layout_height="@dimen/_55sdp"
             android:layout_below="@+id/event"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="@dimen/_10sdp"
             android:gravity="center"
             android:text="開始\n日期"
             android:textColor="@color/design_default_color_background"
-            android:textSize="15sp" />
+            android:textSize="@dimen/_15sdp" />
 
         <EditText
             android:id="@+id/dateinput"
-            android:layout_width="200dp"
-            android:layout_height="55dp"
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="@dimen/_55sdp"
             android:layout_below="@+id/eventinput"
             android:layout_toRightOf="@+id/date"
             android:focusable="false"
@@ -93,19 +94,19 @@
 
         <TextView
             android:id="@+id/time"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="@dimen/_55sdp"
+            android:layout_height="@dimen/_55sdp"
             android:layout_below="@+id/date"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="@dimen/_10sdp"
             android:gravity="center"
             android:text="開始\n時間"
             android:textColor="@color/design_default_color_background"
-            android:textSize="15sp" />
+            android:textSize="@dimen/_15sdp" />
 
         <EditText
             android:id="@+id/timeinput"
-            android:layout_width="200dp"
-            android:layout_height="55dp"
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="@dimen/_55sdp"
             android:layout_below="@+id/dateinput"
             android:layout_toRightOf="@+id/time"
             android:focusable="false"
@@ -117,123 +118,125 @@
 
         <TextView
             android:id="@+id/endsdate"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="@dimen/_55sdp"
+            android:layout_height="@dimen/_55sdp"
             android:layout_below="@id/time"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="@dimen/_10sdp"
             android:gravity="center"
             android:text="結束\n日期"
             android:textColor="@color/cardview_light_background"
-            android:textSize="15sp" />
+            android:textSize="@dimen/_15sdp" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/endsdateinput"
-            android:layout_width="200dp"
-            android:layout_height="55dp"
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="@dimen/_55sdp"
             android:layout_below="@id/timepicker"
-            android:layout_marginLeft="75dp"
+            android:layout_toRightOf="@id/endsdate"
             android:hint="請選擇日期"
             android:textColor="@color/cardview_light_background"
             android:textColorHint="@color/colorAccent" />
 
         <TextView
             android:id="@+id/endstime"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="@dimen/_55sdp"
+            android:layout_height="@dimen/_55sdp"
             android:layout_below="@id/endsdate"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="@dimen/_10sdp"
             android:gravity="center"
             android:text="結束\n時間"
             android:textColor="@color/cardview_light_background"
-            android:textSize="15sp" />
+            android:textSize="@dimen/_15sdp" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/endstimeinput"
-            android:layout_width="200dp"
-            android:layout_height="55dp"
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="@dimen/_55sdp"
             android:layout_below="@id/endsdateinput"
-            android:layout_marginLeft="75dp"
+            android:layout_toRightOf="@id/endstime"
             android:hint="請選擇時間"
             android:textColor="@color/cardview_light_background"
             android:textColorHint="@color/colorAccent" />
 
         <Button
             android:id="@+id/datepicker"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="@dimen/_55sdp"
+            android:layout_height="@dimen/_55sdp"
             android:layout_alignBottom="@+id/dateinput"
             android:layout_alignParentRight="true"
-            android:layout_marginLeft="368dp"
-            android:layout_marginRight="17dp"
-            android:layout_marginBottom="3dp"
+            android:layout_marginLeft="@dimen/_368sdp"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_3sdp"
             android:background="@drawable/action_transparent"
             android:text="選擇\n日期"
             android:textColor="@color/ic_launcher_background"
-            android:textSize="15dp" />
+            android:textSize="@dimen/_13sdp" />
 
         <Button
             android:id="@+id/endsdatepicker"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="@dimen/_55sdp"
+            android:layout_height="@dimen/_55sdp"
             android:layout_below="@id/timepicker"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="2dp"
-            android:layout_marginRight="17dp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginRight="@dimen/_5sdp"
             android:background="@drawable/action_transparent"
             android:text="選擇\n日期"
-            android:textColor="@color/ic_launcher_background" />
+            android:textColor="@color/ic_launcher_background"
+            android:textSize="@dimen/_13sdp" />
 
         <Button
             android:id="@+id/endstimepicker"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="@dimen/_55sdp"
+            android:layout_height="@dimen/_55sdp"
             android:layout_below="@id/endsdatepicker"
             android:layout_alignParentRight="true"
             android:layout_marginTop="0dp"
-            android:layout_marginRight="17dp"
+            android:layout_marginRight="@dimen/_5sdp"
             android:background="@drawable/action_transparent"
             android:onClick="setEndsTime"
             android:text="選擇\n時間"
-            android:textColor="@color/ic_launcher_background" />
+            android:textColor="@color/ic_launcher_background"
+            android:textSize="@dimen/_13sdp" />
 
         <Button
             android:id="@+id/timepicker"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="@dimen/_55sdp"
+            android:layout_height="@dimen/_55sdp"
             android:layout_alignBottom="@+id/timeinput"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="17dp"
-            android:layout_marginBottom="2dp"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
             android:background="@drawable/action_transparent"
             android:onClick="setStartTime"
             android:text="選擇\n時間"
             android:textColor="@color/ic_launcher_background"
-            android:textSize="15dp" />
+            android:textSize="@dimen/_13sdp" />
 
         <Button
             android:id="@+id/savebutton"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_40sdp"
             android:layout_alignRight="@id/endstimepicker"
             android:layout_alignParentBottom="true"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_30sdp"
             android:background="@drawable/assure_button"
             android:onClick="clickToUpdateSC"
             android:text="修改"
-            android:textSize="17dp" />
+            android:textSize="@dimen/_17sdp" />
 
         <Button
             android:id="@+id/cancelbutton"
-            android:layout_width="70dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_40sdp"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="@dimen/_30sdp"
             android:layout_toLeftOf="@+id/savebutton"
             android:background="@drawable/action_transparent"
             android:text="取消"
             android:textColor="@color/ic_launcher_background"
-            android:textSize="16dp" />
+            android:textSize="@dimen/_16sdp" />
 
 
     </RelativeLayout>
