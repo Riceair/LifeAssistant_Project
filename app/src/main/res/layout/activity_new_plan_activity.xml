@@ -43,8 +43,8 @@
 
     <RelativeLayout
         android:id="@+id/mainly"
-        android:layout_width="@dimen/_280sdp"
-        android:layout_height="@dimen/_400sdp"
+        android:layout_width="@dimen/_250sdp"
+        android:layout_height="@dimen/_350sdp"
         android:layout_centerInParent="true"
         android:background="@drawable/new_stuff_background">
 
@@ -220,7 +220,7 @@
             android:layout_alignRight="@id/endstimepicker"
             android:layout_alignParentBottom="true"
             android:layout_marginRight="@dimen/_20sdp"
-            android:layout_marginBottom="@dimen/_30sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:background="@drawable/assure_button"
             android:onClick="clickToUpdateSC"
             android:text="修改"
@@ -231,7 +231,7 @@
             android:layout_width="@dimen/_70sdp"
             android:layout_height="@dimen/_40sdp"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/_30sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:layout_toLeftOf="@+id/savebutton"
             android:background="@drawable/action_transparent"
             android:text="取消"

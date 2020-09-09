@@ -206,6 +206,14 @@
             app:srcCompat="@drawable/weather_indicator_c" />
 
         <ImageView
+            android:id="@+id/secidicators"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="fitXY"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/weather_indicator_c" />
+
+        <ImageView
             android:id="@+id/twoidicators"
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
