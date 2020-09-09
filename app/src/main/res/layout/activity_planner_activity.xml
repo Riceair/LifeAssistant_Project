@@ -8,88 +8,51 @@
     tools:context="com.example.lifeassistant_project.menu_activity.schedule.Planner_activity">
 
 
-    <ImageView
-        android:id="@+id/back_ind"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="25dp"
-        android:onClick="clickBack"
-        android:scaleType="centerInside"
-        app:srcCompat="@drawable/arrowbutton_left" />
-
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignTop="@id/back_ind"
-        android:layout_marginLeft="5dp"
-        android:layout_toRightOf="@id/back_ind"
-        app:srcCompat="@drawable/newstand" />
-
-    <TextView
-        android:id="@+id/subtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_alignTop="@id/back_ind"
-        android:layout_marginLeft="5dp"
-        android:layout_toRightOf="@id/icon"
-        android:gravity="center"
-        android:text="排程"
-        android:textColor="@color/ic_launcher_background"
-        android:textSize="20dp" />
-
     <RelativeLayout
         android:id="@+id/tabs"
-        android:layout_width="220dp"
-        android:layout_height="45dp"
-        android:layout_below="@id/icon"
-        android:layout_alignRight="@id/mainly"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/tabsonplanner"
-        tools:visibility="visible">
+        android:layout_width="@dimen/_120sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_alignEnd="@id/mainly"
+        android:layout_marginTop="@dimen/_50sdp"
+        android:background="@drawable/tabsonplanner">
 
         <Button
             android:id="@+id/addbutton"
-            android:layout_width="70dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_1sdp"
             android:background="@drawable/action_transparent"
             android:onClick="clickNewPlan"
-            android:text=" 新增排程"
-            android:textSize="16dp" />
+            android:text="新增\n排程"
+            android:textSize="@dimen/_10sdp" />
 
         <Button
             android:id="@+id/checkbutton"
-            android:layout_width="70dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_1sdp"
             android:layout_toRightOf="@id/addbutton"
             android:background="@drawable/action_transparent"
             android:onClick="clickViewPlan"
-            android:text="檢視全部"
-            android:textSize="16dp" />
+            android:text="檢視\n全部"
+            android:textSize="@dimen/_12sdp" />
 
         <Button
             android:id="@+id/indicator"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/_5sdp"
             android:layout_toRightOf="@id/checkbutton"
-            android:background="@drawable/stuff_indicator_reddot"
+            android:background="@drawable/stuff_indicator_greendot"
             android:text="0"
-            android:textColor="@color/design_default_color_on_secondary"
-            android:textSize="15sp" />
+            android:textSize="@dimen/_12sdp" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/mainly"
-        android:layout_width="350dp"
-        android:layout_height="350dp"
+        android:layout_width="@dimen/_260sdp"
+        android:layout_height="@dimen/_260sdp"
         android:layout_below="@id/tabs"
         android:layout_alignParentBottom="false"
         android:layout_centerHorizontal="true"
@@ -98,39 +61,40 @@
 
         <TextView
             android:id="@+id/Month_layout"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_30sdp"
             android:layout_above="@id/compactcalendar_view"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:gravity="center"
             android:text="July 2020"
             android:textColor="@color/design_default_color_on_secondary"
-            android:textSize="20sp" />
+            android:textSize="@dimen/_20sdp" />
 
         <com.github.sundeepk.compactcalendarview.CompactCalendarView
             android:id="@+id/compactcalendar_view"
-            android:layout_width="300dp"
-            android:layout_height="250dp"
+            android:layout_width="@dimen/_220sdp"
+            android:layout_height="@dimen/_180sdp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:paddingLeft="@dimen/_10sdp"
+            android:paddingRight="@dimen/_10sdp"
             app:compactCalendarBackgroundColor="@color/zxing_transparent"
             app:compactCalendarCurrentDayBackgroundColor="@android:color/holo_blue_dark"
             app:compactCalendarCurrentSelectedDayBackgroundColor="@android:color/holo_orange_light"
             app:compactCalendarMultiEventIndicatorColor="#000"
-            app:compactCalendarTargetHeight="250dp"
+            app:compactCalendarTargetHeight="@dimen/_250sdp"
             app:compactCalendarTextColor="#000"
-            app:compactCalendarTextSize="12sp" />
+            app:compactCalendarTextSize="@dimen/_12sdp" />
 
 
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/sec_tabs"
-        android:layout_width="130dp"
-        android:layout_height="45dp"
+        android:layout_width="@dimen/_130sdp"
+        android:layout_height="@dimen/_45sdp"
         android:layout_alignTop="@id/secondary"
         android:layout_centerHorizontal="true"
         android:background="@drawable/action_transparent"
@@ -138,24 +102,24 @@
 
         <Button
             android:id="@+id/editbutton"
-            android:layout_width="65dp"
-            android:layout_height="45dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="@dimen/_55sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
 
             android:background="@drawable/action_transparent"
 
             android:onClick="clickEdit"
             android:text="修改"
             android:textColor="@color/ic_launcher_background"
-            android:textSize="22dp" />
+            android:textSize="@dimen/_22sdp" />
 
         <ImageButton
             android:id="@+id/edit_button"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_8sdp"
             android:layout_toRightOf="@id/editbutton"
             android:background="@drawable/action_transparent"
             android:onClick="clickEdit"
@@ -167,8 +131,8 @@
 
     <RelativeLayout
         android:id="@+id/secondary"
-        android:layout_width="350dp"
-        android:layout_height="300dp"
+        android:layout_width="@dimen/_260sdp"
+        android:layout_height="@dimen/_223sdp"
         android:layout_below="@id/mainly"
         android:layout_centerHorizontal="true"
         android:background="@drawable/planner_stuff_empty"
@@ -177,18 +141,18 @@
         <LinearLayout
             android:id="@+id/easylist"
             android:layout_width="wrap_content"
-            android:layout_height="200dp"
+            android:layout_height="@dimen/_170sdp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="@dimen/_5sdp"
             android:orientation="vertical">
 
             <ListView
                 android:id="@+id/list"
-                android:layout_width="300dp"
+                android:layout_width="@dimen/_300sdp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:listSelector="@drawable/action_transparent" />
         </LinearLayout>
     </RelativeLayout>

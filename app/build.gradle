@@ -43,5 +43,7 @@ dependencies {
     //noinspection GradleCompatible
     implementation "com.android.support:support-v4:24.1.1"
 
+    implementation 'com.intuit.sdp:sdp-android:1.0.5'
+
 
 }
