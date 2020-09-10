@@ -22,6 +22,8 @@ public class AccountPackage extends DataPackage
     private int requestAction; // request 需要執行的行為
     // 0 = 新增, 1 = 刪除, 2 = 修改, 3 = 查詢, 4 = Debug.
 
+    public static final int PACKAGE_SIZE = 180;
+
     public int getRequestAction() {
         return requestAction;
     }
@@ -64,7 +66,7 @@ public class AccountPackage extends DataPackage
     @Override
     public ArrayList<DataPackage> sendOperation(String address, int port) throws IOException {
         super.sendOperation(address, port);
-        final int PACKAGE_SIZE = 168, SELECT_TYPE_SIZE = 3;
+        final int SELECT_TYPE_SIZE = 3;
         ArrayList<DataPackage> resultPackageList = null;
 
         SocketAddress tempSocketAddress = new InetSocketAddress(address, port);

@@ -39,6 +39,7 @@ public class ChatbotBehavior {
     private SentenceHandler sentenceHandler;
     private SentenceHandler sendSentence;
     private ArrayList<DataPackage> selectedPackage;
+    private String selectType = "def";
     private ClientProgress client;
     private String errorMessage;
     private boolean searchFlag;
@@ -51,6 +52,8 @@ public class ChatbotBehavior {
     public String getErrorMessage() { return errorMessage; }
 
     public ArrayList<DataPackage> getSelectedPackage() { return selectedPackage; }
+
+    public String getSelectType() { return selectType; }
 
     public int getCurrentIntent() { return currentIntent; }
 
@@ -106,13 +109,17 @@ public class ChatbotBehavior {
     public String getResponse()
     {
         this.searchFlag = false;
+
         if(this.currentIntent == 0 && this.currentOperation == 0)
         {
+            this.selectType = "def";
+
             if(this.sentenceHandler.getRcvSelectedList().size() == 0)
                 return this.sentenceHandler.getFulfillment();
 
             this.searchFlag = true;
             this.selectedPackage = this.sentenceHandler.getRcvSelectedList();
+            this.selectType = this.sentenceHandler.getCalculateType();
 
 //            AccountPackage temp = (AccountPackage) this.selectedPackage.get(1);
 //            System.out.println("DEBUG//////////////////////////");

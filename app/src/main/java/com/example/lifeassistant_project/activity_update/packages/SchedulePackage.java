@@ -21,6 +21,7 @@ public class SchedulePackage extends DataPackage{
     // 0 = 新增, 1 = 刪除, 2 = 修改, 3 = 查詢, 4 = Debug.
 
     private ScheduleDate startDate, endDate;
+    public static final int PACKAGE_SIZE = 78;
 
     // start_time = hours of the date, and end_time is that the difference between the start_time
     public SchedulePackage()
@@ -62,7 +63,7 @@ public class SchedulePackage extends DataPackage{
     public ArrayList<DataPackage> sendOperation(String address, int port) throws IOException {
         super.sendOperation(address, port);
         System.out.println("Plan");
-        final int PACKAGE_SIZE = 78, SELECT_TYPE_SIZE = 3;
+        final int SELECT_TYPE_SIZE = 3;
         ArrayList<DataPackage> resultPackageList = null;
 
         SocketAddress tempSocketAddress = new InetSocketAddress(address, port);

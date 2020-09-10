@@ -57,7 +57,7 @@ public class SentenceHandler extends DataPackage{
         out.flush();
         InputStream in = client.getInputStream();      // 取得輸入訊息的串流
 
-        ByteBuffer b_buf = super.getInputByteBuffer(in, 1024);
+        ByteBuffer b_buf = super.getInputByteBuffer(in, 1024 * 16);
         out.close();
 
         byte[] rcvArray = Arrays.copyOfRange(b_buf.array(), 3, b_buf.array().length);

@@ -100,25 +100,25 @@
                     android:layout_centerInParent="true"
                     android:visibility="visible"
                     android:layout_width="300dp"
-                    android:layout_height="250dp">
+                    android:layout_height="250dp" tools:visibility="invisible">
                 <TextView
-                    android:id="@+id/weather_city_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="30dp"
-                    android:layout_centerHorizontal="true"
-                    android:gravity="center"
-                    android:text="OO市"
-                    android:layout_alignParentTop="true"/>
+                        android:id="@+id/weather_city_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="30dp"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center"
+                        android:text="OO市"
+                        android:layout_alignParentTop="true"/>
 
                 <TextView
-                    android:id="@+id/weather_condition_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_below="@+id/weather_city_text"
-                    android:text="晴時多雲偶陣雨"
-                    android:textSize="20dp"/>
+                        android:id="@+id/weather_condition_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_below="@+id/weather_city_text"
+                        android:text="晴時多雲偶陣雨"
+                        android:textSize="20dp"/>
 
                 <ImageView
                         android:id="@+id/weather_condition"
@@ -133,86 +133,157 @@
                         android:src="@drawable/weather_condition_thunderstorms"/>
 
                 <TextView
-                    android:id="@+id/weather_highest_title"
-                    android:layout_width="140dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignTop="@+id/weather_condition"
-                    android:text="最高溫:"
-                    android:textSize="25dp"/>
+                        android:id="@+id/weather_highest_title"
+                        android:layout_width="140dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignTop="@+id/weather_condition"
+                        android:text="最高溫:"
+                        android:textSize="25dp"/>
 
                 <TextView
-                    android:id="@+id/weather_highest_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/weather_highest_title"
-                    android:layout_below="@+id/weather_highest_title"
-                    android:text="30"
-                    android:textSize="20dp"/>
+                        android:id="@+id/weather_highest_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/weather_highest_title"
+                        android:layout_below="@+id/weather_highest_title"
+                        android:text="30"
+                        android:textSize="20dp"/>
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/weather_highest_text"
-                    android:layout_below="@+id/weather_highest_title"
-                    android:text="°C"
-                    android:textSize="20dp"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/weather_highest_text"
+                        android:layout_below="@+id/weather_highest_title"
+                        android:text="°C"
+                        android:textSize="20dp"/>
 
                 <TextView
-                    android:id="@+id/weather_lowest_title"
-                    android:layout_width="140dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/weather_highest_text"
-                    android:text="最低溫:"
-                    android:textSize="25dp"/>
+                        android:id="@+id/weather_lowest_title"
+                        android:layout_width="140dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/weather_highest_text"
+                        android:text="最低溫:"
+                        android:textSize="25dp"/>
 
                 <TextView
-                    android:id="@+id/weather_lowest_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/weather_lowest_title"
-                    android:layout_below="@+id/weather_lowest_title"
-                    android:text="30"
-                    android:textSize="20dp"/>
+                        android:id="@+id/weather_lowest_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/weather_lowest_title"
+                        android:layout_below="@+id/weather_lowest_title"
+                        android:text="30"
+                        android:textSize="20dp"/>
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/weather_lowest_text"
-                    android:layout_below="@+id/weather_lowest_title"
-                    android:text="°C"
-                    android:textSize="20dp"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/weather_lowest_text"
+                        android:layout_below="@+id/weather_lowest_title"
+                        android:text="°C"
+                        android:textSize="20dp"/>
             </RelativeLayout>
             <!--    天氣顯示    -->
 
             <!--      Yes No      -->
             <LinearLayout
-                android:id="@+id/yes_no_response"
-                android:visibility="invisible"
-                android:layout_centerInParent="true"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content">
+                    android:id="@+id/yes_no_response"
+                    android:visibility="invisible"
+                    android:layout_centerInParent="true"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content" tools:visibility="invisible">
 
                 <Button
-                    android:id="@+id/cancelButton"
-                    android:layout_width="150dp"
-                    android:layout_height="50dp"
-                    android:text="否"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20dp"
-                    android:background="@drawable/cancel_button"/>
+                        android:id="@+id/cancelButton"
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:text="否"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20dp"
+                        android:background="@drawable/cancel_button"/>
 
                 <Button
-                    android:id="@+id/assure_button"
-                    android:layout_width="150dp"
-                    android:layout_height="50dp"
-                    android:text="是"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20dp"
-                    android:background="@drawable/assure_button"/>
+                        android:id="@+id/assure_button"
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:text="是"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20dp"
+                        android:background="@drawable/assure_button"/>
             </LinearLayout>
             <!--      Yes No      -->
+
+            <!--      文字顯示      -->
+            <RelativeLayout
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent" tools:visibility="visible" android:id="@+id/AccountCalWindow"
+                    android:visibility="gone">
+
+                <TextView
+                        android:layout_width="320dp"
+                        android:layout_height="30dp"
+                        android:text="總共支出："
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:textSize="24sp"
+                        android:id="@+id/payDescription"/>
+
+                <TextView
+                        android:layout_width="320dp"
+                        android:layout_height="30dp"
+                        android:id="@+id/payMoney"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@+id/payDescription"
+                        android:layout_marginLeft="15dp"
+                        android:textColor="#FF0000"
+                        android:text="$100"
+                        android:textSize="24sp"/>
+
+                <TextView
+                        android:layout_width="320dp"
+                        android:layout_height="30dp"
+                        android:text="總共收入："
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:textSize="24sp"
+                        android:id="@+id/incomeDescription"
+                        android:layout_below="@+id/payMoney"/>
+
+                <TextView
+                        android:layout_width="320dp"
+                        android:layout_height="30dp"
+                        android:id="@+id/incomeMoney"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_below="@+id/incomeDescription"
+                        android:textColor="#00FF0D"
+                        android:text="$200"
+                        android:textSize="24sp"/>
+
+                <TextView
+                        android:layout_width="320dp"
+                        android:layout_height="30dp"
+                        android:text="剩餘："
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:textSize="24sp"
+                        android:id="@+id/sumDescription"
+                        android:layout_below="@+id/incomeMoney"/>
+
+                <TextView
+                        android:layout_width="320dp"
+                        android:layout_height="30dp"
+                        android:id="@+id/sumMoney"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_below="@+id/sumDescription"
+                        android:textColor="#00FF0D"
+                        android:text="$100"
+                        android:textSize="24sp"/>
+
+            </RelativeLayout>
+            <!--      文字顯示      -->
 
             <!--      報表      -->
             <com.github.mikephil.charting.charts.PieChart
@@ -220,7 +291,7 @@
                     android:visibility="invisible"
                     android:layout_centerInParent="true"
                     android:layout_width="300dp"
-                    android:layout_height="250dp"/>
+                    android:layout_height="250dp" tools:visibility="invisible"/>
             <!--      報表      -->
         </RelativeLayout>
         <!--    機器人回應視窗    -->

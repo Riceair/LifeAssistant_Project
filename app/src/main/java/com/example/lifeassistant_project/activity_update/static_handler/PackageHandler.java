@@ -16,7 +16,7 @@ public class PackageHandler
     PackageHandler() {}
 
     static public byte[] accountPackageEncode(AccountPackage acPkg) throws UnsupportedEncodingException {
-        final int ID_size = 4, money_size = 4, year_size = 4, month_size = 1, day_size = 1, item_size = 18, detail_size = 18, receipt_size = 3, note_size = 90, status_size = 1, action_size = 1, user_size = 20;
+        final int ID_size = 4, money_size = 4, year_size = 4, month_size = 1, day_size = 1, item_size = 18, detail_size = 30, receipt_size = 3, note_size = 90, status_size = 1, action_size = 1, user_size = 20;
 
         ByteBuffer buf = ByteBuffer.allocate(1024);
 
@@ -126,7 +126,7 @@ public class PackageHandler
 
     static public AccountPackage accountPackageDecode(byte[] message)
     {
-        final int ID_size = 4, money_size = 4, year_size = 4, month_size = 1, day_size = 1, item_size = 18, detail_size = 18, receipt_size = 3, note_size = 90, status_size = 1, action_size = 1, user_size = 20;
+        final int ID_size = 4, money_size = 4, year_size = 4, month_size = 1, day_size = 1, item_size = 18, detail_size = 30, receipt_size = 3, note_size = 90, status_size = 1, action_size = 1, user_size = 20;
         AccountPackage result = new AccountPackage();
         int temp = 0, currentSize = ID_size;
         ByteBuffer buffer = ByteBuffer.allocate(1024);
@@ -244,7 +244,7 @@ public class PackageHandler
 //    {
 //        final int PACKAGE_TYPE_SIZE = 3;
 //        final int ID_size = 4, money_size = 4, year_size = 4, month_size = 1, day_size = 1, item_size = 18,
-//                detail_size = 18, receipt_size = 3, note_size = 90, status_size = 1, action_size = 1, user_size = 20;
+//                detail_size = 30, receipt_size = 3, note_size = 90, status_size = 1, action_size = 1, user_size = 20;
 //        int ptr = 0;
 //
 //        AccountPackage result = new AccountPackage();
@@ -661,11 +661,11 @@ public class PackageHandler
                 //shitty code
                 if(typeCheck.equals("acc"))
                 {
-                    packageSize = 168;
+                    packageSize = AccountPackage.PACKAGE_SIZE;
                 }
                 else
                 {
-                    packageSize = 78;
+                    packageSize = SchedulePackage.PACKAGE_SIZE;
                 }
 
                 for(int i = currentSize;i < message.length; i += packageSize)
@@ -744,7 +744,7 @@ public class PackageHandler
     //dropped.
     static public AccountPackage ReceiptPackageDecode(byte[] message)
     {
-        final int ID_SIZE = 4, MONEY_SIZE = 4, YEAR_SIZE = 4, MONTH_SIZE = 1, DAY_SIZE = 1, DETAIL_SIZE = 18, RECEIPT_SIZE = 3, STATUS_SIZE = 1;
+        final int ID_SIZE = 4, MONEY_SIZE = 4, YEAR_SIZE = 4, MONTH_SIZE = 1, DAY_SIZE = 1, DETAIL_SIZE = 30, RECEIPT_SIZE = 3, STATUS_SIZE = 1;
         int currentSize = 0;
         AccountPackage result = new AccountPackage();
 

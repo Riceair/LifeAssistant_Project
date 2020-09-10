@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView chatBotSay;
 
     //機器人回應視窗
-    private RelativeLayout popup_window,weather_response;
+    private RelativeLayout popup_window,weather_response,account_cal_window;
     private LinearLayout yes_no_response;
     private int popup_window_height,popup_window_width;
     private PieChart mChart;
@@ -170,6 +170,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         loginButton = navigationView.getHeaderView(0).findViewById(R.id.LoginButton);
         popup_window=findViewById(R.id.popup_window);
         weather_response=findViewById(R.id.weather_response);
+        account_cal_window=findViewById(R.id.AccountCalWindow);
         yes_no_response=findViewById(R.id.yes_no_response);
         mChart=findViewById(R.id.pieChart);
         popup_window_height= (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300, getResources().getDisplayMetrics());
@@ -201,15 +202,48 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     //記帳查詢
-    private void popupShow(List<String> type_list,List<Integer> amount_list){
+    private void popupShow(List<String> type_list,List<Integer> amount_list, String calType){
         setPopupDefaultSize();
         popup_window.setVisibility(View.VISIBLE);
         Animation animation=AnimationUtils.loadAnimation(this,R.anim.alpha_scale_anim);
         animation.setDuration(1000);
         popup_window.startAnimation(animation);
 
-        mChart.setVisibility(View.VISIBLE);
-        PieChartUsedClass pieChartUsedClass=new PieChartUsedClass(mChart,type_list,amount_list);
+        switch (calType) {
+            case "def":
+                mChart.setVisibility(View.VISIBLE);
+                PieChartUsedClass pieChartUsedClass = new PieChartUsedClass(mChart, type_list, amount_list);
+                break;
+            case "sum":
+                account_cal_window.setVisibility(View.VISIBLE);
+                int incomeSum = 0, paySum = 0;
+                for(Integer value : amount_list)
+                {
+                    if (value > 0)
+                        incomeSum += value;
+                    else
+                        paySum -= value;
+                }
+                TextView tempText;
+                int textColorCode = 0;
+                tempText = findViewById(R.id.payMoney);
+                tempText.setText("$" + Integer.toString(paySum));
+                textColorCode = tempText.getCurrentTextColor();
+                tempText = findViewById(R.id.incomeMoney);
+                tempText.setText("$" + Integer.toString(incomeSum));
+                if(incomeSum - paySum >= 0)
+                    textColorCode = tempText.getCurrentTextColor();
+
+                tempText = findViewById(R.id.sumMoney);
+                tempText.setTextColor(textColorCode);
+                tempText.setText("$" + Integer.toString(incomeSum - paySum));
+                break;
+            case "avg":
+
+                break;
+            default:
+                break;
+        }
     }
 
     //天氣
@@ -278,6 +312,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void popupGone(){
         popup_window.setVisibility(View.INVISIBLE);
         weather_response.setVisibility(View.INVISIBLE);
+        account_cal_window.setVisibility(View.INVISIBLE);
         yes_no_response.setVisibility(View.INVISIBLE);
         mChart.setVisibility(View.INVISIBLE);
     }
@@ -519,44 +554,61 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void subwindowHandle()
     {
-        if(chatbotBehavior.ifNeedSubWindow())
-        {
-            popupGone();
-            findViewById(R.id.popup_window).setVisibility(View.VISIBLE);
-            if (chatbotBehavior.isSearchFlag())
-            {
-                //記帳查詢
-                List<String> itemList = new ArrayList<>();
-                List<Integer> moneyList = new ArrayList<>();
-                for (DataPackage ele : chatbotBehavior.getSelectedPackage())
-                {
-                    AccountPackage rcvEle = (AccountPackage) ele;
-                    itemList.add(rcvEle.getItem());
-                    moneyList.add(rcvEle.getMoney());
-                }
+        popupGone();
+        if(!chatbotBehavior.ifNeedSubWindow())
+            return;
 
-                popupShow(itemList, moneyList);
-            }
-            else if (chatbotBehavior.getCurrentIntent() == 2 && chatbotBehavior.getCurrentOperation() == 4)
-            {
-                //行程查詢
-                yes_no_response.setVisibility(View.INVISIBLE);
-                findViewById(R.id.weather_condition).setVisibility(View.INVISIBLE);
-            }
-            else if (chatbotBehavior.getCurrentIntent() == 3)
-            {
-                //猜測意圖
-                popupShow();
-            }
-            else if (chatbotBehavior.getCurrentIntent() == 4)
-            {
-                //天氣
-                popupShow(getWeatherData());
-            }
-        }
-        else
+        findViewById(R.id.popup_window).setVisibility(View.VISIBLE);
+        if (chatbotBehavior.isSearchFlag())
         {
-            popupGone();
+            //記帳查詢
+            List<String> itemList = new ArrayList<>();
+            List<Integer> moneyList = new ArrayList<>();
+            String selectType = chatbotBehavior.getSelectType();
+            for (DataPackage ele : chatbotBehavior.getSelectedPackage())
+            {
+                AccountPackage rcvEle = (AccountPackage) ele;
+                if(!rcvEle.getType() && selectType.equals("def"))
+                    continue;
+
+                if(!selectType.equals("def"))
+                    System.out.println("?????");
+                int moneyBuf = rcvEle.getMoney();
+                if(!selectType.equals("def") && rcvEle.getType())
+                    moneyBuf *= -1;
+
+                if(!itemList.contains(rcvEle.getItem()))
+                {
+                    itemList.add(rcvEle.getItem());
+                    moneyList.add(moneyBuf);
+                }
+                else
+                {
+                    int ptr = itemList.indexOf(rcvEle.getItem()), moneyBuf_t = moneyList.get(ptr);
+                    if(!selectType.equals("def") && rcvEle.getType())
+                        moneyBuf_t *= -1;
+
+                    moneyList.set(ptr, moneyBuf + moneyBuf_t);
+                }
+            }
+
+            popupShow(itemList, moneyList, chatbotBehavior.getSelectType());
+        }
+        else if (chatbotBehavior.getCurrentIntent() == 2 && chatbotBehavior.getCurrentOperation() == 4)
+        {
+            //行程查詢
+            yes_no_response.setVisibility(View.INVISIBLE);
+            findViewById(R.id.weather_condition).setVisibility(View.INVISIBLE);
+        }
+        else if (chatbotBehavior.getCurrentIntent() == 3)
+        {
+            //猜測意圖
+            popupShow();
+        }
+        else if (chatbotBehavior.getCurrentIntent() == 4)
+        {
+            //天氣
+            popupShow(getWeatherData());
         }
     }
 

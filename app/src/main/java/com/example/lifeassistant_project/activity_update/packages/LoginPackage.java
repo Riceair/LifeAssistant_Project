@@ -25,6 +25,7 @@ public class LoginPackage extends DataPackage{
         this.name = "Null";
         this.password = "Null";
         this.authorizationKey = "FA"; //default value: connection fail.
+        this.connectionTimeout = 2000;
     }
 
     public LoginPackage(String name, String password)
@@ -32,6 +33,7 @@ public class LoginPackage extends DataPackage{
         this.name = name;
         this.password = password;
         this.authorizationKey = "FA"; //default value: connection fail.
+        this.connectionTimeout = 2000;
     }
 
     @Override
