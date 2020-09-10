@@ -38,6 +38,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import static com.example.lifeassistant_project.features_class.AndroidCommonFunction.changeViewSize;
+import static com.example.lifeassistant_project.features_class.AndroidCommonFunction.getViewHeight;
+import static com.example.lifeassistant_project.features_class.AndroidCommonFunction.getViewWidth;
+
 public class Bookkeeping_activity extends AppCompatActivity {
     private static final String DBNAME = "myDB.db";
     private static final String FILTER_TABLE="filter";
@@ -46,9 +50,6 @@ public class Bookkeeping_activity extends AppCompatActivity {
     private SQLiteDatabase myDB;
     private Cursor cursor;
     private int recordID;
-    private TextView[] editTextArray;
-    private TextView[] titleTextArray,pickerButtonArray;
-    private Button[] saveCancelButton;
     private TextView costinput,dateinput,filterinput,itemsinput,receiptinput,quotesinput;
     private RadioButton outlay,income;
     private List<String> list = new ArrayList<>();
@@ -127,45 +128,29 @@ public class Bookkeeping_activity extends AppCompatActivity {
         quotesinput=findViewById(R.id.quotesinput);
         outlay=findViewById(R.id.outlay);
         income=findViewById(R.id.income);
-        //輸入框
-        editTextArray= new TextView[]{costinput, dateinput, filterinput, itemsinput, receiptinput};
-        //小標題
-        titleTextArray=new TextView[]{(TextView) findViewById(R.id.cost),(TextView) findViewById(R.id.attribute),(TextView) findViewById(R.id.date),
-                        (TextView) findViewById(R.id.filter),(TextView) findViewById(R.id.items),(TextView) findViewById(R.id.receipt),(TextView) findViewById(R.id.quotes)};
-        //picker button
-        pickerButtonArray=new TextView[]{findViewById(R.id.datepicker),findViewById(R.id.filterpicker)};
-        //save cancel button
-        saveCancelButton=new Button[]{findViewById(R.id.savebutton),findViewById(R.id.cancelbutton)};
     }
 
     private void setLayoutSize(){
         DisplayMetrics dm=new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int screenWidth=dm.widthPixels;
         int screenHeight=dm.heightPixels;
+        RelativeLayout mainly=findViewById(R.id.mainly);
+        RelativeLayout.LayoutParams mainlyLayoutParams= (RelativeLayout.LayoutParams) mainly.getLayoutParams();
+        RelativeLayout.LayoutParams deleteLayoutParams= (RelativeLayout.LayoutParams) findViewById(R.id.deletebutton).getLayoutParams();
+        float rate= (float) ((screenHeight*0.75)/mainlyLayoutParams.height);
+        while(true){ //測試rate
+            break;
+        }
 
-        //中間卡片大小
-        RelativeLayout mainly=(RelativeLayout) findViewById(R.id.mainly);
-        RelativeLayout.LayoutParams mainlyLayoutParams=(RelativeLayout.LayoutParams) mainly.getLayoutParams();
-        mainlyLayoutParams.width= (int) (screenWidth*0.8);
-        mainlyLayoutParams.height= (int) (screenHeight*0.8);
+        mainlyLayoutParams.height= (int) (mainlyLayoutParams.height*rate);
+        mainlyLayoutParams.width= (int) (mainlyLayoutParams.width*rate);
         mainly.setLayoutParams(mainlyLayoutParams);
 
-        //刪除按鈕大小
-        int remainHeight=screenHeight-mainlyLayoutParams.height-getActionBarHeight();
-        Button deleteButton=findViewById(R.id.deletebutton);
-        RelativeLayout.LayoutParams deleteParams= (RelativeLayout.LayoutParams) deleteButton.getLayoutParams();
-        deleteParams.height= remainHeight/4;
-        deleteButton.setLayoutParams(deleteParams);
-    }
-
-    private int getActionBarHeight(){
-        int actionBarHeight = 0;
-        TypedValue tv = new TypedValue();
-        if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
-            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
-        }
-        return actionBarHeight;
+        changeViewSize((ViewGroup) findViewById(R.id.topLayout),rate);
+        RadioGroup radioGroup=findViewById(R.id.attributeinput);
+        RelativeLayout.LayoutParams radioParams= (RelativeLayout.LayoutParams) radioGroup.getLayoutParams();
+        radioParams.height= (int) (radioParams.height*rate);
+        radioGroup.setLayoutParams(radioParams);
     }
 
     //日期
