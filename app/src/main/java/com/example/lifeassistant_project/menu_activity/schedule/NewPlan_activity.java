@@ -83,7 +83,7 @@ public class NewPlan_activity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setIcon(R.drawable.newstand);
-        getSupportActionBar().hide();
+//        getSupportActionBar().hide();
         GregorianCalendar calendar = new GregorianCalendar();
         Bundle bundle = getIntent().getExtras();
         datewasclicked = bundle.getString("clickeddate");

@@ -59,6 +59,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -274,6 +276,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ImageView conditionImg = findViewById(R.id.weather_condition);
         WeatherPackage.assignCondition2Image(selectedWeather.getSituation(), conditionImg);
     }
+
+    //排程
 
     //猜測意圖
     private void popupShow()
@@ -599,6 +603,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //行程查詢
             yes_no_response.setVisibility(View.INVISIBLE);
             findViewById(R.id.weather_condition).setVisibility(View.INVISIBLE);
+
+
         }
         else if (chatbotBehavior.getCurrentIntent() == 3)
         {
@@ -898,4 +904,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             out.write(buffer, 0, read);
         }
     }
+
+
 }

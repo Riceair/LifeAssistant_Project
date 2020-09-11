@@ -7,18 +7,6 @@
     android:background="@drawable/planner_background"
     android:onClick="clickBackPlanner">
 
-    <TextView
-        android:id="@+id/back_ind"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_35sdp"
-        android:layout_above="@id/mainly"
-        android:layout_alignLeft="@id/mainly"
-        android:gravity="center"
-        android:text="﹤回日曆"
-        android:textColor="@color/zxing_custom_viewfinder_laser"
-        android:textSize="@dimen/_22sdp"
-        android:textStyle="bold" />
-
     <RelativeLayout
         android:id="@+id/tabs"
         android:layout_width="@dimen/_110sdp"

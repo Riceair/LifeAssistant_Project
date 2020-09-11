@@ -94,6 +94,68 @@
                 android:background="@drawable/main_inner_background"
                 android:visibility="visible">
 
+            <!--    排程顯示    -->
+
+            <RelativeLayout
+                android:id="@+id/Planner_popup"
+                android:layout_width="@dimen/_250sdp"
+                android:layout_height="@dimen/_200sdp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:background="@drawable/planner_stuff_on_main_screen">
+
+                <TextView
+                    android:id="@+id/PlannerInnerText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="您當天的行程如下:"
+                    android:textColor="@color/design_default_color_on_secondary"
+                    android:textSize="@dimen/_15sdp" />
+
+                <Button
+                    android:id="@+id/editbutton"
+                    android:layout_width="@dimen/_65sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_below="@id/PlannerInnerText"
+
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/action_transparent"
+                    android:gravity="center_horizontal|top"
+                    android:text="按此查看"
+                    android:textColor="@color/design_default_color_on_secondary"
+                    android:textSize="@dimen/_15sdp" />
+
+                <ImageButton
+                    android:id="@+id/edit_button"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_alignTop="@id/editbutton"
+
+                    android:layout_toRightOf="@id/editbutton"
+                    android:background="@drawable/action_transparent"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/arrowbutton" />
+                <LinearLayout
+                    android:id="@+id/easylist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_130sdp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:orientation="vertical">
+
+                    <ListView
+                        android:id="@+id/list"
+                        android:layout_width="@dimen/_230sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:listSelector="@drawable/action_transparent" />
+                </LinearLayout>
+            </RelativeLayout>
             <!--    天氣顯示    -->
             <RelativeLayout
                     android:id="@+id/weather_response"
@@ -216,71 +278,73 @@
 
             <!--      文字顯示      -->
             <RelativeLayout
-                    android:layout_height="match_parent"
-                    android:layout_width="match_parent" tools:visibility="visible" android:id="@+id/AccountCalWindow"
-                    android:visibility="gone">
+                android:id="@+id/AccountCalWindow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                tools:visibility="invisible">
 
                 <TextView
-                        android:layout_width="320dp"
-                        android:layout_height="30dp"
-                        android:text="總共支出："
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="10dp"
-                        android:textSize="24sp"
-                        android:id="@+id/payDescription"/>
+                    android:id="@+id/payDescription"
+                    android:layout_width="320dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:text="總共支出："
+                    android:textSize="24sp" />
 
                 <TextView
-                        android:layout_width="320dp"
-                        android:layout_height="30dp"
-                        android:id="@+id/payMoney"
-                        android:layout_marginTop="10dp"
-                        android:layout_below="@+id/payDescription"
-                        android:layout_marginLeft="15dp"
-                        android:textColor="#FF0000"
-                        android:text="$100"
-                        android:textSize="24sp"/>
+                    android:id="@+id/payMoney"
+                    android:layout_width="320dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@+id/payDescription"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:text="$100"
+                    android:textColor="#FF0000"
+                    android:textSize="24sp" />
 
                 <TextView
-                        android:layout_width="320dp"
-                        android:layout_height="30dp"
-                        android:text="總共收入："
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="10dp"
-                        android:textSize="24sp"
-                        android:id="@+id/incomeDescription"
-                        android:layout_below="@+id/payMoney"/>
+                    android:id="@+id/incomeDescription"
+                    android:layout_width="320dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@+id/payMoney"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:text="總共收入："
+                    android:textSize="24sp" />
 
                 <TextView
-                        android:layout_width="320dp"
-                        android:layout_height="30dp"
-                        android:id="@+id/incomeMoney"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_below="@+id/incomeDescription"
-                        android:textColor="#00FF0D"
-                        android:text="$200"
-                        android:textSize="24sp"/>
+                    android:id="@+id/incomeMoney"
+                    android:layout_width="320dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@+id/incomeDescription"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:text="$200"
+                    android:textColor="#00FF0D"
+                    android:textSize="24sp" />
 
                 <TextView
-                        android:layout_width="320dp"
-                        android:layout_height="30dp"
-                        android:text="剩餘："
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="10dp"
-                        android:textSize="24sp"
-                        android:id="@+id/sumDescription"
-                        android:layout_below="@+id/incomeMoney"/>
+                    android:id="@+id/sumDescription"
+                    android:layout_width="320dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@+id/incomeMoney"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:text="剩餘："
+                    android:textSize="24sp" />
 
                 <TextView
-                        android:layout_width="320dp"
-                        android:layout_height="30dp"
-                        android:id="@+id/sumMoney"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_below="@+id/sumDescription"
-                        android:textColor="#00FF0D"
-                        android:text="$100"
-                        android:textSize="24sp"/>
+                    android:id="@+id/sumMoney"
+                    android:layout_width="320dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@+id/sumDescription"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:text="$100"
+                    android:textColor="#00FF0D"
+                    android:textSize="24sp" />
 
             </RelativeLayout>
             <!--      文字顯示      -->
@@ -297,6 +361,7 @@
         <!--    機器人回應視窗    -->
 
         <!--    說明視窗    -->
+
         <ScrollView
                 android:id="@+id/question_item"
                 android:layout_marginTop="?attr/actionBarSize"
