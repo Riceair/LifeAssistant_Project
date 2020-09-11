@@ -117,13 +117,13 @@
                 <Button
                     android:id="@+id/editbutton"
                     android:layout_width="@dimen/_65sdp"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_height="@dimen/_25sdp"
                     android:layout_below="@id/PlannerInnerText"
 
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:background="@drawable/action_transparent"
-                    android:gravity="center_horizontal|top"
+                    android:gravity="center"
                     android:text="按此查看"
                     android:textColor="@color/design_default_color_on_secondary"
                     android:textSize="@dimen/_15sdp" />
@@ -138,10 +138,11 @@
                     android:background="@drawable/action_transparent"
                     android:scaleType="centerInside"
                     app:srcCompat="@drawable/arrowbutton" />
+
                 <LinearLayout
                     android:id="@+id/easylist"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_130sdp"
+                    android:layout_height="@dimen/_100sdp"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="@dimen/_5sdp"
