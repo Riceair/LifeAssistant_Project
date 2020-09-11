@@ -71,7 +71,7 @@
 
         <EditText
             android:id="@+id/dateinput"
-            android:layout_width="@dimen/_200sdp"
+            android:layout_width="@dimen/_130sdp"
             android:layout_height="@dimen/_55sdp"
             android:layout_below="@+id/eventinput"
             android:layout_toRightOf="@+id/date"
@@ -93,7 +93,7 @@
 
         <EditText
             android:id="@+id/timeinput"
-            android:layout_width="@dimen/_200sdp"
+            android:layout_width="@dimen/_130sdp"
             android:layout_height="@dimen/_55sdp"
             android:layout_below="@+id/dateinput"
             android:layout_toRightOf="@+id/time"
@@ -117,7 +117,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/endsdateinput"
-            android:layout_width="@dimen/_200sdp"
+            android:layout_width="@dimen/_130sdp"
             android:layout_height="@dimen/_55sdp"
             android:layout_below="@id/timepicker"
             android:layout_toRightOf="@id/endsdate"
@@ -138,7 +138,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/endstimeinput"
-            android:layout_width="@dimen/_200sdp"
+            android:layout_width="@dimen/_130sdp"
             android:layout_height="@dimen/_55sdp"
             android:layout_below="@id/endsdateinput"
             android:layout_toRightOf="@id/endstime"
