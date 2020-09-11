@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import static com.example.lifeassistant_project.features_class.AndroidCommonFunction.changeViewSize;
+import static com.example.lifeassistant_project.features_class.AndroidCommonFunction.changeRelativeViewSize;
 
 public class Bookkeeping_activity extends AppCompatActivity {
     private static final String DBNAME = "myDB.db";
@@ -132,8 +132,7 @@ public class Bookkeeping_activity extends AppCompatActivity {
         DisplayMetrics dm=new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         int screenHeight=dm.heightPixels;
-        RelativeLayout mainly=findViewById(R.id.mainly);
-        RelativeLayout.LayoutParams mainlyLayoutParams= (RelativeLayout.LayoutParams) mainly.getLayoutParams();
+        RelativeLayout.LayoutParams mainlyLayoutParams= (RelativeLayout.LayoutParams) findViewById(R.id.mainly).getLayoutParams();
         RelativeLayout.LayoutParams deleteLayoutParams= (RelativeLayout.LayoutParams) findViewById(R.id.deletebutton).getLayoutParams();
         LinearLayout.LayoutParams toolbarParams= (LinearLayout.LayoutParams) findViewById(R.id.toolbar).getLayoutParams();
         float rate= (float) 0.9;
@@ -147,7 +146,7 @@ public class Bookkeeping_activity extends AppCompatActivity {
         }
 
 
-        changeViewSize((ViewGroup) findViewById(R.id.topLayout),changeRate);
+        changeRelativeViewSize((ViewGroup) findViewById(R.id.topLayout),changeRate);
         RadioGroup radioGroup=findViewById(R.id.attributeinput);
         RelativeLayout.LayoutParams radioParams= (RelativeLayout.LayoutParams) radioGroup.getLayoutParams();
         radioParams.height= (int) (radioParams.height*changeRate);

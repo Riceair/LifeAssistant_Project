@@ -7,11 +7,14 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -20,6 +23,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.lifeassistant_project.features_class.PieChartUsedClass;
 import com.example.lifeassistant_project.R;
@@ -72,6 +76,35 @@ public class Report_activity extends AppCompatActivity {
 
         setBotInf();
         setSwitch();
+    }
+
+    private void setLayoutSize(){
+        DisplayMetrics dm=new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        final int screenHeight=dm.heightPixels;
+        final ConstraintLayout mainly=findViewById(R.id.mainly);
+        ConstraintLayout.LayoutParams mainlyParams= (ConstraintLayout.LayoutParams) findViewById(R.id.mainly).getLayoutParams();
+        ConstraintLayout.LayoutParams scrollParams= (ConstraintLayout.LayoutParams) findViewById(R.id.reportScroll).getLayoutParams();
+        LinearLayout.LayoutParams toolbarParams= (LinearLayout.LayoutParams) findViewById(R.id.toolbar).getLayoutParams();
+
+//        mainly.setLayoutParams(mainlyParams);
+//        //screenHeight-viewRect.bottom = 到底部的距離
+//        Runnable runnable = new Runnable() {
+//            @Override
+//            public void run() {
+//                Rect viewRect = new Rect();
+//                mainly.getGlobalVisibleRect(viewRect);
+//                Log.e("text","msg: "+viewRect.bottom);
+//                notify();
+//            }
+//        };
+//        Thread thread=new Thread(runnable);
+//        thread.start();
+//        synchronized (runnable){
+//            try {
+//                runnable.wait();
+//            }catch (Exception e){}
+//        }
     }
 
     private void setSwitch(){

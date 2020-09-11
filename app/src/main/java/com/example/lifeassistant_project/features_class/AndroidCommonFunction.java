@@ -15,6 +15,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.example.lifeassistant_project.R;
 
 import java.util.Calendar;
@@ -30,10 +32,9 @@ public class AndroidCommonFunction {
     //    int screenWidth=dm.widthPixels;
     //    int screenHeight=dm.heightPixels;
 
-    public static void changeViewSize(ViewGroup viewGroup,float rate) {//傳入Activity頂層Layout,螢幕寬,螢幕高
+    public static void changeRelativeViewSize(ViewGroup viewGroup,float rate) {//傳入Activity頂層Layout,螢幕寬,螢幕高
         for(int i = 0; i<viewGroup.getChildCount(); i++ ) { //處理外層的RelativeLayout #RelativeLayout為一種ViewGroup
             View v = viewGroup.getChildAt(i);
-
             if(v instanceof RelativeLayout){
                 RelativeLayout.LayoutParams params= (RelativeLayout.LayoutParams) v.getLayoutParams();
                 params.height= (int) (params.height*rate);
@@ -48,7 +49,7 @@ public class AndroidCommonFunction {
                 return;
 
             if(v instanceof ViewGroup){
-                changeViewSize((ViewGroup)v,rate);
+                changeRelativeViewSize((ViewGroup)v,rate);
             }else if(v instanceof RadioButton){ //
                 ( (RadioButton)v ).setTextSize(TypedValue.COMPLEX_UNIT_PX,((RadioButton) v).getTextSize()*rate);
             }else if(v instanceof Button){

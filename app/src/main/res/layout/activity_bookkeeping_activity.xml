@@ -10,7 +10,7 @@
         android:id="@+id/deletebutton"
         android:layout_width="100dp"
         android:layout_height="30dp"
-        android:visibility="visible"
+        android:visibility="invisible"
         android:layout_above="@id/mainly"
         android:layout_alignRight="@id/mainly"
         android:layout_marginRight="10dp"
