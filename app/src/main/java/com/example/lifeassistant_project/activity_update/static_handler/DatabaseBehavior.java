@@ -7,7 +7,10 @@ import com.example.lifeassistant_project.activity_update.ClientProgress;
 import com.example.lifeassistant_project.activity_update.packages.AccountPackage;
 import com.example.lifeassistant_project.activity_update.packages.DataPackage;
 import com.example.lifeassistant_project.activity_update.packages.SchedulePackage;
+import com.google.android.gms.common.api.Api;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 
@@ -130,6 +133,12 @@ public class DatabaseBehavior {
         synchronizeServer2Client_Schedule();
     }
 
+    public static void synchronizeDataFromClient()
+    {
+        synchronizeClient2Server_Account();
+        synchronizeClient2Server_Schedule();
+    }
+
     public static void resetDatabase()
     {
         myDB = SQLiteDatabase.openOrCreateDatabase(PATH + "/databases/" + DBNAME, null);
@@ -137,38 +146,107 @@ public class DatabaseBehavior {
         myDB.execSQL("DELETE FROM schedule_record");
     }
 
-//    still in considering.
-//    public static void synchronizeClient2Server()
-//    {
-//        System.out.println("Synchronize start.");
-//
-//        ArrayList<AccountPackage> clientAccountList = getClientAccountList(myDB, cursor);
-//
-//        ClientProgress client = new ClientProgress();
-//        AccountPackage selectAccount = new AccountPackage();
-//        selectAccount.setRequestAction(3);
-//        selectAccount.setUser(LoginPackage.getUserName());
-//        client.setBookkeeping(selectAccount);
-//        Thread cThread = new Thread(client);
-//        cThread.start();
-//
-//        synchronized (client)
-//        {
-//            try
-//            {
-//                System.out.println("WAITING");
-//                client.wait();
-//                System.out.println("GOGO");
-//            }catch (Exception e)
-//            {
-//                System.out.println(e);
-//            }
-//        }
-//
-//        ArrayList<AccountPackage> serverAccountList = client.getRcvAccountData();
-//
-//        System.out.println("synchronization success.");
-//    }
+    public static void synchronizeClient2Server_Account()
+    {
+        System.out.println("Synchronize start.");
+
+        myDB = SQLiteDatabase.openOrCreateDatabase(PATH + "/databases/" + DBNAME, null);
+
+        try
+        {
+            ArrayList<AccountPackage> clientAccountList = getClientAccountList(myDB, cursor);
+            ByteBuffer encodedPackage = ByteBuffer.allocate((clientAccountList.size() * AccountPackage.PACKAGE_SIZE) + 16);
+
+            for(AccountPackage pkg : clientAccountList)
+            {
+                pkg.setRequestAction(0);
+                encodedPackage.put(PackageHandler.accountPackageEncode(pkg));
+            }
+
+            ClientProgress client = new ClientProgress();
+            AccountPackage sndPkg = new AccountPackage();
+            sndPkg.setID(0);
+            sndPkg.setRequestAction(1);
+            client.setPackage(sndPkg);
+            Thread cThread = new Thread(client);
+            cThread.start();
+
+            synchronized (client)
+            {
+                try
+                {
+                    client.wait();
+                }catch (Exception e)
+                {
+                    System.out.println(e);
+                }
+            }
+
+            client.setBytePackage(encodedPackage.array());
+            cThread = new Thread(client);
+            cThread.start();
+
+            System.out.println("synchronization success.");
+        }catch (UnsupportedEncodingException e)
+        {
+            System.out.println("Unsupported Encoding Exception occurred:");
+            System.out.println(e);
+
+            System.out.println("synchronization failed.");
+        }
+
+    }
+
+    public static void synchronizeClient2Server_Schedule()
+    {
+        System.out.println("Synchronize start.");
+
+        myDB = SQLiteDatabase.openOrCreateDatabase(PATH + "/databases/" + DBNAME, null);
+
+        try
+        {
+            ArrayList<SchedulePackage> clientScheduleList = getClientScheduleList(myDB, cursor);
+            ByteBuffer encodedPackage = ByteBuffer.allocate((clientScheduleList.size() * SchedulePackage.PACKAGE_SIZE) + 16);
+
+            for(SchedulePackage pkg : clientScheduleList)
+            {
+                pkg.setRequestAction(0);
+                encodedPackage.put(PackageHandler.schedulePackageEncode(pkg));
+            }
+
+            ClientProgress client = new ClientProgress();
+            SchedulePackage sndPkg = new SchedulePackage();
+            sndPkg.setID(0);
+            sndPkg.setRequestAction(1);
+            client.setPackage(sndPkg);
+            Thread cThread = new Thread(client);
+            cThread.start();
+
+            synchronized (client)
+            {
+                try
+                {
+                    client.wait();
+                }catch (Exception e)
+                {
+                    System.out.println(e);
+                }
+            }
+
+            client.setBytePackage(encodedPackage.array());
+            cThread = new Thread(client);
+            cThread.start();
+
+            System.out.println("synchronization success.");
+        }catch (UnsupportedEncodingException e)
+        {
+            System.out.println("Unsupported Encoding Exception occurred:");
+            System.out.println(e);
+
+            System.out.println("synchronization failed.");
+        }
+
+    }
 
     private static ArrayList<AccountPackage> getClientAccountList(SQLiteDatabase myDB, Cursor cursor)
     {

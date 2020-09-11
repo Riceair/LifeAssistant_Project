@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 public abstract class DataPackage {
     protected int connectionTimeout = 5000;
-
     public ArrayList<DataPackage> sendOperation(String address, int port) throws IOException {return null;}
 
     protected ByteBuffer getInputByteBuffer(InputStream in, int allocateSize) throws IOException {

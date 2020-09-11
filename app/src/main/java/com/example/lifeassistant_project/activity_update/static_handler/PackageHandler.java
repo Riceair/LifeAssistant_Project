@@ -18,7 +18,7 @@ public class PackageHandler
     static public byte[] accountPackageEncode(AccountPackage acPkg) throws UnsupportedEncodingException {
         final int ID_size = 4, money_size = 4, year_size = 4, month_size = 1, day_size = 1, item_size = 18, detail_size = 30, receipt_size = 3, note_size = 90, status_size = 1, action_size = 1, user_size = 20;
 
-        ByteBuffer buf = ByteBuffer.allocate(1024);
+        ByteBuffer buf = ByteBuffer.allocate(AccountPackage.PACKAGE_SIZE);
 
         ByteBuffer b_temp;
         buf.put("acc".getBytes("UTF-8"));
@@ -280,7 +280,7 @@ public class PackageHandler
         final int ID_SIZE = 4, TODO_SIZE = 36, YEAR_SIZE = 4, MONTH_SIZE = 1, DAY_SIZE = 1,
                 START_TIME_SIZE = 4, END_TIME_SIZE = 4, OPERATION_CODE_SIZE = 1, USER_SIZE = 20;
 
-        ByteBuffer buf = ByteBuffer.allocate(1024);
+        ByteBuffer buf = ByteBuffer.allocate(SchedulePackage.PACKAGE_SIZE);
         int currentLength = 0;
 
         ByteBuffer b_temp;
