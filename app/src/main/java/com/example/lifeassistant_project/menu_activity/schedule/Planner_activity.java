@@ -554,13 +554,13 @@ public class Planner_activity extends AppCompatActivity {
         initial(null);
 
     }
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        final int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-//        final View decorView = getWindow().getDecorView();
-//        decorView.setSystemUiVisibility(uiOptions);
-//    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        final int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        final View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(uiOptions);
+    }
     public void clickViewPlan(View view){
         selectstatus=0;
         Intent intent = new Intent(view.getContext(),ViewPlan_activity.class);
