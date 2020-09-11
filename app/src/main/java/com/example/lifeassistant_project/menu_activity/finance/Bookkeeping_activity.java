@@ -38,9 +38,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import static com.example.lifeassistant_project.features_class.AndroidCommonFunction.changeViewSize;
-import static com.example.lifeassistant_project.features_class.AndroidCommonFunction.getViewHeight;
-import static com.example.lifeassistant_project.features_class.AndroidCommonFunction.getViewWidth;
+import static com.example.lifeassistant_project.features_class.AndroidCommonFunction.changeRelativeViewSize;
 
 public class Bookkeeping_activity extends AppCompatActivity {
     private static final String DBNAME = "myDB.db";
@@ -134,22 +132,24 @@ public class Bookkeeping_activity extends AppCompatActivity {
         DisplayMetrics dm=new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         int screenHeight=dm.heightPixels;
-        RelativeLayout mainly=findViewById(R.id.mainly);
-        RelativeLayout.LayoutParams mainlyLayoutParams= (RelativeLayout.LayoutParams) mainly.getLayoutParams();
+        RelativeLayout.LayoutParams mainlyLayoutParams= (RelativeLayout.LayoutParams) findViewById(R.id.mainly).getLayoutParams();
         RelativeLayout.LayoutParams deleteLayoutParams= (RelativeLayout.LayoutParams) findViewById(R.id.deletebutton).getLayoutParams();
-        float rate= (float) ((screenHeight*0.75)/mainlyLayoutParams.height);
-        while(true){ //測試rate
-            break;
+        LinearLayout.LayoutParams toolbarParams= (LinearLayout.LayoutParams) findViewById(R.id.toolbar).getLayoutParams();
+        float rate= (float) 0.9;
+        float changeRate;
+        while(true){ //計算縮放比例
+            changeRate=(screenHeight*rate)/(mainlyLayoutParams.height+deleteLayoutParams.height);
+            if((screenHeight-mainlyLayoutParams.height*changeRate)/2-toolbarParams.height>deleteLayoutParams.height*changeRate)
+                break;
+            else
+                rate-=0.05;
         }
 
-        mainlyLayoutParams.height= (int) (mainlyLayoutParams.height*rate);
-        mainlyLayoutParams.width= (int) (mainlyLayoutParams.width*rate);
-        mainly.setLayoutParams(mainlyLayoutParams);
 
-        changeViewSize((ViewGroup) findViewById(R.id.topLayout),rate);
+        changeRelativeViewSize((ViewGroup) findViewById(R.id.topLayout),changeRate);
         RadioGroup radioGroup=findViewById(R.id.attributeinput);
         RelativeLayout.LayoutParams radioParams= (RelativeLayout.LayoutParams) radioGroup.getLayoutParams();
-        radioParams.height= (int) (radioParams.height*rate);
+        radioParams.height= (int) (radioParams.height*changeRate);
         radioGroup.setLayoutParams(radioParams);
     }
 

@@ -11,7 +11,7 @@
     <RelativeLayout
         android:id="@+id/easylist"
         android:layout_width="@dimen/_300sdp"
-        android:layout_height="@dimen/_470sdp"
+        android:layout_height="@dimen/_450sdp"
         android:layout_centerInParent="true"
         android:background="@drawable/weather_bg_sunny"
         android:visibility="visible">
@@ -46,6 +46,7 @@
 
             android:layout_below="@id/secconditions"
             android:layout_marginLeft="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_13sdp"
             android:text="星期五"
             android:textColor="@android:color/background_light"
             android:textColorHint="@android:color/background_light"
@@ -58,7 +59,7 @@
 
             android:layout_below="@id/onedayafter"
             android:layout_marginLeft="@dimen/_30sdp"
-            android:layout_marginTop="@dimen/_18sdp"
+            android:layout_marginTop="@dimen/_13sdp"
             android:text="星期六"
             android:textColor="@android:color/background_light"
             android:textColorHint="@android:color/background_light"
@@ -71,7 +72,7 @@
 
             android:layout_below="@id/twodaysafter"
             android:layout_marginLeft="@dimen/_30sdp"
-            android:layout_marginTop="@dimen/_18sdp"
+            android:layout_marginTop="@dimen/_13sdp"
             android:text="星期日"
             android:textColor="@android:color/background_light"
             android:textColorHint="@android:color/background_light"
@@ -84,7 +85,7 @@
 
             android:layout_below="@id/threedaysafter"
             android:layout_marginLeft="@dimen/_30sdp"
-            android:layout_marginTop="@dimen/_18sdp"
+            android:layout_marginTop="@dimen/_13sdp"
             android:text="星期一"
             android:textColor="@android:color/background_light"
             android:textColorHint="@android:color/background_light"
@@ -97,7 +98,7 @@
 
             android:layout_below="@id/fourdaysafter"
             android:layout_marginLeft="@dimen/_30sdp"
-            android:layout_marginTop="@dimen/_18sdp"
+            android:layout_marginTop="@dimen/_13sdp"
             android:text="星期二"
             android:textColor="@android:color/background_light"
             android:textColorHint="@android:color/background_light"
@@ -110,7 +111,7 @@
 
             android:layout_below="@id/fivedaysafter"
             android:layout_marginLeft="@dimen/_30sdp"
-            android:layout_marginTop="@dimen/_18sdp"
+            android:layout_marginTop="@dimen/_13sdp"
             android:text="星期三"
             android:textColor="@android:color/background_light"
             android:textColorHint="@android:color/background_light"
@@ -127,145 +128,145 @@
 
         <ImageView
             android:id="@+id/secconditions"
-            android:layout_width="@dimen/_60sdp"
-            android:layout_height="@dimen/_60sdp"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_180sdp"
             app:srcCompat="@drawable/weather_condition_partlysunnywithflurries" />
 
         <ImageView
             android:id="@+id/onedaycondition"
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
             android:layout_below="@id/secconditions"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             app:srcCompat="@drawable/weather_condition_hot" />
 
         <ImageView
             android:id="@+id/twodayscondition"
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
             android:layout_below="@id/onedaycondition"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             app:srcCompat="@drawable/weather_condition_partlysunnywithshowers" />
 
         <ImageView
             android:id="@+id/threedayscondition"
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
             android:layout_below="@id/twodayscondition"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             app:srcCompat="@drawable/weather_condition_partlysunnywithshowers" />
 
         <ImageView
             android:id="@+id/fourdayscondition"
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
             android:layout_below="@id/threedayscondition"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             app:srcCompat="@drawable/weather_condition_partlysunnywithshowers" />
 
         <ImageView
             android:id="@+id/fivedayscondition"
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
             android:layout_below="@id/fourdayscondition"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             app:srcCompat="@drawable/weather_condition_windy" />
 
         <ImageView
             android:id="@+id/sixodayscondition"
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
             android:layout_below="@id/fivedayscondition"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             app:srcCompat="@drawable/weather_condition_fog" />
 
         <ImageView
             android:id="@+id/idicators"
             android:layout_width="@dimen/_45sdp"
             android:layout_height="@dimen/_45sdp"
-            android:layout_marginLeft="@dimen/_220sdp"
-            android:layout_marginTop="@dimen/_80sdp"
+            android:layout_alignTop="@id/higher_digitsdegree"
+            android:layout_toRightOf="@id/higher_digitsdegree"
             app:srcCompat="@drawable/weather_indicator_c" />
 
         <ImageView
             android:id="@+id/oneidicators"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/_230sdp"
+            android:layout_marginTop="@dimen/_220sdp"
             android:layout_marginRight="@dimen/_10sdp"
             app:srcCompat="@drawable/weather_indicator_c" />
 
         <ImageView
             android:id="@+id/twoidicators"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
             android:layout_below="@id/oneidicators"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_10sdp"
             app:srcCompat="@drawable/weather_indicator_c" />
 
         <ImageView
             android:id="@+id/threeidicators"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
             android:layout_below="@id/twoidicators"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_10sdp"
             app:srcCompat="@drawable/weather_indicator_c" />
 
         <ImageView
             android:id="@+id/fouridicators"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
             android:layout_below="@id/threeidicators"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_10sdp"
             app:srcCompat="@drawable/weather_indicator_c" />
 
         <ImageView
             android:id="@+id/fiveidicators"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
             android:layout_below="@id/fouridicators"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_10sdp"
             app:srcCompat="@drawable/weather_indicator_c" />
 
         <ImageView
             android:id="@+id/sixidicators"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
             android:layout_below="@id/fiveidicators"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_10sdp"
             app:srcCompat="@drawable/weather_indicator_c" />
 
         <ImageView
             android:id="@+id/sec_higher_decimaldegree"
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_50sdp"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_40sdp"
             android:layout_alignTop="@id/secconditions"
             android:layout_toLeftOf="@id/sec_higher_digitsdegree"
             app:srcCompat="@drawable/digits_3" />
 
         <ImageView
             android:id="@+id/sec_higher_digitsdegree"
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_50sdp"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_40sdp"
             android:layout_alignTop="@id/sec_higher_decimaldegree"
             android:layout_toLeftOf="@id/sec_lower_decimaldegree"
             app:srcCompat="@drawable/digits_1" />
@@ -306,7 +307,7 @@
             android:id="@+id/lower_decimaldegree"
             android:layout_width="@dimen/_15sdp"
             android:layout_height="@dimen/_30sdp"
-            android:layout_alignBottom="@id/higher_digitsdegree"
+            android:layout_below="@id/idicators"
             android:layout_toRightOf="@id/higher_digitsdegree"
             app:srcCompat="@drawable/digits_2" />
 
@@ -345,7 +346,7 @@
         <TextView
             android:id="@+id/onedaytemperature"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_height="@dimen/_30sdp"
             android:layout_alignTop="@id/onedaycondition"
             android:layout_toLeftOf="@id/oneidicators"
             android:gravity="center"
@@ -356,7 +357,7 @@
         <TextView
             android:id="@+id/twodaytemperature"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_height="@dimen/_30sdp"
             android:layout_alignTop="@id/twodayscondition"
             android:layout_toLeftOf="@id/twoidicators"
             android:gravity="center"
@@ -367,7 +368,7 @@
         <TextView
             android:id="@+id/threedaytemperature"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_height="@dimen/_30sdp"
             android:layout_alignTop="@id/threedayscondition"
             android:layout_toLeftOf="@id/threeidicators"
             android:gravity="center"
@@ -378,7 +379,7 @@
         <TextView
             android:id="@+id/fourdaytemperature"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_height="@dimen/_30sdp"
             android:layout_alignTop="@id/fourdayscondition"
             android:layout_toLeftOf="@id/fouridicators"
             android:gravity="center"
@@ -389,7 +390,7 @@
         <TextView
             android:id="@+id/fivedaytemperature"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_height="@dimen/_30sdp"
             android:layout_alignTop="@id/fivedayscondition"
             android:layout_toLeftOf="@id/fiveidicators"
             android:gravity="center"
@@ -400,7 +401,7 @@
         <TextView
             android:id="@+id/sixdaytemperature"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_height="@dimen/_30sdp"
             android:layout_alignTop="@id/sixodayscondition"
             android:layout_toLeftOf="@id/sixidicators"
             android:gravity="center"
@@ -411,14 +412,33 @@
     </RelativeLayout>
 
     <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="@dimen/_35sdp"
-        android:layout_height="@dimen/_35sdp"
+        android:id="@+id/backind"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
         android:layout_marginLeft="@dimen/_5sdp"
-        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
         android:onClick="clickBack"
         android:scaleType="centerInside"
         app:srcCompat="@drawable/arrowbutton_left" />
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_alignTop="@id/backind"
+        android:layout_toRightOf="@id/backind"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/weather" />
+
+    <TextView
+        android:id="@+id/subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_alignTop="@id/backind"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_toRightOf="@id/icon"
+        android:textColor="@color/design_default_color_background"
+        android:textSize="@dimen/_12sdp" />
 
     <include
         layout="@layout/drawer_toolbar"

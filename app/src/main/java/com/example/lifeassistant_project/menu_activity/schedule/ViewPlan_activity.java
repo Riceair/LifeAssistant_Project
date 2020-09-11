@@ -87,13 +87,11 @@ public class ViewPlan_activity extends AppCompatActivity {
         if(selectstatus==0)
         {
             ReadDBRecord();
-
-
             monthlayout.setText("全部事項");
             month_text.setText("All");
             day_text.setText("☵");
         }
-        else
+        else if(selectstatus==1)
         {
             ReadSpecifiedRecord();
             Date tempdate = null;
@@ -108,6 +106,24 @@ public class ViewPlan_activity extends AppCompatActivity {
 
             day_text.setText(clicked_day.toString().toUpperCase());
         }
+        else
+        {
+            ReadDBRecord4month();
+            Date tempdate = null;
+            try {
+                tempdate = tempdate = new SimpleDateFormat("MM").parse(clicked_month.toString());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            SimpleDateFormat tempsdf = new SimpleDateFormat("MMM");
+            monthlayout.setText(clicked_year+"年 "+clicked_month+"月"+clicked_day+"日");
+            month_text.setText(tempsdf.format(tempdate).toUpperCase());
+
+            day_text.setText(clicked_day.toString().toUpperCase());
+        }
+
+
+
         setList();
         if(stuffTitleList.isEmpty()==true)
         {ImageView empty_sign = (ImageView) findViewById(R.id.empty_sign);
@@ -458,6 +474,146 @@ public class ViewPlan_activity extends AppCompatActivity {
                 // 5. 關閉 DB
                 myDB.close();
 
+
+
+
+            } else {
+                Toast.makeText(this, "Hint 1: 請將db準備好!", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void ReadDBRecord4month() {
+        stuffList.clear();
+        stuffEndingList.clear();
+        stuffNameList.clear();
+        stuffIDList.clear();
+        stuffListinDateFormat.clear();
+        stuffEndingListinDateFormat.clear();
+        stuffListBackup.clear();
+        stuffEndingListBackup.clear();
+        stuffNameListBackup.clear();
+        stuffIDListBackup.clear();
+        stuffEndingListinDateFormatBackup.clear();
+        stuffListinDateFormatBackup.clear();
+        stuffTitleList.clear();
+        myDB = openOrCreateDatabase(DBNAME, MODE_PRIVATE, null);
+        try {
+
+            String args[] = {"2020"};
+            cursor = myDB.rawQuery("select schedule_record.事情, schedule_record.年,schedule_record.月,schedule_record.日,schedule_record.開始時間,schedule_record.結束時間,schedule_record.id from schedule_record where schedule_record.年 = ?", args);
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            if (cursor != null) {
+                int iRow = cursor.getCount(); // 取得資料記錄的筆數
+                cursor.moveToFirst();
+                for (int i = 0; i < iRow; i++) {
+                    SchedulePackage temp = new SchedulePackage(
+                            cursor.getInt(6),
+                            cursor.getString(0),
+                            cursor.getInt(1),
+                            cursor.getInt(2),
+                            cursor.getInt(3),
+                            cursor.getInt(4),
+                            cursor.getInt(5));
+                    String tempString = new String(Integer.toString(temp.getStartDateInFormat().getYear()) + "-" +
+                            String.format("%02d", temp.getStartDateInFormat().getMonth()) + "-" +
+                            String.format("%02d", temp.getStartDateInFormat().getDay()) + " " +
+                            String.format("%02d", temp.getStartDateInFormat().getHour()) + ":" +
+                            String.format("%02d", temp.getStartDateInFormat().getMinute()) + ":00");
+                    stuffList.add(tempString);
+                    tempString = new String(Integer.toString(temp.getStartDateInFormat().getYear()) + "-" +
+                            String.format("%02d", temp.getStartDateInFormat().getMonth()) + "-" +
+                            String.format("%02d", temp.getStartDateInFormat().getDay()) + " 00:00:00");
+                    Date tempdate = null;
+                    tempdate = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(tempString);
+                    long tempmilis = tempdate.getTime();
+                    stuffListinDateFormat.add(tempmilis);
+                    tempString = new String(Integer.toString(temp.getEndDateInFormat().getYear()) + "-" +
+                            String.format("%02d", temp.getEndDateInFormat().getMonth()) + "-" +
+                            String.format("%02d", temp.getEndDateInFormat().getDay()) + " " +
+                            String.format("%02d", temp.getEndDateInFormat().getHour()) + ":" +
+                            String.format("%02d", temp.getEndDateInFormat().getMinute()) + ":00");
+                    stuffEndingList.add(tempString);
+                    tempString = new String(Integer.toString(temp.getEndDateInFormat().getYear()) + "-" +
+                            String.format("%02d", temp.getEndDateInFormat().getMonth()) + "-" +
+                            String.format("%02d", temp.getEndDateInFormat().getDay()) + " 23:59:59");
+                    tempdate = null;
+                    tempdate = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(tempString);
+                    tempmilis = tempdate.getTime();
+                    stuffEndingListinDateFormat.add(tempmilis);
+                    stuffNameList.add(temp.getTodo());
+                    stuffIDList.add(temp.getID());
+                    stuffcount=stuffIDList.size();
+                    cursor.moveToNext();
+                }
+
+
+
+
+                for(int i=stuffList.size()-1;i>=0;i--)
+                {
+                    int minIndex = stuffListinDateFormat.indexOf(Collections.min(stuffListinDateFormat));
+                    stuffListinDateFormatBackup.add(stuffListinDateFormat.get(minIndex));
+                    stuffEndingListinDateFormatBackup.add(stuffEndingListinDateFormat.get(minIndex));
+                    stuffListBackup.add(stuffList.get(minIndex));
+                    stuffEndingListBackup.add(stuffEndingList.get(minIndex));
+                    stuffIDListBackup.add(stuffIDList.get(minIndex));
+                    stuffNameListBackup.add(stuffNameList.get(minIndex));
+
+                    stuffList.set(minIndex,"");
+                    stuffNameList.set(minIndex,"");
+                    stuffEndingList.set(minIndex,"");
+                    stuffListinDateFormat.set(minIndex,Long.MAX_VALUE);
+                    stuffEndingListinDateFormat.set(minIndex,Long.MAX_VALUE);
+                    stuffIDList.set(minIndex,Integer.MAX_VALUE);
+
+
+                }
+
+                stuffList.clear();
+                stuffNameList.clear();
+                stuffEndingList.clear();
+                stuffListinDateFormat.clear();
+                stuffEndingListinDateFormat.clear();
+                stuffIDList.clear();
+
+                for(int i=0;i<stuffListBackup.size();i++)
+                {
+                    stuffListinDateFormat.add(stuffListinDateFormatBackup.get(i));
+                    stuffEndingListinDateFormat.add(stuffEndingListinDateFormatBackup.get(i));
+                    stuffList.add(stuffListBackup.get(i));
+                    stuffEndingList.add(stuffEndingListBackup.get(i));
+                    stuffIDList.add(stuffIDListBackup.get(i));
+                    stuffNameList.add(stuffNameListBackup.get(i));
+
+                }
+                for(int i=0;i<stuffList.size();i++)
+                {
+                    stuffTitleList.add(stuffNameList.get(i));
+                }
+
+                for(int i=0;i<stuffList.size();i++)
+                {
+
+                    if(stuffNameList.get(i).length()>15)
+                    {
+                        stuffTitleList.set(i,stuffTitleList.get(i).substring(0, 15)+"⋯");
+                    }
+                    else
+                    {
+                        while(stuffTitleList.get(i).length()<15)
+                        {
+                            stuffTitleList.set(i,stuffTitleList.get(i)+"　");
+                        }
+
+                    }
+                    // stuffTitleList.set(i,stuffTitleList.get(i)+" ("+stuffList.get(i).split(" ")[0]+")");
+                }
+
+                // 5. 關閉 DB
+                myDB.close();
 
 
 
