@@ -190,13 +190,13 @@ public class NewPlan_activity extends AppCompatActivity {
         return String.valueOf(year) + "-" + String.format("%02d", monthOfYear + 1) + "-" + String.format("%02d", dayOfMonth);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            NewPlan_activity.this.finish();
-        }
-        return true;
-    }
+//q
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        if (item.getItemId() == android.R.id.home) {
+//            NewPlan_activity.this.finish();
+//        }
+//        return true;
+//    }
 
     public void setStartTime(View v) {
         timePickerDialog.show();

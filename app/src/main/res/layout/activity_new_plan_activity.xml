@@ -45,7 +45,8 @@
             android:hint="請輸入標題"
             android:inputType="textUri"
             android:textColor="@color/cardview_light_background"
-            android:textColorHint="@color/colorAccent" />
+            android:textColorHint="@color/colorAccent"
+            android:textSize="@dimen/_15sdp" />
 
         <EditText
             android:id="@+id/dateinput"
@@ -56,7 +57,8 @@
             android:focusable="false"
             android:hint="請選擇日期"
             android:textColor="@color/cardview_light_background"
-            android:textColorHint="@color/colorAccent" />
+            android:textColorHint="@color/colorAccent"
+            android:textSize="@dimen/_15sdp" />
 
 
         <com.google.android.material.textfield.TextInputEditText
@@ -69,7 +71,8 @@
             android:layout_toRightOf="@id/endsdate"
             android:hint="請選擇日期"
             android:textColor="@color/cardview_light_background"
-            android:textColorHint="@color/colorAccent" />
+            android:textColorHint="@color/colorAccent"
+            android:textSize="@dimen/_15sdp" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/endstimeinput"
@@ -81,7 +84,8 @@
             android:layout_toRightOf="@id/endstime"
             android:hint="請選擇時間"
             android:textColor="@color/cardview_light_background"
-            android:textColorHint="@color/colorAccent" />
+            android:textColorHint="@color/colorAccent"
+            android:textSize="@dimen/_15sdp" />
 
         <TextView
             android:id="@+id/event"
@@ -197,7 +201,8 @@
             android:hint="請選擇時間"
             android:inputType="time"
             android:textColor="@color/cardview_light_background"
-            android:textColorHint="@color/colorAccent" />
+            android:textColorHint="@color/colorAccent"
+            android:textSize="@dimen/_15sdp" />
 
         <TextView
             android:id="@+id/endsdate"
