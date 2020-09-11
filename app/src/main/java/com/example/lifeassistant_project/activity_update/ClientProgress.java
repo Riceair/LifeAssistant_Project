@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class ClientProgress implements Runnable {
 
     public static int port = 6666;
-    public static String address = "192.168.203.112";
+    public static String address = "172.20.10.8";
 
     public DataPackage sndPackage;
     public ArrayList<DataPackage> rcvPackageList;

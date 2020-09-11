@@ -103,7 +103,8 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="@dimen/_10sdp"
-                android:background="@drawable/planner_stuff_on_main_screen">
+                android:background="@drawable/planner_stuff_on_main_screen"
+                tools:visibility="invisible">
 
                 <TextView
                     android:id="@+id/PlannerInnerText"
