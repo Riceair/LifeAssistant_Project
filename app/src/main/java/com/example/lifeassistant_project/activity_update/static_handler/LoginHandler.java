@@ -10,6 +10,8 @@ public class LoginHandler {
     static private String errorMessage = "default error message.";
     static private String resKey = "FA";
 
+    static private String storedUserName = "Null";
+
     static private boolean isLogin = false;
 
     static public boolean Login(LoginPackage loginPackage)
@@ -38,7 +40,13 @@ public class LoginHandler {
             LoginHandler.userKey = resultKey;
             LoginHandler.userName = loginPackage.getName();
             LoginHandler.isLogin = true;
-            DatabaseBehavior.synchronizeData();
+
+//            if(storedUserName.equals(userName))
+//                DatabaseBehavior.synchronizeDataFromClient();
+//            else
+                DatabaseBehavior.synchronizeData();
+
+            storedUserName = userName;
             return true;
         }
     }
@@ -126,4 +134,8 @@ public class LoginHandler {
     static public void setUserKey(String message){userKey = message;}
 
     static public String getUserKey(){ return userKey; }
+
+    public static String getStoredUserName() { return storedUserName; }
+
+    public static void setStoredUserName(String storedUserName) { LoginHandler.storedUserName = storedUserName; }
 }

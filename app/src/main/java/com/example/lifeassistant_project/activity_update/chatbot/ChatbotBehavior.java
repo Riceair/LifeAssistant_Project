@@ -103,7 +103,7 @@ public class ChatbotBehavior {
         if((this.sendSentence.getIntent() == 1 || this.sendSentence.getIntent() == 2) ||
                 (this.currentIntent == 0 && this.sentenceHandler.getFulfillment().substring(0, 1).equals("已")))
         {
-            DatabaseBehavior.synchronizeServer2Client_Account();
+            DatabaseBehavior.synchronizeData();
         }
     }
     public String getResponse()

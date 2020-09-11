@@ -178,7 +178,7 @@ public class WeatherPackage extends DataPackage
                 image.setImageResource(R.drawable.weather_condition_mostlyclear);
                 break;
             default:
-                image.setImageResource(R.drawable.weather_condition_windy);
+                image.setImageResource(R.drawable.weather_condition_rain);
                 break;
         }
     }

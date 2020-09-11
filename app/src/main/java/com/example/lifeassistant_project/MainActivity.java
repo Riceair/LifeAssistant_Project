@@ -142,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             System.out.println(shared.getString("username", "null"));
             System.out.println(shared.getString("password", "null"));
             LoginPackage loginPackage = new LoginPackage(shared.getString("username", "null"), shared.getString("password", "null"));
+            LoginHandler.setStoredUserName(shared.getString("username", "Null"));
             if(LoginHandler.Login(loginPackage))
             {
                 setAfterLogin(shared.getString("username","null"));
@@ -441,7 +442,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case -1:
                 break;
             case 0:
-                DatabaseBehavior.synchronizeServer2Client_Account();
+                DatabaseBehavior.synchronizeDataFromClient();
                 break;
             case 1:
 //          FOR CHATBOT DEBUG
