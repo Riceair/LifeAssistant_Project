@@ -1,5 +1,6 @@
 package com.example.lifeassistant_project;
 
+import android.accounts.Account;
 import android.app.ActionBar;
 import android.content.*;
 import android.database.Cursor;
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView chatBotSay;
 
     //機器人回應視窗
-    private RelativeLayout popup_window,weather_response,account_cal_window;
+    private RelativeLayout popup_window,weather_response,account_cal_window, planner_window;
     private LinearLayout yes_no_response;
     private int popup_window_height,popup_window_width;
     private PieChart mChart;
@@ -173,6 +174,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         loginButton = navigationView.getHeaderView(0).findViewById(R.id.LoginButton);
         popup_window=findViewById(R.id.popup_window);
         weather_response=findViewById(R.id.weather_response);
+        planner_window = findViewById((R.id.Planner_popup));
         account_cal_window=findViewById(R.id.AccountCalWindow);
         yes_no_response=findViewById(R.id.yes_no_response);
         mChart=findViewById(R.id.pieChart);
@@ -279,6 +281,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     //排程
+    private void popupShow(List<String> todoList, String calType)
+    {
+        setPopupDefaultSize();
+        popup_window.setVisibility(View.VISIBLE);
+        Animation animation=AnimationUtils.loadAnimation(this,R.anim.alpha_scale_anim);
+        animation.setDuration(1000);
+        popup_window.startAnimation(animation);
+
+        planner_window.setVisibility(View.VISIBLE);
+        ListView todoListView = findViewById(R.id.list);
+
+        String[] detTodoList = new String[todoList.size()];
+        detTodoList = todoList.toArray(detTodoList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, detTodoList);
+        todoListView.setAdapter(adapter);
+    }
 
     //猜測意圖
     private void popupShow()
@@ -317,6 +335,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void popupGone(){
         popup_window.setVisibility(View.INVISIBLE);
         weather_response.setVisibility(View.INVISIBLE);
+        planner_window.setVisibility(View.INVISIBLE);
         account_cal_window.setVisibility(View.INVISIBLE);
         yes_no_response.setVisibility(View.INVISIBLE);
         mChart.setVisibility(View.INVISIBLE);
@@ -566,42 +585,70 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         findViewById(R.id.popup_window).setVisibility(View.VISIBLE);
         if (chatbotBehavior.isSearchFlag())
         {
-            //記帳查詢
+            //記帳 or 行程查詢
             List<String> itemList = new ArrayList<>();
             List<Integer> moneyList = new ArrayList<>();
+            List<String> todoList = new ArrayList<>();
             String selectType = chatbotBehavior.getSelectType();
+            int packageType = 0; // 0 for default, 1 for AccountPackage, 2 for SchedulePackage
+
             for (DataPackage ele : chatbotBehavior.getSelectedPackage())
             {
-                AccountPackage rcvEle = (AccountPackage) ele;
-                if(!rcvEle.getType() && selectType.equals("def"))
-                    continue;
-
-                if(!selectType.equals("def"))
-                    System.out.println("?????");
-                int moneyBuf = rcvEle.getMoney();
-                if(!selectType.equals("def") && rcvEle.getType())
-                    moneyBuf *= -1;
-
-                if(!itemList.contains(rcvEle.getItem()))
+                if(packageType == 0)
                 {
-                    itemList.add(rcvEle.getItem());
-                    moneyList.add(moneyBuf);
+                    try {
+                        AccountPackage rcvEle = (AccountPackage) ele;
+                        packageType = 1;
+                    }catch (ClassCastException e) {
+                        SchedulePackage rcvEle = (SchedulePackage) ele;
+                        packageType = 2;
+                    }
                 }
-                else
-                {
-                    int ptr = itemList.indexOf(rcvEle.getItem()), moneyBuf_t = moneyList.get(ptr);
-                    if(!selectType.equals("def") && rcvEle.getType())
-                        moneyBuf_t *= -1;
 
-                    moneyList.set(ptr, moneyBuf + moneyBuf_t);
+                if(packageType == 1)
+                {
+                    AccountPackage rcvEle = (AccountPackage) ele;
+                    if(!rcvEle.getType() && selectType.equals("def"))
+                        continue;
+
+                    if(!selectType.equals("def"))
+                        System.out.println("?????");
+                    int moneyBuf = rcvEle.getMoney();
+                    if(!selectType.equals("def") && rcvEle.getType())
+                        moneyBuf *= -1;
+
+                    if(!itemList.contains(rcvEle.getItem()))
+                    {
+                        itemList.add(rcvEle.getItem());
+                        moneyList.add(moneyBuf);
+                    }
+                    else
+                    {
+                        int ptr = itemList.indexOf(rcvEle.getItem()), moneyBuf_t = moneyList.get(ptr);
+                        if(!selectType.equals("def") && rcvEle.getType())
+                            moneyBuf_t *= -1;
+
+                        moneyList.set(ptr, moneyBuf + moneyBuf_t);
+                    }
+                }
+                else if(packageType == 2)
+                {
+                    SchedulePackage rcvEle = (SchedulePackage) ele;
+                    if(selectType.equals("def"))
+                    {
+                        todoList.add(rcvEle.getTodo());
+                    }
                 }
             }
 
-            popupShow(itemList, moneyList, chatbotBehavior.getSelectType());
+            if(packageType == 1)
+                popupShow(itemList, moneyList, chatbotBehavior.getSelectType());
+            else if(packageType == 2)
+                popupShow(todoList, chatbotBehavior.getSelectType());
         }
         else if (chatbotBehavior.getCurrentIntent() == 2 && chatbotBehavior.getCurrentOperation() == 4)
         {
-            //行程查詢
+            //行程查詢 dropped.
             yes_no_response.setVisibility(View.INVISIBLE);
             findViewById(R.id.weather_condition).setVisibility(View.INVISIBLE);
 
