@@ -116,31 +116,33 @@
                         android:textSize="@dimen/_15sdp"/>
 
                 <Button
-                        android:id="@+id/editbutton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/_25sdp"
-                        android:layout_below="@id/PlannerInnerText"
+                    android:id="@+id/editbutton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_below="@id/PlannerInnerText"
 
-                        android:layout_centerHorizontal="false"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_marginRight="@dimen/_5sdp"
-                        android:layout_toLeftOf="@id/edit_button"
-                        android:background="@drawable/action_transparent"
-                        android:gravity="center|end"
-                        android:text="查看詳細"
-                        android:textColor="@color/design_default_color_on_secondary"
-                        android:textSize="@dimen/_15sdp"/>
+                    android:layout_centerHorizontal="false"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:layout_toLeftOf="@id/edit_button"
+                    android:background="@drawable/action_transparent"
+                    android:gravity="center|end"
+                    android:onClick="clickViewPlan"
+                    android:text="查看詳細"
+                    android:textColor="@color/design_default_color_on_secondary"
+                    android:textSize="@dimen/_15sdp" />
 
                 <ImageButton
-                        android:id="@+id/edit_button"
-                        android:layout_width="@dimen/_25sdp"
-                        android:layout_height="@dimen/_25sdp"
-                        android:layout_alignTop="@id/editbutton"
+                    android:id="@+id/edit_button"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_alignTop="@id/editbutton"
 
-                        android:layout_alignRight="@id/easylist"
-                        android:background="@drawable/action_transparent"
-                        android:scaleType="centerInside"
-                        app:srcCompat="@drawable/arrowbutton"/>
+                    android:layout_alignRight="@id/easylist"
+                    android:background="@drawable/action_transparent"
+                    android:onClick="clickViewPlan"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/arrowbutton" />
 
                 <LinearLayout
                         android:id="@+id/easylist"

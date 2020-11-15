@@ -49,6 +49,7 @@ import com.example.lifeassistant_project.menu_activity.login.Login_activity;
 import com.example.lifeassistant_project.menu_activity.login.Register_activity;
 import com.example.lifeassistant_project.menu_activity.schedule.Planner_activity;
 import com.example.lifeassistant_project.menu_activity.finance.report.Report_activity;
+import com.example.lifeassistant_project.menu_activity.schedule.ViewPlan_activity;
 import com.example.lifeassistant_project.menu_activity.weather.Weather_activity;
 import com.github.mikephil.charting.charts.PieChart;
 import com.google.android.material.navigation.NavigationView;
@@ -952,6 +953,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             out.write(buffer, 0, read);
         }
     }
+    public void clickViewPlan(View view){
 
+        Intent intent = new Intent(view.getContext(),ViewPlan_activity.class);
+        view.getContext().startActivity(intent);
+
+        startActivityForResult(intent,0);
+    }
 
 }
