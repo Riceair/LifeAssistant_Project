@@ -12,18 +12,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -129,28 +126,35 @@ public class Bookkeeping_activity extends AppCompatActivity {
     }
 
     private void setLayoutSize(){
+        //1080 1920 pixel 2
         DisplayMetrics dm=new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int screenHeight=dm.heightPixels;
-        RelativeLayout.LayoutParams mainlyLayoutParams= (RelativeLayout.LayoutParams) findViewById(R.id.mainly).getLayoutParams();
-        RelativeLayout.LayoutParams deleteLayoutParams= (RelativeLayout.LayoutParams) findViewById(R.id.deletebutton).getLayoutParams();
-        LinearLayout.LayoutParams toolbarParams= (LinearLayout.LayoutParams) findViewById(R.id.toolbar).getLayoutParams();
-        float rate= (float) 0.9;
-        float changeRate;
-        while(true){ //計算縮放比例
-            changeRate=(screenHeight*rate)/(mainlyLayoutParams.height+deleteLayoutParams.height);
-            if((screenHeight-mainlyLayoutParams.height*changeRate)/2-toolbarParams.height>deleteLayoutParams.height*changeRate)
-                break;
-            else
-                rate-=0.05;
-        }
+        float heightRate=dm.heightPixels/(float)1920;
+        float widthRate=dm.widthPixels/(float)1080;
 
+        RelativeLayout mainly=findViewById(R.id.mainly);
+        RelativeLayout.LayoutParams params= (RelativeLayout.LayoutParams) mainly.getLayoutParams();
+        params.height= (int) (dm.heightPixels*0.7);
+        params.width= (int) (params.width*widthRate);
+        mainly.setLayoutParams(params);
 
-        changeRelativeViewSize((ViewGroup) findViewById(R.id.topLayout),changeRate);
+        changeRelativeViewSize((ViewGroup) findViewById(R.id.topLayout),widthRate,heightRate);
+
+        //特殊元件定義
         RadioGroup radioGroup=findViewById(R.id.attributeinput);
         RelativeLayout.LayoutParams radioParams= (RelativeLayout.LayoutParams) radioGroup.getLayoutParams();
-        radioParams.height= (int) (radioParams.height*changeRate);
+        radioParams.height= (int) (radioParams.height*heightRate);
         radioGroup.setLayoutParams(radioParams);
+
+        Button datePicker=findViewById(R.id.datepicker);
+        RelativeLayout.LayoutParams dateParams= (RelativeLayout.LayoutParams) datePicker.getLayoutParams();
+        dateParams.width= dateParams.height;
+        datePicker.setLayoutParams(dateParams);
+
+        Button filterPicker=findViewById(R.id.filterpicker);
+        RelativeLayout.LayoutParams filterParams= (RelativeLayout.LayoutParams) filterPicker.getLayoutParams();
+        filterParams.width= filterParams.height;
+        filterPicker.setLayoutParams(filterParams);
     }
 
     //日期

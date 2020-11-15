@@ -1,6 +1,7 @@
 package com.example.lifeassistant_project.features_class;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.drawable.GradientDrawable;
 import android.util.Log;
 import android.util.TypedValue;
@@ -32,38 +33,43 @@ public class AndroidCommonFunction {
     //    int screenWidth=dm.widthPixels;
     //    int screenHeight=dm.heightPixels;
 
-    public static void changeRelativeViewSize(ViewGroup viewGroup,float rate) {//傳入Activity頂層Layout,螢幕寬,螢幕高
-        for(int i = 0; i<viewGroup.getChildCount(); i++ ) { //處理外層的RelativeLayout #RelativeLayout為一種ViewGroup
-            View v = viewGroup.getChildAt(i);
-            if(v instanceof RelativeLayout){
-                RelativeLayout.LayoutParams params= (RelativeLayout.LayoutParams) v.getLayoutParams();
-                params.height= (int) (params.height*rate);
-                params.width= (int) (params.width*rate);
-                v.setLayoutParams(params);
-            }
-        }
-
+    public static void changeRelativeViewSize(ViewGroup viewGroup,float widthRate,float heightRate) {//傳入Activity頂層Layout,螢幕寬,螢幕高
         for(int i = 0; i<viewGroup.getChildCount(); i++ ){
             View v = viewGroup.getChildAt(i);
-            if(v.getId() == R.id.toolbar) //不處理toolbar
+            if(v.getId() == R.id.toolbar) {
+                LinearLayout.LayoutParams params= (LinearLayout.LayoutParams) v.getLayoutParams();
+                params.height= (int) (params.height*heightRate);
+                v.setLayoutParams(params);
+                changeToolbarLayoutSize((ViewGroup) v,widthRate,heightRate);
                 return;
+            }
 
             if(v instanceof ViewGroup){
-                changeRelativeViewSize((ViewGroup)v,rate);
+                changeRelativeViewSize((ViewGroup)v, widthRate, heightRate);
             }else if(v instanceof RadioButton){ //
-                ( (RadioButton)v ).setTextSize(TypedValue.COMPLEX_UNIT_PX,((RadioButton) v).getTextSize()*rate);
+                ( (RadioButton)v ).setTextSize(TypedValue.COMPLEX_UNIT_PX,((RadioButton) v).getTextSize()*widthRate);
             }else if(v instanceof Button){
                 RelativeLayout.LayoutParams params= (RelativeLayout.LayoutParams) v.getLayoutParams();
-                params.height= (int) (params.height*rate);
-                params.width= (int) (params.width*rate);
+                params.height= (int) (params.height*heightRate);
+                params.width= (int) (params.width*widthRate);
                 v.setLayoutParams(params);
-                ( (Button)v ).setTextSize(TypedValue.COMPLEX_UNIT_PX,((Button) v).getTextSize()*rate);
+                ( (Button)v ).setTextSize(TypedValue.COMPLEX_UNIT_PX,((Button) v).getTextSize()*widthRate);
             }else if(v instanceof TextView){
                 RelativeLayout.LayoutParams params= (RelativeLayout.LayoutParams) v.getLayoutParams();
-                params.height= (int) (params.height*rate);
-                params.width= (int) (params.width*rate);
+                params.height= (int) (params.height*heightRate);
+                params.width= (int) (params.width*widthRate);
                 v.setLayoutParams(params);
-                ( (TextView)v ).setTextSize(TypedValue.COMPLEX_UNIT_PX,((TextView) v).getTextSize()*rate);
+                ( (TextView)v ).setTextSize(TypedValue.COMPLEX_UNIT_PX,((TextView) v).getTextSize()*widthRate);
+            }
+        }
+    }
+
+    public static void changeToolbarLayoutSize(ViewGroup viewGroup,float widthRate,float heightRate) {//傳入Activity頂層Layout,螢幕寬,螢幕高
+        for(int i = 0; i<viewGroup.getChildCount(); i++ ){
+            View v = viewGroup.getChildAt(i);
+
+            if(v instanceof TextView){
+                ( (TextView)v ).setTextSize(TypedValue.COMPLEX_UNIT_PX,((TextView) v).getTextSize()*widthRate);
             }
         }
     }
