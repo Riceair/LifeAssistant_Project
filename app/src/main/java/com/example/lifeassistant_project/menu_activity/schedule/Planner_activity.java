@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -118,7 +119,22 @@ public class Planner_activity extends AppCompatActivity {
             public void onDayClick(Date dateClicked) {
                 List<Event> events = compactCalendarView.getEvents(dateClicked);
                 ListView list = findViewById(R.id.list);
-                list.setOnItemClickListener(null);
+                list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+                        selectstatus=1;
+                        Intent intent = new Intent(view.getContext(),ViewPlan_activity.class);
+                        view.getContext().startActivity(intent);
+                        intent.putExtra("clicked_year",clicked_year);
+                        intent.putExtra("clicked_month",clicked_month);
+                        intent.putExtra("clicked_day",clicked_day);
+                        intent.putExtra("selstatus",selectstatus);
+                        startActivityForResult(intent,0);
+
+
+                    }
+                });
                 RelativeLayout sec_tabs = findViewById(R.id.sec_tabs);
                 RelativeLayout sec = findViewById(R.id.secondary);
                 EventList.clear();
