@@ -1,8 +1,10 @@
 package com.example.lifeassistant_project.activity_update.chatbot;
 
+import android.accounts.Account;
 import com.example.lifeassistant_project.activity_update.ClientProgress;
 import com.example.lifeassistant_project.activity_update.packages.AccountPackage;
 import com.example.lifeassistant_project.activity_update.packages.DataPackage;
+import com.example.lifeassistant_project.activity_update.packages.SchedulePackage;
 import com.example.lifeassistant_project.activity_update.packages.SentenceHandler;
 import com.example.lifeassistant_project.activity_update.static_handler.DatabaseBehavior;
 import com.example.lifeassistant_project.activity_update.static_handler.LoginHandler;
@@ -125,7 +127,24 @@ public class ChatbotBehavior {
 //            System.out.println("DEBUG//////////////////////////");
 //            System.out.println(this.sentenceHandler.getCalculateType());
 //            System.out.println(temp.getMoney());
-            return "好的！以下是您欲查詢的記帳項目：";
+
+            boolean isAccountPackage = true;
+
+            try{
+                AccountPackage temp = (AccountPackage) this.selectedPackage.get(0);
+            }catch (ClassCastException e)
+            {
+                SchedulePackage temp = (SchedulePackage) this.selectedPackage.get(0);
+                isAccountPackage = false;
+            }catch (Exception e)
+            {
+                throw e;
+            }
+
+            if(isAccountPackage)
+                return "好的！以下是您欲查詢的記帳項目：";
+            else if(!isAccountPackage)
+                return "好的！以下是您欲查詢的行程項目：";
         }
         else if(this.currentIntent == 1)
         {
