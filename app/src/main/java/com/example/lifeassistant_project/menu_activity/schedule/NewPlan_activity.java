@@ -27,6 +27,7 @@ import com.example.lifeassistant_project.activity_update.ClientProgress;
 
 import com.example.lifeassistant_project.activity_update.static_handler.LoginHandler;
 import com.example.lifeassistant_project.activity_update.packages.SchedulePackage;
+import com.example.lifeassistant_project.menu_activity.finance.invoice.Invoice_activity;
 
 
 import java.text.SimpleDateFormat;
@@ -212,7 +213,13 @@ public class NewPlan_activity extends AppCompatActivity {
         overridePendingTransition(0, R.anim.translate_out);
     }
 
+    public boolean onOptionsItemSelected(MenuItem item){
 
+        if(item.getItemId()==android.R.id.home){
+           NewPlan_activity.this.finish();
+        }
+        return true;
+    }
     private void ReadDBRecord() {
         stuffList.clear();
         stuffEndingList.clear();
