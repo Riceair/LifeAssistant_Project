@@ -43,10 +43,10 @@
             android:layout_width="?attr/actionBarSize"
             android:layout_height="@dimen/_15sdp"
             android:layout_centerHorizontal="true"
-            android:gravity="center"
+            android:gravity="bottom|center_horizontal"
             android:text="JAN"
             android:textColor="@color/ic_launcher_background"
-            android:textSize="@dimen/_5sdp"
+            android:textSize="@dimen/_8sdp"
             android:textStyle="bold" />
 
         <TextView
@@ -58,7 +58,7 @@
             android:gravity="center|center_horizontal|top"
             android:text="27"
             android:textColor="@color/design_default_color_on_secondary"
-            android:textSize="18sp"
+            android:textSize="@dimen/_18sdp"
             android:textStyle="bold" />
 
     </RelativeLayout>
