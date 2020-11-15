@@ -34,6 +34,7 @@
         android:layout_alignTop="@id/backind"
         android:layout_alignParentRight="false"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_5sdp"
         android:background="@drawable/tabsonplanner">
 
         <Button
@@ -118,7 +119,7 @@
 
     <RelativeLayout
         android:id="@+id/sec_tabs"
-        android:layout_width="@dimen/_60sdp"
+        android:layout_width="@dimen/_70sdp"
         android:layout_height="@dimen/_30sdp"
         android:layout_alignTop="@id/secondary"
         android:layout_centerHorizontal="true"
@@ -127,12 +128,12 @@
 
         <Button
             android:id="@+id/editbutton"
-            android:layout_width="@dimen/_30sdp"
+            android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_30sdp"
 
             android:background="@drawable/action_transparent"
 
-            android:gravity="left|center_vertical"
+            android:gravity="center|center_vertical"
             android:onClick="clickEdit"
             android:text="修改"
             android:textColor="@color/ic_launcher_background"
