@@ -10,10 +10,9 @@
         android:id="@+id/LoginButton"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:background="#686363"
-        android:gravity="center"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true">
+        android:layout_centerInParent="true"
+        android:gravity="center">
+
         <ImageButton
             android:id="@+id/LoginImg"
             android:layout_width="wrap_content"

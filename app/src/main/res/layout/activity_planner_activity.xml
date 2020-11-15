@@ -31,9 +31,10 @@
         android:id="@+id/tabs"
         android:layout_width="@dimen/_165sdp"
         android:layout_height="@dimen/_30sdp"
-        android:layout_below="@id/backind"
+        android:layout_alignTop="@id/backind"
         android:layout_alignParentRight="false"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_5sdp"
         android:background="@drawable/tabsonplanner">
 
         <Button
