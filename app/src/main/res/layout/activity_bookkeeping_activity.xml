@@ -126,7 +126,7 @@
                 android:textSize="35px"
                 android:layout_alignBottom="@+id/dateinput"
                 android:layout_toRightOf="@+id/dateinput"
-                android:text="選擇日期" />
+                android:text="選擇\n日期" />
 
             <TextView
                 android:id="@+id/filter"
@@ -161,7 +161,7 @@
                 android:layout_alignBottom="@+id/filterinput"
                 android:layout_toRightOf="@+id/filterinput"
                 android:onClick="clickToShowTypeList"
-                android:text="選擇分類" />
+                android:text="選擇\n分類" />
 
             <TextView
                 android:id="@+id/items"
