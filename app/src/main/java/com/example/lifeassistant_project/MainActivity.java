@@ -957,7 +957,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Intent intent = new Intent(view.getContext(),ViewPlan_activity.class);
         view.getContext().startActivity(intent);
-
+        intent.putExtra("lastclickeddate","");
         startActivityForResult(intent,0);
     }
 
