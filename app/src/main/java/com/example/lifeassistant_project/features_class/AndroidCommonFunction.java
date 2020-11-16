@@ -53,9 +53,29 @@ public class AndroidCommonFunction {
                 params.height= (int) (params.height*heightRate);
                 params.width= (int) (params.width*widthRate);
                 v.setLayoutParams(params);
-                ( (Button)v ).setTextSize(TypedValue.COMPLEX_UNIT_PX,((Button) v).getTextSize()*widthRate);
+                ( (Button)v ).setTextSize(TypedValue.COMPLEX_UNIT_PX,((Button) v).getTextSize()*widthRate*(float) 0.9);
             }else if(v instanceof TextView){
                 RelativeLayout.LayoutParams params= (RelativeLayout.LayoutParams) v.getLayoutParams();
+                params.height= (int) (params.height*heightRate);
+                params.width= (int) (params.width*widthRate);
+                v.setLayoutParams(params);
+                ( (TextView)v ).setTextSize(TypedValue.COMPLEX_UNIT_PX,((TextView) v).getTextSize()*widthRate);
+            }
+        }
+    }
+
+    public static void changeLinearViewSize(ViewGroup viewGroup,float widthRate,float heightRate) {//傳入Activity頂層Layout,螢幕寬,螢幕高
+        Log.e("LIN","number:"+viewGroup.getChildCount());
+        for(int i = 0; i<viewGroup.getChildCount(); i++ ){
+            View v = viewGroup.getChildAt(i);
+
+            if(v instanceof LinearLayout){
+                LinearLayout.LayoutParams params= (LinearLayout.LayoutParams) v.getLayoutParams();
+                params.height= (int) (params.height*heightRate);
+                v.setLayoutParams(params);
+                changeLinearViewSize((ViewGroup)v, widthRate, heightRate);
+            }else if(v instanceof TextView){
+                LinearLayout.LayoutParams params= (LinearLayout.LayoutParams) v.getLayoutParams();
                 params.height= (int) (params.height*heightRate);
                 params.width= (int) (params.width*widthRate);
                 v.setLayoutParams(params);
