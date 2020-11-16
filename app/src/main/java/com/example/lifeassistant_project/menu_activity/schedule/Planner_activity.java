@@ -604,8 +604,10 @@ public class Planner_activity extends AppCompatActivity {
         return true;
     }
     public void clickBack(View view){
-        finish();
-
+//        finish();
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
     //    @Override
     public void finish() {

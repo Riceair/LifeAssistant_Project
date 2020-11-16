@@ -13,12 +13,11 @@
         android:layout_centerInParent="true"
         android:gravity="center">
 
-        <ImageButton
+        <ImageView
             android:id="@+id/LoginImg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:background="@android:drawable/menuitem_background"
             app:srcCompat="@drawable/login_button" />
 
         <TextView

@@ -176,6 +176,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_20sdp"
+                android:divider="@drawable/divider"
                 android:listSelector="@drawable/action_transparent" />
         </LinearLayout>
     </RelativeLayout>
