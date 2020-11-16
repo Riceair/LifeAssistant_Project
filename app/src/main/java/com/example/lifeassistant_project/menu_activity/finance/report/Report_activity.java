@@ -11,6 +11,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,11 +20,12 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.lifeassistant_project.features_class.PieChartUsedClass;
 import com.example.lifeassistant_project.R;
@@ -33,6 +35,8 @@ import java.util.Calendar;
 import java.util.List;
 
 import static com.example.lifeassistant_project.features_class.AndroidCommonFunction.addBaseline;
+import static com.example.lifeassistant_project.features_class.AndroidCommonFunction.changeLinearViewSize;
+import static com.example.lifeassistant_project.features_class.AndroidCommonFunction.changeRelativeViewSize;
 
 public class Report_activity extends AppCompatActivity {
     private static final String DBNAME = "myDB.db";
@@ -49,6 +53,7 @@ public class Report_activity extends AppCompatActivity {
     private List<Integer> sum_list = new ArrayList<>();
     private List<Integer> color_default_list = new ArrayList<>();
     private int transYear,transMonth,transDay;
+    private float heightRate,widthRate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,35 +81,37 @@ public class Report_activity extends AppCompatActivity {
 
         setBotInf();
         setSwitch();
+        setLayoutSize();
     }
 
     private void setLayoutSize(){
         DisplayMetrics dm=new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
-        final int screenHeight=dm.heightPixels;
-        final ConstraintLayout mainly=findViewById(R.id.mainly);
-        ConstraintLayout.LayoutParams mainlyParams= (ConstraintLayout.LayoutParams) findViewById(R.id.mainly).getLayoutParams();
-        ConstraintLayout.LayoutParams scrollParams= (ConstraintLayout.LayoutParams) findViewById(R.id.reportScroll).getLayoutParams();
-        LinearLayout.LayoutParams toolbarParams= (LinearLayout.LayoutParams) findViewById(R.id.toolbar).getLayoutParams();
+        heightRate=dm.heightPixels/(float)1920;
+        widthRate=dm.widthPixels/(float)1080;
 
-//        mainly.setLayoutParams(mainlyParams);
-//        //screenHeight-viewRect.bottom = 到底部的距離
-//        Runnable runnable = new Runnable() {
-//            @Override
-//            public void run() {
-//                Rect viewRect = new Rect();
-//                mainly.getGlobalVisibleRect(viewRect);
-//                Log.e("text","msg: "+viewRect.bottom);
-//                notify();
-//            }
-//        };
-//        Thread thread=new Thread(runnable);
-//        thread.start();
-//        synchronized (runnable){
-//            try {
-//                runnable.wait();
-//            }catch (Exception e){}
-//        }
+        //報表本體
+        RelativeLayout mainly=findViewById(R.id.mainly);
+        RelativeLayout.LayoutParams params= (RelativeLayout.LayoutParams) mainly.getLayoutParams();
+        params.height= (int) (params.height*heightRate);
+        params.width= (int) (params.width*widthRate);
+        mainly.setLayoutParams(params);
+
+        //底部資訊
+        ScrollView reportScroll=findViewById(R.id.reportScroll);
+        RelativeLayout.LayoutParams sp= (RelativeLayout.LayoutParams) reportScroll.getLayoutParams();
+        sp.height= (int) (sp.height*heightRate*(float)0.9);
+        reportScroll.setLayoutParams(sp);
+
+        //無資料文字顯示
+        TextView no_data_text=findViewById(R.id.no_data_text);
+        no_data_text.setTextSize(TypedValue.COMPLEX_UNIT_PX,no_data_text.getTextSize()*widthRate);
+        RelativeLayout.LayoutParams ntPar=(RelativeLayout.LayoutParams) no_data_text.getLayoutParams();
+        ntPar.bottomMargin=(int) (sp.height*(float)0.3);
+        no_data_text.setLayoutParams(ntPar);
+
+        changeRelativeViewSize(reportScroll,widthRate,heightRate);
+
     }
 
     private void setSwitch(){
@@ -358,6 +365,8 @@ public class Report_activity extends AppCompatActivity {
             //新增底線
             addBaseline(this,recordLinear,R.drawable.segment);
         }
+
+        changeLinearViewSize(recordLinear,widthRate,heightRate);
     }
 
     @Override
