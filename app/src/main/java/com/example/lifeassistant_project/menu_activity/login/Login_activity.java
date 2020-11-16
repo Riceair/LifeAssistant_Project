@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.lifeassistant_project.MainActivity;
 import com.example.lifeassistant_project.R;
 import com.example.lifeassistant_project.activity_update.static_handler.LoginHandler;
 import com.example.lifeassistant_project.activity_update.packages.LoginPackage;
@@ -32,6 +33,7 @@ public class Login_activity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setIcon(R.drawable.regsite_logo_small);
+        getSupportActionBar().hide();
         final Button loginButton = findViewById(R.id.login_button);
         loginButton.setOnClickListener(new View.OnClickListener()
         {
@@ -110,7 +112,10 @@ public class Login_activity extends AppCompatActivity {
         }
         return true;
     }
+    public void clickBack(View view){
+    finish();
 
+    }
     @Override
     public void finish() {
         super.finish();
