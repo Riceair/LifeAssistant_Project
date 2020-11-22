@@ -10,22 +10,22 @@
     tools:context="com.example.lifeassistant_project.menu_activity.finance.invoice.Invoice_activity">
 
     <RelativeLayout
-        android:layout_width="350dp"
-        android:layout_height="600dp"
+        android:layout_width="@dimen/_250sdp"
+        android:layout_height="@dimen/_380sdp"
         android:layout_centerInParent="true"
         android:background="@drawable/receipt_checksum_inner_background">
 
         <TextView
             android:id="@+id/welcometext"
-            android:layout_width="110dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="false"
             android:layout_alignParentBottom="false"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="@dimen/_30sdp"
             android:text="歡迎來到"
             android:textColor="@android:color/background_light"
-            android:textSize="25sp"
+            android:textSize="@dimen/_10sdp"
             android:textStyle="bold"
             tools:text="歡迎來到" />
 
@@ -37,62 +37,66 @@
             android:text="發票兌獎"
             android:textAlignment="center"
             android:textColor="@android:color/background_light"
-            android:textSize="45dp"
+            android:textSize="@dimen/_35sdp"
             android:textStyle="bold"
             tools:text="發票兌獎" />
 
         <LinearLayout
+            android:id="@+id/buttons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/welcometext2"
-            android:layout_centerHorizontal="true">
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_10sdp">
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="clickToQRScan"
-            android:layout_marginRight="5dp"
-            android:text="QR掃描器"
-            android:textSize="16dp" />
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:onClick="clickToQRScan"
+                android:text="QR掃描器"
+                android:textSize="@dimen/_10sdp" />
 
-        <Button
-            android:id="@+id/auto_check_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="clickToAutoCheck"
-            android:layout_marginLeft="5dp"
-            android:text="自動兌獎"
-            android:textSize="16dp"/>
+            <Button
+                android:id="@+id/auto_check_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:onClick="clickToAutoCheck"
+                android:text="自動兌獎"
+                android:textSize="@dimen/_10sdp" />
 
         </LinearLayout>
 
         <TextView
             android:id="@+id/more"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@id/buttons"
+            android:layout_alignParentBottom="false"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="290dp"
+            android:layout_marginTop="@dimen/_30sdp"
             android:text="或是，你可以..."
-            android:textColor="@android:color/background_dark"
+            android:textColor="@android:color/white"
             android:textSize="20sp"
             android:textStyle="bold"
             tools:text="或是，你可以..." />
 
         <ImageView
             android:id="@+id/reciptbox"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_below="@id/more"
+            android:layout_alignParentBottom="false"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="220dp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:background="@android:drawable/editbox_background_normal" />
 
         <EditText
             android:id="@+id/receiptserial"
-            android:layout_width="180dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/_140sdp"
+            android:layout_height="@dimen/_32sdp"
             android:layout_alignTop="@+id/reciptbox"
             android:layout_centerHorizontal="true"
             android:gravity="center"
@@ -105,45 +109,47 @@
 
         <TextView
             android:id="@+id/invoice_rewards"
-            android:layout_width="100dp"
-            android:layout_height="35dp"
-            android:layout_alignParentBottom="true"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_below="@id/receiptserial"
+            android:layout_alignParentBottom="false"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="180dp"
+            android:layout_marginTop="@dimen/_35sdp"
             android:background="@drawable/rewards_exile"
             android:gravity="center"
             android:text="未中獎"
             android:textColor="@color/zxing_status_text"
-            android:textSize="14dp"
+            android:textSize="@dimen/_15sdp"
             android:visibility="invisible" />
 
         <LinearLayout
             android:id="@+id/invoice_rewords_number"
-            android:layout_width="100dp"
-            android:layout_height="35dp"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_35sdp"
             android:layout_above="@+id/invoice_rewards"
+            android:layout_below="@id/invoice_rewards"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="-100dp"
+            android:layout_marginTop="@dimen/_5sdp"
             android:background="@drawable/tabs4receipt"
             android:orientation="horizontal"
             android:visibility="invisible">
 
             <TextView
                 android:id="@+id/invoice_first5"
-                android:layout_width="65dp"
-                android:layout_height="32dp"
+                android:layout_width="@dimen/_45sdp"
+                android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="12345"
                 android:textColor="#F1DFDF"
-                android:textSize="18dp" />
+                android:textSize="@dimen/_15sdp" />
 
             <TextView
                 android:id="@+id/invoice_last3"
-                android:layout_width="35dp"
-                android:layout_height="32dp"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="match_parent"
                 android:text="678"
                 android:textColor="#0000C6"
-                android:textSize="18dp" />
+                android:textSize="@dimen/_15sdp" />
         </LinearLayout>
     </RelativeLayout>
 

@@ -9,9 +9,9 @@
 
     <SurfaceView
         android:id="@+id/qr_view"
-        android:layout_width="320dp"
-        android:layout_height="320dp"
-        android:layout_marginTop="84dp"
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_200sdp"
+        android:layout_marginTop="@dimen/_50sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,14 +19,14 @@
 
     <TextView
         android:id="@+id/invoice_text"
-        android:layout_width="280dp"
-        android:layout_height="60dp"
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_55sdp"
         android:layout_marginTop="36dp"
         android:background="@drawable/rewards_abandoned"
         android:gravity="center"
         android:text="請掃描發票左側QR code"
         android:textColor="#FFFFFF"
-        android:textSize="23dp"
+        android:textSize="@dimen/_17sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,8 +34,8 @@
 
     <TextView
         android:id="@+id/invoice_rewards"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_30sdp"
         android:layout_marginTop="20dp"
         android:background="@drawable/rewards_exile"
         android:gravity="center"
@@ -50,8 +50,8 @@
 
     <LinearLayout
         android:id="@+id/invoice_rewords_number"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_35sdp"
         android:layout_above="@+id/invoice_rewards"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
@@ -65,8 +65,8 @@
 
         <TextView
             android:id="@+id/invoice_first5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_45sdp"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:text="12345"
             android:textColor="#F1DFDF"
@@ -74,8 +74,8 @@
 
         <TextView
             android:id="@+id/invoice_last3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="match_parent"
             android:text="678"
             android:textColor="#0000C6"
             android:textSize="18dp" />
