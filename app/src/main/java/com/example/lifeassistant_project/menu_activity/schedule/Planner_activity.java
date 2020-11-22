@@ -87,6 +87,7 @@ public class Planner_activity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setIcon(R.drawable.newstand);
         getSupportActionBar().hide();
+        //暫時取消全螢幕模式
         final View decorView = getWindow().getDecorView();
         decorView.setOnSystemUiVisibilityChangeListener (new View.OnSystemUiVisibilityChangeListener() {
             @Override
@@ -99,7 +100,7 @@ public class Planner_activity extends AppCompatActivity {
                                     | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
                 }
             }
-        });
+       });
         //初始化日曆頭標與語系
         final CompactCalendarView compactCalendarView = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
         compactCalendarView.setLocale(TimeZone.getTimeZone("GMT-8:00"),Locale.CHINESE);
@@ -575,7 +576,7 @@ public class Planner_activity extends AppCompatActivity {
         super.onResume();
         final int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
         final View decorView = getWindow().getDecorView();
-        decorView.setSystemUiVisibility(uiOptions);
+       decorView.setSystemUiVisibility(uiOptions);
     }
     public void clickViewPlan(View view){
         selectstatus=0;
