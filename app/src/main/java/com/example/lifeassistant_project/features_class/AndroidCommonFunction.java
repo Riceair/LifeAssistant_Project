@@ -46,6 +46,11 @@ public class AndroidCommonFunction {
 
             if(v instanceof ViewGroup){
                 changeRelativeViewSize((ViewGroup)v, widthRate, heightRate);
+            }else if(v instanceof ImageView){
+                RelativeLayout.LayoutParams params= (RelativeLayout.LayoutParams) v.getLayoutParams();
+                params.height= (int) (params.height*heightRate);
+                params.width= (int) (params.width*widthRate);
+                v.setLayoutParams(params);
             }else if(v instanceof RadioButton){ //
                 ( (RadioButton)v ).setTextSize(TypedValue.COMPLEX_UNIT_PX,((RadioButton) v).getTextSize()*widthRate);
             }else if(v instanceof Button){
@@ -75,6 +80,8 @@ public class AndroidCommonFunction {
                 v.setLayoutParams(params);
                 changeLinearViewSize((ViewGroup)v, widthRate, heightRate);
             }else if(v instanceof TextView){
+                if(heightRate<1) heightRate=1;
+                if(widthRate<1) widthRate=1;
                 LinearLayout.LayoutParams params= (LinearLayout.LayoutParams) v.getLayoutParams();
                 params.height= (int) (params.height*heightRate);
                 params.width= (int) (params.width*widthRate);

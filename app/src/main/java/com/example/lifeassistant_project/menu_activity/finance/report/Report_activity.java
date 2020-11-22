@@ -67,7 +67,6 @@ public class Report_activity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setIcon(R.drawable.icon_report);
 
-
         //title設置 底部資訊設置
         Calendar c = Calendar.getInstance();
         currentYear=c.get(Calendar.YEAR);
@@ -110,7 +109,9 @@ public class Report_activity extends AppCompatActivity {
         ntPar.bottomMargin=(int) (sp.height*(float)0.3);
         no_data_text.setLayoutParams(ntPar);
 
-        changeRelativeViewSize(reportScroll,widthRate,heightRate);
+        //switch按鈕
+        Switch inoutSwitch=findViewById(R.id.inoutSwitch);
+
 
     }
 

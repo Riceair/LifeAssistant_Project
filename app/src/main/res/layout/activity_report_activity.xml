@@ -33,6 +33,9 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/reportScroll"
         android:layout_alignParentRight="true"
+        android:layout_marginRight="0px"
+        android:scaleX="1"
+        android:scaleY="1"
         android:checked="false"
         android:thumb="@drawable/report_inout_switch"
         android:track="@drawable/report_switch_background" />
