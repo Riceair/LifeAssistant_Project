@@ -2,6 +2,7 @@ package com.example.lifeassistant_project.activity_update.static_handler;
 
 import com.example.lifeassistant_project.activity_update.packages.SentenceHandler;
 import com.example.lifeassistant_project.activity_update.packages.*;
+import com.google.zxing.qrcode.decoder.Version;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
@@ -678,6 +679,8 @@ public class PackageHandler
                     else
                         break;
                 }
+                if(tempList.size() == 0)
+                    result.setFulfillment("null_package");
                 result.setRcvSelectedList(tempList);
 //            currentSize += message.length - currentSize;
             }
@@ -801,6 +804,33 @@ public class PackageHandler
 
         return result;
     }
+
+    static public byte[] VersionPackageEncode(VersionPackage vrPkg) throws UnsupportedEncodingException
+    {
+        final int NAME_SIZE = 20;
+        ByteBuffer buf = ByteBuffer.allocate(VersionPackage.PACKAGE_SIZE);
+
+        buf.put("ver".getBytes("UTF-8"));
+        buf.put(TransInt2ByteArray(vrPkg.getVersionCode(), 4));
+        buf.put(TransString2ByteArray(vrPkg.getName(), NAME_SIZE));
+        return buf.array();
+    }
+
+    static public VersionPackage VersionPackageDecode(byte[] message)
+    {
+        final int VERSIONCODE_SIZE = 4, NAME_SIZE = 20;
+        int currentSize = 0;
+        VersionPackage result = new VersionPackage();
+
+        result.setVersionCode(TransByteArray2Int(Arrays.copyOfRange(message, currentSize, currentSize + VERSIONCODE_SIZE), VERSIONCODE_SIZE));
+        currentSize += VERSIONCODE_SIZE;
+
+        result.setName(TransByteArray2String(Arrays.copyOfRange(message, currentSize, currentSize + NAME_SIZE), NAME_SIZE));
+        currentSize += NAME_SIZE;
+
+        return result;
+    }
+
     static public byte[] TransInt2ByteArray(int num, int MES_SIZE)
     {
         ByteBuffer b_temp = ByteBuffer.allocate(MES_SIZE);

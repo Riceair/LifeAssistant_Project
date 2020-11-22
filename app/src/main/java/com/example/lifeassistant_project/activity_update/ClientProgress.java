@@ -22,7 +22,7 @@ import java.util.Arrays;
 public class ClientProgress implements Runnable {
 
     public static int port = 6666;
-    public static String address = "192.168.203.101";
+    public static String address = "192.168.203.101"; //localhost: 10.0.2.2
 
     public DataPackage sndPackage;
     public ArrayList<DataPackage> rcvPackageList;
