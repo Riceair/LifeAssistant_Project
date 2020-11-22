@@ -43,23 +43,24 @@
             android:layout_marginLeft="40dp"
             android:gravity="center"
             android:text="帳號"
-            android:textSize="50px" />
+            android:textSize="35px" />
 
 
         <ImageView
             android:id="@+id/account_inputbox"
             android:layout_width="500px"
             android:layout_height="120px"
-            android:layout_alignBottom="@+id/account_text"
+            android:layout_alignTop="@id/account_text"
             android:layout_toRightOf="@+id/account_text"
             android:scaleType="fitXY"
             android:src="@drawable/fillin_frame" />
 
         <EditText
             android:id="@+id/account_input"
-            android:layout_width="480px"
-            android:layout_height="110px"
-            android:layout_alignBottom="@+id/account_inputbox"
+            android:layout_width="460px"
+            android:layout_height="105px"
+            android:layout_alignTop="@id/account_text"
+            android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/account_text"
             android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
             android:hint="請輸入帳號"
@@ -85,7 +86,7 @@
             android:layout_alignLeft="@+id/account_text"
             android:gravity="center"
             android:text="密碼"
-            android:textSize="50px" />
+            android:textSize="35px" />
 
         <ImageView
             android:id="@+id/pw_inputbox"
@@ -98,11 +99,11 @@
 
         <EditText
             android:id="@+id/pw_input"
-            android:layout_width="480px"
-            android:layout_height="110px"
-            android:layout_alignLeft="@+id/pw_inputbox"
-            android:layout_alignBottom="@+id/pw_inputbox"
-            android:layout_marginLeft="5dp"
+            android:layout_width="460px"
+            android:layout_height="105px"
+            android:layout_alignTop="@id/pw_text"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/pw_text"
             android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
             android:hint="請輸入密碼"
             android:inputType="textPassword"
@@ -140,11 +141,11 @@
 
         <EditText
             android:id="@+id/pw_check_input"
-            android:layout_width="480px"
-            android:layout_height="110px"
-            android:layout_alignLeft="@+id/pw_check_inputbox"
-            android:layout_alignBottom="@+id/pw_check_inputbox"
-            android:layout_marginLeft="5dp"
+            android:layout_width="460px"
+            android:layout_height="105px"
+            android:layout_alignTop="@id/pw_check_text"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/pw_check_text"
             android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
             android:hint="請再次輸入密碼"
             android:inputType="textPassword"
@@ -166,11 +167,12 @@
 
         <ImageView
             android:id="@+id/continuebutton"
-            android:layout_width="120px"
-            android:layout_height="120px"
+            android:layout_width="80px"
+            android:layout_height="80px"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/pw_check_text"
             android:layout_marginTop="20dp"
+            android:layout_marginBottom="100px"
             android:onClick="clickToRegister"
             android:scaleType="fitXY"
             android:src="@drawable/arrowbutton" />
