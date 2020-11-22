@@ -45,13 +45,13 @@
             android:layout_marginTop="40dp"
             android:gravity="center"
             android:text="帳號"
-            android:textSize="14dp" />
+            android:textSize="35px" />
 
 
         <ImageView
             android:id="@+id/account_inputbox"
-            android:layout_width="210dp"
-            android:layout_height="45dp"
+            android:layout_width="500px"
+            android:layout_height="80px"
             android:layout_alignTop="@+id/account_text"
             android:layout_toRightOf="@+id/account_text"
             android:scaleType="fitXY"
@@ -59,16 +59,16 @@
 
         <EditText
             android:id="@+id/account_input"
-            android:layout_width="190dp"
-            android:layout_height="45dp"
+            android:layout_width="480px"
+            android:layout_height="78px"
             android:layout_alignLeft="@+id/account_inputbox"
             android:layout_alignTop="@+id/account_inputbox"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
             android:hint="請輸入帳號"
             android:inputType="textEmailAddress"
             android:maxLength="20"
-            android:textSize="15dp" />
+            android:textSize="15px" />
 
         <TextView
             android:id="@+id/account_hint"
@@ -78,7 +78,7 @@
             android:layout_alignLeft="@+id/account_inputbox"
             android:gravity="center"
             android:text="限制:長度6至20之英數混雜"
-            android:textSize="13dp" />
+            android:textSize="30px" />
 
         <TextView
             android:id="@+id/pw_text"
@@ -88,12 +88,12 @@
             android:layout_alignLeft="@+id/account_text"
             android:gravity="center"
             android:text="密碼"
-            android:textSize="14dp" />
+            android:textSize="35px" />
 
         <ImageView
             android:id="@+id/pw_inputbox"
-            android:layout_width="210dp"
-            android:layout_height="45dp"
+            android:layout_width="500px"
+            android:layout_height="80px"
             android:layout_alignTop="@+id/pw_text"
             android:layout_toRightOf="@+id/pw_text"
             android:scaleType="fitXY"
@@ -101,42 +101,41 @@
 
         <EditText
             android:id="@+id/pw_input"
-            android:layout_width="190dp"
-            android:layout_height="45dp"
+            android:layout_width="480px"
+            android:layout_height="80px"
             android:layout_alignLeft="@+id/pw_inputbox"
             android:layout_alignTop="@+id/pw_inputbox"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
             android:hint="請輸入密碼"
             android:inputType="textPassword"
             android:maxLength="20"
-            android:textSize="15dp" />
+            android:textSize="15px" />
 
         <TextView
             android:id="@+id/pw_hint"
-            android:layout_width="200dp"
-            android:layout_height="30dp"
+            android:layout_width="500px"
+            android:layout_height="80px"
             android:layout_below="@+id/pw_inputbox"
             android:layout_alignLeft="@+id/pw_inputbox"
-            android:layout_marginLeft="5dp"
             android:gravity="center"
             android:text="限制:長度6至20之英數混雜"
-            android:textSize="13dp" />
+            android:textSize="30px" />
 
         <TextView
             android:id="@+id/pw_check_text"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="100px"
+            android:layout_height="100px"
             android:layout_below="@+id/pw_hint"
             android:layout_alignLeft="@+id/pw_text"
             android:gravity="center"
             android:text="確認\n密碼"
-            android:textSize="14dp" />
+            android:textSize="35px" />
 
         <ImageView
             android:id="@+id/pw_check_inputbox"
-            android:layout_width="210dp"
-            android:layout_height="45dp"
+            android:layout_width="500px"
+            android:layout_height="80px"
             android:layout_alignTop="@+id/pw_check_text"
             android:layout_toRightOf="@+id/pw_check_text"
             android:scaleType="fitXY"
@@ -144,37 +143,39 @@
 
         <EditText
             android:id="@+id/pw_check_input"
-            android:layout_width="190dp"
-            android:layout_height="45dp"
+            android:layout_width="480px"
+            android:layout_height="80px"
             android:layout_alignLeft="@+id/pw_check_inputbox"
             android:layout_alignTop="@+id/pw_check_inputbox"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
             android:hint="請再次輸入密碼"
             android:inputType="textPassword"
             android:maxLength="20"
-            android:textSize="15dp" />
+            android:textSize="15px" />
 
         <TextView
             android:id="@+id/pw_check_hint"
-            android:layout_width="160dp"
-            android:layout_height="30dp"
+            android:layout_width="200px"
+            android:layout_height="50px"
             android:layout_below="@+id/pw_check_inputbox"
             android:layout_alignLeft="@+id/pw_check_inputbox"
             android:layout_marginLeft="5dp"
             android:gravity="center"
             android:text="請輸入相同的密碼"
             android:textColor="#FF0000"
-            android:textSize="16dp"
+            android:textSize="20px"
             android:visibility="invisible" />
 
         <ImageView
             android:id="@+id/continuebutton"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_below="@+id/pw_check_hint"
+            android:layout_width="80px"
+            android:layout_height="80px"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="100px"
             android:onClick="clickToRegister"
+            android:scaleType="centerInside"
             android:src="@drawable/arrowbutton" />
 
     </RelativeLayout>

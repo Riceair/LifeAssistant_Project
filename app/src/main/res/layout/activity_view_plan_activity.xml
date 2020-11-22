@@ -24,6 +24,7 @@
         android:id="@+id/back_ind"
         android:layout_width="?attr/actionBarSize"
         android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="@dimen/_5sdp"
         android:onClick="clickBackPlanner"
         android:scaleType="center"
         app:srcCompat="@drawable/arrowbutton_left" />
