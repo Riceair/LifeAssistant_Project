@@ -1,80 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/topLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/finance_background">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <include
+        android:id="@+id/include"
+        layout="@layout/drawer_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
         android:id="@+id/mainly"
-        android:layout_width="350dp"
-        android:layout_height="400dp"
-        android:layout_centerInParent="true"
-        android:layout_centerVertical="true"
-        android:background="@drawable/report_inner_background"
-        app:layout_constraintBottom_toTopOf="@+id/reportScroll"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include"
-        app:layout_constraintVertical_bias="0.311">
+        android:layout_width="900px"
+        android:layout_height="1000px"
+        android:layout_below="@+id/include"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/report_inner_background">
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/pieChart"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 
     <Switch
         android:id="@+id/inoutSwitch"
-        android:layout_width="120dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/reportScroll"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="0px"
+        android:scaleX="1"
+        android:scaleY="1"
         android:checked="false"
         android:thumb="@drawable/report_inout_switch"
-        android:track="@drawable/report_switch_background"
-        app:layout_constraintBottom_toTopOf="@+id/reportScroll"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.945"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:track="@drawable/report_switch_background" />
 
-    <TextView
-        android:id="@+id/outSwitchText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="支出"
-        android:textColor="#FFFFFF"
-        android:textSize="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/inoutSwitch"
-        app:layout_constraintStart_toStartOf="@+id/inoutSwitch"
-        app:layout_constraintEnd_toStartOf="@+id/inSwitchText"
-        app:layout_constraintTop_toTopOf="@+id/inoutSwitch" />
+    <RelativeLayout
+        android:id="@+id/inoutText"
+        android:layout_width="300px"
+        android:layout_height="120px"
+        android:layout_above="@+id/reportScroll"
+        android:layout_alignParentRight="true">
+        <TextView
+            android:id="@+id/outSwitchText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="支出"
+            android:textColor="#FFFFFF"
+            android:textSize="55px" />
 
-    <TextView
-        android:id="@+id/inSwitchText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="收入"
-        android:textColor="#FFFFFF"
-        android:textSize="16dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/inoutSwitch"
-        app:layout_constraintEnd_toEndOf="@+id/inoutSwitch"
-        app:layout_constraintStart_toEndOf="@+id/outSwitchText"
-        app:layout_constraintTop_toTopOf="@+id/inoutSwitch" />
+        <TextView
+            android:id="@+id/inSwitchText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:text="收入"
+            android:textColor="#FFFFFF"
+            android:textSize="55px"
+            android:visibility="invisible" />
+    </RelativeLayout>
 
 
     <ScrollView
         android:id="@+id/reportScroll"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="600px"
+        android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:background="@color/zxing_result_view"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        android:layout_marginBottom="0dp"
+        android:background="@color/zxing_result_view">
 
         <LinearLayout
             android:id="@+id/record_list"
@@ -89,17 +94,10 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="查無資料"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/reportScroll"
+        android:layout_marginBottom="250px"
         android:textColor="#FFFFFF"
-        android:textSize="40dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/reportScroll"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/reportScroll" />
-
-    <include
-        android:id="@+id/include"
-        layout="@layout/drawer_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:textSize="100px"
+        android:visibility="invisible" />
+</RelativeLayout>

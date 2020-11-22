@@ -431,14 +431,18 @@
         android:scaleType="centerInside"
         app:srcCompat="@drawable/weather" />
 
+
     <TextView
-        android:id="@+id/subtitle"
-        android:layout_width="wrap_content"
+        android:id="@+id/sub_title"
+        android:layout_width="@dimen/_50sdp"
         android:layout_height="@dimen/_30sdp"
-        android:layout_alignTop="@id/backind"
+        android:layout_alignBottom="@id/backind"
+        android:layout_centerHorizontal="true"
         android:layout_marginLeft="@dimen/_5sdp"
-        android:layout_toRightOf="@id/icon"
-        android:textColor="@color/design_default_color_background"
+        android:layout_toEndOf="@id/icon"
+        android:gravity="start|center_vertical"
+        android:text="天氣"
+        android:textColor="@color/zxing_status_text"
         android:textSize="@dimen/_12sdp" />
 
     <include

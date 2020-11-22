@@ -1,6 +1,9 @@
 package com.example.lifeassistant_project.menu_activity.login;
-
+////////////////////////////////Register img問題
 import android.content.SharedPreferences;
+import android.util.DisplayMetrics;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,6 +15,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +24,8 @@ import com.example.lifeassistant_project.R;
 import com.example.lifeassistant_project.activity_update.packages.LoginPackage;
 import com.example.lifeassistant_project.activity_update.static_handler.LoginHandler;
 import com.google.android.material.textfield.TextInputEditText;
+
+import static com.example.lifeassistant_project.features_class.AndroidCommonFunction.changeRelativeViewSize;
 
 public class Register_activity extends AppCompatActivity {
     private TextView account_input,pw_input,pw_check_input,account_hint,pw_hint,pw_check_hint;
@@ -40,7 +47,23 @@ public class Register_activity extends AppCompatActivity {
 
         bind();
         setChangeListener();
+        setLayoutSize();
+    }
 
+    private void setLayoutSize(){
+        //1080 1920 pixel 2
+        DisplayMetrics dm=new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        float heightRate=dm.heightPixels/(float)1920;
+        float widthRate=dm.widthPixels/(float)1080;
+
+        RelativeLayout mainly=findViewById(R.id.mainly);
+        RelativeLayout.LayoutParams params= (RelativeLayout.LayoutParams) mainly.getLayoutParams();
+        params.height= (int) (dm.heightPixels*0.7);
+        params.width= (int) (params.width*widthRate);
+        mainly.setLayoutParams(params);
+
+        changeRelativeViewSize((ViewGroup) findViewById(R.id.topLayout),widthRate,heightRate);
     }
 
     public void clickToRegister(View view){
