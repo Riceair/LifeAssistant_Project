@@ -469,7 +469,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case -1:
                 break;
             case 0:
-                DatabaseBehavior.synchronizeDataFromClient();
+                DatabaseBehavior.synchronizeData();
                 break;
             case 1:
 //          FOR CHATBOT DEBUG
@@ -526,6 +526,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         System.out.println(str);
                     }
                 }
+            case 4:
+                DatabaseBehavior.validateVersion();
         }
     }
 

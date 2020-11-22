@@ -105,9 +105,10 @@ public class ChatbotBehavior {
         if((this.sendSentence.getIntent() == 1 || this.sendSentence.getIntent() == 2) ||
                 (this.currentIntent == 0 && this.sentenceHandler.getFulfillment().substring(0, 1).equals("已")))
         {
-            DatabaseBehavior.synchronizeData();
+            DatabaseBehavior.synchronizeServer2Client();
         }
     }
+
     public String getResponse()
     {
         this.searchFlag = false;
@@ -116,8 +117,10 @@ public class ChatbotBehavior {
         {
             this.selectType = "def";
 
-            if(this.sentenceHandler.getRcvSelectedList().size() == 0)
+            if(this.sentenceHandler.getRcvSelectedList().size() == 0 && !this.sentenceHandler.getFulfillment().contains("null_package"))
                 return this.sentenceHandler.getFulfillment();
+            else if(this.sentenceHandler.getFulfillment().contains("null_package"))
+                return "很抱歉，沒有任何欲搜尋的結果！";
 
             this.searchFlag = true;
             this.selectedPackage = this.sentenceHandler.getRcvSelectedList();

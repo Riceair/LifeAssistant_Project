@@ -3,10 +3,13 @@ package com.example.lifeassistant_project.activity_update.static_handler;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.ContactsContract;
+import android.util.Log;
 import com.example.lifeassistant_project.activity_update.ClientProgress;
 import com.example.lifeassistant_project.activity_update.packages.AccountPackage;
 import com.example.lifeassistant_project.activity_update.packages.DataPackage;
 import com.example.lifeassistant_project.activity_update.packages.SchedulePackage;
+import com.example.lifeassistant_project.activity_update.packages.VersionPackage;
 import com.google.android.gms.common.api.Api;
 
 import java.io.UnsupportedEncodingException;
@@ -129,14 +132,74 @@ public class DatabaseBehavior {
 
     public static void synchronizeData()
     {
+        //in progress
+        if(DatabaseBehavior.validateVersion())
+//        System.out.println(DatabaseBehavior.validateVersion());
+//        if(false)
+        {
+            synchronizeClient2Server_Account();
+            synchronizeClient2Server_Schedule();
+            raiseDataVersion();
+        }
+        else
+        {
+            synchronizeServer2Client_Account();
+            synchronizeServer2Client_Schedule();
+            synchronizeVersion();
+        }
+    }
+
+    public static void synchronizeServer2Client()
+    {
         synchronizeServer2Client_Account();
         synchronizeServer2Client_Schedule();
     }
 
-    public static void synchronizeDataFromClient()
+    //True for userVersion > Server.
+    public static boolean validateVersion()
     {
-        synchronizeClient2Server_Account();
-        synchronizeClient2Server_Schedule();
+        int userVersion = 0;
+
+        myDB = SQLiteDatabase.openOrCreateDatabase(PATH + "/databases/" + DBNAME, null);
+        cursor = myDB.rawQuery("SELECT * FROM record_version WHERE username = " + '"' + LoginHandler.getUserName() + '"', null);
+
+        cursor.moveToFirst();
+        try
+        {
+//            DEBUG
+            userVersion = 0;
+//            userVersion = cursor.getInt(0);
+        }catch (android.database.CursorIndexOutOfBoundsException e)
+        {
+            userVersion = -1;
+            ContentValues values = new ContentValues();
+            values.put("Version", userVersion);
+            values.put("userName", LoginHandler.getUserName());
+            myDB.insert("record_version", null, values);
+        }
+        VersionPackage userVersionPackage = new VersionPackage(userVersion, LoginHandler.getUserName());
+
+        ClientProgress client = new ClientProgress();
+        client.setPackage(userVersionPackage);
+        Thread cThread = new Thread(client);
+        cThread.start();
+
+        synchronized (client)
+        {
+            try
+            {
+                client.wait();
+            }catch (Exception e)
+            {
+                System.out.println(e);
+            }
+        }
+
+        VersionPackage rcvVersionPackage = (VersionPackage) client.getRcvPackageList().get(0);
+
+        System.out.println("User Version: " + userVersionPackage.getVersionCode());
+        System.out.println("Server Version: " + rcvVersionPackage.getVersionCode());
+        return userVersionPackage.getVersionCode() >= rcvVersionPackage.getVersionCode();
     }
 
     public static void resetDatabase()
@@ -248,6 +311,84 @@ public class DatabaseBehavior {
 
     }
 
+    private static void raiseDataVersion()
+    {
+        int userVersion = -1;
+        if(myDB == null)
+            myDB = SQLiteDatabase.openOrCreateDatabase(PATH + "/databases/" + DBNAME, null);
+
+        cursor = myDB.rawQuery("SELECT * FROM record_version WHERE username = " + '"' + LoginHandler.getUserName() + '"', null);
+
+        cursor.moveToFirst();
+        try
+        {
+            userVersion = cursor.getInt(0);
+        }catch (android.database.CursorIndexOutOfBoundsException e)
+        {
+            ContentValues values = new ContentValues();
+            values.put("Version", userVersion);
+            values.put("userName", LoginHandler.getUserName());
+            myDB.insert("record_version", null, values);
+        }finally {
+            ContentValues values = new ContentValues();
+            values.put("Version", ++userVersion);
+            values.put("userName", LoginHandler.getUserName());
+            myDB.update("record_version", values, "userName="+'"'+LoginHandler.getUserName()+'"', null);
+        }
+
+        if(userVersion > 65535)
+        {
+            ContentValues values = new ContentValues();
+            values.put("Version", 0);
+            values.put("userName", LoginHandler.getUserName());
+            myDB.update("record_version", values, "Version="+0,null);
+        }
+    }
+
+    private static void synchronizeVersion()
+    {
+        int userVersion = -1;
+        if(myDB == null)
+            myDB = SQLiteDatabase.openOrCreateDatabase(PATH + "/databases/" + DBNAME, null);
+        cursor = myDB.rawQuery("SELECT * FROM record_version WHERE username = " + '"' + LoginHandler.getUserName() + '"', null);
+
+        cursor.moveToFirst();
+        try
+        {
+            userVersion = cursor.getInt(0);
+        }catch (android.database.CursorIndexOutOfBoundsException e)
+        {
+            userVersion = -1;
+            ContentValues values = new ContentValues();
+            values.put("Version", userVersion);
+            values.put("userName", LoginHandler.getUserName());
+            myDB.insert("record_version", null, values);
+        }
+        VersionPackage userVersionPackage = new VersionPackage(userVersion, LoginHandler.getUserName());
+
+        ClientProgress client = new ClientProgress();
+        client.setPackage(userVersionPackage);
+        Thread cThread = new Thread(client);
+        cThread.start();
+
+        synchronized (client)
+        {
+            try
+            {
+                client.wait();
+            }catch (Exception e)
+            {
+                System.out.println(e);
+            }
+        }
+
+        VersionPackage rcvVersionPackage = (VersionPackage) client.getRcvPackageList().get(0);
+
+        ContentValues values = new ContentValues();
+        values.put("Version", rcvVersionPackage.getVersionCode());
+        myDB.update("record_version", values, "userName="+'"'+LoginHandler.getUserName()+'"', null);
+    }
+
     private static ArrayList<AccountPackage> getClientAccountList(SQLiteDatabase myDB, Cursor cursor)
     {
         ArrayList<AccountPackage> resultList = new ArrayList<AccountPackage>();
@@ -265,7 +406,7 @@ public class DatabaseBehavior {
             tempAccount.setItem(cursor.getString(4));   //Item
             tempAccount.setDetail(cursor.getString(5)); //Detail
             tempAccount.setType(cursor.getInt(8) == 0 ? false : true);     //Type
-            tempAccount.setID(cursor.getInt(9));       //ID
+            tempAccount.setID(cursor.getInt(9));        //ID
             tempAccount.setUser(LoginHandler.getUserName());
 
 
