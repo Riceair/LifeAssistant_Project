@@ -3,6 +3,7 @@ package com.example.lifeassistant_project;
 import android.accounts.Account;
 import android.app.ActionBar;
 import android.content.*;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -93,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //註冊 登入
     private ImageView loginImg, regImg;
     private TextView regText,account_id;
-    private RelativeLayout loginButton;
+    private RelativeLayout loginButton,login_bg;
 
     private LocationManager locationManager;
     private Geocoder geocoder;
@@ -173,12 +174,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         regImg = navigationView.getHeaderView(0).findViewById(R.id.RegImg);
         regText = navigationView.getHeaderView(0).findViewById(R.id.RegText);
         loginButton = navigationView.getHeaderView(0).findViewById(R.id.LoginButton);
+        login_bg = navigationView.getHeaderView(0).findViewById(R.id.LoginBackground);
+
         popup_window=findViewById(R.id.popup_window);
         weather_response=findViewById(R.id.weather_response);
         planner_window = findViewById((R.id.Planner_popup));
         account_cal_window=findViewById(R.id.AccountCalWindow);
         yes_no_response=findViewById(R.id.yes_no_response);
         mChart=findViewById(R.id.pieChart);
+
         popup_window_height= (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300, getResources().getDisplayMetrics());
         popup_window_width=(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 350, getResources().getDisplayMetrics());
     }
@@ -390,8 +394,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
         regImg.setVisibility(View.VISIBLE);
+        login_bg.setBackgroundResource(R.drawable.toggle_login);
         regText.setText("尚未加入嗎？按此註冊");
         account_id.setText("按此登入");
+
     }
 
     private void setAfterLogin(String account){
@@ -401,6 +407,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         regImg.setVisibility(View.INVISIBLE);
         regImg.setOnClickListener(null);
         regText.setText("登出");
+        login_bg.setBackgroundResource(R.drawable.login_already);
         regText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
