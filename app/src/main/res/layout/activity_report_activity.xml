@@ -40,28 +40,36 @@
         android:thumb="@drawable/report_inout_switch"
         android:track="@drawable/report_switch_background" />
 
-    <TextView
-        android:id="@+id/outSwitchText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_alignLeft="@+id/inoutSwitch"
-        android:layout_alignBottom="@+id/inoutSwitch"
-        android:text="支出"
-        android:textColor="#FFFFFF"
-        android:textSize="55px" />
+    <RelativeLayout
+        android:id="@+id/inoutText"
+        android:layout_width="300px"
+        android:layout_height="120px"
+        android:layout_above="@+id/reportScroll"
+        android:layout_alignParentRight="true">
+        <TextView
+            android:id="@+id/outSwitchText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="支出"
+            android:textColor="#FFFFFF"
+            android:textSize="55px" />
 
-    <TextView
-        android:id="@+id/inSwitchText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_alignRight="@+id/inoutSwitch"
-        android:layout_alignBottom="@+id/inoutSwitch"
-        android:text="收入"
-        android:textColor="#FFFFFF"
-        android:textSize="55px"
-        android:visibility="invisible" />
+        <TextView
+            android:id="@+id/inSwitchText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:text="收入"
+            android:textColor="#FFFFFF"
+            android:textSize="55px"
+            android:visibility="invisible" />
+    </RelativeLayout>
 
 
     <ScrollView

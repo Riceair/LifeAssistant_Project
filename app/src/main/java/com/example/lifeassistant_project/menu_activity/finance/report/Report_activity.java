@@ -111,7 +111,10 @@ public class Report_activity extends AppCompatActivity {
 
         //switch按鈕
         Switch inoutSwitch=findViewById(R.id.inoutSwitch);
+        RelativeLayout.LayoutParams switchParm=(RelativeLayout.LayoutParams) inoutSwitch.getLayoutParams();
 
+        inoutSwitch.setScaleX(widthRate);
+        inoutSwitch.setScaleY(widthRate);
 
     }
 

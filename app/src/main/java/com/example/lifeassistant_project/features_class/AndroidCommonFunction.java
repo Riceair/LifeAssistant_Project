@@ -48,8 +48,13 @@ public class AndroidCommonFunction {
                 changeRelativeViewSize((ViewGroup)v, widthRate, heightRate);
             }else if(v instanceof ImageView){
                 RelativeLayout.LayoutParams params= (RelativeLayout.LayoutParams) v.getLayoutParams();
-                params.height= (int) (params.height*heightRate);
-                params.width= (int) (params.width*widthRate);
+                if(params.height==params.width){
+                    params.height= (int) (params.width*widthRate);
+                    params.width= (int) (params.width*widthRate);
+                }else {
+                    params.height = (int) (params.height * heightRate);
+                    params.width = (int) (params.width * widthRate);
+                }
                 v.setLayoutParams(params);
             }else if(v instanceof RadioButton){ //
                 ( (RadioButton)v ).setTextSize(TypedValue.COMPLEX_UNIT_PX,((RadioButton) v).getTextSize()*widthRate);
@@ -61,7 +66,7 @@ public class AndroidCommonFunction {
                 ( (Button)v ).setTextSize(TypedValue.COMPLEX_UNIT_PX,((Button) v).getTextSize()*widthRate*(float) 0.9);
             }else if(v instanceof TextView){
                 RelativeLayout.LayoutParams params= (RelativeLayout.LayoutParams) v.getLayoutParams();
-                params.height= (int) (params.height*heightRate);
+                params.height= (int) (params.height*widthRate);
                 params.width= (int) (params.width*widthRate);
                 v.setLayoutParams(params);
                 ( (TextView)v ).setTextSize(TypedValue.COMPLEX_UNIT_PX,((TextView) v).getTextSize()*widthRate);
