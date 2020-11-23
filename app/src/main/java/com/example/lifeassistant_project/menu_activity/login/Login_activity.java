@@ -2,7 +2,9 @@ package com.example.lifeassistant_project.menu_activity.login;
 
 import android.content.SharedPreferences;
 import android.content.Intent;
+import android.util.DisplayMetrics;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.lifeassistant_project.MainActivity;
@@ -17,6 +20,8 @@ import com.example.lifeassistant_project.R;
 import com.example.lifeassistant_project.activity_update.static_handler.LoginHandler;
 import com.example.lifeassistant_project.activity_update.packages.LoginPackage;
 import com.google.android.material.textfield.TextInputEditText;
+
+import static com.example.lifeassistant_project.features_class.AndroidCommonFunction.changeRelativeViewSize;
 
 public class Login_activity extends AppCompatActivity {
     private static final int REGISTER_CODE = 11;
@@ -33,7 +38,7 @@ public class Login_activity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setIcon(R.drawable.regsite_logo_small);
-        getSupportActionBar().hide();
+
         final Button loginButton = findViewById(R.id.login_button);
         loginButton.setOnClickListener(new View.OnClickListener()
         {
@@ -67,6 +72,24 @@ public class Login_activity extends AppCompatActivity {
                 overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
             }
         });
+
+        setLayoutSize();
+    }
+
+    private void setLayoutSize(){
+        //1080 1920 pixel 2
+        DisplayMetrics dm=new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        float heightRate=dm.heightPixels/(float)1920;
+        float widthRate=dm.widthPixels/(float)1080;
+
+        RelativeLayout mainly=findViewById(R.id.mainly);
+        RelativeLayout.LayoutParams params= (RelativeLayout.LayoutParams) mainly.getLayoutParams();
+        params.height= (int) (dm.heightPixels*0.7);
+        params.width= (int) (params.width*widthRate);
+        mainly.setLayoutParams(params);
+
+        changeRelativeViewSize((ViewGroup) findViewById(R.id.topLayout),widthRate,heightRate);
     }
 
     @Override
