@@ -23,7 +23,7 @@
     <RelativeLayout
         android:id="@+id/mainly"
         android:layout_width="900px"
-        android:layout_height="1450px"
+        android:layout_height="1400px"
         android:layout_centerInParent="true"
         android:background="@drawable/bookkeeping_inner_background">
 
