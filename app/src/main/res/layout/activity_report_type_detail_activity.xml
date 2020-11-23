@@ -7,19 +7,24 @@
     android:background="@drawable/finance_background"
     tools:context=".menu_activity.finance.report.Report_type_detail_activity">
 
-    <ScrollView
-        android:layout_width="350dp"
-        android:layout_height="600dp"
-        android:layout_centerInParent="true"
-        android:background="@drawable/report_result_inner_background"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:id="@+id/record_list"
+    <RelativeLayout
+        android:id="@+id/mainly"
+        android:layout_width="900px"
+        android:layout_height="1500px"
+        android:layout_centerInParent="true">
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" />
-    </ScrollView>
+            android:background="@drawable/report_result_inner_background"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/record_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" />
+        </ScrollView>
+    </RelativeLayout>
 
     <include
         android:layout_width="match_parent"
