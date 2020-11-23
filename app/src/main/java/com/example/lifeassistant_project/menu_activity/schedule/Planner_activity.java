@@ -103,7 +103,8 @@ public class Planner_activity extends AppCompatActivity {
 //       });
         //初始化日曆頭標與語系
         final CompactCalendarView compactCalendarView = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
-        compactCalendarView.setLocale(TimeZone.getTimeZone("GMT-8:00"),Locale.CHINESE);
+
+        compactCalendarView.setLocale(TimeZone.getTimeZone("GMT+:8:00"),Locale.CHINESE);
         compactCalendarView.setUseThreeLetterAbbreviation(true);
         final TextView monthlayout = (TextView) findViewById(R.id.Month_layout);
         monthlayout.setText(dateFormatForMonth.format(compactCalendarView.getFirstDayOfCurrentMonth()));

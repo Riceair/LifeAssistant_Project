@@ -63,7 +63,7 @@
     <RelativeLayout
         android:id="@+id/mainly"
         android:layout_width="@dimen/_250sdp"
-        android:layout_height="@dimen/_380sdp"
+        android:layout_height="@dimen/_370sdp"
         android:layout_below="@id/tabs"
         android:layout_centerHorizontal="true"
         android:background="@drawable/main_inner_background">
@@ -103,7 +103,7 @@
             android:layout_below="@id/textView2"
             android:layout_centerHorizontal="true"
             android:text="帳號"
-            android:textSize="@dimen/_20sdp" />
+            android:textSize="@dimen/_13sdp" />
 
         <ImageView
             android:id="@+id/imageView4"
@@ -123,7 +123,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="密碼"
-            android:textSize="@dimen/_20sdp" />
+            android:textSize="@dimen/_13sdp" />
 
         <ImageView
             android:id="@+id/imageView5"
