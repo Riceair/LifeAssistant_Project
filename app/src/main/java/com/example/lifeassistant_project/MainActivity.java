@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view) {
                 // for DEBUG
-                DEBUG_FUNCTION(1);
+//                DEBUG_FUNCTION(1);
 
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -478,6 +478,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 userSay.setText(tempText.getText());
 
+                if(LoginHandler.getUserName().equals("Null"))
+                {
+                    chatBotSay.setText("您必須要先登入，我才能夠幫助您！");
+                    return;
+                }
 //                System.out.println("Behavior");
 //                System.out.println(chatbotBehavior.getBehaviorMode());
                 if(!chatbotBehavior.generateSendSentence(tempText.getText().toString()))
@@ -542,6 +547,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             userSay.setText(result.get(0));
 
+            if(LoginHandler.getUserName().equals("Null"))
+            {
+                chatBotSay.setText("您必須要先登入，我才能夠幫助您！");
+                return;
+            }
 //                System.out.println("Behavior");
 //                System.out.println(chatbotBehavior.getBehaviorMode());
             if(!chatbotBehavior.generateSendSentence(result.get(0)))

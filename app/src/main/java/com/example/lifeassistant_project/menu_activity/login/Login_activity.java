@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -112,9 +113,9 @@ public class Login_activity extends AppCompatActivity {
     private LoginPackage getClientLoginInfo()
     {
         LoginPackage loginPackage = new LoginPackage();
-        TextInputEditText targetText = (TextInputEditText) findViewById(R.id.account_id);
+        EditText targetText = (EditText) findViewById(R.id.account_id);
         loginPackage.setName(targetText.getText().toString());
-        targetText = (TextInputEditText) findViewById(R.id.account_password);
+        targetText = (EditText) findViewById(R.id.account_password);
         loginPackage.setPassword(targetText.getText().toString());
         return loginPackage;
     }

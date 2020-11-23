@@ -199,7 +199,7 @@ public class DatabaseBehavior {
 
         System.out.println("User Version: " + userVersionPackage.getVersionCode());
         System.out.println("Server Version: " + rcvVersionPackage.getVersionCode());
-        return userVersionPackage.getVersionCode() >= rcvVersionPackage.getVersionCode();
+        return userVersionPackage.getVersionCode() > rcvVersionPackage.getVersionCode();
     }
 
     public static void resetDatabase()
@@ -230,6 +230,7 @@ public class DatabaseBehavior {
             AccountPackage sndPkg = new AccountPackage();
             sndPkg.setID(0);
             sndPkg.setRequestAction(1);
+            sndPkg.setUser(LoginHandler.getUserName());
             client.setPackage(sndPkg);
             Thread cThread = new Thread(client);
             cThread.start();
@@ -281,6 +282,7 @@ public class DatabaseBehavior {
             SchedulePackage sndPkg = new SchedulePackage();
             sndPkg.setID(0);
             sndPkg.setRequestAction(1);
+            sndPkg.setUser(LoginHandler.getUserName());
             client.setPackage(sndPkg);
             Thread cThread = new Thread(client);
             cThread.start();

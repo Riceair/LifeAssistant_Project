@@ -258,13 +258,13 @@ public class ChatbotBehavior {
             this.supposeIntent = 0;
         }
 
-        if(message.contains("新增"))
+        if(message.contains("增") || message.contains("加") || message.contains("記") || message.contains("入"))
             this.supposeOperation = 1;
-        else if(message.contains("刪除"))
+        else if(message.contains("刪"))
             this.supposeOperation = 2;
-        else if(message.contains("修改"))
+        else if(message.contains("改"))
             this.supposeOperation = 3;
-        else if(message.contains("查詢"))
+        else if(message.contains("查") || message.contains("看"))
             this.supposeOperation = 4;
         else
         {
