@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -15,10 +14,8 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -78,9 +75,9 @@ public class Report_activity extends AppCompatActivity {
         mChart=findViewById(R.id.pieChart);
         pieChartUsedClass=new PieChartUsedClass(mChart,type_list,sum_list);
 
-        setBotInf();
         setSwitch();
         setLayoutSize();
+        setBotInf();
     }
 
     private void setLayoutSize(){
@@ -109,10 +106,35 @@ public class Report_activity extends AppCompatActivity {
         ntPar.bottomMargin=(int) (sp.height*(float)0.3);
         no_data_text.setLayoutParams(ntPar);
 
-        //switch按鈕
+
+        //收支文字參數
+        RelativeLayout inoutText=findViewById(R.id.inoutText);
+        RelativeLayout.LayoutParams ioParm= (RelativeLayout.LayoutParams) inoutText.getLayoutParams();
+        float sSParm = (float) 0.9;
+        float tSParm = (float) 0.8;
+        if(widthRate<=1.001 && widthRate>=0.999){
+            sSParm = 1;
+            tSParm = 1;
+        }
+
+            //switch按鈕
         Switch inoutSwitch=findViewById(R.id.inoutSwitch);
+        RelativeLayout.LayoutParams switchParm= (RelativeLayout.LayoutParams) inoutSwitch.getLayoutParams();
+        switchParm.rightMargin= (int) (ioParm.width*(widthRate-1)*0.5*sSParm);
+        switchParm.bottomMargin=(int) (ioParm.height*(widthRate-1)*0.5*sSParm);
+        inoutSwitch.setLayoutParams(switchParm);
         inoutSwitch.setScaleX(widthRate);
         inoutSwitch.setScaleY(widthRate);
+
+        //收入支出文字
+        ioParm.height= (int) (ioParm.height*widthRate*tSParm);
+        ioParm.width= (int) (ioParm.width*widthRate*tSParm);
+        inoutText.setLayoutParams(ioParm);
+
+        TextView outText=findViewById(R.id.outSwitchText);
+        ( (TextView)outText ).setTextSize(TypedValue.COMPLEX_UNIT_PX, (float) (((TextView) outText).getTextSize()*widthRate*tSParm));
+        TextView inText=findViewById(R.id.inSwitchText);
+        ( (TextView)inText ).setTextSize(TypedValue.COMPLEX_UNIT_PX, (float) (((TextView) inText).getTextSize()*widthRate*tSParm));
 
     }
 

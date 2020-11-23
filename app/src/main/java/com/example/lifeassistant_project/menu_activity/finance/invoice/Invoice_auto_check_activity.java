@@ -9,12 +9,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,6 +77,7 @@ public class Invoice_auto_check_activity extends AppCompatActivity {
         else readData();
         AutoCheck();
         setLayout();
+        setLayoutSize();
     }
 
     private void readData(){
@@ -256,6 +260,21 @@ public class Invoice_auto_check_activity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    private void setLayoutSize(){
+        DisplayMetrics dm=new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        float heightRate=dm.heightPixels/(float)1920;
+        float widthRate=dm.widthPixels/(float)1080;
+
+        RelativeLayout mainly=findViewById(R.id.mainly);
+        RelativeLayout.LayoutParams params= (RelativeLayout.LayoutParams) mainly.getLayoutParams();
+        params.height= (int) (params.height*heightRate);
+        params.width= (int) (params.width*widthRate);
+        mainly.setLayoutParams(params);
+
+        changeLinearViewSize((ViewGroup) findViewById(R.id.record_list),widthRate,heightRate);
     }
 
     @Override

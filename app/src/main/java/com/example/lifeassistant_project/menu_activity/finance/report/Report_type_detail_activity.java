@@ -8,9 +8,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,6 +69,22 @@ public class Report_type_detail_activity extends AppCompatActivity {
 
         ReadDBRecord(year,month,day);
         setInf();
+        setLayoutSize();
+    }
+
+    private void setLayoutSize(){
+        DisplayMetrics dm=new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        float heightRate=dm.heightPixels/(float)1920;
+        float widthRate=dm.widthPixels/(float)1080;
+
+        RelativeLayout mainly=findViewById(R.id.mainly);
+        RelativeLayout.LayoutParams params= (RelativeLayout.LayoutParams) mainly.getLayoutParams();
+        params.height= (int) (params.height*heightRate);
+        params.width= (int) (params.width*widthRate);
+        mainly.setLayoutParams(params);
+
+        changeLinearViewSize((ViewGroup) findViewById(R.id.record_list),widthRate,heightRate);
     }
 
     ////////////////////////////////////////////////////數據處理///////////////////////////////////////////////////
