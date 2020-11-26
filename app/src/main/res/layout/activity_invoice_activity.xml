@@ -105,7 +105,7 @@
             android:maxLength="3"
             android:textColor="@color/design_default_color_on_secondary"
             android:textColorHint="#979494"
-            android:textSize="15dp" />
+            android:textSize="@dimen/_10sdp" />
 
         <TextView
             android:id="@+id/invoice_rewards"
