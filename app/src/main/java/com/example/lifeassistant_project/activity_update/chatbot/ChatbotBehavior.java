@@ -257,14 +257,15 @@ public class ChatbotBehavior {
             System.out.println("Supposing intent error! please check the fulfillment of sentenceHandler.");
             this.supposeIntent = 0;
         }
-
-        if(message.contains("增") || message.contains("加") || message.contains("記") || message.contains("入"))
+        String tempMessage = message.replace("記帳", "");
+        tempMessage = tempMessage.replace("行程", "");
+        if(tempMessage.contains("增") || tempMessage.contains("加") || tempMessage.contains("記") || tempMessage.contains("入"))
             this.supposeOperation = 1;
-        else if(message.contains("刪"))
+        else if(tempMessage.contains("刪"))
             this.supposeOperation = 2;
-        else if(message.contains("改"))
+        else if(tempMessage.contains("改"))
             this.supposeOperation = 3;
-        else if(message.contains("查") || message.contains("看"))
+        else if(tempMessage.contains("查") || tempMessage.contains("看"))
             this.supposeOperation = 4;
         else
         {
