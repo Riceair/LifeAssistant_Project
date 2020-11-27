@@ -110,10 +110,14 @@ public class Report_activity extends AppCompatActivity {
         //收支文字參數
         RelativeLayout inoutText=findViewById(R.id.inoutText);
         RelativeLayout.LayoutParams ioParm= (RelativeLayout.LayoutParams) inoutText.getLayoutParams();
+        Log.e("WR",""+dm.widthPixels);
         float sSParm = (float) 0.9;
         float tSParm = (float) 0.8;
-        if(widthRate<=1.001 && widthRate>=0.999){
+        if(dm.widthPixels==1080){
             sSParm = 1;
+            tSParm = 1;
+        }else if(dm.widthPixels==1440){
+            sSParm = (float) 0.3;
             tSParm = 1;
         }
 

@@ -44,8 +44,8 @@
             <TextView
                 android:id="@+id/chatBotSay"
                 android:layout_width="@dimen/_260sdp"
-                android:layout_height="@dimen/_380sdp"
-                android:layout_alignParentBottom="false"
+                android:layout_height="@dimen/_250sdp"
+                android:layout_below="@+id/chatBotHelp"
                 android:layout_centerInParent="true"
                 android:text="您好，我可以為您做什麼?"
                 android:textColor="@color/cardview_light_background"
