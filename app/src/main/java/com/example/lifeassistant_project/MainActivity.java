@@ -692,12 +692,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //////////////////////////////說明提示////////////////////////////
     private void setHelpContext(){
         //"如何使用","天氣功能","排程功能","記帳功能","報表功能","發票功能"
-        String[] how={"按壓主畫面的麥克風即可與生活助理Assis對話",""};
-        String[] wtr={"天氣指令"};
-        String[] pln={"排程指令"};
-        String[] bkg={"記帳指令"};
-        String[] rpt={"報表指令"};
-        String[] inv={"發票"};
+        String[] how={"一、按壓主畫面麥克風即可與生活助理Assis對話","二、可對Assis下達天氣、排程、記帳指令(詳情見各項功能說明)","三、可利用側選單進入各項功能進行手動操作"};
+        String[] wtr={"一、對Assis詢問特定時間的天氣","二、可利用側選單點選天氣進入天氣頁面查看近期天氣"};
+        String[] pln={"一、對Assis可以下達新增、刪除、查詢排程的要求","二、可利用側選單點選排程進入排程頁面進行手動新增、檢視、修改"};
+        String[] bkg={"一、對Assis可以下達新增、刪除記帳的要求","二、可利用側選單點選排程進入記帳頁面進行手動新增"};
+        String[] rpt={"一、對Assis可以下達查詢記帳的要求","二、可利用側選單點選排程進入報表頁面進行檢視、修改過往的記帳"};
+        String[] inv={"一、可利用側選單點選發票進入發票頁面進行手動兌獎、掃描QR code兌獎"};
         helpContext.add(how);
         helpContext.add(wtr);
         helpContext.add(pln);
