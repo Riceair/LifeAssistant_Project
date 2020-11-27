@@ -471,7 +471,7 @@ public class ViewPlan_activity extends AppCompatActivity {
 
                     }
 
-                    stuffTitleList.set(i,stuffTitleList.get(i)+stuffList.get(i).split(" ")[0]+"~"+stuffEndingList.get(i).split(" ")[0]);
+                    stuffTitleList.set(i,stuffTitleList.get(i)+stuffList.get(i).split(" ")[1]+"~"+stuffEndingList.get(i).split(" ")[1]);
                 }
 
                 // 5. 關閉 DB
