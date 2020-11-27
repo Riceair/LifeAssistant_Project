@@ -276,13 +276,13 @@ public class ViewPlan_activity extends AppCompatActivity {
                 for(int i=0;i<stuffList.size();i++)
                 {
 
-                    if(stuffNameList.get(i).length()>11)
+                    if(stuffNameList.get(i).length()>9)
                     {
-                        stuffTitleList.set(i,stuffTitleList.get(i).substring(0, 11)+"⋯");
+                        stuffTitleList.set(i,stuffTitleList.get(i).substring(0, 9)+"⋯");
                     }
                     else
                     {
-                        while(stuffTitleList.get(i).length()<11)
+                        while(stuffTitleList.get(i).length()<9)
                         {
                             stuffTitleList.set(i,stuffTitleList.get(i)+"　");
                         }
@@ -458,13 +458,13 @@ public class ViewPlan_activity extends AppCompatActivity {
                 for(int i=0;i<stuffList.size();i++)
                 {
 
-                    if(stuffNameList.get(i).length()>11)
+                    if(stuffNameList.get(i).length()>9)
                     {
-                        stuffTitleList.set(i,stuffTitleList.get(i).substring(0, 11)+"⋯");
+                        stuffTitleList.set(i,stuffTitleList.get(i).substring(0, 9)+"⋯");
                     }
                     else
                     {
-                        while(stuffTitleList.get(i).length()<11)
+                        while(stuffTitleList.get(i).length()<9)
                         {
                             stuffTitleList.set(i,stuffTitleList.get(i)+"　");
                         }
@@ -600,13 +600,13 @@ public class ViewPlan_activity extends AppCompatActivity {
                 for(int i=0;i<stuffList.size();i++)
                 {
 
-                    if(stuffNameList.get(i).length()>11)
+                    if(stuffNameList.get(i).length()>9)
                     {
-                        stuffTitleList.set(i,stuffTitleList.get(i).substring(0, 11)+"⋯");
+                        stuffTitleList.set(i,stuffTitleList.get(i).substring(0, 9)+"⋯");
                     }
                     else
                     {
-                        while(stuffTitleList.get(i).length()<11)
+                        while(stuffTitleList.get(i).length()<9)
                         {
                             stuffTitleList.set(i,stuffTitleList.get(i)+"　");
                         }
