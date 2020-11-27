@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view) {
                 // for DEBUG
-//                DEBUG_FUNCTION(1);
+                DEBUG_FUNCTION(1);
 
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -222,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (calType) {
             case "def":
                 mChart.setVisibility(View.VISIBLE);
-                PieChartUsedClass pieChartUsedClass = new PieChartUsedClass(mChart, type_list, amount_list);
+                PieChartUsedClass pieChartUsedClass = new PieChartUsedClass(mChart, type_list, amount_list,10,12,12f);
                 break;
             case "sum":
                 account_cal_window.setVisibility(View.VISIBLE);

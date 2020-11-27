@@ -16,12 +16,22 @@ import java.util.Random;
 public class PieChartUsedClass {
     private PieChart mChart;
     private List<Integer> color_default_list = new ArrayList<>();
+    private float textSize=20f;
 
     public PieChartUsedClass(PieChart mChart,List<String> type_list,List<Integer> amount_list){
         this.mChart=mChart;
         setDefulatColor(); //設置顏色
         setMChartDefault();
         setMChartLegend(20,15); //設置圖例
+        setMChartData(type_list,amount_list);
+    }
+
+    public PieChartUsedClass(PieChart mChart,List<String> type_list,List<Integer> amount_list,int formSize,int lgTextSize,float textSize){
+        this.mChart=mChart;
+        this.textSize=textSize;
+        setDefulatColor(); //設置顏色
+        setMChartDefault();
+        setMChartLegend(formSize,lgTextSize); //設置圖例
         setMChartData(type_list,amount_list);
     }
 
@@ -71,7 +81,7 @@ public class PieChartUsedClass {
         PieData pieData = new PieData(pieDataSet);
         pieData.setDrawValues(true);            //設置是否顯示資料實體(百分比，true:以下屬性才有意義)
         pieData.setValueTextColor(Color.BLACK);  //設置所有DataSet內資料實體（百分比）的文本顏色
-        pieData.setValueTextSize(20f);          //設置所有DataSet內資料實體（百分比）的文本字體大小
+        pieData.setValueTextSize(textSize);          //設置所有DataSet內資料實體（百分比）的文本字體大小
         //pieData.setValueTypeface(mTfLight);     //設置所有DataSet內資料實體（百分比）的文本字體樣式
         pieData.setValueFormatter(new PercentFormatter());//設置所有DataSet內資料實體（百分比）的文本字體格式
         mChart.setData(pieData);

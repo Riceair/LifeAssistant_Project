@@ -17,7 +17,7 @@
         android:text="建立帳戶"
         android:background="@drawable/tabsonplanner"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="@dimen/_15sdp" />
+        android:textSize="50px" />
 
     <RelativeLayout
         android:id="@+id/mainly"
@@ -29,7 +29,7 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="300px"
-            android:layout_height="300px"
+            android:layout_height="250px"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_30sdp"
             android:scaleType="fitXY"
