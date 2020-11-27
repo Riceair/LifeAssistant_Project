@@ -276,19 +276,21 @@ public class ViewPlan_activity extends AppCompatActivity {
                 for(int i=0;i<stuffList.size();i++)
                 {
 
-                    if(stuffNameList.get(i).length()>15)
+                    if(stuffNameList.get(i).length()>11)
                     {
-                        stuffTitleList.set(i,stuffTitleList.get(i).substring(0, 15)+"⋯");
+                        stuffTitleList.set(i,stuffTitleList.get(i).substring(0, 11)+"⋯");
                     }
                     else
                     {
-                        while(stuffTitleList.get(i).length()<15)
+                        while(stuffTitleList.get(i).length()<11)
                         {
                             stuffTitleList.set(i,stuffTitleList.get(i)+"　");
                         }
 
                     }
-                   // stuffTitleList.set(i,stuffTitleList.get(i)+" ("+stuffList.get(i).split(" ")[0]+")");
+
+                    stuffTitleList.set(i,stuffTitleList.get(i)+" "+stuffList.get(i)+"~"+stuffEndingList.get(i));
+
                 }
 
             // 5. 關閉 DB
@@ -456,19 +458,20 @@ public class ViewPlan_activity extends AppCompatActivity {
                 for(int i=0;i<stuffList.size();i++)
                 {
 
-                    if(stuffNameList.get(i).length()>15)
+                    if(stuffNameList.get(i).length()>11)
                     {
-                        stuffTitleList.set(i,stuffTitleList.get(i).substring(0, 15)+"⋯");
+                        stuffTitleList.set(i,stuffTitleList.get(i).substring(0, 11)+"⋯");
                     }
                     else
                     {
-                        while(stuffTitleList.get(i).length()<15)
+                        while(stuffTitleList.get(i).length()<11)
                         {
                             stuffTitleList.set(i,stuffTitleList.get(i)+"　");
                         }
 
                     }
-                    // stuffTitleList.set(i,stuffTitleList.get(i)+" ("+stuffList.get(i).split(" ")[0]+")");
+
+                    stuffTitleList.set(i,stuffTitleList.get(i)+stuffList.get(i).split(" ")[0]+"~"+stuffEndingList.get(i).split(" ")[0]);
                 }
 
                 // 5. 關閉 DB
@@ -597,13 +600,13 @@ public class ViewPlan_activity extends AppCompatActivity {
                 for(int i=0;i<stuffList.size();i++)
                 {
 
-                    if(stuffNameList.get(i).length()>15)
+                    if(stuffNameList.get(i).length()>11)
                     {
-                        stuffTitleList.set(i,stuffTitleList.get(i).substring(0, 15)+"⋯");
+                        stuffTitleList.set(i,stuffTitleList.get(i).substring(0, 11)+"⋯");
                     }
                     else
                     {
-                        while(stuffTitleList.get(i).length()<15)
+                        while(stuffTitleList.get(i).length()<11)
                         {
                             stuffTitleList.set(i,stuffTitleList.get(i)+"　");
                         }
