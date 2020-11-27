@@ -274,6 +274,9 @@ public class Invoice_auto_check_activity extends AppCompatActivity {
         params.width= (int) (params.width*widthRate);
         mainly.setLayoutParams(params);
 
+        if(dm.widthPixels==1080 || dm.widthPixels==1440)
+            return;
+
         changeLinearViewSize((ViewGroup) findViewById(R.id.record_list),widthRate,heightRate);
     }
 
