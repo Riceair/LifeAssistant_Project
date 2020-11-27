@@ -100,11 +100,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Geocoder geocoder;
     private String adminArea=""; //高雄市 台北市
 
-    ArrayList<LinearLayout> all_help_linear=new ArrayList<>();
-    ArrayList<MainHelpItemOnClickListener> helpItem_onclick_list=new ArrayList<>();
+    private ArrayList<LinearLayout> all_help_linear=new ArrayList<>();
+    private ArrayList<MainHelpItemOnClickListener> helpItem_onclick_list=new ArrayList<>();
 
     private boolean isQuestion=false;
-    private final String[] helpTitle={"如何使用","天氣指令","排程指令","記帳指令","報表指令","發票指令"};
+    private final String[] helpTitle={"如何使用","天氣功能","排程功能","記帳功能","報表功能","發票功能"};
+    private ArrayList<String []> helpContext=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,6 +125,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         actionBarDrawerToggle.syncState();
 
         setLocationPermission();
+        setHelpContext();
         setHelp();
 
         // 資料庫
@@ -687,6 +689,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     //////////////////////////////說明提示////////////////////////////
+    private void setHelpContext(){
+        //"如何使用","天氣功能","排程功能","記帳功能","報表功能","發票功能"
+        String[] how={"按壓主畫面的麥克風即可與生活助理Assis對話",""};
+        String[] wtr={"天氣指令"};
+        String[] pln={"排程指令"};
+        String[] bkg={"記帳指令"};
+        String[] rpt={"報表指令"};
+        String[] inv={"發票"};
+        helpContext.add(how);
+        helpContext.add(wtr);
+        helpContext.add(pln);
+        helpContext.add(bkg);
+        helpContext.add(rpt);
+        helpContext.add(inv);
+    }
+
     //help設置
     private void setHelp(){
         //重設
@@ -729,7 +747,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             help_list.addView(main_help_element);
 
             help_title.setText(helpTitle[i]);
-            MainHelpItemOnClickListener helpOnClick=new MainHelpItemOnClickListener(this,help_list,show_more,new String[]{"說出我要記帳\n聊天機器人可能會幫你記帳","123","你好"});
+            MainHelpItemOnClickListener helpOnClick=new MainHelpItemOnClickListener(this,help_list,show_more,helpContext.get(i));
             main_help_element.setOnClickListener(helpOnClick);
             all_help_linear.add(main_help_element);
             helpItem_onclick_list.add(helpOnClick);
@@ -767,22 +785,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         public void onClick(View view) {
             if(isQuestion){
-                isQuestion=false;
-                findViewById(R.id.basic_item).setVisibility(View.VISIBLE);
-                findViewById(R.id.question_item).setVisibility(View.INVISIBLE);
-
-                Animation anim_alpha = new AlphaAnimation(0.0f,1.0f);
-                anim_alpha.setDuration(500);
-                findViewById(R.id.basic_item).startAnimation(anim_alpha);
-
-                Animation anim_transDown = AnimationUtils.loadAnimation(MainActivity.this,R.anim.translate_down);
-                anim_transDown.setDuration(500);
-                findViewById(R.id.question_item).startAnimation(anim_transDown);
-
-                for(int i=0;i<helpItem_onclick_list.size();i++)
-                    helpItem_onclick_list.get(i).reset();
+                helpHidden();
             }
         }
+    }
+
+    private void helpHidden(){
+        isQuestion=false;
+        findViewById(R.id.basic_item).setVisibility(View.VISIBLE);
+        findViewById(R.id.question_item).setVisibility(View.INVISIBLE);
+
+        Animation anim_alpha = new AlphaAnimation(0.0f,1.0f);
+        anim_alpha.setDuration(500);
+        findViewById(R.id.basic_item).startAnimation(anim_alpha);
+
+        Animation anim_transDown = AnimationUtils.loadAnimation(MainActivity.this,R.anim.translate_down);
+        anim_transDown.setDuration(500);
+        findViewById(R.id.question_item).startAnimation(anim_transDown);
+
+        for(int i=0;i<helpItem_onclick_list.size();i++)
+            helpItem_onclick_list.get(i).reset();
     }
 
     ///////////////////////////Navigation Drawer/////////////////////////////
@@ -941,6 +963,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onBackPressed(){
         if(drawerLayout.isDrawerOpen(GravityCompat.START)){
             drawerLayout.closeDrawer(GravityCompat.START);
+        }else if(isQuestion){
+            helpHidden();
         }else{
             super.onBackPressed();
         }
