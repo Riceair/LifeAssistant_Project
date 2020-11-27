@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //機器人回應視窗
     private RelativeLayout popup_window,weather_response,account_cal_window, planner_window;
-    private LinearLayout yes_no_response;
+    private RelativeLayout yes_no_response;
     private int popup_window_height,popup_window_width;
     private PieChart mChart;
 
