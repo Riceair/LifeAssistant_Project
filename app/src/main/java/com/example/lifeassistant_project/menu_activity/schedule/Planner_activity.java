@@ -125,15 +125,14 @@ public class Planner_activity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //
-                        selectstatus=1;
-                        Intent intent = new Intent(view.getContext(),ViewPlan_activity.class);
-                        view.getContext().startActivity(intent);
-                        intent.putExtra("clicked_year",clicked_year);
-                        intent.putExtra("clicked_month",clicked_month);
-                        intent.putExtra("clicked_day",clicked_day);
-                        intent.putExtra("selstatus",selectstatus);
-                        startActivityForResult(intent,0);
-
+                    selectstatus=1;
+                    Intent intent = new Intent(view.getContext(),ViewPlan_activity.class);
+                    view.getContext().startActivity(intent);
+                    intent.putExtra("clicked_year",clicked_year);
+                    intent.putExtra("clicked_month",clicked_month);
+                    intent.putExtra("clicked_day",clicked_day);
+                    intent.putExtra("selstatus",selectstatus);
+                    startActivityForResult(intent,0);
 
                     }
                 });
@@ -149,51 +148,47 @@ public class Planner_activity extends AppCompatActivity {
                 Log.d(TAG, "Day was clicked: " + dateClicked + " with events " + events);
                 for (int i=0 ; i<events.size();i++)
                 {
-
                     String[] Eventparts = events.get(i).toString().split("=");
                     String tempString=Eventparts[3];
 
-                    Integer tempIndic=tempString.length();
-                    tempString=tempString.substring(0,tempIndic-1);
-
-                    EventList.add(tempString);
-
+                    EventList.add(tempString.substring(0, tempString.length() - 1));
                 }
                 for(int i=0;i<EventList.size();i++)
                 {
-
-                    if(EventList.get(i).length()>15)
+                    int length = EventList.get(i).length();
+                    String ele = EventList.get(i);
+                    if(length > 15)
                     {
-                        EventList.set(i,EventList.get(i).substring(0, 15)+"⋯");
+                        EventList.set(i, ele.substring(0, 15)+"⋯");
                     }
                     else
                     {
-                        while(EventList.get(i).length()<15)
+                        while(length < 15)
                         {
-                            EventList.set(i,EventList.get(i)+"　");
+                            ele = ele + "　";
+                            length++;
                         }
-
+                        EventList.set(i, ele);
                     }
-
                 }
 
 
 
                 ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Planner_activity.this, android.R.layout.simple_list_item_1,EventList);
                 list.setAdapter(arrayAdapter);
-                if(EventList.isEmpty()==false)
-                {   sec_tabs.setVisibility(View.VISIBLE);
+                if(!EventList.isEmpty())
+                {
+                    sec_tabs.setVisibility(View.VISIBLE);
                     sec.setBackgroundResource(R.drawable.planner_stuff_background);
-                    Animation anim_transUp = AnimationUtils.loadAnimation(Planner_activity.this,R.anim.translate_up);
-                    anim_transUp.setDuration(500);
-                    sec.startAnimation(anim_transUp);
                 }
                 else
-                {   sec_tabs.setVisibility(View.INVISIBLE);
+                {
+                    sec_tabs.setVisibility(View.INVISIBLE);
                     sec.setBackgroundResource(R.drawable.planner_stuff_empty);
-                    Animation anim_transDown = AnimationUtils.loadAnimation(Planner_activity.this,R.anim.translate_up);
-                    anim_transDown.setDuration(500);
-                    sec.startAnimation(anim_transDown);}
+                }
+                Animation anim_transDown = AnimationUtils.loadAnimation(Planner_activity.this,R.anim.translate_up);
+                anim_transDown.setDuration(500);
+                sec.startAnimation(anim_transDown);
             }
 
 

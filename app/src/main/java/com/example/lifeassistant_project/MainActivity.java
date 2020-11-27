@@ -417,6 +417,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //Login out here
                         LoginHandler.Logout();
+                        resetInformation();
                         //After login out
                         setBeforeLogin();
                     }
@@ -933,6 +934,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         SharedPreferences.Editor editor = shared.edit();
         editor.putString("username", username);
         editor.putString("password", password);
+        editor.commit();
+    }
+
+    public void resetInformation()
+    {
+        SharedPreferences shared = getSharedPreferences("shared", MODE_PRIVATE);
+        SharedPreferences.Editor editor = shared.edit();
+        editor.remove("username");
+        editor.remove("password");
         editor.commit();
     }
 
