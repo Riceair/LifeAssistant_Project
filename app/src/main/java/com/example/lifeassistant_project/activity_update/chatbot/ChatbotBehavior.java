@@ -9,8 +9,10 @@ import com.example.lifeassistant_project.activity_update.packages.SentenceHandle
 import com.example.lifeassistant_project.activity_update.static_handler.DatabaseBehavior;
 import com.example.lifeassistant_project.activity_update.static_handler.LoginHandler;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.SimpleTimeZone;
 
 public class ChatbotBehavior {
     private int behaviorMode;
@@ -321,10 +323,14 @@ public class ChatbotBehavior {
                         weekDay = 7;
                 }
 
+                calendar.add(Calendar.DATE, number);
+                SimpleDateFormat ft = new SimpleDateFormat("MM月dd日");
+
                 number += weekDay;
                 while(number > 7)
                     number -= 7;
-                return "星期" + this.TransInt2WeekWord(number);
+
+                return ft.format(calendar.getTime()) + "星期" + this.TransInt2WeekWord(number);
         }
     }
 

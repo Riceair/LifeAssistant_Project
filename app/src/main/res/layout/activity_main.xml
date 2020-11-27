@@ -100,64 +100,135 @@
             <!--    排程顯示    -->
 
             <RelativeLayout
-                android:id="@+id/Planner_popup"
-                android:layout_width="@dimen/_220sdp"
-                android:layout_height="@dimen/_200sdp"
-                android:layout_centerInParent="true"
-                android:background="@drawable/planner_stuff_on_main_screen"
-                android:visibility="visible"
-                tools:visibility="visible">
+                    android:id="@+id/AccountCalWindow"
+                    android:layout_width="@dimen/_200sdp"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone"
+                    tools:visibility="visible">
 
                 <TextView
-                    android:id="@+id/PlannerInnerText"
-                    android:layout_width="@dimen/_180sdp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@id/easylist"
-                    android:gravity="center"
-                    android:text="您當天的行程如下:"
-                    android:textColor="@color/design_default_color_on_secondary"
-                    android:textSize="@dimen/_13sdp" />
+                        android:id="@+id/payDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="總共支出："
+                        android:textSize="@dimen/_20sdp"/>
 
                 <TextView
-                    android:id="@+id/editText"
-                    android:layout_width="@dimen/_35sdp"
-                    android:layout_height="@dimen/_25sdp"
-                    android:layout_alignTop="@id/edit_button"
-                    android:layout_toLeftOf="@id/edit_button"
-                    android:gravity="right|center_vertical"
-                    android:onClick="clickViewPlan"
-                    android:text="排程"
-                    android:textSize="@dimen/_12sdp" />
+                        android:id="@+id/payMoney"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_below="@+id/payDescription"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="$100"
+                        android:textColor="#FF0000"
+                        android:textSize="@dimen/_20sdp"/>
+
+                <TextView
+                        android:id="@+id/incomeDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_below="@+id/payMoney"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="總共收入："
+                        android:textSize="@dimen/_20sdp"/>
+
+                <TextView
+                        android:id="@+id/incomeMoney"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_below="@+id/incomeDescription"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="$200"
+                        android:textColor="#00FF0D"
+                        android:textSize="@dimen/_20sdp"/>
+
+                <TextView
+                        android:id="@+id/sumDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_below="@+id/incomeMoney"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="剩餘："
+                        android:textSize="@dimen/_20sdp"/>
+
+                <TextView
+                        android:id="@+id/sumMoney"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_below="@+id/sumDescription"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="$100"
+                        android:textColor="#00FF0D"
+                        android:textSize="@dimen/_20sdp"/>
+
+            </RelativeLayout>
+            <RelativeLayout
+                    android:id="@+id/Planner_popup"
+                    android:layout_width="@dimen/_220sdp"
+                    android:layout_height="@dimen/_200sdp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/planner_stuff_on_main_screen"
+                    android:visibility="visible"
+                    tools:visibility="invisible">
+
+                <TextView
+                        android:id="@+id/PlannerInnerText"
+                        android:layout_width="@dimen/_180sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@id/easylist"
+                        android:gravity="center"
+                        android:text="您當天的行程如下:"
+                        android:textColor="@color/design_default_color_on_secondary"
+                        android:textSize="@dimen/_13sdp"/>
+
+                <TextView
+                        android:id="@+id/editText"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_25sdp"
+                        android:layout_alignTop="@id/edit_button"
+                        android:layout_toLeftOf="@id/edit_button"
+                        android:gravity="right|center_vertical"
+                        android:onClick="clickViewPlan"
+                        android:text="排程"
+                        android:textSize="@dimen/_12sdp"/>
 
                 <ImageButton
-                    android:id="@+id/edit_button"
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
+                        android:id="@+id/edit_button"
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_25sdp"
 
-                    android:layout_below="@id/PlannerInnerText"
-                    android:layout_alignRight="@id/easylist"
-                    android:background="@drawable/action_transparent"
-                    android:onClick="clickViewPlan"
-                    android:scaleType="centerInside"
-                    app:srcCompat="@drawable/arrowbutton" />
+                        android:layout_below="@id/PlannerInnerText"
+                        android:layout_alignRight="@id/easylist"
+                        android:background="@drawable/action_transparent"
+                        android:onClick="clickViewPlan"
+                        android:scaleType="centerInside"
+                        app:srcCompat="@drawable/arrowbutton"/>
 
                 <LinearLayout
-                    android:id="@+id/easylist"
-                    android:layout_width="@dimen/_160sdp"
-                    android:layout_height="@dimen/_120sdp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="@dimen/_5sdp"
-                    android:orientation="vertical">
+                        android:id="@+id/easylist"
+                        android:layout_width="@dimen/_160sdp"
+                        android:layout_height="@dimen/_120sdp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:orientation="vertical">
 
                     <ListView
-                        android:id="@+id/list"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        android:layout_marginTop="@dimen/_20sdp"
-                        android:divider="@drawable/divider"
-                        android:listSelector="@drawable/action_transparent" />
+                            android:id="@+id/list"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_20sdp"
+                            android:divider="@drawable/divider"
+                            android:listSelector="@drawable/action_transparent"/>
                 </LinearLayout>
             </RelativeLayout>
             <!--    天氣顯示    -->
@@ -256,101 +327,30 @@
 
             <!--      Yes No      -->
             <LinearLayout
-                android:id="@+id/yes_no_response"
-                android:layout_width="@dimen/_220sdp"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:visibility="invisible"
-                tools:visibility="invisible">
-
-                <Button
-                    android:id="@+id/cancelButton"
-                    android:layout_width="@dimen/_65sdp"
-                    android:layout_height="@dimen/_35sdp"
-                    android:background="@drawable/cancel_button"
-                    android:text="否"
-                    android:textColor="#FFFFFF"
-                    android:textSize="@dimen/_20sdp" />
-
-                <RelativeLayout
-                    android:id="@+id/AccountCalWindow"
-                    android:layout_width="@dimen/_80sdp"
-                    android:layout_height="match_parent"
-                    android:visibility="gone"
+                    android:id="@+id/yes_no_response"
+                    android:layout_width="@dimen/_220sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="invisible"
                     tools:visibility="invisible">
 
-                    <TextView
-                        android:id="@+id/payDescription"
-                        android:layout_width="@dimen/_80sdp"
-                        android:layout_height="@dimen/_20sdp"
-                        android:layout_marginLeft="@dimen/_5sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:text="總共支出："
-                        android:textSize="@dimen/_15sdp" />
-
-                    <TextView
-                        android:id="@+id/payMoney"
-                        android:layout_width="@dimen/_80sdp"
-                        android:layout_height="@dimen/_20sdp"
-                        android:layout_below="@+id/payDescription"
-                        android:layout_marginLeft="@dimen/_5sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:text="$100"
-                        android:textColor="#FF0000"
-                        android:textSize="@dimen/_24sdp" />
-
-                    <TextView
-                        android:id="@+id/incomeDescription"
-                        android:layout_width="@dimen/_80sdp"
-                        android:layout_height="@dimen/_20sdp"
-                        android:layout_below="@+id/payMoney"
-                        android:layout_marginLeft="@dimen/_5sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:text="總共收入："
-                        android:textSize="@dimen/_24sdp" />
-
-                    <TextView
-                        android:id="@+id/incomeMoney"
-                        android:layout_width="@dimen/_80sdp"
-                        android:layout_height="@dimen/_20sdp"
-                        android:layout_below="@+id/incomeDescription"
-                        android:layout_marginLeft="@dimen/_5sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:text="$200"
-                        android:textColor="#00FF0D"
-                        android:textSize="@dimen/_24sdp" />
-
-                    <TextView
-                        android:id="@+id/sumDescription"
-                        android:layout_width="@dimen/_80sdp"
-                        android:layout_height="@dimen/_20sdp"
-                        android:layout_below="@+id/incomeMoney"
-                        android:layout_marginLeft="@dimen/_5sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:text="剩餘："
-                        android:textSize="@dimen/_24sdp" />
-
-                    <TextView
-                        android:id="@+id/sumMoney"
-                        android:layout_width="@dimen/_80sdp"
-                        android:layout_height="@dimen/_20sdp"
-                        android:layout_below="@+id/sumDescription"
-                        android:layout_marginLeft="@dimen/_5sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:text="$100"
-                        android:textColor="#00FF0D"
-                        android:textSize="@dimen/_24sdp" />
-
-                </RelativeLayout>
+                <Button
+                        android:id="@+id/cancelButton"
+                        android:layout_width="@dimen/_65sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@drawable/cancel_button"
+                        android:text="否"
+                        android:textColor="#FFFFFF"
+                        android:textSize="@dimen/_20sdp"/>
 
                 <Button
-                    android:id="@+id/assure_button"
-                    android:layout_width="@dimen/_65sdp"
-                    android:layout_height="@dimen/_35sdp"
-                    android:background="@drawable/assure_button"
-                    android:text="是"
-                    android:textColor="#FFFFFF"
-                    android:textSize="@dimen/_20sdp" />
+                        android:id="@+id/assure_button"
+                        android:layout_width="@dimen/_65sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@drawable/assure_button"
+                        android:text="是"
+                        android:textColor="#FFFFFF"
+                        android:textSize="@dimen/_20sdp"/>
             </LinearLayout>
             <!--      Yes No      -->
 

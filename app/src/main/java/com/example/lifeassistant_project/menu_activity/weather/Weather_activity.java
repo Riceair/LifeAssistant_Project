@@ -189,13 +189,13 @@ public class Weather_activity extends AppCompatActivity {
         String currentWeek = ft.format(dNow);
 
         int ptr = 0;
-        if(currentWeek.equals("Sun")) ptr = 0;
-        else if(currentWeek.equals("Mon")) ptr = 1;
-        else if(currentWeek.equals("Tus")) ptr = 2;
-        else if(currentWeek.equals("Wed")) ptr = 3;
-        else if(currentWeek.equals("Thu")) ptr = 4;
-        else if(currentWeek.equals("Fri")) ptr = 5;
-        else if(currentWeek.equals("Sat")) ptr = 6;
+        if(currentWeek.equals("Sun") || currentWeek.equals("週日")) ptr = 0;
+        else if(currentWeek.equals("Mon") || currentWeek.equals("週一")) ptr = 1;
+        else if(currentWeek.equals("Tus") || currentWeek.equals("週二")) ptr = 2;
+        else if(currentWeek.equals("Wed") || currentWeek.equals("週三")) ptr = 3;
+        else if(currentWeek.equals("Thu") || currentWeek.equals("週四")) ptr = 4;
+        else if(currentWeek.equals("Fri") || currentWeek.equals("週五")) ptr = 5;
+        else if(currentWeek.equals("Sat") || currentWeek.equals("週六")) ptr = 6;
         else ptr = 0;
 
         for(int i = 0; i < 7; i++)
