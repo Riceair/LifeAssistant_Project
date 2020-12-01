@@ -6,6 +6,7 @@ import android.content.*;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.util.TypedValue;
 import android.widget.*;
@@ -109,6 +110,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private boolean isQuestion=false;
     private final String[] helpTitle={"如何使用","天氣功能","排程功能","記帳功能","報表功能","發票功能"};
     private ArrayList<String []> helpContext=new ArrayList<>();
+    private TextToSpeech textToSpeech;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,6 +133,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setLocationPermission();
         setHelpContext();
         setHelp();
+
+        textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == textToSpeech.SUCCESS) {
+                    int result = textToSpeech.setLanguage(Locale.TAIWAN);
+                    if (result != TextToSpeech.LANG_COUNTRY_AVAILABLE
+                            && result != TextToSpeech.LANG_AVAILABLE){
+                    }
+                }
+            }
+        });
+        textToSpeech.setPitch(1.2f);
 
         // 資料庫
         File dbDir = new File(PATH, "databases");
@@ -194,6 +210,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void setTTS(){
+        textToSpeech.stop();
         //語音TTS
         chatbotBehavior = new ChatbotBehavior();
         userSay=findViewById(R.id.userSay);
@@ -215,6 +232,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         });
+    }
+
+    private void speakText(final String text){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(100);
+                    textToSpeech.speak(text,
+                            TextToSpeech.QUEUE_ADD, null);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     //記帳查詢
@@ -502,7 +534,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
 
                 chatBotSay.setText(chatbotBehavior.getResponse());
-
                 subwindowHandle();
                 break;
             case 2:
@@ -568,9 +599,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 chatbotBehavior.sendSentence();
 
             chatBotSay.setText(chatbotBehavior.getResponse());
+            speakText(chatbotBehavior.getResponse());
             if(chatbotBehavior.getCurrentIntent() == 5)
                 changePageToInvoice();
-
             this.subwindowHandle();
         }
         else if(requestCode==REGISTER_CODE){
@@ -821,6 +852,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private class ClickToGetHelp implements View.OnClickListener {
         @Override
         public void onClick(View view) {
+            textToSpeech.stop();
             if(isQuestion) return;
             isQuestion=true;
             //基本物件與天氣設為INVISIBLE 使用說明顯示VISIBLE
@@ -1070,4 +1102,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivityForResult(intent,0);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        textToSpeech.stop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (textToSpeech != null) {
+            textToSpeech.stop();
+            textToSpeech.shutdown();
+            textToSpeech = null;
+        }
+        super.onDestroy();
+    }
 }
