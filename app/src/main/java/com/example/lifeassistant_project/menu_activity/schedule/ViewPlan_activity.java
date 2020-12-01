@@ -9,9 +9,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -130,10 +132,44 @@ public class ViewPlan_activity extends AppCompatActivity {
         empty_sign.setVisibility(View.VISIBLE);}
 
     }
+    class Struct {
+        public String iName;
+        public String iDesc;
 
+        Struct(String name, String desc) {
+            iName = name;
+            iDesc = desc;
+        }
+    }
+
+    private Struct[] buildData() {
+        Struct[] array = new Struct[stuffTitleList.size()];
+        for (int i = 0; i < stuffTitleList.size(); i++) {
+            array[i] = new Struct(stuffTitleList.get(i), stuffList.get(i)+"~"+stuffEndingList.get(i));
+        }
+        return array;
+    }
     private void setList(){
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, stuffTitleList);
-        list.setAdapter(arrayAdapter);
+//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, stuffTitleList);
+//        list.setAdapter(arrayAdapter);
+        ListView mList = (ListView) findViewById(R.id.list);
+        Struct[] mItems = buildData();
+        ListAdapter mAdapter =
+                new ArrayAdapter<Struct>(this,
+                        android.R.layout.simple_list_item_2,
+                        android.R.id.text1,
+                        mItems) {
+                    @Override
+                    public View getView(int pos, View convert, ViewGroup group) {
+                        View v = super.getView(pos, convert, group);
+                        TextView t1 = (TextView) v.findViewById(android.R.id.text1);
+                        TextView t2 = (TextView) v.findViewById(android.R.id.text2);
+                        t1.setText(getItem(pos).iName);
+                        t2.setText(getItem(pos).iDesc);
+                        return v;
+                    }
+                };
+        mList.setAdapter(mAdapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -273,25 +309,25 @@ public class ViewPlan_activity extends AppCompatActivity {
 
                 }
 
-                for(int i=0;i<stuffList.size();i++)
-                {
+//                for(int i=0;i<stuffList.size();i++)
+//                {
+//
+//                    if(stuffNameList.get(i).length()>9)
+//                    {
+//                        stuffTitleList.set(i,stuffTitleList.get(i).substring(0, 9)+"⋯");
+//                    }
+//                    else
+//                    {
+//                        while(stuffTitleList.get(i).length()<9)
+//                        {
+//                            stuffTitleList.set(i,stuffTitleList.get(i)+"　");
+//                        }
+//
+//                    }
+//
+//                    stuffTitleList.set(i,stuffTitleList.get(i)+" "+stuffList.get(i)+"~"+stuffEndingList.get(i));
 
-                    if(stuffNameList.get(i).length()>9)
-                    {
-                        stuffTitleList.set(i,stuffTitleList.get(i).substring(0, 9)+"⋯");
-                    }
-                    else
-                    {
-                        while(stuffTitleList.get(i).length()<9)
-                        {
-                            stuffTitleList.set(i,stuffTitleList.get(i)+"　");
-                        }
-
-                    }
-
-                    stuffTitleList.set(i,stuffTitleList.get(i)+" "+stuffList.get(i)+"~"+stuffEndingList.get(i));
-
-                }
+//                }
 
             // 5. 關閉 DB
             myDB.close();
@@ -455,24 +491,24 @@ public class ViewPlan_activity extends AppCompatActivity {
 
                 }
 
-                for(int i=0;i<stuffList.size();i++)
-                {
-
-                    if(stuffNameList.get(i).length()>9)
-                    {
-                        stuffTitleList.set(i,stuffTitleList.get(i).substring(0, 9)+"⋯");
-                    }
-                    else
-                    {
-                        while(stuffTitleList.get(i).length()<9)
-                        {
-                            stuffTitleList.set(i,stuffTitleList.get(i)+"　");
-                        }
-
-                    }
-
-                    stuffTitleList.set(i,stuffTitleList.get(i)+stuffList.get(i).split(" ")[1]+"~"+stuffEndingList.get(i).split(" ")[1]);
-                }
+//                for(int i=0;i<stuffList.size();i++)
+//                {
+//
+//                    if(stuffNameList.get(i).length()>9)
+//                    {
+//                        stuffTitleList.set(i,stuffTitleList.get(i).substring(0, 9)+"⋯");
+//                    }
+//                    else
+//                    {
+//                        while(stuffTitleList.get(i).length()<9)
+//                        {
+//                            stuffTitleList.set(i,stuffTitleList.get(i)+"　");
+//                        }
+//
+//                    }
+//
+//                    stuffTitleList.set(i,stuffTitleList.get(i)+stuffList.get(i).split(" ")[1]+"~"+stuffEndingList.get(i).split(" ")[1]);
+//                }
 
                 // 5. 關閉 DB
                 myDB.close();
@@ -597,23 +633,23 @@ public class ViewPlan_activity extends AppCompatActivity {
                     stuffTitleList.add(stuffNameList.get(i));
                 }
 
-                for(int i=0;i<stuffList.size();i++)
-                {
-
-                    if(stuffNameList.get(i).length()>9)
-                    {
-                        stuffTitleList.set(i,stuffTitleList.get(i).substring(0, 9)+"⋯");
-                    }
-                    else
-                    {
-                        while(stuffTitleList.get(i).length()<9)
-                        {
-                            stuffTitleList.set(i,stuffTitleList.get(i)+"　");
-                        }
-
-                    }
-                    // stuffTitleList.set(i,stuffTitleList.get(i)+" ("+stuffList.get(i).split(" ")[0]+")");
-                }
+//                for(int i=0;i<stuffList.size();i++)
+//                {
+//
+//                    if(stuffNameList.get(i).length()>9)
+//                    {
+//                        stuffTitleList.set(i,stuffTitleList.get(i).substring(0, 9)+"⋯");
+//                    }
+//                    else
+//                    {
+//                        while(stuffTitleList.get(i).length()<9)
+//                        {
+//                            stuffTitleList.set(i,stuffTitleList.get(i)+"　");
+//                        }
+//
+//                    }
+//                    // stuffTitleList.set(i,stuffTitleList.get(i)+" ("+stuffList.get(i).split(" ")[0]+")");
+//                }
 
                 // 5. 關閉 DB
                 myDB.close();
