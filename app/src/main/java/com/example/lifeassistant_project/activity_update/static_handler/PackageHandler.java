@@ -80,7 +80,8 @@ public class PackageHandler
         {
             b_temp = ByteBuffer.allocate(detail_size);
             b_temp.put(acPkg.getDetail().getBytes("UTF-8"));
-            for(int i = acPkg.getDetail().getBytes().length; i < detail_size; i++)
+            int length = Math.min(acPkg.getDetail().getBytes().length, detail_size);
+            for(int i = length; i < detail_size; i++)
             {
                 b_temp.put((byte)0);
             }
@@ -889,7 +890,8 @@ public class PackageHandler
         {
             ByteBuffer b_temp = ByteBuffer.allocate(MES_SIZE);
             b_temp.put(message.getBytes("UTF-8"));
-            for(int i = message.getBytes().length; i < MES_SIZE; i++)
+            int length = Math.min(message.getBytes().length, MES_SIZE);
+            for(int i = length; i < MES_SIZE; i++)
             {
                 b_temp.put((byte)0);
             }

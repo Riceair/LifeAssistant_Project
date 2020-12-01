@@ -46,6 +46,8 @@ import com.example.lifeassistant_project.features_class.MainHelpItemOnClickListe
 import com.example.lifeassistant_project.features_class.PieChartUsedClass;
 import com.example.lifeassistant_project.menu_activity.finance.Bookkeeping_activity;
 import com.example.lifeassistant_project.menu_activity.finance.invoice.Invoice_activity;
+import com.example.lifeassistant_project.menu_activity.finance.invoice.Invoice_auto_check_activity;
+import com.example.lifeassistant_project.menu_activity.finance.invoice.Invoice_qr_activity;
 import com.example.lifeassistant_project.menu_activity.login.Login_activity;
 import com.example.lifeassistant_project.menu_activity.login.Register_activity;
 import com.example.lifeassistant_project.menu_activity.schedule.Planner_activity;
@@ -54,6 +56,7 @@ import com.example.lifeassistant_project.menu_activity.schedule.ViewPlan_activit
 import com.example.lifeassistant_project.menu_activity.weather.Weather_activity;
 import com.github.mikephil.charting.charts.PieChart;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
 import org.w3c.dom.Text;
 
 import java.io.File;
@@ -200,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view) {
                 // for DEBUG
-                DEBUG_FUNCTION(1);
+//                DEBUG_FUNCTION(1);
 
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -551,6 +554,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             userSay.setText(result.get(0));
 
+            //阻擋未登入
             if(LoginHandler.getUserName().equals("Null"))
             {
                 chatBotSay.setText("您必須要先登入，我才能夠幫助您！");
@@ -564,6 +568,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 chatbotBehavior.sendSentence();
 
             chatBotSay.setText(chatbotBehavior.getResponse());
+            if(chatbotBehavior.getCurrentIntent() == 5)
+                changePageToInvoice();
 
             this.subwindowHandle();
         }
@@ -598,6 +604,56 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         }
+    }
+
+    private void changePageToInvoice()
+    {
+        //轉換頁面至對發票
+        Intent intent = new Intent(this, Invoice_activity.class);;
+        int operationCode = chatbotBehavior.getCurrentOperation();
+        ReceiptQRPackage recepitContainerRec = new ReceiptQRPackage(), recepitContainerPre = new ReceiptQRPackage();
+        boolean isInvoiceUpdate;
+
+
+        if(operationCode == 1 || operationCode == 2)
+        {
+            if(operationCode == 1)
+                intent = new Intent(this, Invoice_auto_check_activity.class);
+            else
+                intent = new Intent(this, Invoice_qr_activity.class);
+
+            ClientProgress client = new ClientProgress();
+            client.setPackage(new ReceiptQRPackage());
+            Thread cThread = new Thread(client);
+            cThread.start();
+            synchronized (client)
+            {
+                try {
+                    client.wait();
+                }catch (InterruptedException e)
+                {
+                    System.out.println(e);
+                }
+
+                ArrayList<DataPackage> rcvReceiptContainer = client.getRcvPackageList();
+                if(rcvReceiptContainer.size()!=0) {
+                    recepitContainerRec = (ReceiptQRPackage) rcvReceiptContainer.get(0); //較近期的發票
+                    recepitContainerPre = (ReceiptQRPackage) rcvReceiptContainer.get(1); //上一期的發票
+                    isInvoiceUpdate=true;
+                }
+                else{
+                    Toast.makeText(this,"無網路連線",Toast.LENGTH_SHORT).show();
+                    isInvoiceUpdate=false;
+                }
+            }
+
+            intent.putExtra("isInvoiceUpdate",isInvoiceUpdate);
+            intent.putExtra("recepitContainerPre", new Gson().toJson(recepitContainerPre));
+            intent.putExtra("recepitContainerRec", new Gson().toJson(recepitContainerRec));
+        }
+
+        this.startActivity(intent);
+        overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
     }
 
     private void subwindowHandle()

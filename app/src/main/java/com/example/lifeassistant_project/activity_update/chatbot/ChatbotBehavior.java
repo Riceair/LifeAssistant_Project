@@ -115,7 +115,7 @@ public class ChatbotBehavior {
     {
         this.searchFlag = false;
 
-        if(this.currentIntent == 0 && this.currentOperation == 0)
+        if(this.currentIntent == 0 && this.currentOperation == 0) //單純顯示文字 or 查詢
         {
             this.selectType = "def";
 
@@ -151,9 +151,8 @@ public class ChatbotBehavior {
             else if(!isAccountPackage)
                 return "好的！以下是您欲查詢的行程項目：";
         }
-        else if(this.currentIntent == 1)
+        else if(this.currentIntent == 1) //記帳
         {
-            System.out.println("記帳");
             switch (this.currentOperation)
             {
                 case 1:
@@ -166,7 +165,7 @@ public class ChatbotBehavior {
                     return "好的！請告訴我您想要查詢哪些帳目。（您可以告訴我：記帳金額、時間）";
             }
         }
-        else if(this.currentIntent == 2)
+        else if(this.currentIntent == 2) //行程
         {
             switch (this.currentOperation)
             {
@@ -180,15 +179,18 @@ public class ChatbotBehavior {
                     return "好的！請告訴我您想要查詢哪些行程。（您可以告訴我：時間）";
             }
         }
-        else if(this.currentIntent == 3)
+        else if(this.currentIntent == 3) //猜測意圖
         {
-            //猜測意圖
             this.checkSupposedIntentAndOperation(this.sentenceHandler.getFulfillment());
             return this.sentenceHandler.getFulfillment();
         }
-        else if(this.currentIntent == 4)
+        else if(this.currentIntent == 4) //天氣
         {
             return "好的！以下是" + this.TransWeatherTime(this.sentenceHandler.getFulfillment()) + "的天氣預報：";
+        }
+        else if(this.currentIntent == 5) //對發票
+        {
+            return "好的！即將幫您導入到兌發票的頁面。";
         }
         else
         {
