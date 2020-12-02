@@ -722,22 +722,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     if(!rcvEle.getType() && selectType.equals("def"))
                         continue;
 
-                    if(!selectType.equals("def"))
-                        System.out.println("?????");
                     int moneyBuf = rcvEle.getMoney();
                     if(!selectType.equals("def") && rcvEle.getType())
                         moneyBuf *= -1;
 
-                    if(!itemList.contains(rcvEle.getItem()))
+                    String itemName = rcvEle.getType() ? rcvEle.getItem() : rcvEle.getItem() + "_收入";
+
+                    if(!itemList.contains(itemName))
                     {
-                        itemList.add(rcvEle.getItem());
+                        itemList.add(itemName);
                         moneyList.add(moneyBuf);
                     }
                     else
                     {
                         int ptr = itemList.indexOf(rcvEle.getItem()), moneyBuf_t = moneyList.get(ptr);
                         if(!selectType.equals("def") && rcvEle.getType() && moneyBuf > 0)
+                        {
                             moneyBuf_t *= -1;
+                        }
 
                         moneyList.set(ptr, moneyBuf + moneyBuf_t);
                     }
