@@ -92,7 +92,8 @@ public class Bookkeeping_activity extends AppCompatActivity {
 
         ////////////////////////////////日期/////////////////////////////////
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        dateinput.setText(formatter.format(new java.util.Date()));
+        if(isBookkeeping)
+            dateinput.setText(formatter.format(new java.util.Date()));
         TextView datePicker = findViewById(R.id.datepicker);
         datePicker.setOnClickListener(new ChoseDate());
         dateinput.setOnClickListener(new ChoseDate());

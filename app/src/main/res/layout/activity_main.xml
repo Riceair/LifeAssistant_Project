@@ -77,13 +77,13 @@
 
             <!--  DEBUG          -->
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/DEBUG_TEXT"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/userSayButton"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:inputType="textPersonName" />
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:id="@+id/DEBUG_TEXT"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_above="@+id/userSayButton"-->
+<!--                android:layout_marginBottom="@dimen/_10sdp"-->
+<!--                android:inputType="textPersonName" />-->
 
         </RelativeLayout>
         <!--    基本物件    -->
