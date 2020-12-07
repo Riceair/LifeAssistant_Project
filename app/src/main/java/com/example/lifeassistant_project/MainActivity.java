@@ -360,7 +360,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
                 chatbotBehavior.setReadyMode();
-                chatBotSay.setText(chatbotBehavior.getResponse());
+                String res = chatbotBehavior.getResponse();
+                chatBotSay.setText(res);
+                textToSpeech.stop();
+                speakText(res);
                 popupGone();
             }
         });
@@ -369,7 +372,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
                 chatbotBehavior.setDefaultMode();
+                String res = "好的，請您重新再說出您的需求。";
                 chatBotSay.setText("好的，請您重新再說出您的需求。");
+                textToSpeech.stop();
+                speakText(res);
                 popupGone();
             }
         });
@@ -598,8 +604,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             else
                 chatbotBehavior.sendSentence();
 
-            chatBotSay.setText(chatbotBehavior.getResponse());
-            speakText(chatbotBehavior.getResponse());
+            String res = chatbotBehavior.getResponse();
+            chatBotSay.setText(res);
+            textToSpeech.stop();
+            speakText(res);
             if(chatbotBehavior.getCurrentIntent() == 5)
                 changePageToInvoice();
             this.subwindowHandle();
@@ -735,7 +743,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                     else
                     {
-                        int ptr = itemList.indexOf(rcvEle.getItem()), moneyBuf_t = moneyList.get(ptr);
+                        int ptr = itemList.indexOf(itemName), moneyBuf_t = moneyList.get(ptr);
                         if(!selectType.equals("def") && rcvEle.getType() && moneyBuf > 0)
                         {
                             moneyBuf_t *= -1;
