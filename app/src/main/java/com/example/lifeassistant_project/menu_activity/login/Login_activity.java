@@ -73,24 +73,6 @@ public class Login_activity extends AppCompatActivity {
                 overridePendingTransition(R.anim.translate_in,R.anim.translate_out);
             }
         });
-
-        setLayoutSize();
-    }
-
-    private void setLayoutSize(){
-        //1080 1920 pixel 2
-        DisplayMetrics dm=new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        float heightRate=dm.heightPixels/(float)1920;
-        float widthRate=dm.widthPixels/(float)1080;
-
-        RelativeLayout mainly=findViewById(R.id.mainly);
-        RelativeLayout.LayoutParams params= (RelativeLayout.LayoutParams) mainly.getLayoutParams();
-        params.height= (int) (dm.heightPixels*0.7);
-        params.width= (int) (params.width*widthRate);
-        mainly.setLayoutParams(params);
-
-        changeRelativeViewSize((ViewGroup) findViewById(R.id.topLayout),widthRate,heightRate);
     }
 
     @Override

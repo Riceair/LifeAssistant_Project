@@ -8,28 +8,29 @@
 
     <TextView
         android:id="@+id/register_button"
-        android:layout_width="250px"
-        android:layout_height="100px"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_30sdp"
         android:layout_marginRight="@dimen/_10sdp"
-        android:layout_above="@id/mainly"
+        android:layout_marginTop="?actionBarSize"
         android:layout_alignRight="@id/mainly"
         android:gravity="center"
         android:text="建立帳戶"
         android:background="@drawable/tabsonplanner"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="50px" />
+        android:textSize="@dimen/_15sdp" />
 
     <RelativeLayout
         android:id="@+id/mainly"
-        android:layout_width="850px"
-        android:layout_height="1300px"
-        android:layout_centerInParent="true"
+        android:layout_width="@dimen/_250sdp"
+        android:layout_height="@dimen/_400sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/register_button"
         android:background="@drawable/main_inner_background">
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="300px"
-            android:layout_height="250px"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_75sdp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_30sdp"
             android:scaleType="fitXY"
@@ -37,39 +38,39 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="750px"
-            android:layout_height="100px"
+            android:layout_width="@dimen/_240sdp"
+            android:layout_height="@dimen/_30sdp"
             android:layout_below="@id/imageView"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_20sdp"
             android:gravity="center"
             android:text="您好!我是您的生活助理"
-            android:textSize="70px" />
+            android:textSize="@dimen/_20sdp" />
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="400px"
-            android:layout_height="70px"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_20sdp"
             android:layout_below="@id/textView"
             android:layout_centerHorizontal="true"
             android:gravity="center"
             android:text="輸入資訊以繼續"
-            android:textSize="50px" />
+            android:textSize="@dimen/_15sdp" />
 
         <TextView
             android:id="@+id/textView4"
-            android:layout_width="100px"
-            android:layout_height="50px"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_16sdp"
             android:layout_below="@id/textView2"
             android:layout_centerHorizontal="true"
             android:gravity="center"
             android:text="帳號"
-            android:textSize="40px" />
+            android:textSize="@dimen/_12sdp" />
 
         <ImageView
             android:id="@+id/imageView4"
-            android:layout_width="600px"
-            android:layout_height="130px"
+            android:layout_width="@dimen/_180sdp"
+            android:layout_height="@dimen/_40sdp"
             android:layout_below="@id/textView4"
             android:layout_alignParentBottom="false"
             android:layout_centerHorizontal="true"
@@ -78,18 +79,19 @@
 
         <TextView
             android:id="@+id/textView6"
-            android:layout_width="100px"
-            android:layout_height="50px"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_16sdp"
             android:layout_below="@id/imageView4"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_10sdp"
+            android:gravity="center"
             android:text="密碼"
-            android:textSize="40px" />
+            android:textSize="@dimen/_12sdp" />
 
         <ImageView
             android:id="@+id/imageView5"
-            android:layout_width="600px"
-            android:layout_height="130px"
+            android:layout_width="@dimen/_180sdp"
+            android:layout_height="@dimen/_40sdp"
             android:layout_below="@id/textView6"
             android:layout_alignParentBottom="false"
             android:layout_centerHorizontal="true"
@@ -98,8 +100,9 @@
 
         <EditText
             android:id="@+id/account_id"
-            android:layout_width="550px"
-            android:layout_height="120px"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:textSize="@dimen/_10sdp"
             android:layout_below="@id/textView4"
             android:layout_centerHorizontal="true"
             android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -108,8 +111,9 @@
 
         <EditText
             android:id="@+id/account_password"
-            android:layout_width="550px"
-            android:layout_height="120px"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:textSize="@dimen/_10sdp"
             android:layout_below="@id/textView6"
             android:layout_centerHorizontal="true"
             android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -117,15 +121,15 @@
 
         <Button
             android:id="@+id/login_button"
-            android:layout_width="200px"
-            android:layout_height="100px"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_30sdp"
             android:layout_below="@+id/imageView5"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_20sdp"
             android:background="@drawable/signin_button"
             android:text="登入"
             android:textColor="#FFFFFF"
-            android:textSize="50px" />
+            android:textSize="@dimen/_15sdp" />
 
 
     </RelativeLayout>
