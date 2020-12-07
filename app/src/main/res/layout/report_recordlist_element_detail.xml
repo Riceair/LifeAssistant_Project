@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:background="#0000574B">
+    android:background="#00FFFFFF">
 
     <TextView
         android:id="@+id/detail"
-        android:layout_width="150dp"
+        android:layout_width="@dimen/_80sdp"
         android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
         android:gravity="center"
         android:text="早餐"
         android:textColor="#FFFFFF"
-        android:textSize="25dp" />
+        android:textSize="@dimen/_20sdp" />
 
     <LinearLayout
-        android:layout_width="150dp"
+        android:layout_width="@dimen/_120sdp"
         android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
         android:orientation="vertical">
     <TextView
         android:id="@+id/cost"
@@ -25,7 +27,7 @@
         android:textColor="#FFFFFF"
         android:gravity="right"
         android:text="+$8000"
-        android:textSize="15dp" />
+        android:textSize="@dimen/_12sdp" />
 
     <TextView
         android:id="@+id/date"
@@ -34,6 +36,6 @@
         android:textColor="#FFFFFF"
         android:gravity="right"
         android:text="2020/7/23 星期四"
-        android:textSize="15dp"/>
+        android:textSize="@dimen/_12sdp"/>
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

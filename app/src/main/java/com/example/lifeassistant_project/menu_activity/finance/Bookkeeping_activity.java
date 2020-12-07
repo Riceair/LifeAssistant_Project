@@ -73,7 +73,6 @@ public class Bookkeeping_activity extends AppCompatActivity {
         getSupportActionBar().setIcon(R.drawable.icon_bookkeeping);
 
         bind();
-        setLayoutSize();
 
         //確認是屬於新增還是修改記帳
         Bundle bundle=getIntent().getExtras();
@@ -124,38 +123,6 @@ public class Bookkeeping_activity extends AppCompatActivity {
         quotesinput=findViewById(R.id.quotesinput);
         outlay=findViewById(R.id.outlay);
         income=findViewById(R.id.income);
-    }
-
-    private void setLayoutSize(){
-        //1080 1920 pixel 2
-        DisplayMetrics dm=new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        float heightRate=dm.heightPixels/(float)1920;
-        float widthRate=dm.widthPixels/(float)1080;
-
-        RelativeLayout mainly=findViewById(R.id.mainly);
-        RelativeLayout.LayoutParams params= (RelativeLayout.LayoutParams) mainly.getLayoutParams();
-        params.height= (int) (dm.heightPixels*0.7);
-        params.width= (int) (params.width*widthRate);
-        mainly.setLayoutParams(params);
-
-        changeRelativeViewSize((ViewGroup) findViewById(R.id.topLayout),widthRate,heightRate);
-
-        //特殊元件定義
-        RadioGroup radioGroup=findViewById(R.id.attributeinput);
-        RelativeLayout.LayoutParams radioParams= (RelativeLayout.LayoutParams) radioGroup.getLayoutParams();
-        radioParams.height= (int) (radioParams.height*heightRate);
-        radioGroup.setLayoutParams(radioParams);
-
-        Button datePicker=findViewById(R.id.datepicker);
-        RelativeLayout.LayoutParams dateParams= (RelativeLayout.LayoutParams) datePicker.getLayoutParams();
-        dateParams.width= dateParams.height;
-        datePicker.setLayoutParams(dateParams);
-
-        Button filterPicker=findViewById(R.id.filterpicker);
-        RelativeLayout.LayoutParams filterParams= (RelativeLayout.LayoutParams) filterPicker.getLayoutParams();
-        filterParams.width= filterParams.height;
-        filterPicker.setLayoutParams(filterParams);
     }
 
     //日期

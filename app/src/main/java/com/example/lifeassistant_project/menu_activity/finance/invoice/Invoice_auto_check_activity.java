@@ -223,7 +223,7 @@ public class Invoice_auto_check_activity extends AppCompatActivity {
             }else{  //新增中獎項目
                 for(int j=0;j<allReward.get(i).size();j++){
                     final AccountPackage accountPackage=allReward.get(i).get(j);
-                    LinearLayout recordlist_element_detail = (LinearLayout) getLayoutInflater().inflate(R.layout.report_recordlist_element_detail,null);
+                    RelativeLayout recordlist_element_detail = (RelativeLayout) getLayoutInflater().inflate(R.layout.report_recordlist_element_detail,null);
                     final TextView detailName = (TextView) recordlist_element_detail.findViewById(R.id.detail);
                     TextView detailAmount = (TextView) recordlist_element_detail.findViewById(R.id.cost);
                     TextView detailDate = (TextView) recordlist_element_detail.findViewById(R.id.date);

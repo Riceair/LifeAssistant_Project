@@ -157,7 +157,7 @@ public class Report_type_detail_activity extends AppCompatActivity {
         LinearLayout recordLinear = (LinearLayout) findViewById(R.id.record_list); //要顯示的layout
         recordLinear.removeAllViews();
         for(int i=0;i<recordID_list.size();i++){
-            LinearLayout recordlist_element_detail = (LinearLayout) getLayoutInflater().inflate(R.layout.report_recordlist_element_detail,null);
+            RelativeLayout recordlist_element_detail = (RelativeLayout) getLayoutInflater().inflate(R.layout.report_recordlist_element_detail,null);
             final TextView detailName = (TextView) recordlist_element_detail.findViewById(R.id.detail);
             TextView detailAmount = (TextView) recordlist_element_detail.findViewById(R.id.cost);
             TextView detailDate = (TextView) recordlist_element_detail.findViewById(R.id.date);
