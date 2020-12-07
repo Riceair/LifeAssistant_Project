@@ -10,16 +10,16 @@
 
     <RelativeLayout
         android:id="@+id/mainly"
-        android:layout_width="850px"
-        android:layout_height="1500px"
+        android:layout_width="@dimen/_250sdp"
+        android:layout_height="@dimen/_400sdp"
         android:layout_centerInParent="true"
         android:background="@drawable/regsite_inner_background">
 
 
         <ImageView
             android:id="@+id/reg_logo"
-            android:layout_width="350px"
-            android:layout_height="350px"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:scaleType="fitXY"
@@ -27,29 +27,29 @@
 
         <TextView
             android:id="@+id/welcomeText"
-            android:layout_width="800px"
-            android:layout_height="120px"
+            android:layout_width="@dimen/_230sdp"
+            android:layout_height="@dimen/_30sdp"
             android:gravity="center"
             android:layout_below="@id/reg_logo"
             android:layout_centerHorizontal="true"
             android:text="輸入註冊資訊以繼續"
-            android:textSize="80px" />
+            android:textSize="@dimen/_22sdp" />
 
         <TextView
             android:id="@+id/account_text"
-            android:layout_width="150px"
-            android:layout_height="120px"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_35sdp"
             android:layout_below="@+id/welcomeText"
             android:layout_marginLeft="40dp"
             android:gravity="center"
             android:text="帳號"
-            android:textSize="35px" />
+            android:textSize="@dimen/_12sdp" />
 
 
         <ImageView
             android:id="@+id/account_inputbox"
-            android:layout_width="500px"
-            android:layout_height="120px"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_35sdp"
             android:layout_alignTop="@id/account_text"
             android:layout_toRightOf="@+id/account_text"
             android:scaleType="fitXY"
@@ -57,8 +57,8 @@
 
         <EditText
             android:id="@+id/account_input"
-            android:layout_width="460px"
-            android:layout_height="105px"
+            android:layout_width="@dimen/_140sdp"
+            android:layout_height="@dimen/_33sdp"
             android:layout_alignTop="@id/account_text"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/account_text"
@@ -66,32 +66,32 @@
             android:hint="請輸入帳號"
             android:inputType="textEmailAddress"
             android:maxLength="20"
-            android:textSize="40px" />
+            android:textSize="@dimen/_10sdp" />
 
         <TextView
             android:id="@+id/account_hint"
-            android:layout_width="500px"
-            android:layout_height="80px"
+            android:layout_width="@dimen/_140sdp"
+            android:layout_height="@dimen/_20sdp"
             android:layout_below="@+id/account_input"
             android:layout_alignLeft="@+id/account_input"
             android:gravity="center"
             android:text="限制:長度6至20之英數混雜"
-            android:textSize="35px" />
+            android:textSize="@dimen/_10sdp" />
 
         <TextView
             android:id="@+id/pw_text"
-            android:layout_width="150px"
-            android:layout_height="120px"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_35sdp"
             android:layout_below="@id/account_hint"
             android:layout_alignLeft="@+id/account_text"
             android:gravity="center"
             android:text="密碼"
-            android:textSize="35px" />
+            android:textSize="@dimen/_12sdp" />
 
         <ImageView
             android:id="@+id/pw_inputbox"
-            android:layout_width="500px"
-            android:layout_height="120px"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_35sdp"
             android:layout_alignTop="@+id/pw_text"
             android:layout_toRightOf="@+id/pw_text"
             android:scaleType="fitXY"
@@ -99,8 +99,8 @@
 
         <EditText
             android:id="@+id/pw_input"
-            android:layout_width="460px"
-            android:layout_height="105px"
+            android:layout_width="@dimen/_140sdp"
+            android:layout_height="@dimen/_33sdp"
             android:layout_alignTop="@id/pw_text"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/pw_text"
@@ -108,32 +108,32 @@
             android:hint="請輸入密碼"
             android:inputType="textPassword"
             android:maxLength="20"
-            android:textSize="40px" />
+            android:textSize="@dimen/_10sdp" />
 
         <TextView
             android:id="@+id/pw_hint"
-            android:layout_width="500px"
-            android:layout_height="80px"
+            android:layout_width="@dimen/_140sdp"
+            android:layout_height="@dimen/_20sdp"
             android:layout_below="@+id/pw_inputbox"
             android:layout_alignLeft="@+id/pw_inputbox"
             android:gravity="center"
             android:text="限制:長度6至20之英數混雜"
-            android:textSize="35px" />
+            android:textSize="@dimen/_10sdp" />
 
         <TextView
             android:id="@+id/pw_check_text"
-            android:layout_width="150px"
-            android:layout_height="120px"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_35sdp"
             android:layout_below="@+id/pw_hint"
             android:layout_alignLeft="@+id/pw_text"
             android:gravity="center"
             android:text="確認\n密碼"
-            android:textSize="35px" />
+            android:textSize="@dimen/_11sdp" />
 
         <ImageView
             android:id="@+id/pw_check_inputbox"
-            android:layout_width="500px"
-            android:layout_height="120px"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_35sdp"
             android:layout_alignTop="@+id/pw_check_text"
             android:layout_toRightOf="@+id/pw_check_text"
             android:scaleType="fitXY"
@@ -141,8 +141,8 @@
 
         <EditText
             android:id="@+id/pw_check_input"
-            android:layout_width="460px"
-            android:layout_height="105px"
+            android:layout_width="@dimen/_140sdp"
+            android:layout_height="@dimen/_33sdp"
             android:layout_alignTop="@id/pw_check_text"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/pw_check_text"
@@ -150,25 +150,25 @@
             android:hint="請再次輸入密碼"
             android:inputType="textPassword"
             android:maxLength="20"
-            android:textSize="40px" />
+            android:textSize="@dimen/_10sdp" />
 
         <TextView
             android:id="@+id/pw_check_hint"
-            android:layout_width="500px"
-            android:layout_height="80px"
+            android:layout_width="@dimen/_140sdp"
+            android:layout_height="@dimen/_20sdp"
             android:layout_below="@+id/pw_check_inputbox"
             android:layout_alignLeft="@+id/pw_check_inputbox"
             android:layout_marginLeft="5dp"
             android:gravity="center"
             android:text="請輸入相同的密碼"
             android:textColor="#FF0000"
-            android:textSize="35px"
+            android:textSize="@dimen/_10sdp"
             android:visibility="invisible" />
 
         <ImageView
             android:id="@+id/continuebutton"
-            android:layout_width="100px"
-            android:layout_height="100px"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
             android:layout_below="@+id/pw_check_hint"
             android:layout_centerHorizontal="true"
             android:onClick="clickToRegister"
